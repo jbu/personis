@@ -1,0 +1,73 @@
+
+# word/word/.../word: description
+#	  makes a context and makes it current
+# -componentname: type of component, type of value, description, [value/value/...]
+#	create a component in the current context
+
+# root context
+
+Location: Information about the users' location.
+-seenby: attribute, string, sensor that has seen this person
+-location: attribute, string, Location
+-given_string: attribute, string, the string to be used for the given resolver
+Location/Resolvers: Which resolvers a user is allowed to use
+-default: attribute, string, the resolver which is used to generate the users location for others
+
+Work: Information about the users work.
+-role: attribute, string, the users main role in the organisation, value=Academic, value=Postgraduate, value=etc
+
+Devices: Devices related to the user
+-syssensors: attribute, string, list of system activity which detect the user
+-carrying: attribute, string, Device(s) being carried
+
+modelinfo: Model Information
+-modeled: attribute, string, type of entity being modeled
+-personisversion: attribute, string, version of the Personis version in use
+
+Personal: Personal data
+-firstname: attribute, string, First name
+-lastname: attribute, string, Last name
+-gender: attribute, enum, Gender, value=male, value=female
+-email: attribute, string, email address
+# create a subscription that will notify when email address changes
+@email: <default!./Personal/email> ~ '*' : NOTIFY 'http://www.somewhere.com/' 'email=' <./Personal/email>
+
+# %viewname: list of components from current context
+#	create a view in the current context
+%fullname: firstname, lastname
+
+Personal/Health: Health information
+-weight: attribute, number, My Weight
+-sleep: attribute, string, Sleep info
+
+
+Awareness: information on whether the use is or should be aware of information.
+
+Awareness/Places: Relevance of a place to the user
+# -place1: attribute, string, Informatino about the users interest and knowledge about place1
+
+Awareness/Devices: Relevance of a device to the user
+# -device1: attribute, string, Informatino about the users interest and knowledge about device1
+
+Awareness/Services: Relevance of a service to the user
+# -service1: attribute, string, Information about the users interest and knowledge about service1
+
+People: Information about people who may be relevant to the user
+#-bob: attribute, string, relevance of showing Bob's status
+-fullname: attribute, JSON, first+last name JSON encoded
+
+
+Preferences: preferences
+Preferences/Music: Music preferences, playlists etc
+-playlist: attribute, string, Tracks on my playlist
+-played: attribute, string, Tracks played
+Preferences/Music/Jazz: preferences for Jazz
+Preferences/Music/Jazz/Artists: preferences for Jazz artists
+-Miles_Davis: preference, number, Miles Davis
+
+Preferences/Food: Food preferences
+Preferences/Food/Thai: Thai food preferences
+-orders: attribute, string, orders
+-preferences: attribute, string, preferred thai dishes
+
+Temp: work area

@@ -1,0 +1,5 @@
+[12/Jun/2012:04:55:05] ENGINE Bus STARTING
+[12/Jun/2012:04:55:05] ENGINE Started monitor thread '_TimeoutMonitor'.
+[12/Jun/2012:04:55:05] ENGINE Started monitor thread 'Autoreloader'.
+[12/Jun/2012:04:55:06] ENGINE Serving on 127.0.0.1:2005
+[12/Jun/2012:04:55:06] ENGINE Bus STARTED

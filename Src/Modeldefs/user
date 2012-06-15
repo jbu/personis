@@ -1,0 +1,67 @@
+
+#Create a context and make it current
+# @@word/word/.../word: description="description string"
+#Create a component in the current context
+# --componentname: type="type of component", value_type="type of value", description="description", value="blah", value="..".......
+#	subscription="sub statement"
+# ==viewname: path, path,....
+
+#Notes: 
+# defs continue on new line starting with whitespace
+# ComponentTypes = ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
+# ValueTypes = ["string", "number", "boolean", "enum", "JSON"]
+
+
+# root context
+
+@@Location: description="Information about the users' location."
+--seenby: type="attribute", value_type="string", description="sensor that has seen this person"
+--location: type="attribute", value_type="string", description="Location"
+
+@@Work: description="Information about the users work."
+--role: description="the users main role in the organisation", type="attribute", 
+	value_type="enum", value="Academic", value="Postgraduate", value="etc"
+
+@@Devices: description="Devices related to the user"
+--syssensors: type="attribute", value_type="string", description="list of system activity which detect the user"
+--carrying: type="attribute", value_type="string", description="Device(s) being carried"
+
+@@modelinfo: description="Model Information"
+--modeled: type="attribute", value_type="string", description="type of entity being modeled"
+--personisversion: type="attribute", value_type="string", description="version of the Personis version in use"
+
+@@Personal: description="Personal data"
+--firstname: type="attribute", value_type="string", description="First name", [evidence_type="explicit", value="Bob"]
+--lastname: type="attribute", value_type="string", description="Last name"
+--gender: type="attribute", value_type="enum", description="Gender", value="male", value="female"
+--email: type="attribute", value_type="string", description="email address",
+# create a subscription that will notify when email address changes
+	rule="<default!./Personal/email> ~ '*' : NOTIFY 'http://www.somewhere.com/' 'email=' <./Personal/email>"
+
+# ==viewname: list of components from current context
+#	create a view in the current context
+==fullname: firstname, lastname
+
+@@Personal/Health: description="Health information"
+--weight: type="attribute", value_type="number", description="My Weight", [evidence_type="explicit", value="75", flags=["goal"]]
+--sleep: type="attribute", value_type="string", description="Sleep info"
+
+@@People: description="Information about people who may be relevant to the user"
+--bob: type="attribute", value_type="string", description="relevance of showing Bob's status"
+--fullname: type="attribute", value_type="JSON", description="first+last name JSON encoded"
+
+
+@@Preferences: description="preferences"
+@@Preferences/Music: description="Music preferences, playlists etc"
+--playlist: type="attribute", value_type="string", description="Tracks on my playlist"
+--played: type="attribute", value_type="string", description="Tracks played"
+@@Preferences/Music/Jazz: description="preferences for Jazz"
+@@Preferences/Music/Jazz/Artists: description="preferences for Jazz artists"
+--Miles_Davis: type="preference", value_type="number", description="Miles Davis"
+
+@@Preferences/Food: description="Food preferences"
+@@Preferences/Food/Thai: description="Thai food preferences"
+--orders: type="attribute", value_type="string", description="orders"
+--preferences: type="attribute", value_type="string", description="preferred thai dishes"
+
+@@Temp: description="work area"
