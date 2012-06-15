@@ -19,6 +19,7 @@ import cPickle
 from multiprocessing import Process, Queue
 import cronserver
 import random, time
+import connection
 
 from Personis_mkmodel import *
 #import httplib, oauth2
@@ -65,18 +66,18 @@ class Access(Personis_a.Access):
             password        password string
     returns a user model access object
     """
-    def __init__(self, credentials=None, debug=0):
+    def __init__(self, connection=None, debug=0):
         self.debug =debug
         self.modelname = '-'
         self.user = ''
         self.password = ''
-        self.credentials = credentials
+        self.connection = connection
         ok = False
 
         try:
             if self.debug != 0:
-                print "jsondocall:", credentials
-            ok = jsoncall.do_call(credentials, "access", {})
+                print "jsondocall:", connection
+            ok = jsoncall.do_call("access", {}, self.connection)
             if self.debug != 0:
                 print "---------------------- result returned", ok
         except:
@@ -103,13 +104,14 @@ arguments: (see Personis_base for details)
 
 returns a list of component objects
         """
-        reslist = jsoncall.do_call(self.credentials, "ask", {'modelname':self.modelname,\
+        reslist = jsoncall.do_call("ask", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
                                                                         'view':view,\
                                                                         'resolver':resolver,\
-                                                                        'showcontexts':showcontexts})
+                                                                        'showcontexts':showcontexts},
+                                                                        self.connection)
         complist = []
         if showcontexts:
             cobjlist, contexts, theviews, thesubs = reslist
@@ -143,12 +145,14 @@ arguments:
         if evidence == None:
             raise ValueError, "tell: no evidence provided"
 
-        return jsoncall.do_call(self.credentials, "tell", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentid':componentid,\
-                                                                        'evidence':evidence.__dict__})
+        return jsoncall.do_call("tell", {'modelname':self.modelname,\
+            'user':self.user,\
+            'password':self.password,\
+            'context':context,\
+            'componentid':componentid,\
+            'evidence':evidence.__dict__},
+            self.connection
+        )
     def mkcomponent(self,
             context=[],
             componentobj=None):
@@ -163,11 +167,12 @@ returns:
         """
         if componentobj == None:
             raise ValueError, "mkcomponent: componentobj is None"
-        return jsoncall.do_call(self.credentials, "mkcomponent", {'modelname':self.modelname,\
+        return jsoncall.do_call("mkcomponent", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'componentobj':componentobj.__dict__})
+                                                                        'componentobj':componentobj.__dict__},
+                                                                        self.connection)
     def delcomponent(self,
             context=[],
             componentid=None):
@@ -182,11 +187,12 @@ returns:
         """
         if componentid == None:
             raise ValueError, "delcomponent: componentid is None"
-        return jsoncall.do_call(self.credentials, "delcomponent", {'modelname':self.modelname,\
+        return jsoncall.do_call("delcomponent", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'componentid':componentid})
+                                                                        'componentid':componentid},
+                                                                        self.connection)
     def delcontext(self,
             context=[]):
         """
@@ -199,14 +205,16 @@ returns:
         """
         if context == None:
             raise ValueError, "delcontext: context is None"
-        return jsoncall.do_call(self.credentials, "delcontext", {'modelname':self.modelname,\
+        return jsoncall.do_call( "delcontext", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
-                                                                        'context':context})
+                                                                        'context':context},
+                                                                        self.connection)
     def getresolvers(self):
         '''Return a list of the available resolver names'''
-        return jsoncall.do_call(self.credentials, "getresolvers", {'modelname':self.modelname,\
-                                                                        'user':self.user, 'password':self.password})
+        return jsoncall.do_call("getresolvers", {'modelname':self.modelname,\
+                                                                        'user':self.user, 'password':self.password},
+                                                                        self.connection)
 
     def setresolver(self,
             context,
@@ -224,12 +232,13 @@ returns:
         """
         if componentid == None:
             raise ValueError, "setresolver: componentid is None"
-        return jsoncall.do_call(self.credentials, "setresolver", {'modelname':self.modelname,\
+        return jsoncall.do_call("setresolver", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
                                                                         'componentid':componentid, \
-                                                                        'resolver':resolver})
+                                                                        'resolver':resolver},
+                                                                        self.connection)
 
     def mkview(self,
             context=[],
@@ -245,11 +254,12 @@ returns:
         """
         if viewobj == None:
             raise ValueError, "mkview: viewobj is None"
-        return jsoncall.do_call(self.credentials, "mkview", {'modelname':self.modelname,\
+        return jsoncall.do_call("mkview", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'viewobj':viewobj.__dict__})
+                                                                        'viewobj':viewobj.__dict__},
+                                                                        self.connection)
     def delview(self,
             context=[],
             viewid=None):
@@ -263,11 +273,12 @@ returns:
         """
         if viewid == None:
             raise ValueError, "delview: viewid is None"
-        return jsoncall.do_call(self.credentials, "delview", {'modelname':self.modelname,\
+        return jsoncall.do_call("delview", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'viewid':viewid})
+                                                                        'viewid':viewid},
+                                                                        self.connection)
 
 
     def mkcontext(self,
@@ -281,11 +292,12 @@ arguments:
         """
         if contextobj == None:
             raise ValueError, "mkcontext: contextobj is None"
-        return jsoncall.do_call(self.credentials, "mkcontext", {'modelname':self.modelname,\
+        return jsoncall.do_call("mkcontext", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'contextobj':contextobj.__dict__})
+                                                                        'contextobj':contextobj.__dict__},
+                                                                        self.connection)
 
 
     def getcontext(self,
@@ -297,11 +309,12 @@ arguments:
         context - a list giving the path to the required context
         getsize - True if the size in bytes of the context subtree is required
         """
-        return jsoncall.do_call(self.credentials, "getcontext", {'modelname':self.modelname,\
+        return jsoncall.do_call("getcontext", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'getsize':getsize})
+                                                                        'getsize':getsize},
+                                                                        self.connection)
 
     def subscribe(self,
             context=[],
@@ -317,12 +330,13 @@ arguments:
                         the context be returned
                 subscription is a Subscription object
         """
-        return  jsoncall.do_call(self.credentials, "subscribe", {'modelname':self.modelname,\
+        return  jsoncall.do_call("subscribe", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
                                                                         'view':view,\
-                                                                        'subscription':subscription})
+                                                                        'subscription':subscription},
+                                                                        self.connection)
     def delete_sub(self,
             context=[],
             componentid=None,
@@ -333,12 +347,13 @@ arguments:
         componentid designates the component subscribed to
         subname is the subscription name
         """
-        return  jsoncall.do_call(self.credentials, "delete_sub", {'modelname':self.modelname,\
+        return  jsoncall.do_call("delete_sub", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
                                                                         'componentid':componentid,\
-                                                                        'subname':subname})
+                                                                        'subname':subname},
+                                                                        self.connection)
 
     def export_model(self,
             context=[],
@@ -356,11 +371,12 @@ arguments:
                                         "last1" returns most recent evidence item,
                                         None returns no evidence
         """
-        return jsoncall.do_call(self.credentials, "export_model", {'modelname':self.modelname,\
+        return jsoncall.do_call("export_model", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'resolver':resolver})
+                                                                        'resolver':resolver},
+                                                                        self.connection)
 
     def import_model(self,
             context=[],
@@ -370,11 +386,12 @@ arguments:
         context is the context to import into
         partial_model is a json encoded string containing the partial model
         """
-        return jsoncall.do_call(self.credentials, "import_model", {'modelname':self.modelname,\
+        return jsoncall.do_call("import_model", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'partial_model':partial_model})
+                                                                        'partial_model':partial_model},
+                                                                        self.connection)
     def set_goals(self,
             context=[],
             componentid=None,
@@ -387,12 +404,13 @@ arguments:
                 goals for this componentid if it is not of type goal
                 components that contribute to this componentid if it is of type goal
         """
-        return  jsoncall.do_call(self.credentials, "set_goals", {'modelname':self.modelname,\
+        return  jsoncall.do_call("set_goals", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
                                                                         'componentid':componentid,\
-                                                                        'goals':goals})
+                                                                        'goals':goals},
+                                                                        self.connection)
 
 
     def list_subs(self,
@@ -403,11 +421,12 @@ arguments:
         context is a list giving the path of context identifiers
         componentid designates the component with subscriptions attached
         """
-        return  jsoncall.do_call(self.credentials, "list_subs", {'modelname':self.modelname,\
+        return  jsoncall.do_call("list_subs", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context':context,\
-                                                                        'componentid':componentid})
+                                                                        'componentid':componentid},
+                                                                        self.connection)
 
     def registerapp(self, app=None, desc="", password=None):
         """
@@ -415,12 +434,13 @@ arguments:
                 app name is a string (needs checking TODO)
                 app passwords are stored at the top level .model db
         """
-        return jsoncall.do_call(self.credentials, "registerapp", {'modelname':self.modelname,\
+        return jsoncall.do_call("registerapp", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'app':app,\
                                                                         'description':desc,\
-                                                                        'apppassword':password})
+                                                                        'apppassword':password},
+                                                                        self.connection)
 
     def deleteapp(self, app=None):
         """
@@ -428,31 +448,34 @@ arguments:
         """
         if app == None:
             raise ValueError, "deleteapp: app is None"
-        return jsoncall.do_call(self.credentials, "deleteapp", {'modelname':self.modelname,\
+        return jsoncall.do_call("deleteapp", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
-                                                                        'app':app})
+                                                                        'app':app},
+                                                                        self.connection)
 
     def listapps(self):
         """
                 returns array of registered app names
         """
-        return jsoncall.do_call(self.credentials, "listapps", {'modelname':self.modelname,\
+        return jsoncall.do_call("listapps", {'modelname':self.modelname,\
                                                                         'user':self.user,\
-                                                                        'password':self.password})
+                                                                        'password':self.password},
+                                                                        self.connection)
 
     def setpermission(self, context=None, componentid=None, app=None, permissions={}):
         """
                 sets ask/tell permission for a context (if componentid is None) or
                         a component
         """
-        return jsoncall.do_call(self.credentials, "setpermission", {'modelname':self.modelname,\
+        return jsoncall.do_call("setpermission", {'modelname':self.modelname,\
                                                                         'user':self.user,\
                                                                         'password':self.password,\
                                                                         'context': context,\
                                                                         'componentid': componentid,\
                                                                         'app': app,\
-                                                                        'permissions': permissions})
+                                                                        'permissions': permissions},
+                                                                        self.connection)
 
     def getpermission(self, context=None, componentid=None, app=None):
         """
@@ -460,12 +483,13 @@ gets permissions for a context (if componentid is None) or
 a component
 returns a tuple (ask,tell)
         """
-        return jsoncall.do_call(self.credentials, "getpermission", {'modelname':self.modelname,\
+        return jsoncall.do_call("getpermission", {'modelname':self.modelname,\
                                                'user':self.user,\
                                                'password':self.password,\
                                                'context': context,\
                                                'componentid': componentid,\
-                                               'app': app})
+                                               'app': app},
+                                               self.connection)
 
 
       
@@ -595,7 +619,7 @@ class Personis_server:
 
     @cherrypy.expose
     def allow(self):
-        print 'allow session id',cherrypy.session.id
+        print 'allow session id',cherrypy.session.id, cherrypy.session.get('auth_code')
         usr = cherrypy.session.get('user')
         print usr
         val_key = ''
