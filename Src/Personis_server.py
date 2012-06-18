@@ -28,8 +28,11 @@ import httplib2
 import shutil
 
 from oauth2client.file import Storage
-from oauth2client.client import AccessTokenRefreshError, Storage, Credentials, OAuth2WebServerFlow
-from oauth2client.tools import run
+from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow
+#from oauth2client.tools import run
+
+from genshi.template import TemplateLoader
+#loader = TemplateLoader('/templates', auto_reload=True)
 
 
 
@@ -502,7 +505,8 @@ oauth_consumers = {'personis_client_mneme': {
                                              'redirect_uri': 'http://enterprise.it.usyd.edu.au:8000/authorized',
                                              'auth_codes': {},
                                              'request_tokens': {},
-                                             'refresh_tokens': {}
+                                             'refresh_tokens': {},
+                                             'icon':''
                                              },
                    'personis_client_log_llum': {
                                              'friendly_name': 'Log',
@@ -510,7 +514,8 @@ oauth_consumers = {'personis_client_mneme': {
                                              'redirect_uri': 'http://enterprise.it.usyd.edu.au:8001/authorized',
                                              'auth_codes': {},
                                              'request_tokens': {},
-                                             'refresh_tokens': {}
+                                             'refresh_tokens': {},
+                                             'icon':''
                                              },
                    'personis_client_umbrowse': {
                                              'friendly_name': 'Umbrowse',
@@ -518,7 +523,8 @@ oauth_consumers = {'personis_client_mneme': {
                                              'redirect_uri': 'http://localhost:8080/',
                                              'auth_codes': {},
                                              'request_tokens': {},
-                                             'refresh_tokens': {}
+                                             'refresh_tokens': {},
+                                             'icon':''
                                              }
                    }
 
@@ -608,14 +614,11 @@ class Personis_server:
             raise cherrypy.HTTPRedirect('/allow')
         
         #otherwise, ask yes/no                
-        return '''
-        <body>
-        <h1>Welcome %s!</h1>
-        The %s application is requesting access to your model. Do you want to allow this?
-        <br>
-        <a href="/allow">yes</a>, <a href="dissallow">no</a>
-        </body>
-        '''%(usr['given_name'], cli['friendly_name'])
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        loader = TemplateLoader([base_path])
+        tmpl = loader.load('index.html')
+        stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'])
+        return stream.render('xhtml')
 
     @cherrypy.expose
     def allow(self):

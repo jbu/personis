@@ -21,9 +21,9 @@ import oauth2client
 
 class Access(Personis_server.Access):
 
-	def __init__(self, modelserver=None, credentials = None, debug=0):
+	def __init__(self, connection = None, debug=0):
 
-		Personis_server.Access.__init__(self, modelserver = modelserver, credentials = credentials, debug=debug)
+		Personis_server.Access.__init__(self, connection = connection, debug=debug)
 
 
 class CliAccess(Personis_server.Access):
