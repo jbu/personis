@@ -515,7 +515,7 @@ oauth_consumers = {'personis_client_mneme': {
                                              'auth_codes': {},
                                              'request_tokens': {},
                                              'refresh_tokens': {},
-                                             'icon':''
+                                             'icon':'http://enterprise.it.usyd.edu.au:8001/static/logo.jpg'
                                              },
                    'personis_client_umbrowse': {
                                              'friendly_name': 'Umbrowse',
@@ -616,8 +616,8 @@ class Personis_server:
         #otherwise, ask yes/no                
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
-        tmpl = loader.load('index.html')
-        stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'])
+        tmpl = loader.load('appQuery.html')
+        stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'], icon=cli['icon'])
         return stream.render('xhtml')
 
     @cherrypy.expose
