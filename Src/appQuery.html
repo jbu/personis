@@ -264,27 +264,33 @@ img.profile {
 </tbody></table>
 <br/>
 <br/>
+
 <div style="
     max-width:  600px;
     margin:  0 auto;
     border: 2px black solid;
-    padding:  50px;
+    padding:  30px;
     border-radius: 5px;
 ">
 <table border='0' width="100%">
 <tr>
-<td><img src="/static/images/Personis_icon.gif" width="100"/></td>
+<td valign='top' halign='center' style='padding-right: 30px'><img src="/static/images/icon.svg" width="100"/></td>
 <td>
- <div style="text-align:center; font-size: 24pt; font-weight: bold">Personis User Model Server</div>
+ <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div>
  <h1>Welcome $name!</h1>
 <br/>
 <img src='$icon' style="float: right; width: 100px"/>
+<div style="font-size: 18px">
  The <span style="font-weight: bold">$app</span> application is requesting access to your model. Do you want to allow this?
  <br/>
+<br/>
+</div>
 <div style='margin: 10px'>
  <a class='button' href="/allow">yes</a>    <a class='button' href="dissallow">no</a>
 </div>
+
 </td>
+</tr>
 </table>
 </div>
 </body>

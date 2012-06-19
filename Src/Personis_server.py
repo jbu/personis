@@ -524,7 +524,7 @@ oauth_consumers = {'personis_client_mneme': {
                                              'auth_codes': {},
                                              'request_tokens': {},
                                              'refresh_tokens': {},
-                                             'icon':''
+                                             'icon':'/static/images/umbrowser.jpg'
                                              }
                    }
 
