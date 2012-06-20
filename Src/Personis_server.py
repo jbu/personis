@@ -495,47 +495,11 @@ returns a tuple (ask,tell)
                                                'app': app},
                                                self.connection)
 
-
-      
-
-
-
-oauth_consumers = {'personis_client_mneme': {
-                                             'friendly_name': 'Mneme',
-                                             'secret': 'personis_client_secret_mneme', 
-                                             'redirect_uri': 'http://enterprise.it.usyd.edu.au:8000/authorized',
-                                             'auth_codes': {},
-                                             'request_tokens': {},
-                                             'refresh_tokens': {},
-                                             'icon':''
-                                             },
-                   'personis_client_log_llum': {
-                                             'friendly_name': 'Log',
-                                             'secret': 'personis_client_secret_log_llum', 
-                                             'redirect_uri': 'http://enterprise.it.usyd.edu.au:8001/authorized',
-                                             'auth_codes': {},
-                                             'request_tokens': {},
-                                             'refresh_tokens': {},
-                                             'icon':'http://enterprise.it.usyd.edu.au:8001/static/logo.jpg'
-                                             },
-                   'personis_client_umbrowse': {
-                                             'friendly_name': 'Umbrowse',
-                                             'secret': 'personis_client_secret_umbrowse', 
-                                             'redirect_uri': 'http://localhost:8080/',
-                                             'auth_codes': {},
-                                             'request_tokens': {},
-                                             'refresh_tokens': {},
-                                             'icon':'/static/images/umbrowser.jpg'
-                                             }
-                   }
-
 users = {}
 
 bearers = {}
 
 class oauth_client(object):
-
-    #fields = ['client_id': self.client_id, 'friendly_name': self.friendly_name, 'secret', 'redirect_uri', 'icon', 'auth_codes', 'request_tokens', 'refresh_tokens']
 
     def __init__(self, client_id, friendly_name, secret, redirect_uri, icon=''):
         self.client_id = client_id
@@ -559,8 +523,11 @@ class Personis_server:
         #if not os.path.exists(os.path.join(self.modeldir,'_system')):
         #    mkmodel(model='_system', mfile='Modeldefs/system.prod', modeldir=self.modeldir, user='sys', password='')
         self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
+        for k, v in self.oauth_clients.items():
+            print k, v.friendly_name
 	if not 'personis_client_umbrowse' in self.oauth_clients:
             # seed with command line client
+            print 'seeding clients'
             self.oauth_clients['personis_client_umbrowse'] = oauth_client(
                              client_id = 'personis_client_umbrowse',
                              friendly_name= 'Umbrowse',
@@ -574,6 +541,12 @@ class Personis_server:
                              redirect_uri = 'http://enterprise.it.usyd.edu.au:8000/authorized',
                              icon = '')
             self.oauth_clients.sync()
+        def stopper():
+            print 'saving clients'
+            for k, v in self.oauth_clients.items():
+                print k, v.friendly_name
+            self.oauth_clients.close()
+        cherrypy.engine.subscribe('stop', stopper)
 
 
     @cherrypy.expose
@@ -584,10 +557,11 @@ class Personis_server:
         cherrypy.session['client_id'] = client_id
         print response_type, client_id, scope, access_type, approval_prompt
         
-        cli = oauth_consumers[client_id]
+        cli = self.oauth_clients[client_id]
         if state <> None:
             cherrypy.session['state'] = state
-        if cli['redirect_uri'] <> redirect_uri:
+        print 'redirect uris', cli.redirect_uri, redirect_uri
+        if cli.redirect_uri <> redirect_uri:
             raise cherrypy.HTTPError() 
         raise cherrypy.HTTPRedirect('/login')
     
@@ -621,9 +595,9 @@ class Personis_server:
         print 'session',cherrypy.session.id
         print 'got user',usr
         
-        if not cherrypy.session.has_key('client_id'):
+        if not 'client_id' in cherrypy.session:
             raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
-        cli = oauth_consumers[cherrypy.session['client_id']]
+        cli = self.oauth_clients[cherrypy.session['client_id']]
         print 'loggedin session id',cherrypy.session.id
 
         # if no model for user, create one.
@@ -648,72 +622,72 @@ class Personis_server:
 
 
         # if it's mneme, then don't ask whether it's all ok. just do it.
-        if cli['secret'] == 'personis_client_secret_mneme':
+        if cli.secret == 'personis_client_secret_mneme':
             raise cherrypy.HTTPRedirect('/allow')
         
         #otherwise, ask yes/no                
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
         tmpl = loader.load('appQuery.html')
-        stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'], icon=cli['icon'])
+        stream = tmpl.generate(name=usr['given_name'], app=cli.friendly_name, icon=cli.icon)
         return stream.render('xhtml')
 
     @cherrypy.expose
     def allow(self):
-        print 'allow session id',cherrypy.session.id, cherrypy.session.get('auth_code')
         usr = cherrypy.session.get('user')
+        cli = self.oauth_clients[cherrypy.session['client_id']]
+        print 'allow session id',cherrypy.session.id, cherrypy.session.get('auth_code'), usr['email'], cli.friendly_name
         print usr
         val_key = ''
         for i in range(10):
             val_key = val_key+ str(int(random.random()*100))
-        cli = oauth_consumers[cherrypy.session['client_id']]
-        rdi = cli['redirect_uri'] + '?'
-        if cherrypy.session.has_key('state'):
+        rdi = cli.redirect_uri + '?'
+        if 'state' in cherrypy.session:
             rdi = rdi + 'state='+cherrypy.session['state']+'&amp;'
         rdi = rdi + 'code=' + val_key
         cherrypy.session['auth_code'] = val_key
-        cli['auth_codes'][val_key] = [time.time(),usr['id']]
+        cli.auth_codes[val_key] = [time.time(),usr['id']]
 
-        cli = oauth_consumers[cherrypy.session.get('client_id')]
-        redr = cli['redirect_uri']
+        cli = self.oauth_clients[cherrypy.session.get('client_id')]
+        redr = cli.redirect_uri
         print redr, cherrypy.session.get('auth_code')
         um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
         cherrypy.session['um'] = um
-        result = um.registerapp(app=cherrypy.session['client_id'], desc=pargs['description'], password=pargs['apppassword'])
+        result = um.registerapp(app=cherrypy.session['client_id'], desc='', password='')
         raise cherrypy.HTTPRedirect(redr+'?code='+cherrypy.session.get('auth_code'))
                
     @cherrypy.expose
     def dissallow(self):
-        cli = oauth_consumers[cherrypy.session.get('client_id')]
-        redr = cli['redirect_uri']+'?error=access_denied'
+        cli = self.oauth_clients[cherrypy.session.get('client_id')]
+        redr = cli.redirect_uri+'?error=access_denied'
         #print redr
         raise cherrypy.HTTPRedirect(redr)
 
     @cherrypy.expose
     def request_token(self, code, redirect_uri, client_id, client_secret, scope, grant_type):
-        if cherrypy.session.get('user') == None:
-            raise cherrypy.HTTPRedirect('/login')
+        #if cherrypy.session.get('user') == None:
+            #raise cherrypy.HTTPRedirect('/login')
         #nasty hack. insecure. needs to check code!
-        cli = oauth_consumers[client_id]
+        cli = self.oauth_clients[client_id]
         #code = code.encode('ascii')
         #print 'code:',code
         #print 'client:',cli
         #print 'users:',users
-        if not cli['auth_codes'].has_key(code):
+        if not code in cli.auth_codes:
             raise cherrypy.HTTPError()
         atoken = ''
         rtoken = ''
         for i in range(10):
             atoken = atoken + str(int(random.random()*100))
             rtoken = rtoken + str(int(random.random()*100))
-        user = users[cli['auth_codes'][code][1]][0]
+        user = users[cli.auth_codes[code][1]][0]
         b = {}
         b['user'] = user
-        b['credentials'] = users[cli['auth_codes'][code][1]][1]
+        b['credentials'] = users[cli.auth_codes[code][1]][1]
         bearers[atoken] = b
         #print user
-        cli['request_tokens'][atoken] = user['id']
-        cli['refresh_tokens'][rtoken] = ''
+        cli.request_tokens[atoken] = user['id']
+        cli.refresh_tokens[rtoken] = ''
         s = '''
 {
     "access_token":"%s",
@@ -723,8 +697,9 @@ class Personis_server:
     "example_parameter":"example_value"
 }
         '''%(atoken,rtoken)
-        del(users[cli['auth_codes'][code][1]])
-        del(cli['auth_codes'][code])
+        del(users[cli.auth_codes[code][1]])
+        del(cli.auth_codes[code])
+        self.oauth_clients[client_id] = cli
         print s
         return s
 
@@ -736,7 +711,8 @@ class Personis_server:
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
         tmpl = loader.load('list_clients.html')
-        print self.oauth_clients
+        for k, v in self.oauth_clients.items():
+            print k, v.friendly_name
         stream = tmpl.generate(clients=self.oauth_clients.values())
         return stream.render('xhtml')
 
@@ -746,6 +722,7 @@ class Personis_server:
             raise cherrypy.HTTPError()
         if id == "removeOneForMe":
             del(self.oauth_clients[value])
+            self.oauth_clients.sync()
             print "removed a client"
             raise cherrypy.HTTPRedirect('/list_clients')
         if id == "addOneForMe":
@@ -766,8 +743,11 @@ class Personis_server:
 
         clid, field = id.split('|')
         print 'saving: ',clid, field, value
-        self.oauth_clients[clid].__dict__[field] = value
-        print self.oauth_clients[clid].friendly_name
+        oldc = self.oauth_clients[clid]
+        oldc.__dict__[field] = value
+        self.oauth_clients[clid] = oldc
+        for k, v in self.oauth_clients.items():
+            print k, v.friendly_name
         self.oauth_clients.sync()
         return value
         
