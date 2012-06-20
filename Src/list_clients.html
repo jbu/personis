@@ -245,6 +245,21 @@ img.profile {
    background: #1b435e;
    }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.jeditable.js"></script>
+<script src="/static/js/list_clients.js"></script>
+<script>
+$(document).ready(function() {
+    $('.edit').editable('/list_clients_save', {
+        indicator : "...",
+        onblur    : 'cancel',
+        //submit    : 'OK',
+        type      : 'text',
+        //submitdata: { _method: "put" },
+        cssclass  : "editable"
+    });
+});
+</script>
 </head>
 <body>
 <table width="100%" cellspacing="0" cellpadding="0" border="0" class="role">
@@ -279,11 +294,26 @@ img.profile {
  <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div>
  <h1>Registered Clients</h1>
 <br/>
-<ol py:if="clients">
+<ul py:if="clients">
       <li py:for="client in clients">
-        ${client.friendly_name}, ${client.client_id}, ${client.secret}, ${client.redirect_uri}, ${client.icon}
+        <table border="0" padding="5">
+          <tr><td>Friendly Name: </td>
+              <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>
+              <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>
+              <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>
+          </tr><tr><td>Client id:</td>
+              <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>
+          </tr><tr><td>Secret:</td>
+               <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>
+          </tr><tr><td>redirect uri:</td>
+               <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>
+          </tr><tr><td>icon uri:</td>
+               <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>
+          </tr>
+</table>
       </li>
-    </ol>
+    </ul>
+   <a href="/list_clients_save?id=addOneForMe&amp;value=two"><img src="/static/images/plus_alt.svg"/></a>
 
 </td>
 </tr>

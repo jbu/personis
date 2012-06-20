@@ -20,6 +20,7 @@ from multiprocessing import Process, Queue
 import cronserver
 import random, time
 import connection
+from shove import Shove
 
 from Personis_mkmodel import *
 #import httplib, oauth2
@@ -532,12 +533,48 @@ users = {}
 
 bearers = {}
 
+class oauth_client(object):
+
+    #fields = ['client_id': self.client_id, 'friendly_name': self.friendly_name, 'secret', 'redirect_uri', 'icon', 'auth_codes', 'request_tokens', 'refresh_tokens']
+
+    def __init__(self, client_id, friendly_name, secret, redirect_uri, icon=''):
+        self.client_id = client_id
+        self.friendly_name = friendly_name
+        self.secret = secret
+        self.redirect_uri = redirect_uri
+        self.icon = icon
+        self.auth_codes = {}
+        self.request_tokens = {}
+        self.refresh_tokens = {}
+
+    def __repr__(self):
+        return '<%s %r>' % (type(self).__name__, self.client_id)
+
 class Personis_server:
 
     auth__doc = "The object that serves authentication pages"
 
     def __init__(self, modeldir=None):
         self.modeldir = modeldir
+        #if not os.path.exists(os.path.join(self.modeldir,'_system')):
+        #    mkmodel(model='_system', mfile='Modeldefs/system.prod', modeldir=self.modeldir, user='sys', password='')
+        self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
+	if not 'personis_client_umbrowse' in self.oauth_clients:
+            # seed with command line client
+            self.oauth_clients['personis_client_umbrowse'] = oauth_client(
+                             client_id = 'personis_client_umbrowse',
+                             friendly_name= 'Umbrowse',
+                             secret= 'personis_client_secret_umbrowse', 
+                             redirect_uri='http://localhost:8080/',
+                             icon='/static/images/umbrowser.jpg')
+            self.oauth_clients['personis_client_mneme'] = oauth_client(
+                             client_id = 'personis_client_mneme',
+                             friendly_name = 'Mneme',
+                             secret = 'personis_client_secret_mneme', 
+                             redirect_uri = 'http://enterprise.it.usyd.edu.au:8000/authorized',
+                             icon = '')
+            self.oauth_clients.sync()
+
 
     @cherrypy.expose
     def authorize(self, client_id, redirect_uri, scope, access_type, response_type='code', approval_prompt='auto', state=None):
@@ -567,12 +604,11 @@ class Personis_server:
 
     @cherrypy.expose
     def logged_in(self, code):
-        user = cherrypy.session.get('user')
         flow = cherrypy.session.get('flow')
         if not flow:
             raise IOError()
         credentials = flow.step2_exchange(cherrypy.request.params)
-        cherrypy.session['credentials'] = credentials
+        #cherrypy.session['credentials'] = credentials
         http = httplib2.Http()
         http = credentials.authorize(http)
         cjson = credentials.to_json()
@@ -585,7 +621,8 @@ class Personis_server:
         print 'session',cherrypy.session.id
         print 'got user',usr
         
-        
+        if not cherrypy.session.has_key('client_id'):
+            raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
         cli = oauth_consumers[cherrypy.session['client_id']]
         print 'loggedin session id',cherrypy.session.id
 
@@ -608,6 +645,7 @@ class Personis_server:
             um.tell(context=["Personal"], componentid='email', evidence=ev)
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
             Personis_util.printcomplist(reslist)
+            cherrypy.session['um'] = um
 
         # if it's mneme, then don't ask whether it's all ok. just do it.
         if cli['secret'] == 'personis_client_secret_mneme':
@@ -639,6 +677,8 @@ class Personis_server:
         cli = oauth_consumers[cherrypy.session.get('client_id')]
         redr = cli['redirect_uri']
         print redr, cherrypy.session.get('auth_code')
+        um = cherrypy.session.get('um')
+        result = um.registerapp(app=cherrypy.session['client_id'], desc=pargs['description'], password=pargs['apppassword'])
         raise cherrypy.HTTPRedirect(redr+'?code='+cherrypy.session.get('auth_code'))
                
     @cherrypy.expose
@@ -650,6 +690,8 @@ class Personis_server:
 
     @cherrypy.expose
     def request_token(self, code, redirect_uri, client_id, client_secret, scope, grant_type):
+        if cherrypy.session.get('user') == None:
+            raise cherrypy.HTTPRedirect('/login')
         #nasty hack. insecure. needs to check code!
         cli = oauth_consumers[client_id]
         #code = code.encode('ascii')
@@ -686,6 +728,50 @@ class Personis_server:
         return s
 
     @cherrypy.expose
+    def list_clients(self):
+        if cherrypy.session.get('user') == None:
+            cherrypy.session['target_url'] = '/list_clients'
+            raise cherrypy.HTTPRedirect('/login')
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        loader = TemplateLoader([base_path])
+        tmpl = loader.load('list_clients.html')
+        print self.oauth_clients
+        stream = tmpl.generate(clients=self.oauth_clients.values())
+        return stream.render('xhtml')
+
+    @cherrypy.expose
+    def list_clients_save(self, id, value, _method='get'):
+        if cherrypy.session.get('user') == None:
+            raise cherrypy.HTTPError()
+        if id == "removeOneForMe":
+            del(self.oauth_clients[value])
+            print "removed a client"
+            raise cherrypy.HTTPRedirect('/list_clients')
+        if id == "addOneForMe":
+            clid = ''
+            secret = ''
+            for i in range(10):
+                clid = clid + str(int(random.random()*100))
+                secret = secret + str(int(random.random()*100))
+            self.oauth_clients[clid] = oauth_client(
+                             client_id = clid,
+                             friendly_name= 'my client',
+                             secret= secret, 
+                             redirect_uri='http://www.example.com/',
+                             icon='/static/images/icon.svg')
+            self.oauth_clients.sync()
+            print "added a client"
+            raise cherrypy.HTTPRedirect('/list_clients')
+
+        clid, field = id.split('|')
+        print 'saving: ',clid, field, value
+        self.oauth_clients[clid].__dict__[field] = value
+        print self.oauth_clients[clid].friendly_name
+        self.oauth_clients.sync()
+        return value
+        
+
+    @cherrypy.expose
     def default(self, *args):
 
         print 'path', cherrypy.request.path_info
@@ -696,8 +782,9 @@ class Personis_server:
         jsonobj = cherrypy.request.body.fp.read()        
         print 'body', jsonobj
 
-        #if cherrypy.session.get('user') == None:
-        #    raise cherrypy.HTTPRedirect('/login')
+        if cherrypy.session.get('user') == None:
+            cherrypy.session['target_url'] = '/'
+            raise cherrypy.HTTPRedirect('/login')
         try:
             print cherrypy.request.headers['Authorization']
             access_token = cherrypy.request.headers['Authorization'].split()[1]
@@ -827,25 +914,6 @@ class Personis_server:
 
         return json.dumps(result)
 
-#Restrict default access to logged in users
-#@lg_authority.groups('auth')
-class Root(object):
-    """CherryPy server root"""
-
-    auth__doc = "The object that serves authentication pages"
-
-    #Allow everyone to see the index page
-    @cherrypy.expose
-#       @lg_authority.groups('any')
-    def index(self):
-        return '<p>Welcome!</p><p>Would you like to <a href="protected">view protected information?</a></p>'
-
-    #This method inherits restricted access from the Root class it belongs to
-    @cherrypy.expose
-    def protected(self):
-        return '<p>Welcome, {user}!</p><p><a href="auth/logout">Logout</a> and try again?<p>'.format(user=cherrypy.user.id)
-
-
 def runServer(modeldir, config):
     print "serving models in '%s'" % (modeldir)
     print "config file '%s'" % (config)
@@ -853,6 +921,10 @@ def runServer(modeldir, config):
     cronserver.cronq = Queue()
     p = Process(target=cronserver.cronserver, args=(cronserver.cronq,modeldir))
     p.start()
+
+    # ensure system model exists
+
+
     #conf = {'/favion.ico': {'tools.staticfile.on': True,'tools.staticfile.file': os.path.join(os.path.dirname(os.path.abspath(__file__)), '/images/favicon.ico')}}
     try:
         try:
