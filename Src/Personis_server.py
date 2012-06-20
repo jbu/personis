@@ -645,7 +645,7 @@ class Personis_server:
             um.tell(context=["Personal"], componentid='email', evidence=ev)
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
             Personis_util.printcomplist(reslist)
-            cherrypy.session['um'] = um
+
 
         # if it's mneme, then don't ask whether it's all ok. just do it.
         if cli['secret'] == 'personis_client_secret_mneme':
@@ -677,7 +677,8 @@ class Personis_server:
         cli = oauth_consumers[cherrypy.session.get('client_id')]
         redr = cli['redirect_uri']
         print redr, cherrypy.session.get('auth_code')
-        um = cherrypy.session.get('um')
+        um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+        cherrypy.session['um'] = um
         result = um.registerapp(app=cherrypy.session['client_id'], desc=pargs['description'], password=pargs['apppassword'])
         raise cherrypy.HTTPRedirect(redr+'?code='+cherrypy.session.get('auth_code'))
                
