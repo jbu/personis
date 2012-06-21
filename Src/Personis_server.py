@@ -10,6 +10,7 @@
 
 import os, traceback
 import json
+import yaml
 import jsoncall
 import cherrypy
 import Personis_base
@@ -495,9 +496,6 @@ returns a tuple (ask,tell)
                                                'app': app},
                                                self.connection)
 
-users = {}
-
-bearers = {}
 
 class oauth_client(object):
 
@@ -516,39 +514,72 @@ class oauth_client(object):
 
 class Personis_server:
 
-    auth__doc = "The object that serves authentication pages"
-
     def __init__(self, modeldir=None):
         self.modeldir = modeldir
-        #if not os.path.exists(os.path.join(self.modeldir,'_system')):
-        #    mkmodel(model='_system', mfile='Modeldefs/system.prod', modeldir=self.modeldir, user='sys', password='')
+        self.admins = yaml.load(file('admins.yaml','r'))
         self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
-        for k, v in self.oauth_clients.items():
-            print k, v.friendly_name
-	if not 'personis_client_umbrowse' in self.oauth_clients:
-            # seed with command line client
-            print 'seeding clients'
-            self.oauth_clients['personis_client_umbrowse'] = oauth_client(
-                             client_id = 'personis_client_umbrowse',
-                             friendly_name= 'Umbrowse',
-                             secret= 'personis_client_secret_umbrowse', 
-                             redirect_uri='http://localhost:8080/',
-                             icon='/static/images/umbrowser.jpg')
-            self.oauth_clients['personis_client_mneme'] = oauth_client(
-                             client_id = 'personis_client_mneme',
-                             friendly_name = 'Mneme',
-                             secret = 'personis_client_secret_mneme', 
-                             redirect_uri = 'http://enterprise.it.usyd.edu.au:8000/authorized',
-                             icon = '')
-            self.oauth_clients.sync()
+        self.users = Shove('sqlite:///oauth_users.dat')
+        self.bearers = Shove('sqlite:///oauth_bearers.dat')
+
         def stopper():
-            print 'saving clients'
-            for k, v in self.oauth_clients.items():
-                print k, v.friendly_name
+            print 'saving persistant data'
             self.oauth_clients.close()
+            self.users.close()
+            self.bearers.close()
         cherrypy.engine.subscribe('stop', stopper)
 
+    @cherrypy.expose
+    def list_clients(self):
+        if cherrypy.session.get('user') == None:
+            cherrypy.session['target_url'] = '/list_clients'
+            raise cherrypy.HTTPRedirect('/login')
+        if not cherrypy.session.get('user')['id'] in self.admins.keys():
+            raise cherrypy.HTTPError()
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        loader = TemplateLoader([base_path])
+        tmpl = loader.load('list_clients.html')
+        for k, v in self.oauth_clients.items():
+            print k, v.friendly_name
+        stream = tmpl.generate(clients=self.oauth_clients.values())
+        return stream.render('xhtml')
 
+    @cherrypy.expose
+    def list_clients_save(self, id, value, _method='get'):
+        if cherrypy.session.get('user') == None:
+            raise cherrypy.HTTPError()
+        if not cherrypy.session.get('user')['id'] in self.admins.keys():
+            raise cherrypy.HTTPError()
+        if id == "removeOneForMe":
+            del(self.oauth_clients[value])
+            self.oauth_clients.sync()
+            print "removed a client"
+            raise cherrypy.HTTPRedirect('/list_clients')
+        if id == "addOneForMe":
+            clid = ''
+            secret = ''
+            for i in range(10):
+                clid = clid + str(int(random.random()*100))
+                secret = secret + str(int(random.random()*100))
+            self.oauth_clients[clid] = oauth_client(
+                             client_id = clid,
+                             friendly_name= 'my client',
+                             secret= secret, 
+                             redirect_uri='http://www.example.com/',
+                             icon='/static/images/icon.svg')
+            self.oauth_clients.sync()
+            print "added a client"
+            raise cherrypy.HTTPRedirect('/list_clients')
+
+        clid, field = id.split('|')
+        print 'saving: ',clid, field, value
+        oldc = self.oauth_clients[clid]
+        oldc.__dict__[field] = value
+        self.oauth_clients[clid] = oldc
+        for k, v in self.oauth_clients.items():
+            print k, v.friendly_name
+        self.oauth_clients.sync()
+        return value
+        
     @cherrypy.expose
     def authorize(self, client_id, redirect_uri, scope, access_type, response_type='code', approval_prompt='auto', state=None):
         body = cherrypy.request.body.fp.read()
@@ -582,7 +613,6 @@ class Personis_server:
         if not flow:
             raise IOError()
         credentials = flow.step2_exchange(cherrypy.request.params)
-        #cherrypy.session['credentials'] = credentials
         http = httplib2.Http()
         http = credentials.authorize(http)
         cjson = credentials.to_json()
@@ -591,12 +621,12 @@ class Personis_server:
         #print 'content', content
         usr = json.loads(content[1])
         cherrypy.session['user'] = usr
-        users[usr['id']] = [usr, credentials]
-        print 'session',cherrypy.session.id
-        print 'got user',usr
+        self.users[usr['id']] = [usr, credentials]
+        self.users.sync()
         
         if not 'client_id' in cherrypy.session:
             raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
+
         cli = self.oauth_clients[cherrypy.session['client_id']]
         print 'loggedin session id',cherrypy.session.id
 
@@ -665,14 +695,7 @@ class Personis_server:
 
     @cherrypy.expose
     def request_token(self, code, redirect_uri, client_id, client_secret, scope, grant_type):
-        #if cherrypy.session.get('user') == None:
-            #raise cherrypy.HTTPRedirect('/login')
-        #nasty hack. insecure. needs to check code!
         cli = self.oauth_clients[client_id]
-        #code = code.encode('ascii')
-        #print 'code:',code
-        #print 'client:',cli
-        #print 'users:',users
         if not code in cli.auth_codes:
             raise cherrypy.HTTPError()
         atoken = ''
@@ -680,11 +703,11 @@ class Personis_server:
         for i in range(10):
             atoken = atoken + str(int(random.random()*100))
             rtoken = rtoken + str(int(random.random()*100))
-        user = users[cli.auth_codes[code][1]][0]
+        user = self.users[cli.auth_codes[code][1]][0]
         b = {}
         b['user'] = user
-        b['credentials'] = users[cli.auth_codes[code][1]][1]
-        bearers[atoken] = b
+        b['credentials'] = self.users[cli.auth_codes[code][1]][1]
+        self.bearers[atoken] = b
         #print user
         cli.request_tokens[atoken] = user['id']
         cli.refresh_tokens[rtoken] = ''
@@ -697,80 +720,25 @@ class Personis_server:
     "example_parameter":"example_value"
 }
         '''%(atoken,rtoken)
-        del(users[cli.auth_codes[code][1]])
+        del(self.users[cli.auth_codes[code][1]])
         del(cli.auth_codes[code])
         self.oauth_clients[client_id] = cli
         print s
         return s
 
-    @cherrypy.expose
-    def list_clients(self):
-        if cherrypy.session.get('user') == None:
-            cherrypy.session['target_url'] = '/list_clients'
-            raise cherrypy.HTTPRedirect('/login')
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        loader = TemplateLoader([base_path])
-        tmpl = loader.load('list_clients.html')
-        for k, v in self.oauth_clients.items():
-            print k, v.friendly_name
-        stream = tmpl.generate(clients=self.oauth_clients.values())
-        return stream.render('xhtml')
-
-    @cherrypy.expose
-    def list_clients_save(self, id, value, _method='get'):
-        if cherrypy.session.get('user') == None:
-            raise cherrypy.HTTPError()
-        if id == "removeOneForMe":
-            del(self.oauth_clients[value])
-            self.oauth_clients.sync()
-            print "removed a client"
-            raise cherrypy.HTTPRedirect('/list_clients')
-        if id == "addOneForMe":
-            clid = ''
-            secret = ''
-            for i in range(10):
-                clid = clid + str(int(random.random()*100))
-                secret = secret + str(int(random.random()*100))
-            self.oauth_clients[clid] = oauth_client(
-                             client_id = clid,
-                             friendly_name= 'my client',
-                             secret= secret, 
-                             redirect_uri='http://www.example.com/',
-                             icon='/static/images/icon.svg')
-            self.oauth_clients.sync()
-            print "added a client"
-            raise cherrypy.HTTPRedirect('/list_clients')
-
-        clid, field = id.split('|')
-        print 'saving: ',clid, field, value
-        oldc = self.oauth_clients[clid]
-        oldc.__dict__[field] = value
-        self.oauth_clients[clid] = oldc
-        for k, v in self.oauth_clients.items():
-            print k, v.friendly_name
-        self.oauth_clients.sync()
-        return value
-        
 
     @cherrypy.expose
     def default(self, *args):
 
         print 'path', cherrypy.request.path_info
-        #print 'method', cherrypy.request.method
-        #print 'headers', cherrypy.request.headers
-        #print 'args', args
-        #print 'params', cherrypy.request.params        
+        print 'headers', cherrypy.request.headers
         jsonobj = cherrypy.request.body.fp.read()        
         print 'body', jsonobj
 
-        if cherrypy.session.get('user') == None:
-            cherrypy.session['target_url'] = '/'
-            raise cherrypy.HTTPRedirect('/login')
         try:
-            print cherrypy.request.headers['Authorization']
             access_token = cherrypy.request.headers['Authorization'].split()[1]
-            usr = bearers[access_token]['user']
-            print 'user:',usr['id']
+            print self.bearers
+            usr = self.bearers[access_token]['user']
         except:
             raise cherrypy.HTTPError()
         
