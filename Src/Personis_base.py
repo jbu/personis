@@ -322,7 +322,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		else:
 			self.modeldir = modeldir
 		self.modelname = model
-		#print self.modelname
 		self.user = user
 		self.password = password
 		self.debug = debug
@@ -339,7 +338,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		if self.password == None:
 			self.password = ''
 		p.update(self.password)
-		#print self.user, self.moddb
 		#if (self.user == self.moddb['owner']) and (p.hexdigest() == mod['password']):
 		#	self.usertype = 'owner'
 		if self.user <> None:
@@ -387,8 +385,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		"""
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
-		print 'contextinfo',contextinfo
-		print 'views', view
 		if not contextinfo.has_key('perms'):
 			perms = []
 			print 'no perms!'
@@ -418,7 +414,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 			contexts = filter(lambda x: os.path.isdir(self.curcontext+"/"+x),contexts)
 		except OSError, e:
 			raise ValueError("Component/Context not found: %s/%s" % (context, view))
-		print comps
 		cidlist = []
 		cobjlist = []
 		if type(view) == type(u''):
@@ -437,7 +432,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 				cidlist = comps.keys()
 		else:
 			raise TypeError, 'view "%s" has unknown type'%(`view`)
-		print 'cidlist',cidlist
 		self.theresolver = None
 		resolver_args = {}
 		if resolver != None: 
@@ -527,7 +521,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 			thesubs = None
 		if showcontexts:
 			return (cobjlist, contexts, theviews, thesubs)
-		print cobjlist
 		return cobjlist
 	
 
