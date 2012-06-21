@@ -2,8 +2,9 @@
 import httplib2, types, cPickle
 import simplejson as json
 import cherrypy, oauth2client
+import connection
 
-def do_call(fun, args, connection = None):
+def do_call(fun, args, connection):
 	if (not connection.valid()):
 		raise SystemError('Need http or modelserver and credentials')
 	args["version"] = "11.2"
@@ -11,9 +12,10 @@ def do_call(fun, args, connection = None):
 
 	http = connection.get_http()
 
-	resp, content = http.request(connection.uri+'/'+fun, "POST", body=args_json)
+	resp, content = http.request(connection.uri+fun, "POST", body=args_json)
 
 	try:
+		print 'content', content
 		result = json.loads(content)
 	except:
 		print "json loads failed!"
