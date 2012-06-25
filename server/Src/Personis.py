@@ -14,7 +14,7 @@ from Personis_exceptions import *
 import socket
 import os
 import argparse
-import ConfigParser
+from optparse import OptionParser
 from multiprocessing import Process, Queue
 import cronserver
 import oauth2client
@@ -67,13 +67,26 @@ class CliAccess(Personis_server.Access):
 
 
 if __name__ == "__main__":
-	aparser = argparse.ArgumentParser(description='Personis Server')
-	aparser.add_argument('--models', '-m', help='directory holding models', default="Models")
-	aparser.add_argument('--log', help='log file', default="stdout")
-	aparser.add_argument('--config', '-c', help='config file for server', default='~/.personis_server.conf')
-	args = aparser.parse_args(sys.argv[1:])
-	if args.log != "stdout":
-		sys.stdout = open(args.log, "w", 0)
+    parser = OptionParser()
+    parser.add_option("-m", "--models", dest="models",
+              help="Model directory", metavar="DIRECTORY", default='models')
+    parser.add_option("-c", "--config",
+              dest="config", metavar='FILE',
+              help="Config file")
+    parser.add_option("-a", "--admins",
+              dest="admins", metavar='FILE',
+              help="Admins file", default='admins.yaml')
+    parser.add_option("-o", "--oauthconfig",
+              dest="oauth", metavar='FILE',
+              help="Oauth config file", default='oauth.yaml')
+    parser.add_option("-l", "--log",
+              dest="log", metavar='FILE',
+              help="Log file", default='stdout')
 
-	Personis_server.runServer(args.models, args.config)
+    (options, args) = parser.parse_args()
+
+    if options.log != "stdout":
+		sys.stdout = open(options.log, "w", 0)
+
+    Personis_server.runServer(options.models, options.config, options.admins, options.oauth)
 
