@@ -520,13 +520,13 @@ class Personis_server:
         self.modeldir = modeldir
         self.admins = yaml.load(file(adminsfile,'r'))
         self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
-        self.bearers = Shove('sqlite:///oauth_bearers.dat')
+        self.access_tokens = Shove('sqlite:///oauth_access_tokens.dat')
         self.oauthconf = yaml.load(file(oauthconfig,'r'))
 
         def stopper():
             print 'saving persistant data'
             self.oauth_clients.close()
-            self.bearers.close()
+            self.access_tokens.close()
         cherrypy.engine.subscribe('stop', stopper)
 
     @cherrypy.expose
@@ -717,7 +717,7 @@ class Personis_server:
         if 'state' in cherrypy.session:
             rdi = rdi + 'state='+cherrypy.session['state']+'&amp;'
         rdi = rdi + 'code=' + val_key
-        cherrypy.session['auth_code'] = val_key
+        #cherrypy.session['auth_code'] = val_key
 
         cli.auth_codes[val_key] = {'timestamp': time.time(), 'userid': usrid}
 
@@ -747,36 +747,26 @@ class Personis_server:
         """
         cli = self.oauth_clients[client_id]
 
-        # expire old bearers and tokens before we look
+        # expire old tokens before we look
         now = time.time()
-        expireTime = 600 #seconds
-        for k, v in self.bearers.items():
-            print 'k', k, 'v',v
-            if 'timestamp' in v:
-                if now - v['timestamp'] > expireTime:
-                    del(self.bearers[k])
-            else:
-                del(self.bearers[k])
+        expireTime = 30 #seconds
+        for k, v in self.access_tokens.items():
+            print 'access_tokens', k, 'v',v
+            if now - v['timestamp'] > expireTime:
+                print 'del access_token',k
+                del(self.access_tokens[k])
 
         cli.access_tokens = cli.request_tokens
         for k, v in cli.access_tokens.items():
-            print 'reqt', k, v
-            if 'timestamp' in v: # temporary hack
-                if now - v['timestamp'] > expireTime:
-                    del(cli.access_tokens[k])
-            else:
-                 del(cli.access_tokens[k])
+            print 'access tokens', k, v
+            if now - v['timestamp'] > expireTime:
+                print 'del access_token',k
+                del(cli.access_tokens[k])
 
         for k, v in cli.refresh_tokens.items():
-            if 'timestamp' in v:
-                if now - v['timestamp'] > 3600*24: #refresh tokens are 1day
-                    del(cli.refresh_tokens[k])
-            else:
-                    del(cli.refresh_tokens[k])
-
-
-        if not code in cli.auth_codes:
-            raise cherrypy.HTTPError(401, 'Authorization code not found')
+            if now - v['timestamp'] > 3600*24: #refresh tokens are 1day
+                print 'del refresh_token',k
+                del(cli.refresh_tokens[k])
 
         # should be a temporary hack. db updating
         if type(cli.secret) <> type(u''):
@@ -786,6 +776,7 @@ class Personis_server:
             raise cherrypy.HTTPError(401, 'Incorrect client information')
 
         if grant_type == 'refresh_token':
+            print 'we have a refresh!', code
             if not code in cli.refresh_tokens:
                 raise cherrypy.HTTPError(401, 'Refresh token not found')
         else:
@@ -799,9 +790,9 @@ class Personis_server:
             access_token = access_token + random.choice(string.hexdigits)
             refresh_token = refresh_token + random.choice(string.hexdigits)
 
-        b = {'timestamp': time.time(), 'user': userid}
-        self.bearers[access_token] = b
-        self.bearers.sync()
+        b = {'timestamp': time.time(), 'user': userid, 'client': client_id}
+        self.access_tokens[access_token] = b
+        self.access_tokens.sync()
         cli.access_tokens[access_token] = {'user': userid, 'timestamp': time.time()}
         cli.refresh_tokens[refresh_token] = {'user': userid, 'timestamp': time.time()}
         s = '''
@@ -816,7 +807,6 @@ class Personis_server:
         del(cli.auth_codes[code])
         self.oauth_clients[client_id] = cli
         self.oauth_clients.sync()
-        print s
         return s
 
 
@@ -824,17 +814,13 @@ class Personis_server:
     def default(self, *args):
 
         cherrypy.session['admin'] = False
-        #print 'path', cherrypy.request.path_info
-        #print 'headers', cherrypy.request.headers
         jsonobj = cherrypy.request.body.fp.read()        
-        #print 'body', jsonobj
 
-        access_token = ''
-        #print 'Bearers:', self.bearers.keys()
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
-            #print self.bearers
-            usr = self.bearers[access_token]['user']
+            print 'access_tokens', self.access_tokens.keys()
+            print 'access_token', access_token
+            usr = self.access_tokens[access_token]['user']
         except:
             return '''
 <h1>Personis</h1>
