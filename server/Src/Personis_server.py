@@ -514,12 +514,13 @@ class oauth_client(object):
 
 class Personis_server:
 
-    def __init__(self, modeldir=None):
+    def __init__(self, modeldir=None, adminsfile=None, oauthconfig=None):
         self.modeldir = modeldir
-        self.admins = yaml.load(file('admins.yaml','r'))
+        self.admins = yaml.load(file(adminsfile,'r'))
         self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
         self.users = Shove('sqlite:///oauth_users.dat')
         self.bearers = Shove('sqlite:///oauth_bearers.dat')
+        self.oauthconf = yaml.load(file(oauthconfig,'r'))
 
         def stopper():
             print 'saving persistant data'
@@ -586,20 +587,18 @@ class Personis_server:
         rurl = cherrypy.request.base+cherrypy.request.path_info
 
         cherrypy.session['client_id'] = client_id
-        print response_type, client_id, scope, access_type, approval_prompt
         
         cli = self.oauth_clients[client_id]
         if state <> None:
             cherrypy.session['state'] = state
-        print 'redirect uris', cli.redirect_uri, redirect_uri
         if cli.redirect_uri <> redirect_uri:
             raise cherrypy.HTTPError() 
         raise cherrypy.HTTPRedirect('/login')
     
     @cherrypy.expose
     def login(self):
-        flow = OAuth2WebServerFlow(client_id='911883322662-kbpqhupbua19n373cj7sssurg4ebg09p.apps.googleusercontent.com',
-                                   client_secret='Isd22yV2-1YyfOoXgJeR3EtM',
+        flow = OAuth2WebServerFlow(client_id=self.oauthconf['personis_client_id'],
+                                   client_secret=self.oauthconf['personis_client_secret'],
                                    scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
                                    user_agent='personis-server/1.0')
         callback = callback = cherrypy.request.base + '/logged_in'
@@ -652,8 +651,8 @@ class Personis_server:
 
 
         # if it's mneme, then don't ask whether it's all ok. just do it.
-        if cli.secret == 'personis_client_secret_mneme':
-            raise cherrypy.HTTPRedirect('/allow')
+        #if cli.secret == 'personis_client_secret_mneme':
+            #raise cherrypy.HTTPRedirect('/allow')
         
         #otherwise, ask yes/no                
         base_path = os.path.dirname(os.path.abspath(__file__))
@@ -666,8 +665,6 @@ class Personis_server:
     def allow(self):
         usr = cherrypy.session.get('user')
         cli = self.oauth_clients[cherrypy.session['client_id']]
-        print 'allow session id',cherrypy.session.id, cherrypy.session.get('auth_code'), usr['email'], cli.friendly_name
-        print usr
         val_key = ''
         for i in range(10):
             val_key = val_key+ str(int(random.random()*100))
@@ -680,7 +677,6 @@ class Personis_server:
 
         cli = self.oauth_clients[cherrypy.session.get('client_id')]
         redr = cli.redirect_uri
-        print redr, cherrypy.session.get('auth_code')
         um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
         cherrypy.session['um'] = um
         result = um.registerapp(app=cherrypy.session['client_id'], desc='', password='')
@@ -695,6 +691,7 @@ class Personis_server:
 
     @cherrypy.expose
     def request_token(self, code, redirect_uri, client_id, client_secret, scope, grant_type):
+        print code, client_id, client_secret
         cli = self.oauth_clients[client_id]
         if not code in cli.auth_codes:
             raise cherrypy.HTTPError()
@@ -707,6 +704,7 @@ class Personis_server:
         b = {}
         b['user'] = user
         b['credentials'] = self.users[cli.auth_codes[code][1]][1]
+        print b
         self.bearers[atoken] = b
         #print user
         cli.request_tokens[atoken] = user['id']
@@ -863,7 +861,7 @@ class Personis_server:
 
         return json.dumps(result)
 
-def runServer(modeldir, config):
+def runServer(modeldir, config, admins, oauthconfig):
     print "serving models in '%s'" % (modeldir)
     print "config file '%s'" % (config)
     print "starting cronserver"
@@ -878,7 +876,7 @@ def runServer(modeldir, config):
     try:
         try:
             cherrypy.config.update(os.path.expanduser(config))
-            cherrypy.tree.mount(Personis_server(modeldir), '/', config=config)
+            cherrypy.tree.mount(Personis_server(modeldir, admins, oauthconfig), '/', config=config)
             #cherrypy.server.ssl_certificate = "server.crt"
             #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
@@ -898,6 +896,12 @@ if __name__ == '__main__':
     parser.add_option("-c", "--config",
               dest="conf", metavar='FILE',
               help="Config file")
+    parser.add_option("-a", "--admins",
+              dest="admins", metavar='FILE',
+              help="Admins file", default='admins.yaml')
+    parser.add_option("-o", "--oauthconfig",
+              dest="oauth", metavar='FILE',
+              help="Oauth config file", default='oauth.yaml')
 
     (options, args) = parser.parse_args()
-    runServer(options.modeldir, options.conf)
+    runServer(options.modeldir, options.conf, options.admins, options.oauthconfig)
