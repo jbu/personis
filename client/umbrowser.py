@@ -13,6 +13,8 @@ import json
 import json as sysjson
 import Personis_util
 import connection
+from optparse import OptionParser
+import yaml
 
 from oauth2client.file import Storage
 from oauth2client.client import Credentials, OAuth2WebServerFlow
@@ -559,24 +561,24 @@ class browse(cmd.Cmd):
             self.cmdqueue.extend(input)
 
 
-# Set up a Flow object to be used if we need to authenticate. This
-# sample uses OAuth 2.0, and we set up the OAuth2WebServerFlow with
-# the information it needs to authenticate. Note that it is called
-# the Web Server Flow, but it can also handle the flow for native
-# applications <http://code.google.com/apis/accounts/docs/OAuth2.html#IA>
-# The client_id client_secret are copied from the API Access tab on
-# the Google APIs Console <http://code.google.com/apis/console>. When
-# creating credentials for this application be sure to choose an Application
-# type of "Installed application".
-FLOW = OAuth2WebServerFlow(
-    client_id='personis_client_umbrowse',
-    client_secret='personis_client_secret_umbrowse',
-    scope='https://www.personis.com/auth/model',
-    user_agent='umbrowse-cmdline/1.0',
-    auth_uri='http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/authorize',
-    token_uri='http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/request_token')
 
-def main(argv):
+if __name__ == '__main__':
+
+    parser = OptionParser()
+ 
+    parser.add_option("-o", "--oauthconf",
+              dest="oauthconf", metavar='FILE',
+              help="Oauth Config file", default='oauth.yaml')
+    (options, args) = parser.parse_args()
+    f = file(options.oauthconf,'r')
+    oauthconf = yaml.load(f)
+    FLOW = OAuth2WebServerFlow(
+        client_id=oauthconf['client_id'],
+        client_secret=oauthconf['client_secret'],
+        scope='https://www.personis.com/auth/model',
+        user_agent='umbrowse-cmdline/1.0',
+        auth_uri=oauthconf['personis_uri']+'authorize',
+        token_uri=oauthconf['personis_uri']+'request_token')
 
     # If the Credentials don't exist or are invalid run through the native client
     # flow. The Storage object will ensure that if successful the good
@@ -592,7 +594,7 @@ def main(argv):
     # with our good Credentials.
     http = httplib2.Http(proxy_info=p)
     #http = credentials.authorize(http)
-    c = connection.Connection(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', credentials = credentials, http = http)
+    c = connection.Connection(uri = oauthconf['personis_uri'], credentials = credentials, http = http)
 
     b = browse()
     b.um = Personis_server.Access(connection=c, debug=True)
@@ -607,7 +609,3 @@ def main(argv):
     #global username
     #username = usr['email']
     #print username
-
-
-if __name__ == '__main__':
-    main(sys.argv)

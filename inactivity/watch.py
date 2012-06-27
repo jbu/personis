@@ -90,27 +90,23 @@ def install_inactivity(um):
                  perms={'ask':True, 'tell':True, "resolvers": ["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context = ['Devices']
-    print "Creating Inactivity context under Devices context "
     um.mkcontext(context,ctx_obj)
 
     ctx_obj = Personis_base.Context(Identifier="Activity", Description="Extract data from activity watcher",
                  perms={'ask':True, 'tell':True, "resolvers":["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context.append('Inactivity')
-    print "Creating Activity context under Devices/Inactivity context "
     um.mkcontext(context,ctx_obj)
 
     context.append('Activity')
     cobj = Personis_base.Component(Identifier="length", component_type="attribute", value_type="number",resolver=None,Description="Length of active period")
     um.mkcomponent(context=context, componentobj=cobj)
-    print "Creating component %s"%cobj.Identifier
 
 def send(um, start, length):
-    print 'sending', start, length
     ev = Personis_base.Evidence(source=username, evidence_type="explicit", value=length, time=start)
     um.tell(context=['Devices','Inactivity','Activity'], componentid='length', evidence=ev)
 
-idletimeout = 10
+idletimeout = 5 # seconds
 
 if __name__ == '__main__':
 
@@ -129,11 +125,12 @@ if __name__ == '__main__':
     reslist = um.ask(context=["Personal"],view=['firstname'])
     Personis_util.printcomplist(reslist)
     username = reslist[0].value
-    print username
 
     install_inactivity(um)
 
     idle = idler();
+    time.sleep(1)
+
     while True:
         i = idle.getIdleTime()
         if i < idletimeout:
@@ -142,6 +139,5 @@ if __name__ == '__main__':
                 time.sleep(idletimeout)
                 i = idle.getIdleTime()
             end = time.time()
-            print 'ended activity of ',int(end-start)
             send(um, start, int(end-start))
         time.sleep(idletimeout)
