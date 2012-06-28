@@ -571,6 +571,7 @@ if __name__ == '__main__':
               help="Oauth Config file", default='oauth.yaml')
     (options, args) = parser.parse_args()
     f = file(options.oauthconf,'r')
+    httplib2.debuglevel = 0
     oauthconf = yaml.load(f)
     FLOW = OAuth2WebServerFlow(
         client_id=oauthconf['client_id'],
@@ -583,7 +584,7 @@ if __name__ == '__main__':
     # If the Credentials don't exist or are invalid run through the native client
     # flow. The Storage object will ensure that if successful the good
     # Credentials will get written back to a file.
-    storage = Storage('umbrowser_credentials.dat')
+    storage = Storage('credentials.dat')
     credentials = storage.get()
     p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
     h = httplib2.Http(proxy_info=p)

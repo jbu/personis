@@ -69,15 +69,6 @@ elif osname == 'posixDarwin':
 else:
     raise Error()
 
-personis_uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/'
-FLOW = OAuth2WebServerFlow(
-    client_id='89043173490045979',
-    client_secret='18534421376746196851',
-    scope='https://www.personis.com/auth/model',
-    user_agent='inactivity/1.0',
-    auth_uri=personis_uri+'authorize',
-    token_uri=personis_uri+'request_token'
-    )
 
 def install_inactivity(um):
     try:
@@ -102,8 +93,10 @@ def install_inactivity(um):
     cobj = Personis_base.Component(Identifier="length", component_type="attribute", value_type="number",resolver=None,Description="Length of active period")
     um.mkcomponent(context=context, componentobj=cobj)
 
+    #um.registerapp(app='89043173490045979', desc='Umbrowse', password='18534421376746196851')
+
 def send(um, start, length):
-    ev = Personis_base.Evidence(source=username, evidence_type="explicit", value=length, time=start)
+    ev = Personis_base.Evidence(source='inactivity', evidence_type="explicit", value=length, time=start)
     um.tell(context=['Devices','Inactivity','Activity'], componentid='length', evidence=ev)
 
 idletimeout = 5 # seconds
@@ -113,6 +106,16 @@ if __name__ == '__main__':
     httplib2.debuglevel=0
     storage = Storage('credentials.dat')
     credentials = storage.get()
+    personis_uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/'
+    FLOW = OAuth2WebServerFlow(
+        client_id='89043173490045979',
+        client_secret='18534421376746196851',
+        scope='https://www.personis.com/auth/model',
+        user_agent='inactivity/1.0',
+        auth_uri=personis_uri+'authorize',
+        token_uri=personis_uri+'request_token'
+        )
+
     p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
     h = httplib2.Http(proxy_info=p)
     if credentials is None or credentials.invalid:
@@ -123,8 +126,7 @@ if __name__ == '__main__':
 
     um = Personis_server.Access(connection=c, debug=True)
     reslist = um.ask(context=["Personal"],view=['firstname'])
-    Personis_util.printcomplist(reslist)
-    username = reslist[0].value
+    print 'logging for', reslist[0].value
 
     install_inactivity(um)
 
