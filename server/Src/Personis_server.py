@@ -22,6 +22,7 @@ import cronserver
 import random, time
 import connection
 from shove import Shove
+import string
 
 from Personis_mkmodel import *
 #import httplib, oauth2
@@ -506,6 +507,7 @@ class oauth_client(object):
         self.redirect_uri = redirect_uri
         self.icon = icon
         self.auth_codes = {}
+        self.access_tokens = {}
         self.request_tokens = {}
         self.refresh_tokens = {}
 
@@ -518,24 +520,32 @@ class Personis_server:
         self.modeldir = modeldir
         self.admins = yaml.load(file(adminsfile,'r'))
         self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
-        self.users = Shove('sqlite:///oauth_users.dat')
-        self.bearers = Shove('sqlite:///oauth_bearers.dat')
+        self.access_tokens = Shove('sqlite:///oauth_access_tokens.dat')
         self.oauthconf = yaml.load(file(oauthconfig,'r'))
 
         def stopper():
             print 'saving persistant data'
             self.oauth_clients.close()
-            self.users.close()
-            self.bearers.close()
+            self.access_tokens.close()
         cherrypy.engine.subscribe('stop', stopper)
 
     @cherrypy.expose
     def list_clients(self):
+        """
+        Admin interface for Personis. See admins.yaml for configuration
+        (To be accessed by a user with a web browser)
+        """
+        # if we're here, we just want the local web UI. 
+        # if no user then not logged in, so set admin to
+        # true, target url back here, and go to login.
         if cherrypy.session.get('user') == None:
+            cherrypy.session['admin'] = True
             cherrypy.session['target_url'] = '/list_clients'
             raise cherrypy.HTTPRedirect('/login')
-        if not cherrypy.session.get('user')['id'] in self.admins.keys():
-            raise cherrypy.HTTPError()
+        # check if user is actually allowed to be here
+        if not cherrypy.session.get('user') in self.admins.keys():
+            raise cherrypy.HTTPError(401, 'Admin only')
+
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
         tmpl = loader.load('list_clients.html')
@@ -544,23 +554,73 @@ class Personis_server:
         stream = tmpl.generate(clients=self.oauth_clients.values())
         return stream.render('xhtml')
 
+
     @cherrypy.expose
-    def list_clients_save(self, id, value, _method='get'):
+    def list_apps(self):
+        """
+        App admin interface for Personis users. 
+        (To be accessed by a user with a web browser)
+        """
+        # if we're here, we just want the local web UI. 
+        # if no user then not logged in, so set admin to
+        # true, target url back here, and go to login.
+        if cherrypy.session.get('user') == None:
+            cherrypy.session['admin'] = True
+            cherrypy.session['target_url'] = '/list_apps'
+            raise cherrypy.HTTPRedirect('/login')
+
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        loader = TemplateLoader([base_path])
+        tmpl = loader.load('list_apps.html')
+        um = cherrypy.session.get('um')
+        apps = um.listapps()
+        for k in apps.keys():
+            c = self.oauth_clients[k]
+            apps[k]['friendly_name'] = c.friendly_name
+            apps[k]['client_id'] = c.client_id
+            apps[k]['icon'] = c.icon
+        apps = [apps[k] for k in apps.keys()]
+        print 'apps', apps
+        stream = tmpl.generate(apps = apps)
+        return stream.render('xhtml')
+
+    @cherrypy.expose
+    def list_apps_save(self, id, value, _method='get'):
+        """
+        AJAX helper for list_clients. No real user interface
+        """
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
-        if not cherrypy.session.get('user')['id'] in self.admins.keys():
+        # This uses a get parameter, where it should be del or post. 
+        # worksfornow
+        um = cherrypy.session.get('um')
+        if id == "removeOneForMe":
+            print "removed an app"
+            um.deleteapp(value)
+            raise cherrypy.HTTPRedirect('/list_apps')
+
+    @cherrypy.expose
+    def list_clients_save(self, id, value, _method='get'):
+        """
+        AJAX helper for list_clients. No real user interface
+        """
+        if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
+        if not cherrypy.session.get('user') in self.admins.keys():
+            raise cherrypy.HTTPError()
+        # This uses a get parameter, where it should be del or post. 
+        # worksfornow
         if id == "removeOneForMe":
             del(self.oauth_clients[value])
             self.oauth_clients.sync()
             print "removed a client"
             raise cherrypy.HTTPRedirect('/list_clients')
         if id == "addOneForMe":
-            clid = ''
-            secret = ''
-            for i in range(10):
-                clid = clid + str(int(random.random()*100))
-                secret = secret + str(int(random.random()*100))
+            clid = u''
+            secret = u''
+            for i in range(32):
+                clid = clid + random.choice(string.hexdigits)
+                secret = secret + random.choice(string.hexdigits)
             self.oauth_clients[clid] = oauth_client(
                              client_id = clid,
                              friendly_name= 'my client',
@@ -583,31 +643,51 @@ class Personis_server:
         
     @cherrypy.expose
     def authorize(self, client_id, redirect_uri, scope, access_type, response_type='code', approval_prompt='auto', state=None):
-        body = cherrypy.request.body.fp.read()
-        rurl = cherrypy.request.base+cherrypy.request.path_info
-
+        """
+        This is the entry point for client authentication against Personis. 
+        (accessed by a user with a web browser, redirected from a client).
+        Personis becomes an oauth2 server at this point. The session
+        now contains the client_id but not much else.
+        Only for oauth use. Don't come in this way if you want 
+        to use list_clients!!
+        """
+        cherrypy.session['admin'] = False
         cherrypy.session['client_id'] = client_id
         
         cli = self.oauth_clients[client_id]
         if state <> None:
             cherrypy.session['state'] = state
         if cli.redirect_uri <> redirect_uri:
+            print cli.redirect_uri, redirect_uri
             raise cherrypy.HTTPError() 
         raise cherrypy.HTTPRedirect('/login')
-    
+
     @cherrypy.expose
     def login(self):
+        """
+        Step 1.5. This is where clients of the personis web interface
+        enter. there is no client_id etc because personis is not being
+        used as an oauth server.
+        """
         flow = OAuth2WebServerFlow(client_id=self.oauthconf['personis_client_id'],
                                    client_secret=self.oauthconf['personis_client_secret'],
                                    scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
                                    user_agent='personis-server/1.0')
-        callback = callback = cherrypy.request.base + '/logged_in'
+        callback = cherrypy.request.base + '/logged_in'
         authorize_url = flow.step1_get_authorize_url(callback)
         cherrypy.session['flow'] = flow
         raise cherrypy.HTTPRedirect(authorize_url)
 
     @cherrypy.expose
     def logged_in(self, code):
+        """
+        Step 2 of the oauth dance. At this point Google has said this is a 
+        known user. We then go and get more user info about them from google,
+        save the info in a persistant store, create a model if none exists,
+        and then ask them if they're happy to let the client they're using 
+        access personis on their behalf.
+        (Accessed by the user with a web browser redirected from /authorized)
+        """
         flow = cherrypy.session.get('flow')
         if not flow:
             raise IOError()
@@ -619,14 +699,13 @@ class Personis_server:
         content = http.request('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+cjson['access_token'])
         #print 'content', content
         usr = json.loads(content[1])
-        cherrypy.session['user'] = usr
-        self.users[usr['id']] = [usr, credentials]
-        self.users.sync()
-        
-        if not 'client_id' in cherrypy.session:
-            raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
+        try:
+            cherrypy.session['user'] = usr['id']
+        except:
+            print 'exception on usr', usr
+            raise IOError()
 
-        cli = self.oauth_clients[cherrypy.session['client_id']]
+
         print 'loggedin session id',cherrypy.session.id
 
         # if no model for user, create one.
@@ -646,41 +725,69 @@ class Personis_server:
             um.tell(context=["Personal"], componentid='gender', evidence=ev)
             ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['email'])
             um.tell(context=["Personal"], componentid='email', evidence=ev)
+
+
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
             Personis_util.printcomplist(reslist)
 
+        um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+        try:
+            reslist = um.ask(context=["Personal"], view=['picture'])
+        except:
+            #fill in missing icon info
+            cobj = Personis_base.Component(Identifier="picture", component_type="attribute", value_type="string",resolver=None,Description="Uri of a picture of the user")
+            um.mkcomponent(context=['Personal'], componentobj=cobj)
+            ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
+            um.tell(context=["Personal"], componentid='picture', evidence=ev)
 
-        # if it's mneme, then don't ask whether it's all ok. just do it.
-        #if cli.secret == 'personis_client_secret_mneme':
-            #raise cherrypy.HTTPRedirect('/allow')
-        
+            reslist = um.ask(context=["Personal"], view=['firstname','picture'])
+            Personis_util.printcomplist(reslist)
+
+        # if we're here from a local url, just redirect. no need to allow.
+        if cherrypy.session.get('admin'):
+            cherrypy.session['um'] = um
+            raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
+
+        # if the app is already registered, it's ok.
+        apps = um.listapps()
+        print 'apps:',apps, 'clientid', cherrypy.session.get('client_id')
+        if cherrypy.session.get('client_id') in apps:
+            raise cherrypy.HTTPRedirect('/allow')
+
         #otherwise, ask yes/no                
+        cli = self.oauth_clients[cherrypy.session['client_id']]
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
         tmpl = loader.load('appQuery.html')
-        stream = tmpl.generate(name=usr['given_name'], app=cli.friendly_name, icon=cli.icon)
+        stream = tmpl.generate(name=usr['given_name'], app=cli.friendly_name, icon=cli.icon, picture=usr['picture'])
         return stream.render('xhtml')
 
     @cherrypy.expose
     def allow(self):
-        usr = cherrypy.session.get('user')
-        cli = self.oauth_clients[cherrypy.session['client_id']]
+        """
+        In the case that they do want the client to use personis on their
+        behalf, we register the client in um, and redirect back to the
+        client with a temporary authorization key.
+        (Accessed by a user with a web browser, redirected from /logged_in)
+        """
+        usrid = cherrypy.session.get('user')
+        cli = self.oauth_clients[cherrypy.session.get('client_id')]
+
         val_key = ''
-        for i in range(10):
-            val_key = val_key+ str(int(random.random()*100))
+        for i in range(32):
+            val_key = val_key+ random.choice(string.hexdigits)
         rdi = cli.redirect_uri + '?'
         if 'state' in cherrypy.session:
             rdi = rdi + 'state='+cherrypy.session['state']+'&amp;'
         rdi = rdi + 'code=' + val_key
-        cherrypy.session['auth_code'] = val_key
-        cli.auth_codes[val_key] = [time.time(),usr['id']]
 
-        cli = self.oauth_clients[cherrypy.session.get('client_id')]
+        self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
+
         redr = cli.redirect_uri
-        um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+        um = Personis_a.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
         cherrypy.session['um'] = um
-        result = um.registerapp(app=cherrypy.session['client_id'], desc='', password='')
-        raise cherrypy.HTTPRedirect(redr+'?code='+cherrypy.session.get('auth_code'))
+        result = um.registerapp(app=cherrypy.session['client_id'], desc=cli.friendly_name, password='')
+        raise cherrypy.HTTPRedirect(rdi)
                
     @cherrypy.expose
     def dissallow(self):
@@ -690,55 +797,106 @@ class Personis_server:
         raise cherrypy.HTTPRedirect(redr)
 
     @cherrypy.expose
-    def request_token(self, code, redirect_uri, client_id, client_secret, scope, grant_type):
-        print code, client_id, client_secret
+    def request_token(self, client_id, client_secret, grant_type, code = None, redirect_uri = None, scope = None, refresh_token = None):
+        """
+        The client (mneme) has a temporary key (see /allow) but the key 
+        has been to web browsers and back so it is not safe. It must be 
+        exchanged by the client taking to personis directly (no web browser
+        involvement) for a real token. Tokens have expiration dates etc.
+        (Accessed by the client (Mneme, etc) on behalf of a user.)
+        """
+        print code, redirect_uri, client_id, client_secret, scope, grant_type, refresh_token
         cli = self.oauth_clients[client_id]
-        if not code in cli.auth_codes:
-            raise cherrypy.HTTPError()
-        atoken = ''
-        rtoken = ''
-        for i in range(10):
-            atoken = atoken + str(int(random.random()*100))
-            rtoken = rtoken + str(int(random.random()*100))
-        user = self.users[cli.auth_codes[code][1]][0]
-        b = {}
-        b['user'] = user
-        b['credentials'] = self.users[cli.auth_codes[code][1]][1]
-        print b
-        self.bearers[atoken] = b
-        #print user
-        cli.request_tokens[atoken] = user['id']
-        cli.refresh_tokens[rtoken] = ''
+
+        # expire old tokens before we look
+        now = time.time()
+        for k, v in self.access_tokens.items():
+            #print 'access_tokens', k, 'v',v
+            if now > v['expires']:
+                print 'expire access_token',k
+                del(self.access_tokens[k])
+
+        cli.access_tokens = cli.request_tokens
+        #for k, v in cli.access_tokens.items():
+        #    print 'access tokens', k, v
+        #    if now - v['timestamp'] > expireTime:
+        #        print 'del access_token',k
+        #        del(cli.access_tokens[k])
+
+        #for k, v in cli.refresh_tokens.items():
+        #    if now - v['timestamp'] > 3600*24: #refresh tokens are 1day
+        #        print 'del refresh_token',k
+        #        del(cli.refresh_tokens[k])
+
+        # should be a temporary hack. db updating
+        if type(cli.secret) <> type(u''):
+           cli.secret = unicode(cli.secret)
+
+        if grant_type == 'refresh_token':
+            code = refresh_token
+
+        if not code in self.access_tokens:
+            raise cherrypy.HTTPError(401, 'Incorrect token')
+
+        tok = self.access_tokens[code]
+
+        if tok['client_id'] <> client_id:
+            raise cherrypy.HTTPError(401, 'Incorrect client')
+
+        if tok['type'] == 'refresh_token':
+            del(self.access_tokens[code])
+        
+        if cli.secret <> client_secret:
+            raise cherrypy.HTTPError(401, 'Incorrect client information')
+
+        userid = tok['userid']
+        access_token = ''
+        refresh_token = ''
+        for i in range(32):
+            access_token = access_token + random.choice(string.hexdigits)
+            refresh_token = refresh_token + random.choice(string.hexdigits)
+
+        access_expiry = 3600 # an hour
+        refresh_expiry = 3600*24*7*52 # a year
+
+        self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
+        self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
+        self.access_tokens.sync()
         s = '''
 {
     "access_token":"%s",
     "token_type":"bearer",
-    "expires_in":3600,
+    "expires_in":%s,
     "refresh_token":"%s",
     "example_parameter":"example_value"
 }
-        '''%(atoken,rtoken)
-        del(self.users[cli.auth_codes[code][1]])
-        del(cli.auth_codes[code])
-        self.oauth_clients[client_id] = cli
-        print s
+        '''%(access_token,access_expiry,refresh_token)
         return s
 
 
     @cherrypy.expose
     def default(self, *args):
 
-        print 'path', cherrypy.request.path_info
-        print 'headers', cherrypy.request.headers
+        cherrypy.session['admin'] = False
         jsonobj = cherrypy.request.body.fp.read()        
-        print 'body', jsonobj
 
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
-            print self.bearers
-            usr = self.bearers[access_token]['user']
+            #print 'access_tokens', self.access_tokens
+            #print 'access_token', `access_token`
         except:
-            raise cherrypy.HTTPError()
+            return '''
+<h1>Personis</h1>
+Looks like you're coming into the service entrance with a browser. That's not how it works. Ask someme about 'Mneme'. If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>.
+'''
+        if not access_token in self.access_tokens:
+	    raise cherrypy.HTTPError(401, 'Incorrect access token')
+        #print 'token',self.access_tokens[access_token]
+        now = time.time()
+        if now - self.access_tokens[access_token]['timestamp'] > 60:
+	    #print 'expired'
+	    raise cherrypy.HTTPError(401, 'Expired access token')
+        usr = self.access_tokens[access_token]['userid']
         
         try:
             pargs = json.loads(jsonobj)
@@ -746,6 +904,7 @@ class Personis_server:
             print "bad request - cannot decode json - possible access from web browser"
             return json.dumps("Personis User Model server. Not accessible using a web browser.")
 
+        print 'USER:', usr, 'BEARER:', access_token
         # dirty kludge to get around unicode
         for k,v in pargs.items():
             if type(v) == type(u''):
@@ -759,11 +918,11 @@ class Personis_server:
             if args[0] == 'mkmodel':
                 # fixme need to implement security
                 # and error handling
-                Personis_base.MkModel(model=usr['id'], modeldir=self.modeldir, \
-                                        user=usr['id'], password='', description=pargs['description'])
+                Personis_base.MkModel(model=usr, modeldir=self.modeldir, \
+                                        user=usr, password='', description=pargs['description'])
                 result = True
             else:
-                um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+                um = Personis_a.Access(model=usr, modeldir=self.modeldir, user=usr, password='')
 
             if args[0] == 'access':
                 result = True

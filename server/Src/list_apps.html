@@ -245,6 +245,21 @@ img.profile {
    background: #1b435e;
    }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.jeditable.js"></script>
+<script src="/static/js/list_clients.js"></script>
+<script>
+$(document).ready(function() {
+    $('.edit').editable('/list_clients_save', {
+        indicator : "...",
+        onblur    : 'cancel',
+        //submit    : 'OK',
+        type      : 'text',
+        //submitdata: { _method: "put" },
+        cssclass  : "editable"
+    });
+});
+</script>
 </head>
 <body>
 <table width="100%" cellspacing="0" cellpadding="0" border="0" class="role">
@@ -266,10 +281,10 @@ img.profile {
 <br/>
 
 <div style="
-    max-width:  600px;
+    max-width:  800px;
     margin:  0 auto;
-    border: 2px black solid;
-    padding:  30px;
+    border: 1px black dotted;
+    padding:  20px;
     border-radius: 5px;
 ">
 <table border='0' width="100%">
@@ -277,18 +292,14 @@ img.profile {
 <td valign='top' halign='center' style='padding-right: 30px'><img src="/static/images/icon.svg" width="100"/></td>
 <td>
  <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div>
-<img src="$picture" style="float: right; width: 50px"/>
- <h1>Welcome $name!</h1>
+ <h1>Registered Apps</h1>
 <br/>
-<img src='$icon' style="float: right; width: 100px"/>
-<div style="font-size: 18px">
- The <span style="font-weight: bold">$app</span> application is requesting access to your model. Do you want to allow this?
- <br/>
-<br/>
-</div>
-<div style='margin: 10px'>
- <a class='button' href="/allow">yes</a>    <a class='button' href="dissallow">no</a>
-</div>
+<ul py:if="apps">
+      <li py:for="app in apps">
+          <img src="${app['icon']}" halign="center" style="max-width:50px; max-height:50px"/>
+          <b>Friendly Name: </b>${app['friendly_name']} <a href="/list_apps_save?id=removeOneForMe&amp;value=${app['client_id']}"><img src="/static/images/trash_fill.svg"/></a>
+      </li>
+    </ul>
 
 </td>
 </tr>
