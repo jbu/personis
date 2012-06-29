@@ -658,8 +658,7 @@ class Personis_server:
         if state <> None:
             cherrypy.session['state'] = state
         if cli.redirect_uri <> redirect_uri:
-            print cli.redirect_uri, redirect_uri
-            raise cherrypy.HTTPError() 
+            raise cherrypy.HTTPError(400,'Redirect URIs do not match') 
         raise cherrypy.HTTPRedirect('/login')
 
     @cherrypy.expose

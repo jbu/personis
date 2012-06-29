@@ -72,7 +72,7 @@ else:
 
 def install_inactivity(um):
     try:
-        reslist = um.ask(context=["Devices/Inactivity"])
+        reslist = um.ask(context=["Devices","Inactivity"])
         #return
     except:
         pass
@@ -93,8 +93,6 @@ def install_inactivity(um):
     cobj = Personis_base.Component(Identifier="length", component_type="attribute", value_type="number",resolver=None,Description="Length of active period")
     um.mkcomponent(context=context, componentobj=cobj)
 
-    #um.registerapp(app='89043173490045979', desc='Umbrowse', password='18534421376746196851')
-
 def send(um, start, length):
     ev = Personis_base.Evidence(source='inactivity', evidence_type="explicit", value=length, time=start)
     um.tell(context=['Devices','Inactivity','Activity'], componentid='length', evidence=ev)
@@ -106,10 +104,10 @@ if __name__ == '__main__':
     httplib2.debuglevel=0
     storage = Storage('credentials.dat')
     credentials = storage.get()
-    personis_uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/'
+    personis_uri = 'http://enterprise.it.usyd.edu.au:2005/'
     FLOW = OAuth2WebServerFlow(
-        client_id='89043173490045979',
-        client_secret='18534421376746196851',
+        client_id='af9158ACBd51f91BCe8b4771DBbf64DD',
+        client_secret='3D9d56D1aB4c5D3EFFB5C6F81f029Ac4',
         scope='https://www.personis.com/auth/model',
         user_agent='inactivity/1.0',
         auth_uri=personis_uri+'authorize',
