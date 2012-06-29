@@ -15,7 +15,6 @@ def do_call(fun, args, connection):
 	resp, content = http.request(connection.uri+fun, "POST", body=args_json)
 
 	try:
-		print 'content', content
 		result = json.loads(content)
 	except:
 		print "json loads failed!"
