@@ -1939,3 +1939,937 @@ Request Headers:
 [21/Jun/2012:16:13:24] ENGINE Bus EXITED
 [21/Jun/2012:16:13:24] ENGINE Waiting for child threads to terminate...
 [21/Jun/2012:16:13:24] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:14:29:55] ENGINE Listening for SIGHUP.
+[28/Jun/2012:14:29:55] ENGINE Listening for SIGTERM.
+[28/Jun/2012:14:29:55] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:14:29:55] ENGINE Bus STARTING
+[28/Jun/2012:14:29:55] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:14:29:55] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:14:29:55] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:14:29:55] ENGINE Bus STARTED
+[28/Jun/2012:14:30:03] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:14:30:03] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 82, in index
+    raise HTTPRedirect('/do_login')
+NameError: global name 'HTTPRedirect' is not defined
+
+[28/Jun/2012:14:30:03] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:14:30:20] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:14:30:20] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:14:30:20] ENGINE Bus STOPPING
+[28/Jun/2012:14:30:20] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:14:30:20] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:14:30:20] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:14:30:20] ENGINE Bus STOPPED
+[28/Jun/2012:14:30:20] ENGINE Bus EXITING
+[28/Jun/2012:14:30:20] ENGINE Bus EXITED
+[28/Jun/2012:14:30:20] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:14:30:20] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:14:30:20] ENGINE Listening for SIGHUP.
+[28/Jun/2012:14:30:20] ENGINE Listening for SIGTERM.
+[28/Jun/2012:14:30:20] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:14:30:20] ENGINE Bus STARTING
+[28/Jun/2012:14:30:20] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:14:30:20] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:14:30:20] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:14:30:20] ENGINE Bus STARTED
+[28/Jun/2012:14:30:23] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:14:30:45] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:14:30:45] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:14:30:45] ENGINE Bus STOPPING
+[28/Jun/2012:14:30:45] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:14:30:45] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:14:30:45] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:14:30:45] ENGINE Bus STOPPED
+[28/Jun/2012:14:30:45] ENGINE Bus EXITING
+[28/Jun/2012:14:30:45] ENGINE Bus EXITED
+[28/Jun/2012:14:30:45] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:14:30:45] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:14:30:45] ENGINE Listening for SIGHUP.
+[28/Jun/2012:14:30:45] ENGINE Listening for SIGTERM.
+[28/Jun/2012:14:30:45] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:14:30:45] ENGINE Bus STARTING
+[28/Jun/2012:14:30:45] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:14:30:45] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:14:30:45] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:14:30:45] ENGINE Bus STARTED
+[28/Jun/2012:14:30:53] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:14:30:53] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 29, in do_login
+    flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
+TypeError: string indices must be integers, not str
+
+[28/Jun/2012:14:30:53] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=2360d759f85a61e21bc88bf4ca14b2b9d895d8f2
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:14:31:56] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:14:31:56] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:14:31:56] ENGINE Bus STOPPING
+[28/Jun/2012:14:31:56] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:14:31:56] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:14:31:56] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:14:31:56] ENGINE Bus STOPPED
+[28/Jun/2012:14:31:56] ENGINE Bus EXITING
+[28/Jun/2012:14:31:56] ENGINE Bus EXITED
+[28/Jun/2012:14:31:56] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:14:31:56] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:14:32:14] ENGINE Listening for SIGHUP.
+[28/Jun/2012:14:32:14] ENGINE Listening for SIGTERM.
+[28/Jun/2012:14:32:14] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:14:32:14] ENGINE Bus STARTING
+[28/Jun/2012:14:32:14] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:14:32:14] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:14:32:14] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:14:32:14] ENGINE Bus STARTED
+[28/Jun/2012:14:32:17] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:14:40:35] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:14:40:35] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:14:40:35] ENGINE Bus STOPPING
+[28/Jun/2012:14:40:35] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:14:40:35] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:14:40:35] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:14:40:35] ENGINE Bus STOPPED
+[28/Jun/2012:14:40:35] ENGINE Bus EXITING
+[28/Jun/2012:14:40:35] ENGINE Bus EXITED
+[28/Jun/2012:14:40:35] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:14:40:35] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:14:40:36] ENGINE Listening for SIGHUP.
+[28/Jun/2012:14:40:36] ENGINE Listening for SIGTERM.
+[28/Jun/2012:14:40:36] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:14:40:36] ENGINE Bus STARTING
+[28/Jun/2012:14:40:36] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:14:40:36] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:14:40:36] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:14:40:36] ENGINE Bus STARTED
+[28/Jun/2012:14:40:41] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:14:40:49] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 78, in authorized
+    install_contexts(um)
+NameError: global name 'install_contexts' is not defined
+
+[28/Jun/2012:14:40:49] HTTP 
+Request Headers:
+  REFERER: http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/logged_in?code=kACAH-1Ng2S9Tg267ybhTGJmC7vCJLdosBBXszi_8EhxQUCsKGoRMju7Y5sWx2vzLEntOyaxHFF-kXj5UqZjRtKtNZKABcdrJievHANkEkK6_QTWx_uCXFQci0
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=dd92f3a9b8659e90be29e7027647e34bb5b7509e
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:14:41:06] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:14:41:06] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:14:41:06] ENGINE Bus STOPPING
+[28/Jun/2012:14:41:06] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:14:41:06] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:14:41:06] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:14:41:06] ENGINE Bus STOPPED
+[28/Jun/2012:14:41:06] ENGINE Bus EXITING
+[28/Jun/2012:14:41:06] ENGINE Bus EXITED
+[28/Jun/2012:14:41:06] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:14:41:06] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:14:41:06] ENGINE Listening for SIGHUP.
+[28/Jun/2012:14:41:06] ENGINE Listening for SIGTERM.
+[28/Jun/2012:14:41:06] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:14:41:06] ENGINE Bus STARTING
+[28/Jun/2012:14:41:06] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:14:41:06] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:14:41:06] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:14:41:06] ENGINE Bus STARTED
+[28/Jun/2012:14:41:14] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:15:16:39] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:16:39] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:16:39] ENGINE Bus STOPPING
+[28/Jun/2012:15:16:39] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:16:39] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:16:39] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:15:16:39] ENGINE Bus STOPPED
+[28/Jun/2012:15:16:39] ENGINE Bus EXITING
+[28/Jun/2012:15:16:39] ENGINE Bus EXITED
+[28/Jun/2012:15:16:39] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:16:39] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:16:40] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:16:40] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:16:40] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:16:40] ENGINE Bus STARTING
+[28/Jun/2012:15:16:40] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:16:40] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:16:40] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:16:40] ENGINE Bus STARTED
+[28/Jun/2012:15:16:51] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:15:45:22] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:45:22] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:45:22] ENGINE Bus STOPPING
+[28/Jun/2012:15:45:22] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:45:22] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:45:22] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:15:45:22] ENGINE Bus STOPPED
+[28/Jun/2012:15:45:22] ENGINE Bus EXITING
+[28/Jun/2012:15:45:22] ENGINE Bus EXITED
+[28/Jun/2012:15:45:22] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:45:22] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:45:23] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:45:23] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:45:23] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:45:23] ENGINE Bus STARTING
+[28/Jun/2012:15:45:23] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:45:23] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:45:23] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:45:23] ENGINE Bus STARTED
+[28/Jun/2012:15:46:08] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:46:08] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:46:08] ENGINE Bus STOPPING
+[28/Jun/2012:15:46:08] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:46:08] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:46:08] ENGINE Bus STOPPED
+[28/Jun/2012:15:46:08] ENGINE Bus EXITING
+[28/Jun/2012:15:46:08] ENGINE Bus EXITED
+[28/Jun/2012:15:46:08] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:46:08] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:46:08] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:46:08] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:46:08] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:46:08] ENGINE Bus STARTING
+[28/Jun/2012:15:46:08] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:46:08] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:46:08] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:46:08] ENGINE Bus STARTED
+[28/Jun/2012:15:48:48] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:48:48] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:48:48] ENGINE Bus STOPPING
+[28/Jun/2012:15:48:48] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:48:48] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:48:48] ENGINE Bus STOPPED
+[28/Jun/2012:15:48:48] ENGINE Bus EXITING
+[28/Jun/2012:15:48:48] ENGINE Bus EXITED
+[28/Jun/2012:15:48:48] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:48:48] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:48:49] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:48:49] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:48:49] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:48:49] ENGINE Bus STARTING
+[28/Jun/2012:15:48:49] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:48:49] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:48:49] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:48:49] ENGINE Bus STARTED
+[28/Jun/2012:15:52:29] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:52:29] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:52:29] ENGINE Bus STOPPING
+[28/Jun/2012:15:52:29] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:52:29] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:52:29] ENGINE Bus STOPPED
+[28/Jun/2012:15:52:29] ENGINE Bus EXITING
+[28/Jun/2012:15:52:29] ENGINE Bus EXITED
+[28/Jun/2012:15:52:29] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:52:29] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:52:29] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:52:29] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:52:29] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:52:29] ENGINE Bus STARTING
+[28/Jun/2012:15:52:29] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:52:29] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:52:29] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:52:29] ENGINE Bus STARTED
+[28/Jun/2012:15:52:49] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:52:49] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:52:49] ENGINE Bus STOPPING
+[28/Jun/2012:15:52:49] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:52:49] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:52:49] ENGINE Bus STOPPED
+[28/Jun/2012:15:52:49] ENGINE Bus EXITING
+[28/Jun/2012:15:52:49] ENGINE Bus EXITED
+[28/Jun/2012:15:52:49] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:52:49] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:52:50] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:52:50] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:52:50] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:52:50] ENGINE Bus STARTING
+[28/Jun/2012:15:52:50] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:52:50] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:52:50] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:52:50] ENGINE Bus STARTED
+[28/Jun/2012:15:55:40] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:15:55:40] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:15:55:40] ENGINE Bus STOPPING
+[28/Jun/2012:15:55:40] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:15:55:40] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:15:55:40] ENGINE Bus STOPPED
+[28/Jun/2012:15:55:40] ENGINE Bus EXITING
+[28/Jun/2012:15:55:40] ENGINE Bus EXITED
+[28/Jun/2012:15:55:40] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:15:55:40] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:15:55:40] ENGINE Listening for SIGHUP.
+[28/Jun/2012:15:55:40] ENGINE Listening for SIGTERM.
+[28/Jun/2012:15:55:40] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:15:55:40] ENGINE Bus STARTING
+[28/Jun/2012:15:55:40] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:15:55:40] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:15:55:40] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:15:55:40] ENGINE Bus STARTED
+[28/Jun/2012:16:04:41] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:04:41] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:04:41] ENGINE Bus STOPPING
+[28/Jun/2012:16:04:41] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:04:41] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:04:41] ENGINE Bus STOPPED
+[28/Jun/2012:16:04:41] ENGINE Bus EXITING
+[28/Jun/2012:16:04:41] ENGINE Bus EXITED
+[28/Jun/2012:16:04:41] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:04:41] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:04:41] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:04:41] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:04:41] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:04:41] ENGINE Bus STARTING
+[28/Jun/2012:16:04:41] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:04:41] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:04:41] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:04:41] ENGINE Bus STARTED
+[28/Jun/2012:16:04:48] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:04:51] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 138, in index
+    '''%(args)
+ValueError: unsupported format character ',' (0x2c) at index 793
+
+[28/Jun/2012:16:04:51] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=199745c8e44744645888232ea8061a694421e080
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:06:31] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:06:31] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:06:31] ENGINE Bus STOPPING
+[28/Jun/2012:16:06:31] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:06:31] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:06:31] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:06:31] ENGINE Bus STOPPED
+[28/Jun/2012:16:06:31] ENGINE Bus EXITING
+[28/Jun/2012:16:06:31] ENGINE Bus EXITED
+[28/Jun/2012:16:06:32] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:06:32] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:06:32] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:06:32] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:06:32] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:06:32] ENGINE Bus STARTING
+[28/Jun/2012:16:06:32] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:06:32] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:06:32] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:06:32] ENGINE Bus STARTED
+[28/Jun/2012:16:06:39] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:06:43] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 143, in index
+    '''%(args)
+ValueError: unsupported format character ',' (0x2c) at index 793
+
+[28/Jun/2012:16:06:43] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=c8016ebf38e6d1efe29de4619356c8c4fe2abfaa
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:07:22] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:07:22] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:07:22] ENGINE Bus STOPPING
+[28/Jun/2012:16:07:22] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:07:22] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:07:22] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:07:22] ENGINE Bus STOPPED
+[28/Jun/2012:16:07:22] ENGINE Bus EXITING
+[28/Jun/2012:16:07:22] ENGINE Bus EXITED
+[28/Jun/2012:16:07:22] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:07:22] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:07:22] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:07:22] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:07:22] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:07:22] ENGINE Bus STARTING
+[28/Jun/2012:16:07:22] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:07:22] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:07:22] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:07:22] ENGINE Bus STARTED
+[28/Jun/2012:16:07:31] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:07:34] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 143, in index
+    '''%args
+ValueError: unsupported format character ',' (0x2c) at index 793
+
+[28/Jun/2012:16:07:34] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=d764e9d8abd4c6aebc77ea91e6037d355dd107c0
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:08:17] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:08:17] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:08:17] ENGINE Bus STOPPING
+[28/Jun/2012:16:08:17] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:08:17] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:08:17] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:08:17] ENGINE Bus STOPPED
+[28/Jun/2012:16:08:17] ENGINE Bus EXITING
+[28/Jun/2012:16:08:17] ENGINE Bus EXITED
+[28/Jun/2012:16:08:17] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:08:17] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:08:18] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:08:18] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:08:18] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:08:18] ENGINE Bus STARTING
+[28/Jun/2012:16:08:18] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:08:18] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:08:18] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:08:18] ENGINE Bus STARTED
+[28/Jun/2012:16:08:31] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:08:34] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 129, in index
+    '''%args
+ValueError: unsupported format character ',' (0x2c) at index 793
+
+[28/Jun/2012:16:08:34] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=d28c13cc279326229d715ef08116b5abcce732ca
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:11:28] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:11:28] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:11:28] ENGINE Bus STOPPING
+[28/Jun/2012:16:11:28] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:11:28] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:11:28] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:11:28] ENGINE Bus STOPPED
+[28/Jun/2012:16:11:28] ENGINE Bus EXITING
+[28/Jun/2012:16:11:28] ENGINE Bus EXITED
+[28/Jun/2012:16:11:28] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:11:28] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:11:28] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:11:28] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:11:28] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:11:28] ENGINE Bus STARTING
+[28/Jun/2012:16:11:28] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:11:28] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:11:28] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:11:28] ENGINE Bus STARTED
+[28/Jun/2012:16:11:34] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:11:37] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 142, in index
+    '''%args
+ValueError: unsupported format character ',' (0x2c) at index 785
+
+[28/Jun/2012:16:11:37] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=0656e74f09f73ccc25cae4e65585f0567157f5a7
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:11:43] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:11:43] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:11:43] ENGINE Bus STOPPING
+[28/Jun/2012:16:11:47] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:11:47] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:11:47] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:11:47] ENGINE Bus STOPPED
+[28/Jun/2012:16:11:47] ENGINE Bus EXITING
+[28/Jun/2012:16:11:47] ENGINE Bus EXITED
+[28/Jun/2012:16:11:47] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:11:47] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:11:47] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:11:47] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:11:47] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:11:47] ENGINE Bus STARTING
+[28/Jun/2012:16:11:47] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:11:47] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:11:48] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:11:48] ENGINE Bus STARTED
+[28/Jun/2012:16:22:08] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:22:08] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:22:08] ENGINE Bus STOPPING
+[28/Jun/2012:16:22:08] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:22:08] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:22:08] ENGINE Bus STOPPED
+[28/Jun/2012:16:22:08] ENGINE Bus EXITING
+[28/Jun/2012:16:22:08] ENGINE Bus EXITED
+[28/Jun/2012:16:22:08] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:22:08] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:22:09] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:22:09] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:22:09] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:22:09] ENGINE Bus STARTING
+[28/Jun/2012:16:22:09] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:22:09] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:22:09] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:22:09] ENGINE Bus STARTED
+[28/Jun/2012:16:22:19] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:22:19] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:22:19] ENGINE Bus STOPPING
+[28/Jun/2012:16:22:19] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:22:19] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:22:19] ENGINE Bus STOPPED
+[28/Jun/2012:16:22:19] ENGINE Bus EXITING
+[28/Jun/2012:16:22:19] ENGINE Bus EXITED
+[28/Jun/2012:16:22:19] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:22:19] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:22:19] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:22:19] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:22:19] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:22:19] ENGINE Bus STARTING
+[28/Jun/2012:16:22:19] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:22:19] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:22:19] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:22:19] ENGINE Bus STARTED
+[28/Jun/2012:16:22:25] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:22:28] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 142, in index
+    '''.format(args)
+KeyError: 'firstname'
+
+[28/Jun/2012:16:22:28] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=b6b78401a4198ff03a276cd2f8ba203d66cbef4d
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:25:39] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:25:39] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:25:39] ENGINE Bus STOPPING
+[28/Jun/2012:16:25:39] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:25:39] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:25:39] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:25:39] ENGINE Bus STOPPED
+[28/Jun/2012:16:25:39] ENGINE Bus EXITING
+[28/Jun/2012:16:25:39] ENGINE Bus EXITED
+[28/Jun/2012:16:25:39] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:25:39] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:25:40] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:25:40] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:25:40] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:25:40] ENGINE Bus STARTING
+[28/Jun/2012:16:25:40] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:25:40] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:25:40] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:25:40] ENGINE Bus STARTED
+[28/Jun/2012:16:25:44] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:25:47] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 142, in index
+    '''.format(args)
+AttributeError: 'dict' object has no attribute 'firstname'
+
+[28/Jun/2012:16:25:47] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=e05765e877a8ac6e9e7d0208759380bc7dea23fb
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:26:10] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:26:10] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:26:10] ENGINE Bus STOPPING
+[28/Jun/2012:16:26:10] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:26:10] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:26:10] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:26:10] ENGINE Bus STOPPED
+[28/Jun/2012:16:26:10] ENGINE Bus EXITING
+[28/Jun/2012:16:26:10] ENGINE Bus EXITED
+[28/Jun/2012:16:26:10] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:26:10] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:26:10] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:26:10] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:26:10] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:26:10] ENGINE Bus STARTING
+[28/Jun/2012:16:26:10] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:26:10] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:26:10] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:26:10] ENGINE Bus STARTED
+[28/Jun/2012:16:26:12] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:26:15] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 142, in index
+    '''.format(args)
+KeyError: 'user_icon'
+
+[28/Jun/2012:16:26:15] HTTP 
+Request Headers:
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=e057d000a810422c4a49be72b60e08bd710bbcb1
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[28/Jun/2012:16:28:20] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:28:20] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:28:20] ENGINE Bus STOPPING
+[28/Jun/2012:16:28:20] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:28:20] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:28:20] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:28:20] ENGINE Bus STOPPED
+[28/Jun/2012:16:28:20] ENGINE Bus EXITING
+[28/Jun/2012:16:28:20] ENGINE Bus EXITED
+[28/Jun/2012:16:28:20] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:28:20] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:28:21] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:28:21] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:28:21] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:28:21] ENGINE Bus STARTING
+[28/Jun/2012:16:28:21] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:28:21] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:28:21] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:28:21] ENGINE Bus STARTED
+[28/Jun/2012:16:28:23] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:29:41] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:29:41] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:29:41] ENGINE Bus STOPPING
+[28/Jun/2012:16:29:41] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:29:41] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:29:41] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:29:41] ENGINE Bus STOPPED
+[28/Jun/2012:16:29:41] ENGINE Bus EXITING
+[28/Jun/2012:16:29:41] ENGINE Bus EXITED
+[28/Jun/2012:16:29:41] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:29:41] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:29:41] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:29:41] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:29:41] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:29:41] ENGINE Bus STARTING
+[28/Jun/2012:16:29:41] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:29:41] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:29:41] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:29:41] ENGINE Bus STARTED
+[28/Jun/2012:16:29:41] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:32:31] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:32:31] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:32:31] ENGINE Bus STOPPING
+[28/Jun/2012:16:32:31] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:32:31] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:32:31] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:32:31] ENGINE Bus STOPPED
+[28/Jun/2012:16:32:31] ENGINE Bus EXITING
+[28/Jun/2012:16:32:31] ENGINE Bus EXITED
+[28/Jun/2012:16:32:31] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:32:31] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:32:32] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:32:32] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:32:32] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:32:32] ENGINE Bus STARTING
+[28/Jun/2012:16:32:32] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:32:32] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:32:32] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:32:32] ENGINE Bus STARTED
+[28/Jun/2012:16:32:35] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:33:07] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:33:07] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:33:07] ENGINE Bus STOPPING
+[28/Jun/2012:16:33:07] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:33:07] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:33:07] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:33:07] ENGINE Bus STOPPED
+[28/Jun/2012:16:33:07] ENGINE Bus EXITING
+[28/Jun/2012:16:33:07] ENGINE Bus EXITED
+[28/Jun/2012:16:33:07] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:33:07] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:33:07] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:33:07] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:33:07] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:33:07] ENGINE Bus STARTING
+[28/Jun/2012:16:33:07] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:33:07] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:33:07] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:33:07] ENGINE Bus STARTED
+[28/Jun/2012:16:33:08] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:34:37] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:34:37] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:34:37] ENGINE Bus STOPPING
+[28/Jun/2012:16:34:37] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:34:37] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:34:37] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:34:37] ENGINE Bus STOPPED
+[28/Jun/2012:16:34:37] ENGINE Bus EXITING
+[28/Jun/2012:16:34:37] ENGINE Bus EXITED
+[28/Jun/2012:16:34:37] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:34:37] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:37:37] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:37:37] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:37:37] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:37:37] ENGINE Bus STARTING
+[28/Jun/2012:16:37:37] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:37:37] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:37:37] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:37:37] ENGINE Bus STARTED
+[28/Jun/2012:16:37:40] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:37:46] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 92, in log_me
+    ev = Personis_base.Evidence(source='llum-log', evidence_type="explicit", value=item, time=now.now())
+NameError: global name 'now' is not defined
+
+[28/Jun/2012:16:37:46] HTTP 
+Request Headers:
+  REFERER: http://enterprise.it.usyd.edu.au:8001/
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html, */*; q=0.01
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  X-REQUESTED-WITH: XMLHttpRequest
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=24ba8b06afe8da8245bd9a0252fc263514b02fba
+[28/Jun/2012:16:37:57] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:37:57] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:37:57] ENGINE Bus STOPPING
+[28/Jun/2012:16:37:57] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:37:57] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:37:57] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:37:57] ENGINE Bus STOPPED
+[28/Jun/2012:16:37:57] ENGINE Bus EXITING
+[28/Jun/2012:16:37:57] ENGINE Bus EXITED
+[28/Jun/2012:16:37:57] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:37:57] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:37:57] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:37:57] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:37:57] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:37:57] ENGINE Bus STARTING
+[28/Jun/2012:16:37:57] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:37:57] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:37:57] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:37:57] ENGINE Bus STARTED
+[28/Jun/2012:16:38:00] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:38:06] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "log-llum.py", line 92, in log_me
+    ev = Personis_base.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
+NameError: global name 'time' is not defined
+
+[28/Jun/2012:16:38:06] HTTP 
+Request Headers:
+  REFERER: http://enterprise.it.usyd.edu.au:8001/
+  HOST: enterprise.it.usyd.edu.au:8001
+  CONNECTION: keep-alive
+  Remote-Addr: 129.78.8.92
+  ACCEPT: text/html, */*; q=0.01
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.27 Safari/536.11
+  X-REQUESTED-WITH: XMLHttpRequest
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+  COOKIE: __utmz=223117855.1340325923.2.2.utmccn=(organic)|utmcsr=google|utmctr=|utmcmd=organic; __utma=223117855.1852253725.1340243770.1340325923.1340330096.3; __utmc=223117855; session_id=6cdce37b794af5bbfd097762f8dd40e43e5a5b3a
+[28/Jun/2012:16:38:22] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:38:22] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:38:22] ENGINE Bus STOPPING
+[28/Jun/2012:16:38:22] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:38:22] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:38:22] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:38:22] ENGINE Bus STOPPED
+[28/Jun/2012:16:38:22] ENGINE Bus EXITING
+[28/Jun/2012:16:38:22] ENGINE Bus EXITED
+[28/Jun/2012:16:38:22] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:38:22] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:38:22] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:38:22] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:38:22] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:38:22] ENGINE Bus STARTING
+[28/Jun/2012:16:38:22] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:38:22] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:38:23] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:38:23] ENGINE Bus STARTED
+[28/Jun/2012:16:38:31] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:39:13] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:39:13] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:39:13] ENGINE Bus STOPPING
+[28/Jun/2012:16:39:13] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:39:13] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:39:13] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:39:13] ENGINE Bus STOPPED
+[28/Jun/2012:16:39:13] ENGINE Bus EXITING
+[28/Jun/2012:16:39:13] ENGINE Bus EXITED
+[28/Jun/2012:16:39:13] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:39:13] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:39:13] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:39:13] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:39:13] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:39:13] ENGINE Bus STARTING
+[28/Jun/2012:16:39:13] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:39:13] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:39:13] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:39:13] ENGINE Bus STARTED
+[28/Jun/2012:16:39:13] ENGINE Started monitor thread 'Session cleanup'.
+[28/Jun/2012:16:39:48] ENGINE Restarting because /home/jbu/personis/log-llum/log-llum.py changed.
+[28/Jun/2012:16:39:48] ENGINE Stopped thread 'Autoreloader'.
+[28/Jun/2012:16:39:48] ENGINE Bus STOPPING
+[28/Jun/2012:16:39:48] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[28/Jun/2012:16:39:48] ENGINE Stopped thread 'Session cleanup'.
+[28/Jun/2012:16:39:48] ENGINE Stopped thread '_TimeoutMonitor'.
+[28/Jun/2012:16:39:48] ENGINE Bus STOPPED
+[28/Jun/2012:16:39:48] ENGINE Bus EXITING
+[28/Jun/2012:16:39:48] ENGINE Bus EXITED
+[28/Jun/2012:16:39:48] ENGINE Waiting for child threads to terminate...
+[28/Jun/2012:16:39:48] ENGINE Re-spawning log-llum.py
+[28/Jun/2012:16:39:48] ENGINE Listening for SIGHUP.
+[28/Jun/2012:16:39:48] ENGINE Listening for SIGTERM.
+[28/Jun/2012:16:39:48] ENGINE Listening for SIGUSR1.
+[28/Jun/2012:16:39:48] ENGINE Bus STARTING
+[28/Jun/2012:16:39:48] ENGINE Started monitor thread 'Autoreloader'.
+[28/Jun/2012:16:39:48] ENGINE Started monitor thread '_TimeoutMonitor'.
+[28/Jun/2012:16:39:48] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[28/Jun/2012:16:39:48] ENGINE Bus STARTED
+[29/Jun/2012:11:05:08] ENGINE Keyboard Interrupt: shutting down bus
+[29/Jun/2012:11:05:08] ENGINE Bus STOPPING
+[29/Jun/2012:11:05:08] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[29/Jun/2012:11:05:08] ENGINE Stopped thread '_TimeoutMonitor'.
+[29/Jun/2012:11:05:08] ENGINE Stopped thread 'Autoreloader'.
+[29/Jun/2012:11:05:08] ENGINE Bus STOPPED
+[29/Jun/2012:11:05:08] ENGINE Bus EXITING
+[29/Jun/2012:11:05:08] ENGINE Bus EXITED
+[29/Jun/2012:11:05:08] ENGINE Waiting for child threads to terminate...
+[29/Jun/2012:11:05:08] ENGINE Bus STARTING
+[29/Jun/2012:11:05:08] ENGINE Started monitor thread 'Autoreloader'.
+[29/Jun/2012:11:05:08] ENGINE Started monitor thread '_TimeoutMonitor'.
+[29/Jun/2012:11:05:08] ENGINE Serving on enterprise.it.usyd.edu.au:8001
+[29/Jun/2012:11:05:08] ENGINE Bus STARTED
+[29/Jun/2012:11:05:11] ENGINE Keyboard Interrupt: shutting down bus
+[29/Jun/2012:11:05:11] ENGINE Bus STOPPING
+[29/Jun/2012:11:05:11] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 8001)) shut down
+[29/Jun/2012:11:05:11] ENGINE Stopped thread '_TimeoutMonitor'.
+[29/Jun/2012:11:05:11] ENGINE Stopped thread 'Autoreloader'.
+[29/Jun/2012:11:05:11] ENGINE Bus STOPPED
+[29/Jun/2012:11:05:11] ENGINE Bus EXITING
+[29/Jun/2012:11:05:11] ENGINE Bus EXITED
+[29/Jun/2012:11:05:11] ENGINE Waiting for child threads to terminate...

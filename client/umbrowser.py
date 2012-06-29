@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-sys.path.insert(0, '/home/jbu/src/jbu-personis/Src')
+sys.path.insert(0, '/home/jbu/personis/server/Src')
 
 import time
 import Personis
