@@ -782,6 +782,7 @@ class Personis_server:
         rdi = rdi + 'code=' + val_key
 
         self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
+        self.access_tokens.sync()
 
         redr = cli.redirect_uri
         um = Personis_a.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
@@ -804,6 +805,7 @@ class Personis_server:
         exchanged by the client taking to personis directly (no web browser
         involvement) for a real token. Tokens have expiration dates etc.
         (Accessed by the client (Mneme, etc) on behalf of a user.)
+        NOTE! This should only be exported over TLS/SSL (ahem!)
         """
         print code, redirect_uri, client_id, client_secret, scope, grant_type, refresh_token
         cli = self.oauth_clients[client_id]
@@ -816,19 +818,9 @@ class Personis_server:
                 print 'expire access_token',k
                 del(self.access_tokens[k])
 
+        # temporary hack
         cli.access_tokens = cli.request_tokens
-        #for k, v in cli.access_tokens.items():
-        #    print 'access tokens', k, v
-        #    if now - v['timestamp'] > expireTime:
-        #        print 'del access_token',k
-        #        del(cli.access_tokens[k])
 
-        #for k, v in cli.refresh_tokens.items():
-        #    if now - v['timestamp'] > 3600*24: #refresh tokens are 1day
-        #        print 'del refresh_token',k
-        #        del(cli.refresh_tokens[k])
-
-        # should be a temporary hack. db updating
         if type(cli.secret) <> type(u''):
            cli.secret = unicode(cli.secret)
 
