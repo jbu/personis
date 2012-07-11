@@ -133,6 +133,9 @@ class Component:
 			if (self.value_type == "enum") and not (self.value in self.value_list):
 				raise ValueError, "value '%s' not in value_list for type 'enum'" % (self.value)
 
+	def __str__(self):
+		return 'Component: '+ `self.__dict__`
+
 	def filterevidence(self, model=None, context=[], resolver_args=None):
 		"""
 			if evidence_filter is "all": 
@@ -268,6 +271,9 @@ class Evidence:
 			self.__dict__[k] = v
 		if not self.evidence_type in EvidenceTypes:
 			raise TypeError, "bad evidence type %s"%(self.evidence_type)
+
+	def __str__(self):
+		return 'evidence: '+`self.__dict__`
 
 class Context:
 	""" context object
@@ -418,6 +424,7 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		cobjlist = []
 		if type(view) == type(u''):
 			view = str(view)
+
 		if type(view) is StringType:
 			if views != None:
 				if not views.has_key(view):
@@ -471,8 +478,11 @@ class Access(Resolvers.Access,Ev_filters.Access):
 							compresolver = self.resolverlist[compresname]
 						else:
 							raise ValueError, 'unknown resolver "%s"'%(compresname)
-						cobjlist.append(compresolver(model=self, component=comps[cid], \
-									context=context, resolver_args=resolver_args))
+						cobjlist.append(compresolver(model=self, 
+												component=comps[cid],
+												context=context, 
+												resolver_args=resolver_args)
+										)
 					else:
 						raise ValueError, 'component "%s" not in view "%s" (%s)'%(cid,view,cidlist)
 				else:
@@ -727,7 +737,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 			raise ValueError, "tell: component id is not string type"
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
-		#print 'tell',context, componentid, evidence
 		perms = contextinfo['perms']
 		if self.usertype != 'owner':
 			if not (self.user in perms):
