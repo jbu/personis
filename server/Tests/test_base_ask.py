@@ -5,25 +5,26 @@ import Personis_base
 import os
 import shutil
 import sys
-from Personis_util import printcomplist
+#from Personis_util import printcomplist
 
 class TestPersonisBaseAdd(unittest.TestCase):
 
-    def setUp(self):
-        # create model
+    @classmethod
+    def setUpClass(cls):
         shutil.copytree('models', 'testmodels')
-        self.um = Personis_base.Access(model="Alice", modeldir='testmodels', user='alice', password='secret')
+        cls.um = Personis_base.Access(model="Alice", modeldir='testmodels', user='alice', password='secret')
         # create a piece of evidence with Alice as value
         ev = Personis_base.Evidence(evidence_type="explicit", value="Alice")
         # tell this as user alice's first name
-        self.um.tell(context=["Personal"], componentid='firstname', evidence=ev)
+        cls.um.tell(context=["Personal"], componentid='firstname', evidence=ev)
 
         ev = Personis_base.Evidence(evidence_type="explicit", value="Smith")
-        self.um.tell(context=["Personal"], componentid='lastname', evidence=ev)
+        cls.um.tell(context=["Personal"], componentid='lastname', evidence=ev)
         ev = Personis_base.Evidence(evidence_type="explicit", value="female")
-        self.um.tell(context=["Personal"], componentid='gender', evidence=ev)
+        cls.um.tell(context=["Personal"], componentid='gender', evidence=ev)
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         shutil.rmtree('testmodels')
 
     def test_ask_firstname(self):
@@ -49,7 +50,11 @@ class TestPersonisBaseAdd(unittest.TestCase):
         self.assertEqual(res[0].value, 'Alice')
         self.assertEqual(res[1].value, 'Smith')
 
-
+    def test_ask_more(self):
+        res = self.um.ask(context=["Preferences", "Music", "Jazz", "Artists"], 
+                        view=['Miles_Davis', ['Personal', 'firstname']],
+                        resolver={'evidence_filter':"all"})
+        self.assertEqual(res[1].Identifier, 'firstname')
 
 if __name__ == '__main__':
     unittest.main()
