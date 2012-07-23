@@ -6,18 +6,11 @@ sys.path.insert(0, '/home/jbu/personis/server/Src')
 import os
 import platform
 import time
-import Personis
-import Personis_a
-import Personis_base
-import Personis_mkmodel
-import Personis_server
+import personis
 import json
-import json as sysjson
-import Personis_util
-import connection
 
 from oauth2client.file import Storage
-from oauth2client.client import Credentials, OAuth2WebServerFlow
+from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
 from oauth2client.tools import run
 import httplib2
 
@@ -77,42 +70,36 @@ def install_inactivity(um):
     except:
         pass
 
-    ctx_obj = Personis_base.Context(Identifier="Inactivity", Description="Watch computer usage",
+    ctx_obj = personis.Context(Identifier="Inactivity", Description="Watch computer usage",
                  perms={'ask':True, 'tell':True, "resolvers": ["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context = ['Devices']
     um.mkcontext(context,ctx_obj)
 
-    ctx_obj = Personis_base.Context(Identifier="Activity", Description="Extract data from activity watcher",
+    ctx_obj = personis.Context(Identifier="Activity", Description="Extract data from activity watcher",
                  perms={'ask':True, 'tell':True, "resolvers":["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context.append('Inactivity')
     um.mkcontext(context,ctx_obj)
 
     context.append('Activity')
-    cobj = Personis_base.Component(Identifier="length", component_type="attribute", value_type="number",resolver=None,Description="Length of active period")
+    cobj = personis.Component(Identifier="length", component_type="attribute", value_type="number",resolver=None,Description="Length of active period")
     um.mkcomponent(context=context, componentobj=cobj)
 
-def send(um, start, length):
-    ev = Personis_base.Evidence(source='inactivity', evidence_type="explicit", value=length, time=start)
+def send_toggle(um, v, t):
+    ev = personis.Evidence(source='activity', evidence_type="explicit", value=v, time=t)
     um.tell(context=['Devices','Inactivity','Activity'], componentid='length', evidence=ev)
 
-idletimeout = 5 # seconds
+inactive_granularity = 5 # seconds
+active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's not seen.
 
 if __name__ == '__main__':
 
     httplib2.debuglevel=0
     storage = Storage('credentials.dat')
     credentials = storage.get()
-    personis_uri = 'http://enterprise.it.usyd.edu.au:2005/'
-    FLOW = OAuth2WebServerFlow(
-        client_id='af9158ACBd51f91BCe8b4771DBbf64DD',
-        client_secret='3D9d56D1aB4c5D3EFFB5C6F81f029Ac4',
-        scope='https://www.personis.com/auth/model',
-        user_agent='inactivity/1.0',
-        auth_uri=personis_uri+'authorize',
-        token_uri=personis_uri+'request_token'
-        )
+    FLOW = flow_from_clientsecrets('client_secrets.json',
+        scope='https://www.personis.com/auth/model')
 
     p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
     h = httplib2.Http(proxy_info=p)
@@ -120,9 +107,10 @@ if __name__ == '__main__':
         credentials = run(FLOW, storage, h)
     cjson = json.loads(credentials.to_json())
     http = httplib2.Http(proxy_info=p)
-    c = connection.Connection(uri = personis_uri, credentials = credentials, http = http)
+    c = personis.Connection(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
+            credentials = credentials, http = http)
 
-    um = Personis_server.Access(connection=c, debug=True)
+    um = personis.Access(connection=c, debug=True)
     reslist = um.ask(context=["Personal"],view=['firstname'])
     print 'logging for', reslist[0].value
 
@@ -131,13 +119,21 @@ if __name__ == '__main__':
     idle = idler();
     time.sleep(1)
 
+    idle_state = True
+    i = inactive_granularity + active_granularity
+    send_toggle(um, 0, time.time())                
+
     while True:
-        i = idle.getIdleTime()
-        if i < idletimeout:
-            start = time.time()
-            while i < idletimeout:
-                time.sleep(idletimeout)
+        if idle_state:
+            while i >= inactive_granularity:
+                time.sleep(inactive_granularity)
                 i = idle.getIdleTime()
-            end = time.time()
-            send(um, start, int(end-start))
-        time.sleep(idletimeout)
+            send_toggle(um, 1, time.time())                
+            idle_state = False
+        if not idle_state:
+            while i < active_granularity:
+                time.sleep(active_granularity)
+                i = idle.getIdleTime()
+            send_toggle(um, 0, time.time())                
+            idle_state = True
+
