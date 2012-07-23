@@ -37,7 +37,8 @@ Application Program Interface
 +---------------------+--------------------------------------------------------------------------------------+
 
 
-
+.. automodule:: personis
+   :members:
 
 **Constants**
 

@@ -1,21 +1,19 @@
 import os, sys
 
-import httplib, oauth2
-from optparse import OptionParser
-import httplib2
-
 from oauth2client.file import Storage
-from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow
+from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, AccessTokenRefreshError
 from oauth2client.tools import run
 
-import cherrypy
-import wsgiref.handlers
-import ConfigParser
+import httplib
+import httplib2
+import webapp2
+from gaesessions import get_current_session
 
-import Personis_server, Personis_base
-import connection
+import personis
 import yaml
 import time
+import logging
+import pickle
 
 item_list = {'apple':{'icon':'http://appleadayproject.files.wordpress.com/2011/03/apple-full2.jpg'},
             'pear':{'icon': 'http://4.bp.blogspot.com/-IgzE0L2YSdg/T1Pg-z8t6-I/AAAAAAAAAhU/cWfds0ulbLI/s1600/Pear.jpg'}, 
@@ -24,23 +22,9 @@ item_list = {'apple':{'icon':'http://appleadayproject.files.wordpress.com/2011/0
             'kiwi':{'icon': 'http://1.bp.blogspot.com/-XK8RbZ1MFz8/T88vJy9THfI/AAAAAAAABts/FWCuZptW_d0/s1600/kiwi+fruit.jpg'},
             'grape':{'icon': 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Table_grapes_on_white.jpg/220px-Table_grapes_on_white.jpg'}}
 
-class LogLlum(object):
+        
 
-    def __init__(self, oauthconf):
-        self.oauthconf = yaml.load(file(oauthconf,'r'))
-
-    @cherrypy.expose
-    def do_login(self):
-        flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
-                        client_secret=self.oauthconf['client_secret'],
-                        scope='https://www.personis.info/auth/model',
-                        user_agent='Log-llum/1.0',
-                        auth_uri=self.oauthconf['personis_uri']+'/authorize',
-                        token_uri=self.oauthconf['personis_uri']+'/request_token')
-        callback = self.oauthconf['callback']
-        authorize_url = flow.step1_get_authorize_url(callback)
-        cherrypy.session['flow'] = flow
-        raise cherrypy.HTTPRedirect(authorize_url)
+class LogLlum(webapp2.RequestHandler):
 
     def install_contexts(self, um):
         try:
@@ -50,7 +34,7 @@ class LogLlum(object):
             pass
 
         context = ['Apps']
-        ctx_obj = Personis_base.Context(Identifier="Logging",
+        ctx_obj = personis.Context(Identifier="Logging",
                   Description="The logging app",
                   perms={'ask':True, 'tell':True,
                   "resolvers": ["all","last10","last1","goal"]},
@@ -59,41 +43,69 @@ class LogLlum(object):
         um.mkcontext(context,ctx_obj)
         context.append('Logging')
 
-        cobj = Personis_base.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
+        cobj = personis.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
                                        value_list=[i for i in item_list.keys()], resolver=None ,Description="All the items logged")
         um.mkcomponent(context=context, componentobj=cobj)
 
-    @cherrypy.expose
-    def authorized(self, code, state=None):
-        flow = cherrypy.session.get('flow')
+    def do_login(self):
+        session = get_current_session()
+        oauthconf = self.app.config.get('oauthconf')
+        flow = OAuth2WebServerFlow(client_id=oauthconf['client_id'],
+                        client_secret=oauthconf['client_secret'],
+                        scope='https://www.personis.info/auth/model',
+                        user_agent='Log-llum/1.0',
+                        auth_uri=oauthconf['personis_uri']+'/authorize',
+                        token_uri=oauthconf['personis_uri']+'/request_token')
+        callback = oauthconf['callback']
+        authorize_url = flow.step1_get_authorize_url(callback)
+        session['flow'] = pickle.dumps(flow)
+        return self.redirect(authorize_url)
+
+
+    def authorized(self):
+        session = get_current_session()
+        if not 'code' in self.request.params:
+            self.abort(400, detail='no code param')
+
+        code = self.request.params['code']
+        #logging.info('code: '+code)
+        flow = session.get('flow')
+        flow = pickle.loads(flow)
         if not flow:
             raise IOError()
-        p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
-        h = httplib2.Http(proxy_info=p)
-        credentials = flow.step2_exchange(cherrypy.request.params, h)
-        ht = httplib2.Http(proxy_info=p)
-        c = connection.Connection(uri = self.oauthconf['personis_uri'], credentials = credentials, http = ht)
-        cherrypy.session['connection'] = c
-        um = Personis_server.Access(connection=c, debug=True)
+        #p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+        #h = httplib2.Http(proxy_info=p)
+        credentials = flow.step2_exchange(self.request.params)
+        #ht = httplib2.Http(proxy_info=p)
+        oauthconf = self.app.config.get('oauthconf')
+        c = personis.Connection(uri = oauthconf['personis_uri'], credentials = credentials)
+        session['connection'] = pickle.dumps(c)
+        um = personis.Access(connection=c, debug=0)
         self.install_contexts(um)
-        cherrypy.session['um'] = um
-        raise cherrypy.HTTPRedirect('/')
+        self.redirect('/')
 
-    @cherrypy.expose
-    def log_me(self, item):
-        if cherrypy.session.get('um') == None:
-            raise cherrypy.HTTPError(400, 'Log in first.')
-        um = cherrypy.session.get('um')
-        ev = Personis_base.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
+    def log_me(self):
+        session = get_current_session()
+        if session.get('connection') == None:
+            self.abort(400, detail='Log in first.')
+        connection = pickle.loads(session.get('connection'))
+        um = personis.Access(connection=connection, test=False)
+        item = self.request.get('item')
+        ev = personis.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
         um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
-        raise cherrypy.HTTPRedirect('/')
+        return self.redirect('/')
 
-    @cherrypy.expose
-    def index(self):
-        if cherrypy.session.get('um') == None:
-            raise cherrypy.HTTPRedirect('/do_login')
-        um = cherrypy.session.get('um')
-        reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
+    def get(self):
+        session = get_current_session()
+        if session.get('connection') == None:
+            return self.redirect('/do_login')
+        connection = pickle.loads(session.get('connection'))
+        um = personis.Access(connection=connection, test=False)
+        try:
+            reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
+        except AccessTokenRefreshError as e:
+            print e
+            return self.redirect('do_login')
 
         args = {'firstname': reslist[0].value, 'user_icon':reslist[1].value }
         i = 0
@@ -101,7 +113,8 @@ class LogLlum(object):
             args[`i`+'name'] = k
             args[`i`+'pic'] = v['icon']
             i = i + 1
-        return '''<!DOCTYPE html>
+
+        self.response.write('''<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -142,16 +155,21 @@ class LogLlum(object):
         </div>
         </body>
         </html>
-        '''.format(args)
+        '''.format(args))
 
-if __name__ == '__main__':
-    httplib2.debuglevel=0
-    parser = OptionParser()
-    parser.add_option("-o", "--oauthconf",
-          dest="oauthconf", metavar='FILE',
-          help="Oauth Config file", default='oauth.yaml')
-    (options, args) = parser.parse_args()
-    cherrypy.quickstart(LogLlum(options.oauthconf),'/',config='global.conf')
-    cherrypy.engine.start()
-    cherrypy.engine.block()
+
+httplib2.debuglevel=0
+logging.basicConfig(level=logging.INFO)
+config = {}
+config['oauthconf'] = yaml.load(file('oauth.ae.yaml','r'))
+#config['webapp2_extras.sessions'] = {'secret_key': '0srag7dr89at7t034hjt'}
+app = webapp2.WSGIApplication([
+        webapp2.Route(r'/do_login', handler=LogLlum, handler_method='do_login'),
+        webapp2.Route(r'/authorized', handler=LogLlum, handler_method='authorized'),
+        webapp2.Route(r'/log_me', handler=LogLlum, handler_method='log_me'),
+        (r'/', LogLlum)
+    ],
+    debug=False, config=config)
+
+
 

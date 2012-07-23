@@ -1,9 +1,17 @@
-application: helloworld
+application: personislog
 version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
+- url: /favicon\.ico
+  static_files: static/image/favicon.ico
+  upload: static/image/favicon\.ico
+
+- url: /image/(.*\.(gif|png|jpg|ico))
+  static_files: static/image/\1
+  upload: static/image/(.*\.(gif|png|jpg|ico))
+
 - url: /.*
-  script: gae-log.app
+  script: log-llum.app
