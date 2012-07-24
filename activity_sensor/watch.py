@@ -1,7 +1,7 @@
 #!env python
 
 import sys
-sys.path.insert(0, '/home/jbu/personis/server/Src')
+#sys.path.insert(0, '/home/jbu/personis/server/Src')
 
 import os
 import platform
@@ -13,6 +13,7 @@ from oauth2client.file import Storage
 from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
 from oauth2client.tools import run
 import httplib2
+import logging
 
 osname = os.name + platform.system()
 if osname == 'posixLinux':
@@ -65,30 +66,32 @@ else:
 
 def install_inactivity(um):
     try:
-        reslist = um.ask(context=["Devices","Inactivity"])
-        #return
+        reslist = um.ask(context=["Devices","activity_monitor"])
+        return
     except:
         pass
 
-    ctx_obj = personis.Context(Identifier="Inactivity", Description="Watch computer usage",
+    ctx_obj = personis.Context(Identifier="activity_monitor", Description="Watch computer usage",
                  perms={'ask':True, 'tell':True, "resolvers": ["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context = ['Devices']
     um.mkcontext(context,ctx_obj)
+    context.append('activity_monitor')
 
-    ctx_obj = personis.Context(Identifier="Activity", Description="Extract data from activity watcher",
+    ctx_obj = personis.Context(Identifier="activity", Description="Extract data from activity watcher",
                  perms={'ask':True, 'tell':True, "resolvers":["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
-    context.append('Inactivity')
     um.mkcontext(context,ctx_obj)
+    context.append('activity')
 
-    context.append('Activity')
-    cobj = personis.Component(Identifier="length", component_type="attribute", value_type="number",resolver=None,Description="Length of active period")
+    cobj = personis.Component(Identifier="data", component_type="attribute", 
+        value_type="number",resolver=None,Description="0 on inactivity detection, 1 on activity detection, -1 on shutdown")
     um.mkcomponent(context=context, componentobj=cobj)
 
 def send_toggle(um, v, t):
-    ev = personis.Evidence(source='activity', evidence_type="explicit", value=v, time=t)
-    um.tell(context=['Devices','Inactivity','Activity'], componentid='length', evidence=ev)
+    ev = personis.Evidence(source='activity_monitor', evidence_type="explicit", value=v, time=t)
+    logging.info('%s: %s'%(t, v))
+    um.tell(context=['Devices','activity_monitor','activity'], componentid='data', evidence=ev)
 
 inactive_granularity = 5 # seconds
 active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's not seen.
@@ -96,6 +99,7 @@ active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's 
 if __name__ == '__main__':
 
     httplib2.debuglevel=0
+    logging.basicConfig(level=logging.INFO)
     storage = Storage('credentials.dat')
     credentials = storage.get()
     FLOW = flow_from_clientsecrets('client_secrets.json',
@@ -123,17 +127,21 @@ if __name__ == '__main__':
     i = inactive_granularity + active_granularity
     send_toggle(um, 0, time.time())                
 
-    while True:
-        if idle_state:
-            while i >= inactive_granularity:
-                time.sleep(inactive_granularity)
-                i = idle.getIdleTime()
-            send_toggle(um, 1, time.time())                
-            idle_state = False
-        if not idle_state:
-            while i < active_granularity:
-                time.sleep(active_granularity)
-                i = idle.getIdleTime()
-            send_toggle(um, 0, time.time())                
-            idle_state = True
-
+    try:
+        while True:
+            if idle_state:
+                while i >= inactive_granularity:
+                    time.sleep(inactive_granularity)
+                    i = idle.getIdleTime()
+                send_toggle(um, 1, time.time())                
+                idle_state = False
+            if not idle_state:
+                while i < active_granularity:
+                    time.sleep(active_granularity)
+                    i = idle.getIdleTime()
+                send_toggle(um, 0, time.time())                
+                idle_state = True
+    except:
+        pass
+    finally:
+        send_toggle(um, -1, time.time())  
