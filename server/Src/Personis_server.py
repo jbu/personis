@@ -46,7 +46,7 @@ import httplib2
 import shutil
 
 from oauth2client.file import Storage
-from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow
+from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
 #from oauth2client.tools import run
 
 from genshi.template import TemplateLoader
@@ -683,10 +683,8 @@ class Personis_server:
         enter. there is no client_id etc because personis is not being
         used as an oauth server.
         """
-        flow = OAuth2WebServerFlow(client_id=self.oauthconf['personis_client_id'],
-                                   client_secret=self.oauthconf['personis_client_secret'],
-                                   scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-                                   user_agent='personis-server/1.0')
+        flow = flow_from_clientsecrets('client_secrets_google.json',
+    scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
         callback = cherrypy.request.base + '/logged_in'
         authorize_url = flow.step1_get_authorize_url(callback)
         cherrypy.session['flow'] = flow
