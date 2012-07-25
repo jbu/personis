@@ -31,23 +31,21 @@
 --personisversion: type="attribute", value_type="string", description="version of the Personis version in use"
 
 @@Personal: description="Personal data"
---firstname: type="attribute", value_type="string", description="First name", [evidence_type="explicit", value="Bob"]
+--firstname: type="attribute", value_type="string", description="First name"
 --lastname: type="attribute", value_type="string", description="Last name"
 --gender: type="attribute", value_type="enum", description="Gender", value="male", value="female"
---email: type="attribute", value_type="string", description="email address",
+--email: type="attribute", value_type="string", description="email address"
 # create a subscription that will notify when email address changes
-	rule="<default!./Personal/email> ~ '*' : NOTIFY 'http://www.somewhere.com/' 'email=' <./Personal/email>"
 
 # ==viewname: list of components from current context
 #	create a view in the current context
 ==fullname: firstname, lastname
 
 @@Personal/Health: description="Health information"
---weight: type="attribute", value_type="number", description="My Weight", [evidence_type="explicit", value="75", flags=["goal"]]
+--weight: type="attribute", value_type="number", description="My Weight"
 --sleep: type="attribute", value_type="string", description="Sleep info"
 
 @@People: description="Information about people who may be relevant to the user"
---bob: type="attribute", value_type="string", description="relevance of showing Bob's status"
 --fullname: type="attribute", value_type="JSON", description="first+last name JSON encoded"
 
 

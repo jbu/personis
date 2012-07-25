@@ -1,0 +1,4 @@
+'client_id' : '3Df8640E83aAEFB84E85eEBBB4Ed7fE3'
+'client_secret' : '934aA03Cfa0A25DCfa12d53a26501A37'
+'personis_uri' : 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/'
+'callback' : 'http://personislog.appspot.com/authorized'

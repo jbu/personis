@@ -1,10 +1,24 @@
-#!/usr/bin/env python2.3
+#!/usr/bin/env python
 
 #
-# The Personis system is copyright 2000-2011 University of Sydney
+# The Personis system is copyright 2000-2012 University of Sydney
 #       Bob.Kummerfeld@Sydney.edu.au
-# GPL v3
+
+# This file is part of Personis.
+
+# Personis is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
+# Personis is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Personis.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import os, shelve, sys, fcntl, time, string, glob
 import hashlib
@@ -132,6 +146,9 @@ class Component:
 		if self.value != None:
 			if (self.value_type == "enum") and not (self.value in self.value_list):
 				raise ValueError, "value '%s' not in value_list for type 'enum'" % (self.value)
+
+	def __str__(self):
+		return 'Component: '+ `self.__dict__`
 
 	def filterevidence(self, model=None, context=[], resolver_args=None):
 		"""
@@ -268,6 +285,9 @@ class Evidence:
 			self.__dict__[k] = v
 		if not self.evidence_type in EvidenceTypes:
 			raise TypeError, "bad evidence type %s"%(self.evidence_type)
+
+	def __str__(self):
+		return 'evidence: '+`self.__dict__`
 
 class Context:
 	""" context object
@@ -418,6 +438,7 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		cobjlist = []
 		if type(view) == type(u''):
 			view = str(view)
+
 		if type(view) is StringType:
 			if views != None:
 				if not views.has_key(view):
@@ -471,8 +492,11 @@ class Access(Resolvers.Access,Ev_filters.Access):
 							compresolver = self.resolverlist[compresname]
 						else:
 							raise ValueError, 'unknown resolver "%s"'%(compresname)
-						cobjlist.append(compresolver(model=self, component=comps[cid], \
-									context=context, resolver_args=resolver_args))
+						cobjlist.append(compresolver(model=self, 
+												component=comps[cid],
+												context=context, 
+												resolver_args=resolver_args)
+										)
 					else:
 						raise ValueError, 'component "%s" not in view "%s" (%s)'%(cid,view,cidlist)
 				else:
@@ -727,7 +751,6 @@ class Access(Resolvers.Access,Ev_filters.Access):
 			raise ValueError, "tell: component id is not string type"
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
-		print 'tell',context, componentid, evidence
 		perms = contextinfo['perms']
 		if self.usertype != 'owner':
 			if not (self.user in perms):

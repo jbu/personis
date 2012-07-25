@@ -1,7 +1,5 @@
 import os, sys
 
-sys.path.insert(0, '/home/jbu/src/jbu-personis/Src')
-
 import httplib, oauth2
 from optparse import OptionParser
 import httplib2
@@ -33,7 +31,6 @@ class LogLlum(object):
 
     @cherrypy.expose
     def do_login(self):
-        print self.oauthconf
         flow = OAuth2WebServerFlow(client_id=self.oauthconf['client_id'],
                         client_secret=self.oauthconf['client_secret'],
                         scope='https://www.personis.info/auth/model',
@@ -41,9 +38,7 @@ class LogLlum(object):
                         auth_uri=self.oauthconf['personis_uri']+'/authorize',
                         token_uri=self.oauthconf['personis_uri']+'/request_token')
         callback = self.oauthconf['callback']
-
         authorize_url = flow.step1_get_authorize_url(callback)
-
         cherrypy.session['flow'] = flow
         raise cherrypy.HTTPRedirect(authorize_url)
 
@@ -67,7 +62,6 @@ class LogLlum(object):
         cobj = Personis_base.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
                                        value_list=[i for i in item_list.keys()], resolver=None ,Description="All the items logged")
         um.mkcomponent(context=context, componentobj=cobj)
-
 
     @cherrypy.expose
     def authorized(self, code, state=None):
@@ -93,7 +87,6 @@ class LogLlum(object):
         ev = Personis_base.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
         um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
         raise cherrypy.HTTPRedirect('/')
-    
 
     @cherrypy.expose
     def index(self):

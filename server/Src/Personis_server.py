@@ -1,9 +1,24 @@
 #!/usr/bin/env python
 
-#
-# The Personis system is copyright 2000-2011 University of Sydney
+
+# The Personis system is copyright 2000-2012 University of Sydney
 #       Bob.Kummerfeld@Sydney.edu.au
-# GPL v3
+
+# This file is part of Personis.
+
+# Personis is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Personis is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Personis.  If not, see <http://www.gnu.org/licenses/>.
+
 #
 # Active User Models: added subscribe method to Access
 #
@@ -658,8 +673,7 @@ class Personis_server:
         if state <> None:
             cherrypy.session['state'] = state
         if cli.redirect_uri <> redirect_uri:
-            print cli.redirect_uri, redirect_uri
-            raise cherrypy.HTTPError() 
+            raise cherrypy.HTTPError(400,'Redirect URIs do not match') 
         raise cherrypy.HTTPRedirect('/login')
 
     @cherrypy.expose
