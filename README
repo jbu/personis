@@ -2,11 +2,11 @@ Personis user model server
 ==========================
 
 The project consists of 4 parts (so far). 
-   * Server - the user model server
-   * Client - a command line client for manipulating a user model
+   * server - the user model server
+   * client - a command line client for manipulating a user model
    * log-llum - a really simple web server logging app that uses the personis
                 server. Use as an example.
-   * inactivity - an inactivity sensor that logs period of user activity
+   * activity_sensor - a sensor that logs period of user activity
                   to personis.
 
 All are implemented in python. Python2.7.4 has been the development version.

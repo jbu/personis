@@ -14,6 +14,9 @@ from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clie
 from oauth2client.tools import run
 import httplib2
 import logging
+from Queue import Queue
+import threading
+import math
 
 osname = os.name + platform.system()
 if osname == 'posixLinux':
@@ -88,10 +91,44 @@ def install_inactivity(um):
         value_type="number",resolver=None,Description="0 on inactivity detection, 1 on activity detection, -1 on shutdown")
     um.mkcomponent(context=context, componentobj=cobj)
 
-def send_toggle(um, v, t):
-    ev = personis.Evidence(source='activity_monitor', evidence_type="explicit", value=v, time=t)
-    logging.info('%s: %s'%(t, v))
-    um.tell(context=['Devices','activity_monitor','activity'], componentid='data', evidence=ev)
+class sender(threading.Thread):
+    def __init__(self, um):
+        self.q = Queue()
+        self.um = um
+        self.running = False
+        threading.Thread.__init__(self)
+
+    def send(self, v, t):
+        ev = personis.Evidence(source='activity_monitor', evidence_type="explicit", value=v, time=t)
+        self.q.put(ev)
+        logging.debug('put %s'%(ev))
+
+    def run(self):
+        retries = 1
+        self.running = True
+        ev = None
+        while self.running:
+            if ev == None:
+                ev = self.q.get(block=True)
+                logging.debug('got %s'%(ev))
+            try:
+                self.um.tell(context=['Devices','activity_monitor','activity'], componentid='data', evidence=ev)
+                logging.info('%s: %s'%(time.asctime(time.localtime(ev.time)), ev.value))
+                ev = None
+                retries = 1
+                self.q.task_done()
+            except Exception as e:
+                backoff = math.sqrt(retries)*4
+                logging.info('Personis down? try again in %d seconds'%(backoff))
+                time.sleep(backoff)
+                retries = retries + 1
+
+    def stop(self):
+        self.running = False
+        self.q.join()
+        threading.Thread.join(self)
+
+
 
 inactive_granularity = 5 # seconds
 active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's not seen.
@@ -119,29 +156,31 @@ if __name__ == '__main__':
     print 'logging for', reslist[0].value
 
     install_inactivity(um)
-
+    snd = sender(um)
+    snd.start()
     idle = idler();
     time.sleep(1)
 
     idle_state = True
     i = inactive_granularity + active_granularity
-    send_toggle(um, 0, time.time())                
+    snd.send(0, time.time())                
 
     try:
         while True:
-            if idle_state:
-                while i >= inactive_granularity:
-                    time.sleep(inactive_granularity)
-                    i = idle.getIdleTime()
-                send_toggle(um, 1, time.time())                
-                idle_state = False
-            if not idle_state:
-                while i < active_granularity:
-                    time.sleep(active_granularity)
-                    i = idle.getIdleTime()
-                send_toggle(um, 0, time.time())                
-                idle_state = True
+                if idle_state:
+                    while i >= inactive_granularity:
+                        time.sleep(inactive_granularity)
+                        i = idle.getIdleTime()
+                    snd.send(1, time.time())                
+                    idle_state = False
+                if not idle_state:
+                    while i < active_granularity:
+                        time.sleep(active_granularity)
+                        i = idle.getIdleTime()
+                    snd.send(0, time.time())                
+                    idle_state = True
     except:
         pass
     finally:
-        send_toggle(um, -1, time.time())  
+        snd.send(-1, time.time())  
+        snd.stop()
