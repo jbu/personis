@@ -31,6 +31,7 @@ import httplib2
 import pickle
 import types
 import time
+import logging
 
 def do_call(fun, args, connection):
     if (not connection.valid()):
@@ -44,8 +45,8 @@ def do_call(fun, args, connection):
     try:
         result = json.loads(content)
     except:
-        print "json loads failed!"
-        print "<<%s>>" % (content)
+        logging.debug("json loads failed!")
+        logging.debug("<<%s>>" % (content))
         raise ValueError, "json loads failed"
     # dirty kludge to get around unicode
     for k,v in result.items():
@@ -57,7 +58,6 @@ def do_call(fun, args, connection):
     ## Unpack the error, and if it is an exception throw it.
     if type(result) == types.DictionaryType and result.has_key("result"):
         if result["result"] == "error":
-            print result
             # We have returned with an error, so throw it as an exception.
             if result.has_key("pythonPickel"):
                 raise pickle.loads(result["pythonPickel"])
@@ -254,11 +254,9 @@ class Access(object):
         if not test: 
             return
         try:
-            if self.debug != 0:
-                print "jsondocall:", connection
+            logging.debug("jsondocall:", connection)
             ok = do_call("access", {}, self.connection)
-            if self.debug != 0:
-                print "---------------------- result returned", ok
+            logging.debug("---------------------- result returned", ok)
         except:
             if debug >0:
                 traceback.print_exc()
