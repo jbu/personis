@@ -46,7 +46,7 @@ import httplib2
 import shutil
 
 from oauth2client.file import Storage
-from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow
+from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
 #from oauth2client.tools import run
 
 from genshi.template import TemplateLoader
@@ -683,10 +683,8 @@ class Personis_server:
         enter. there is no client_id etc because personis is not being
         used as an oauth server.
         """
-        flow = OAuth2WebServerFlow(client_id=self.oauthconf['personis_client_id'],
-                                   client_secret=self.oauthconf['personis_client_secret'],
-                                   scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-                                   user_agent='personis-server/1.0')
+        flow = flow_from_clientsecrets('client_secrets_google.json',
+    scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
         callback = cherrypy.request.base + '/logged_in'
         authorize_url = flow.step1_get_authorize_url(callback)
         cherrypy.session['flow'] = flow
@@ -817,7 +815,7 @@ class Personis_server:
         (Accessed by the client (Mneme, etc) on behalf of a user.)
         NOTE! This should only be exported over TLS/SSL (ahem!)
         """
-        print code, redirect_uri, client_id, client_secret, scope, grant_type, refresh_token
+        print 'code %s, redirui %s, clientid %s, clientsec %s, scope %s, granttype %s, refreshtoken %s'%(code, redirect_uri, client_id, client_secret, scope, grant_type, refresh_token)
         cli = self.oauth_clients[client_id]
 
         # expire old tokens before we look
@@ -825,7 +823,7 @@ class Personis_server:
         for k, v in self.access_tokens.items():
             #print 'access_tokens', k, 'v',v
             if now > v['expires']:
-                print 'expire access_token',k
+                #print 'expire access_token',k
                 del(self.access_tokens[k])
 
         # temporary hack
@@ -837,50 +835,63 @@ class Personis_server:
         if grant_type == 'refresh_token':
             code = refresh_token
 
+        #for k,v in self.access_tokens.items():
+            #print 'a:',k, v['type']
+
         if not code in self.access_tokens:
-            raise cherrypy.HTTPError(401, 'Incorrect token')
+            if grant_type == 'refresh_token':
+                raise cherrypy.HTTPError(401, 'Refresh_token expiry')
+            else:
+                raise cherrypy.HTTPError(401, 'Incorrect token')
 
         tok = self.access_tokens[code]
 
         if tok['client_id'] <> client_id:
             raise cherrypy.HTTPError(401, 'Incorrect client')
 
-        if tok['type'] == 'refresh_token':
-            del(self.access_tokens[code])
+        #if tok['type'] == 'refresh_token':
+            #print 'remove refresh_token',code
+            #del(self.access_tokens[code])
         
         if cli.secret <> client_secret:
             raise cherrypy.HTTPError(401, 'Incorrect client information')
 
         userid = tok['userid']
-        access_token = ''
-        refresh_token = ''
-        for i in range(32):
-            access_token = access_token + random.choice(string.hexdigits)
-            refresh_token = refresh_token + random.choice(string.hexdigits)
 
-        access_expiry = 3600 # an hour
+        access_expiry =  3600 # an hour
         refresh_expiry = 3600*24*7*52 # a year
 
+        access_token = ''
+        access_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
         self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
-        self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
+        print 'added access_token:',access_token
+
+        ret = {'access_token': access_token, 
+               'token_type': 'bearer',
+               'expires_in': access_expiry,
+               "example_parameter":"example_value"
+               }
+
+        if grant_type == 'authorization_code':
+            refresh_token = ''
+            refresh_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
+            print 'added refresh_token:',refresh_token
+            self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
+            ret['refresh_token'] = refresh_token
+
         self.access_tokens.sync()
-        s = '''
-{
-    "access_token":"%s",
-    "token_type":"bearer",
-    "expires_in":%s,
-    "refresh_token":"%s",
-    "example_parameter":"example_value"
-}
-        '''%(access_token,access_expiry,refresh_token)
+        s = json.dumps(ret)
+        print s
         return s
 
 
     @cherrypy.expose
-    def default(self, *args):
+    def default(self, *args, **kargs):
 
         cherrypy.session['admin'] = False
-        jsonobj = cherrypy.request.body.fp.read()        
+
+        cl = cherrypy.request.headers['Content-Length']
+        jsonobj = cherrypy.request.body.read(int(cl))
 
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
@@ -895,8 +906,8 @@ Looks like you're coming into the service entrance with a browser. That's not ho
 	    raise cherrypy.HTTPError(401, 'Incorrect access token')
         #print 'token',self.access_tokens[access_token]
         now = time.time()
-        if now - self.access_tokens[access_token]['timestamp'] > 60:
-	    #print 'expired'
+        if now > self.access_tokens[access_token]['expires']:
+	    print 'expired', access_token
 	    raise cherrypy.HTTPError(401, 'Expired access token')
         usr = self.access_tokens[access_token]['userid']
         
