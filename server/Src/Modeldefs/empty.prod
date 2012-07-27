@@ -1,0 +1,24 @@
+
+#Create a context and make it current
+# @@word/word/.../word: description="description string"
+#Create a component in the current context
+# --componentname: type="type of component", value_type="type of value", description="description", value="blah", value="..".......
+#	subscription="sub statement"
+# ==viewname: path, path,....
+
+#Notes: 
+# defs continue on new line starting with whitespace
+# ComponentTypes = ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
+# ValueTypes = ["string", "number", "boolean", "enum", "JSON"]
+
+
+# root context
+
+@@Admin: description="Administrative Information"
+--browseractivity: type="attribute", value_type="string", description="browser activity infos" 
+
+@@Admin/modelinfo: description="Model Information"
+--modeled: type="attribute", value_type="string", description="type of entity being modeled"
+--personisversion: type="attribute", value_type="string", description="version of the Personis version in use"
+
+@@Temp: description="work area"
