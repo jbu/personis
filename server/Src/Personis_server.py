@@ -87,9 +87,9 @@ class Access(Personis_a.Access):
             password        password string
     returns a user model access object
     """
-    def __init__(self, connection=None, debug=0):
+    def __init__(self, modelname = '-', connection=None, debug=0):
         self.debug =debug
-        self.modelname = '-'
+        self.modelname = modelname
         self.user = ''
         self.password = ''
         self.connection = connection
@@ -722,7 +722,6 @@ class Personis_server:
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,usr['id'])):
-            fn = os.path.join('tmp',usr['id'])
             mkmodel(model=usr['id'], mfile='Modeldefs/user.prod', modeldir=self.modeldir, user=usr['id'], password='')
             um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
             ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
@@ -917,7 +916,6 @@ Looks like you're coming into the service entrance with a browser. That's not ho
             print "bad request - cannot decode json - possible access from web browser"
             return json.dumps("Personis User Model server. Not accessible using a web browser.")
 
-        print 'USER:', usr, 'BEARER:', access_token
         # dirty kludge to get around unicode
         for k,v in pargs.items():
             if type(v) == type(u''):
@@ -926,16 +924,20 @@ Looks like you're coming into the service entrance with a browser. That's not ho
                 del pargs[k]
                 pargs[str(k)] = v
 
+	model = usr
+        if 'model' in pargs:
+		model = pargs['modelname']
+
+        print 'USER:', usr, 'MODEL:,', model, 'BEARER:', access_token
+
         try:
             result = False
             if args[0] == 'mkmodel':
-                # fixme need to implement security
-                # and error handling
-                Personis_base.MkModel(model=usr, modeldir=self.modeldir, \
-                                        user=usr, password='', description=pargs['description'])
+                if not os.path.exists(os.path.join(self.modeldir,model)):
+                    mkmodel(model=model, mfile='Modeldefs/empty.prod', modeldir=self.modeldir, user=usr['id'], password='', description=pargs['description'])
                 result = True
             else:
-                um = Personis_a.Access(model=usr, modeldir=self.modeldir, user=usr, password='')
+                um = Personis_a.Access(model=model, modeldir=self.modeldir, user=usr, password='')
 
             if args[0] == 'access':
                 result = True
