@@ -725,10 +725,6 @@ class Personis_server:
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,usr['id'])):
             fn = os.path.join('tmp',usr['id'])
-            #f1 = open('Modeldefs/user.template','r').read()
-            #f = open(fn, 'w')
-            #f.write(f1%(usr['given_name'],usr['family_name'], usr['gender'], usr['email']))
-            #f.close()
             mkmodel(model=usr['id'], mfile='Modeldefs/user.prod', modeldir=self.modeldir, user=usr['id'], password='')
             um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
             ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
