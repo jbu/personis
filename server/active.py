@@ -22,17 +22,17 @@
 #
 # Active User Models: added subscribe method to Access
 
-import Personis_base
-import Subscription
+import base
+import subscription
 from types import *
 import re, time
 import cronserver
 
 
-class Access(Personis_base.Access):
+class Access(base.Access):
 
 	def __init__(self, model=None, modeldir=None, user=None, password=None):
-		Personis_base.Access.__init__(self, model=model, modeldir=modeldir, user=user, password=password)
+		base.Access.__init__(self, model=model, modeldir=modeldir, user=user, password=password)
 	
 	def subscribe(self,
 		context=[],
@@ -61,16 +61,16 @@ class Access(Personis_base.Access):
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
 		try:
-			comps,comps_shelf_fd = Personis_base.shelf_open(self.curcontext+"/.components", "r")
+			comps,comps_shelf_fd = base.shelf_open(self.curcontext+"/.components", "r")
 		except:
 			print "can't open ",self.curcontext+"/.components"
 			comps = None
 		try:
-			views,views_shelf_fd = Personis_base.shelf_open(self.curcontext+"/.views", "r")
+			views,views_shelf_fd = base.shelf_open(self.curcontext+"/.views", "r")
 		except:
 			views = None
 		try:
-			subs,subs_shelf_fd = Personis_base.shelf_open(self.curcontext+"/.subscriptions", "w")
+			subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "w")
 		except:
 			subs = None
 		cidlist = []
@@ -111,7 +111,7 @@ class Access(Personis_base.Access):
 			elif type(cid) is ListType:
 				vcontext = self._getcontextdir(cid[:-1])
 				try:
-					vcomps,vcomps_shelf_fd = Personis_base.shelf_open(vcontext+"/.components", "r")
+					vcomps,vcomps_shelf_fd = base.shelf_open(vcontext+"/.components", "r")
 				except:
 					raise ValueError, 'context "%s" not in view "%s"'%(cid[-1],`view`)
 				if vcomps.has_key(cid[-1]):
@@ -126,14 +126,14 @@ class Access(Personis_base.Access):
 						cronserver.cronq.put(dict(op="put",context=context, comp=cid, subscription=subscription))
 				else:
 					raise ValueError, 'component "%s" not in view "%s"'%(cid[-1],`view`)
-				Personis_base.shelf_close(vcomps, vcomps_shelf_fd)
+				base.shelf_close(vcomps, vcomps_shelf_fd)
 					
 		if comps != None:
-			Personis_base.shelf_close(comps, comps_shelf_fd)
+			base.shelf_close(comps, comps_shelf_fd)
 		if views != None:
-			Personis_base.shelf_close(views, views_shelf_fd)
+			base.shelf_close(views, views_shelf_fd)
 		if subs != None:
-			Personis_base.shelf_close(subs, subs_shelf_fd)
+			base.shelf_close(subs, subs_shelf_fd)
 		return token
 
 	def delete_sub(self, context=None, componentid=None, subname=None):
@@ -141,7 +141,7 @@ class Access(Personis_base.Access):
 		if type(componentid) == type(u''):
 			componentid = str(componentid)
 		try:
-			subs,subs_shelf_fd = Personis_base.shelf_open(self.curcontext+"/.subscriptions", "w")
+			subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "w")
 		except:
 			raise ValueError, 'no subs db when deleting sub %s for component "%s" in context "%s" not found'%(subname, componentid,self.curcontext)
 		if not subs.has_key(componentid):
@@ -153,25 +153,25 @@ class Access(Personis_base.Access):
 			raise ValueError, 'cannot delete subname "%s" for component "%s" in context "%s" '%(subname,componentid,self.curcontext)
 		subs[componentid] = subdict
 		if subs != None:
-			Personis_base.shelf_close(subs, subs_shelf_fd)
+			base.shelf_close(subs, subs_shelf_fd)
 		return None
 
 	def list_subs(self, context=None, componentid=None):
 		self.curcontext = self._getcontextdir(context)
 		try:
-			subs,subs_shelf_fd = Personis_base.shelf_open(self.curcontext+"/.subscriptions", "r")
+			subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "r")
 		except:
 			raise ValueError, 'no subs db when listing subs for component "%s" in context "%s" '%(componentid,self.curcontext)
 		if not subs.has_key(componentid):
 			raise ValueError, 'no subs for component "%s" in context "%s" not found'%(componentid,self.curcontext)
 		subdict = subs[componentid]
 		if subs != None:
-			Personis_base.shelf_close(subs, subs_shelf_fd)
+			base.shelf_close(subs, subs_shelf_fd)
 		return subdict
 
 
 	def checksubs(self, context, componentid):
-		subs,subs_shelf_fd = Personis_base.shelf_open(self.curcontext+"/.subscriptions", "r")
+		subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "r")
 		#print ">>>subs in context '%s': %s" % (self.curcontext, subs.keys())
 		#print "checking subs for '%s'"%(componentid)
 		if subs.has_key(componentid):
@@ -179,5 +179,5 @@ class Access(Personis_base.Access):
 			for subname,sub in subdict.items():
 				if sub == {}:
 					continue
-				Subscription.dosub(sub, self)
+				subscription.dosub(sub, self)
 

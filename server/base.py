@@ -27,10 +27,10 @@ try:
 except:
 	import bsddb3 as bsddb
 from types import *
-import Resolvers
-import Ev_filters
-import simplejson as json
-import Personis_util
+import resolvers
+import ev_filters
+import json
+import util
 
 PERSONIS_VERSION = "$LastChangedRevision: 727 $"
 
@@ -325,7 +325,7 @@ class View:
 		if self.Identifier == None:
 			return None
 
-class Access(Resolvers.Access,Ev_filters.Access):
+class Access(resolvers.Access,ev_filters.Access):
 	""" 
 	arguments:
 		model		model name
@@ -370,8 +370,8 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		#else:
 		#	raise ValueError, "incorrect password '%s' for user '%s', model '%s'"%(self.password, self.user, self.modelname)
 		shelf_close(mod, mod_shelf_fd)
-		Resolvers.Access.__init__(self)
-		Ev_filters.Access.__init__(self)
+		resolvers.Access.__init__(self)
+		ev_filters.Access.__init__(self)
 
 	def ask(self,  
 		context=[],
@@ -823,7 +823,7 @@ class Access(Resolvers.Access,Ev_filters.Access):
 		"""
 	check subscriptions for componentid in current context
 
-	implemented in Personis_a
+	implemented in active
 		"""
 		pass
 	

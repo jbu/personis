@@ -28,9 +28,9 @@ import json
 import yaml
 import jsoncall
 import cherrypy
-import Personis_base
-import Personis_a
-import Personis_util
+import base
+import active
+import util
 import cPickle
 from multiprocessing import Process, Queue
 import cronserver
@@ -39,7 +39,7 @@ import connection
 from shove import Shove
 import string
 
-from Personis_mkmodel import *
+from mkmodel import *
 #import httplib, oauth2
 from optparse import OptionParser
 import httplib2
@@ -76,7 +76,7 @@ def MkModel( model=None, modelserver=None, user=None, password=None, description
     if not ok:
         raise ValueError, "server '%s' cannot create model '%s'" % (modelserver, modelname)
 
-class Access(Personis_a.Access):
+class Access(active.Access):
     """
     Client version of access for client/server system
 
@@ -114,7 +114,7 @@ class Access(Personis_a.Access):
             resolver=None,
             showcontexts=None):
         """
-arguments: (see Personis_base for details)
+arguments: (see base for details)
         context is a list giving the path of context identifiers
         view is either:
                 an identifier of a view in the context specified
@@ -137,16 +137,16 @@ returns a list of component objects
         if showcontexts:
             cobjlist, contexts, theviews, thesubs = reslist
             for c in cobjlist:
-                comp = Personis_base.Component(**c)
+                comp = base.Component(**c)
                 if c["evidencelist"]:
-                    comp.evidencelist = [Personis_base.Evidence(**e) for e in c["evidencelist"]]
+                    comp.evidencelist = [base.Evidence(**e) for e in c["evidencelist"]]
                 complist.append(comp)
             reslist = [complist, contexts, theviews, thesubs]
         else:
             for c in reslist:
-                comp = Personis_base.Component(**c)
+                comp = base.Component(**c)
                 if c["evidencelist"]:
-                    comp.evidencelist = [Personis_base.Evidence(**e) for e in c["evidencelist"]]
+                    comp.evidencelist = [base.Evidence(**e) for e in c["evidencelist"]]
                 complist.append(comp)
             reslist = complist
         return reslist
@@ -349,7 +349,7 @@ arguments:
                 a list of component identifiers or full path lists
                 None indicating that the values of all components in
                         the context be returned
-                subscription is a Subscription object
+                subscription is a subscription object
         """
         return  jsoncall.do_call("subscribe", {'modelname':self.modelname,\
                                                                         'user':self.user,\
@@ -529,7 +529,7 @@ class oauth_client(object):
     def __repr__(self):
         return '<%s %r>' % (type(self).__name__, self.client_id)
 
-class Personis_server:
+class server:
 
     def __init__(self, modeldir=None, adminsfile=None, oauthconfig=None):
         self.modeldir = modeldir
@@ -722,33 +722,33 @@ class Personis_server:
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,usr['id'])):
-            mkmodel(model=usr['id'], mfile='Modeldefs/user.prod', modeldir=self.modeldir, user=usr['id'], password='')
-            um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
-            ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
+            mkmodel(model=usr['id'], mfile='modeldefs/user.prod', modeldir=self.modeldir, user=usr['id'], password='')
+            um = active.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
             um.tell(context=["Personal"], componentid='firstname', evidence=ev)
-            ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['family_name'])
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['family_name'])
             um.tell(context=["Personal"], componentid='lastname', evidence=ev)
-            ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['gender'])
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['gender'])
             um.tell(context=["Personal"], componentid='gender', evidence=ev)
-            ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['email'])
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['email'])
             um.tell(context=["Personal"], componentid='email', evidence=ev)
 
 
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
-            Personis_util.printcomplist(reslist)
+            util.printcomplist(reslist)
 
-        um = Personis_a.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+        um = active.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
         try:
             reslist = um.ask(context=["Personal"], view=['picture'])
         except:
             #fill in missing icon info
-            cobj = Personis_base.Component(Identifier="picture", component_type="attribute", value_type="string",resolver=None,Description="Uri of a picture of the user")
+            cobj = base.Component(Identifier="picture", component_type="attribute", value_type="string",resolver=None,Description="Uri of a picture of the user")
             um.mkcomponent(context=['Personal'], componentobj=cobj)
-            ev = Personis_base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
             um.tell(context=["Personal"], componentid='picture', evidence=ev)
 
             reslist = um.ask(context=["Personal"], view=['firstname','picture'])
-            Personis_util.printcomplist(reslist)
+            util.printcomplist(reslist)
 
         # if we're here from a local url, just redirect. no need to allow.
         if cherrypy.session.get('admin'):
@@ -792,7 +792,7 @@ class Personis_server:
         self.access_tokens.sync()
 
         redr = cli.redirect_uri
-        um = Personis_a.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
+        um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
         cherrypy.session['um'] = um
         result = um.registerapp(app=cherrypy.session['client_id'], desc=cli.friendly_name, password='')
         raise cherrypy.HTTPRedirect(rdi)
@@ -934,15 +934,15 @@ Looks like you're coming into the service entrance with a browser. That's not ho
             result = False
             if args[0] == 'mkmodel':
                 if not os.path.exists(os.path.join(self.modeldir,model)):
-                    mkmodel(model=model, mfile='Modeldefs/empty.prod', modeldir=self.modeldir, user=usr['id'], password='', description=pargs['description'])
+                    mkmodel(model=model, mfile='modeldefs/empty.prod', modeldir=self.modeldir, user=usr['id'], password='', description=pargs['description'])
                 result = True
             else:
-                um = Personis_a.Access(model=model, modeldir=self.modeldir, user=usr, password='')
+                um = active.Access(model=model, modeldir=self.modeldir, user=usr, password='')
 
             if args[0] == 'access':
                 result = True
             elif args[0] == 'tell':
-                result = um.tell(context=pargs['context'], componentid=pargs['componentid'], evidence=Personis_base.Evidence(**pargs['evidence']))
+                result = um.tell(context=pargs['context'], componentid=pargs['componentid'], evidence=base.Evidence(**pargs['evidence']))
             elif args[0] == 'ask':
                 reslist = um.ask(context=pargs['context'], view=pargs['view'], resolver=pargs['resolver'], \
                                         showcontexts=pargs['showcontexts'])
@@ -989,7 +989,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
             elif args[0] == 'listapps':
                 result = um.listapps()
             elif args[0] == 'mkcomponent':
-                comp = Personis_base.Component(**pargs["componentobj"])
+                comp = base.Component(**pargs["componentobj"])
                 result = um.mkcomponent(pargs["context"], comp)
             elif args[0] == 'delcomponent':
                 result = um.delcomponent(pargs["context"], pargs["componentid"])
@@ -1000,12 +1000,12 @@ Looks like you're coming into the service entrance with a browser. That's not ho
             elif args[0] == 'getresolvers':
                 result = um.getresolvers()
             elif args[0] == 'mkview':
-                viewobj = Personis_base.View(**pargs["viewobj"])
+                viewobj = base.View(**pargs["viewobj"])
                 result = um.mkview(pargs["context"], viewobj)
             elif args[0] == 'delview':
                 result = um.delview(pargs["context"], pargs["viewid"])
             elif args[0] == 'mkcontext':
-                contextobj = Personis_base.Context(**pargs["contextobj"])
+                contextobj = base.Context(**pargs["contextobj"])
                 result = um.mkcontext(pargs["context"], contextobj)
             elif args[0] == 'getcontext':
                 result = um.getcontext(pargs["context"], pargs["getsize"])

@@ -19,8 +19,8 @@
 
 from multiprocessing import Process, Queue
 import time
-import Subscription
-import Personis_base as pmdns
+import subscription
+import base as pmdns
 
 cronq = None # message q
 
@@ -58,7 +58,7 @@ def checksub(modeldir, m):
 		return
 	print "Access OK", sub
 	try:
-		Subscription.dosub(sub,um)
+		subscription.dosub(sub,um)
 	except:
 		print "dosub failed"
 		return

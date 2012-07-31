@@ -19,7 +19,7 @@
 # along with Personis.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys,time
-import simplejson as json
+import json
 
 # utility function to display an object
 def showobj(obj, indent):
@@ -60,9 +60,8 @@ class Struct:
     def __init__(self, **entries): 
         self.__dict__.update(entries)
 
-import json as sysjson
 import sys
 def printjson(jsonobj):
-	sysjson.dump(sysjson.loads(jsonobj), sys.stdout, sort_keys=True, indent=4)
+	json.dump(json.loads(jsonobj), sys.stdout, sort_keys=True, indent=4)
 	print
 

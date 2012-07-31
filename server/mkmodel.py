@@ -29,9 +29,9 @@ and creates a model in modeldirectory for each model
 """
 
 import sys
-import Personis_base
-import Personis_a
-import Personis_server
+import base
+import active
+import server
 
 
 """
@@ -134,17 +134,17 @@ def dotells(ev, compid):
 			return
 
 	if not Debug:
-		evobj = Personis_base.Evidence(evidence_type="explicit")
+		evobj = base.Evidence(evidence_type="explicit")
 		for k,v in ev.items():
 			evobj.__dict__[k] = v
 		themodel.tell(context=curcontext, componentid=compid, evidence=evobj)
 		print	"""
-			evobj = Personis_base.Evidence(ev)
+			evobj = base.Evidence(ev)
 			themodel.tell(context=%s, componentid=%s, evidence=%s)
 			""" % (curcontext, compid, evobj.__dict__)
 	else:
 		print	"""
-			evobj = Personis_base.Evidence(ev)
+			evobj = base.Evidence(ev)
 			themodel.tell(context=%s, componentid=%s, evidence=%s)
 			""" % (curcontext, compid, ev)
 		
@@ -164,7 +164,7 @@ def docomponent(str, loc, toks):
 			print attrs[0]
 			return
 	if not Debug:
-		cobj = Personis_base.Component(Identifier=toks[1],
+		cobj = base.Component(Identifier=toks[1],
 			component_type=attrs[0]['type'],
 			value_type=attrs[0]['value_type'],
 			value_list=attrs[0].get('value'),
@@ -176,7 +176,7 @@ def docomponent(str, loc, toks):
 			print "mkcomponent failed"
 		if res != None:
 			print res
-	print """cobj = Personis_base.Component(Identifier="%s",
+	print """cobj = base.Component(Identifier="%s",
 		component_type="%s",
 		value_type="%s",
 		value_list="%s",
@@ -214,8 +214,8 @@ def docontext(str, loc, toks):
 		print "*** description required for ", curcontext
 		raise ParseException, "description required for " + `curcontext`
 	if not Debug:
-		cobj = Personis_base.Context(Identifier=curcontext.split('/')[-1], Description=attrs[0]['description'])
-	print "\tPersonis_base.Context(Identifier='%s', Description='%s')" % (curcontext.split('/')[-1], attrs[0]['description'])
+		cobj = base.Context(Identifier=curcontext.split('/')[-1], Description=attrs[0]['description'])
+	print "\tbase.Context(Identifier='%s', Description='%s')" % (curcontext.split('/')[-1], attrs[0]['description'])
 	print "\t", curcontext.split('/')[:-1]
 	if not Debug:
 		if themodel.mkcontext(curcontext.split('/')[:-1], cobj):
@@ -246,7 +246,7 @@ def doview(str, loc, toks):
 	print "doview::", toks[1]
 	print "\t paths::", paths
 	if not Debug:
-		vobj = Personis_base.View(Identifier=toks[1], component_list=paths)
+		vobj = base.View(Identifier=toks[1], component_list=paths)
 		themodel.mkview(curcontext, vobj)
 	paths = []
 
@@ -311,13 +311,13 @@ def mkmodel_um(um,lines, debug = 1):
 	domodeldef(lines)
 
 def mkmodel_remote(model=None, mfile=None, modelserver=None, user=None, password=None):
-	Personis_server.MkModel(model=model, modelserver=modelserver, user=user, password=password)
+	server.MkModel(model=model, modelserver=modelserver, user=user, password=password)
 	um = Personis.Access(model=model, modelserver=modelserver, user=user, password=password)
 	mkmodel_um(um,get_modeldef(mfile))
 	
 
 def mkmodel(model=None, mfile=None, modeldir=None, user=None, password=None):
-	Personis_base.MkModel(model=model, modeldir=modeldir, user=user, password=password)
+	base.MkModel(model=model, modeldir=modeldir, user=user, password=password)
 	um = Personis_a.Access(model=model, modeldir=modeldir, user=user, password=password)
 	mkmodel_um(um,get_modeldef(mfile))
 
@@ -374,7 +374,7 @@ if __name__ == '__main__':
         value_type="enum", value="Academic", value="Postgraduate", value="etc"
 
 """
-	mmdefstring = get_modeldef("Modeldefs/user-test")
+	mmdefstring = get_modeldef("modeldefs/user-test")
 	mdefstring = get_modeldef(sys.argv[1])
 	print "=====================\n",mdefstring,"\n=====================\n"
 #	domodeldef(mdefstring)

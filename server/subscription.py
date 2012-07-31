@@ -61,7 +61,7 @@
 
 """
 #import Personis_server
-import Personis_base
+import base
 import re
 from mypyparsing import Word, alphas, Literal, ZeroOrMore, quotedString, Forward, removeQuotes, ParseException, Optional, OneOrMore
 
@@ -126,14 +126,14 @@ def dotell_body(str, loc, toks,changed_only=False):
 				if comp.value == newval:
 					return True # don't actually need to do the tell
 			um.tell(context=context, componentid=componentid,
-				evidence=Personis_base.Evidence(evidence_type=evidence_type, value=newval))
+				evidence=base.Evidence(evidence_type=evidence_type, value=newval))
 		else:
 			if changed_only:
 				comp = currentum.ask(context=context, view=[componentid], resolver='default')[0]
 				if comp.value == newval:
 					return True # don't actually need to do the tell
 			currentum.tell(context=context, componentid=componentid,
-				evidence=Personis_base.Evidence(evidence_type=evidence_type, value=newval))
+				evidence=base.Evidence(evidence_type=evidence_type, value=newval))
 
 	except:
 		print 'tell failed'

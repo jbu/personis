@@ -22,25 +22,24 @@
 
 import sys
 import cherrypy
-import Personis_server
-import Personis_base
-from Personis_exceptions import *
+import server
+import base
+from exceptions import *
 import socket
 import os
-import argparse
 from optparse import OptionParser
 from multiprocessing import Process, Queue
 import cronserver
 import oauth2client
 
-class Access(Personis_server.Access):
+class Access(server.Access):
 
 	def __init__(self, connection = None, debug=0):
 
 		Personis_server.Access.__init__(self, connection = connection, debug=debug)
 
 
-class CliAccess(Personis_server.Access):
+class CliAccess(server.Access):
 
 	def __init__(self, model = None, user=None, password=None, configfile="~/.personis.conf", modelserver=None, debug=0):
 		self.model = model
@@ -76,7 +75,7 @@ class CliAccess(Personis_server.Access):
 			self.modelserver = modelserver
 		#print self.modelname, self.modelserver
 
-		Personis_server.Access.__init__(self, model=self.modelname, modelserver=self.modelserver, user=user, password=password, debug=debug)
+		server.Access.__init__(self, model=self.modelname, modelserver=self.modelserver, user=user, password=password, debug=debug)
 
 
 
@@ -102,5 +101,5 @@ if __name__ == "__main__":
     if options.log != "stdout":
 		sys.stdout = open(options.log, "w", 0)
 
-    Personis_server.runServer(options.models, options.config, options.admins, options.oauth)
+    server.runServer(options.models, options.config, options.admins, options.oauth)
 

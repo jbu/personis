@@ -6,7 +6,7 @@ import sys
 import os
 import platform
 import time
-import personis
+from personis.client import access, context, evidence
 import json
 
 from oauth2client.file import Storage
@@ -74,14 +74,14 @@ def install_inactivity(um):
     except:
         pass
 
-    ctx_obj = personis.Context(Identifier="activity_monitor", Description="Watch computer usage",
+    ctx_obj = pc.Context(Identifier="activity_monitor", Description="Watch computer usage",
                  perms={'ask':True, 'tell':True, "resolvers": ["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context = ['Devices']
     um.mkcontext(context,ctx_obj)
     context.append('activity_monitor')
 
-    ctx_obj = personis.Context(Identifier="activity", Description="Extract data from activity watcher",
+    ctx_obj = pc.Context(Identifier="activity", Description="Extract data from activity watcher",
                  perms={'ask':True, 'tell':True, "resolvers":["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     um.mkcontext(context,ctx_obj)
@@ -148,10 +148,9 @@ if __name__ == '__main__':
         credentials = run(FLOW, storage, h)
     cjson = json.loads(credentials.to_json())
     http = httplib2.Http(proxy_info=p)
-    c = personis.Connection(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
-            credentials = credentials, http = http)
 
-    um = personis.Access(connection=c, debug=True)
+    um = client.access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
+            credentials = credentials, http = http, debug=True)
     reslist = um.ask(context=["Personal"],view=['firstname'])
     print 'logging for', reslist[0].value
 

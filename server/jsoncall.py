@@ -18,7 +18,7 @@
 # along with Personis.  If not, see <http://www.gnu.org/licenses/>.
 
 import httplib2, types, cPickle
-import simplejson as json
+import json
 import cherrypy, oauth2client
 import connection
 

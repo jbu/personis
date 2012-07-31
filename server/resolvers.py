@@ -23,9 +23,9 @@
 #
 
 import time,types,traceback,re
-import simplejson as json
+import json
 
-from Personis_exceptions import ModelNotFoundError
+from exceptions import ModelNotFoundError
 
 
 class Access:
