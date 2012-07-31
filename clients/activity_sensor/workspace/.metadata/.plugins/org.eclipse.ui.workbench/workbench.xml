@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench progressCount="8" version="2.0">
+<workbenchAdvisor/>
+<window height="900" width="1196" x="664" y="105">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar/>
+<coolbarLayout>
+<coolItem id="group.file" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="96" y="30"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="84" y="30"/>
+<coolItem id="group.help" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="48" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="40" y="30"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="com.google.dart.tools.ui.web.html.HtmlEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="com.google.dart.tools.ui.web.css.CSSEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+</coolbarLayout>
+<page focus="true" label="Workspace - Dart">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="com.google.dart.tools.ui.internal.presentation.DartEditorPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+</presentation>
+</folder>
+</info>
+</editorArea>
+<editor id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="swipe.dart" partName="swipe.dart" path="/home/jbu/dart/samples/swipe/swipe.dart" title="swipe.dart" tooltip="/home/jbu/dart/samples/swipe/swipe.dart" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/swipe/swipe.dart"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1180" selectionTopPixel="1566"/>
+</editor>
+<editor id="com.google.dart.tools.ui.web.css.CSSEditor" name="swipe.css" partName="swipe.css" path="/home/jbu/dart/samples/swipe/swipe.css" title="swipe.css" tooltip="/home/jbu/dart/samples/swipe/swipe.css" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/swipe/swipe.css"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="381" selectionTopPixel="817"/>
+</editor>
+<editor id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="clock.dart" partName="clock.dart" path="/home/jbu/dart/samples/clock/clock.dart" title="clock.dart" tooltip="/home/jbu/dart/samples/clock/clock.dart" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/clock/clock.dart"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="647" selectionTopPixel="612"/>
+</editor>
+<editor id="com.google.dart.tools.ui.web.html.HtmlEditor" name="clock.html" partName="clock.html" path="/home/jbu/dart/samples/clock/clock.html" title="clock.html" tooltip="/home/jbu/dart/samples/clock/clock.html" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/clock/clock.html"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+</editors>
+<views>
+<view id="com.google.dart.tools.ui.FileExplorer" partName="Files">
+<viewState linkWithEditor="true">
+<expanded>
+<element path="/clock"/>
+<element path="/sunflower"/>
+<element path="/swipe"/>
+</expanded>
+<selection>
+<element path="/sunflower/sunflower.dart"/>
+</selection>
+</viewState>
+</view>
+<view id="com.google.dart.tools.ui.ProblemsView" partName="Problems">
+<viewState columnWidths="520;361" partName="Problems"/>
+</view>
+</views>
+<perspectives activePart="com.google.dart.tools.ui.intro.editor" activePerspective="com.google.dart.tools.ui.DartPerspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="com.google.dart.tools.ui.DartPerspective" id="com.google.dart.tools.ui.DartPerspective" label="Dart"/>
+<alwaysOnActionSet id="com.google.dart.tools.ui.config.java.actionSet.presentation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.debugActionSet"/>
+<alwaysOnActionSet id="com.google.dart.tools.debug.ui.breakpointActionSet"/>
+<alwaysOnActionSet id="com.google.dart.tools.ui.DartActionSet"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<show_view_action id="com.google.dart.tools.ui.internal.metricsView"/>
+<new_wizard_action id="com.google.dart.project.wizard"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<new_wizard_action id="org.eclipse.ui.editors.wizards.UntitledTextFileWizard"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaPerspective"/>
+<perspective_action id="org.eclipse.debug.ui.DebugPerspective"/>
+<perspective_action id="org.eclipse.wst.web.ui.webDevPerspective"/>
+<perspective_action id="org.eclipse.ui.resourcePerspective"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="com.google.dart.tools.ui.FileExplorer"/>
+<view id="com.google.dart.tools.ui.ProblemsView"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="topLeft">
+<folder activePageID="com.google.dart.tools.ui.FileExplorer" appearance="2" expanded="2">
+<page content="com.google.dart.tools.ui.FileExplorer" label="Files"/>
+<page content="com.google.dart.tools.ui.AppsView" label="LabelNotFound"/>
+<presentation id="com.google.dart.tools.ui.internal.presentation.DartEditorPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.7495784" ratioLeft="889" ratioRight="297" relationship="2" relative="topLeft">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.24957842" ratioLeft="296" ratioRight="890" relationship="2" relative="topLeft"/>
+<info folder="true" part="bottomRight" ratio="0.7496887" ratioLeft="602" ratioRight="201" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="com.google.dart.tools.ui.console:24799871" appearance="2" expanded="2">
+<page content="com.google.dart.tools.ui.ProblemsView" label="Problems"/>
+<page content="com.google.dart.tools.ui.console:24799871" label="Dartium launch"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
+<page content="com.google.dart.tools.ui.console" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.TaskList" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
+<presentation id="com.google.dart.tools.ui.internal.presentation.DartEditorPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="topRight" ratio="0.7" ratioLeft="623" ratioRight="267" relationship="2" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="2">
+<page content="com.google.dart.tools.debug.debuggerView" label="LabelNotFound"/>
+</folder>
+</info>
+<info folder="true" part="outlineFolder" ratio="0.49937734" ratioLeft="401" ratioRight="402" relationship="4" relative="topLeft">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
+<page content="com.google.dart.tools.ui.DartUnitView" label="LabelNotFound"/>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory/>
+<input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+<trimItem IMemento.internal.id="editor.toolbar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.web.css.CSSEditor" name="sunflower.css" tooltip="sunflower/sunflower.css">
+<persistable path="/sunflower/sunflower.css"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.web.html.HtmlEditor" name="sunflower.html" tooltip="sunflower/sunflower.html">
+<persistable path="/sunflower/sunflower.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="sunflower.dart" tooltip="sunflower/sunflower.dart">
+<persistable path="/sunflower/sunflower.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.web.css.CSSEditor" name="clock.css" tooltip="clock/clock.css">
+<persistable path="/clock/clock.css"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="numbers.dart" tooltip="clock/numbers.dart">
+<persistable path="/clock/numbers.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="ball-009a49.png" tooltip="clock/images/ball-009a49.png">
+<persistable path="/clock/images/ball-009a49.png"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="balls.dart" tooltip="clock/balls.dart">
+<persistable path="/clock/balls.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.web.html.HtmlEditor" name="clock.html" tooltip="clock/clock.html">
+<persistable path="/clock/clock.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="clock.dart" tooltip="clock/clock.dart">
+<persistable path="/clock/clock.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="map.dart" tooltip="/home/jbu/dart/dart-sdk/lib/core/runtime/map.dart">
+<persistable uri="file:/home/jbu/dart/dart-sdk/lib/core/runtime/map.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="collection.dart" tooltip="/home/jbu/dart/dart-sdk/lib/core/runtime/collection.dart">
+<persistable uri="file:/home/jbu/dart/dart-sdk/lib/core/runtime/collection.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="byte_array.dart" tooltip="/home/jbu/dart/dart-sdk/lib/core/runtime/byte_array.dart">
+<persistable uri="file:/home/jbu/dart/dart-sdk/lib/core/runtime/byte_array.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="com.google.dart.tools.ui.text.editor.CompilationUnitEditor" name="bool.dart" tooltip="/home/jbu/dart/dart-sdk/lib/core/runtime/bool.dart">
+<persistable uri="file:/home/jbu/dart/dart-sdk/lib/core/runtime/bool.dart"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.web.html.HtmlEditor" name="swipe.html" tooltip="swipe/swipe.html">
+<persistable path="/swipe/swipe.html"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.google.dart.tools.ui.web.css.CSSEditor" name="swipe.css" tooltip="swipe/swipe.css">
+<persistable path="/swipe/swipe.css"/>
+</file>
+</mruList>
+</workbench>

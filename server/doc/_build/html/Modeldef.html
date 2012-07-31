@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Model Definition Format &mdash; Personis 12.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '12.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Personis 12.9 documentation" href="index.html" />
+    <link rel="next" title="Client/Server Protocol" href="Client.html" />
+    <link rel="prev" title="Application Program Interface" href="API.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Client.html" title="Client/Server Protocol"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="Application Program Interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="model-definition-format">
+<h1>Model Definition Format<a class="headerlink" href="#model-definition-format" title="Permalink to this headline">¶</a></h1>
+<p>When creating a new model it is possible to build the tree of contexts and components from a template file
+in &#8220;Model Definition Format&#8221; or &#8220;modeldef&#8221;. This is useful when installing applications that need their
+own subtree of contexts and components. The subtree could be built by the application using the <em>mkcontext</em>
+and <em>mkcomponent</em> methods but there is also a &#8220;bulk&#8221; creation script (Src/Utils/mkmodel.py)
+that reads &#8220;modeldef&#8221; files and creates the specified contexts, components, views, subscriptions
+and initial evidence.</p>
+<p>Modeldef files consist of a series text lines. Lines that start with # are comments and ignored.</p>
+<p>Lines that start with &#64;&#64; specify a context to be made. The context name is in the form of a pathname starting
+at the root of the model. For example:</p>
+<div class="highlight-python"><pre>@@Personal: description="Personal information"</pre>
+</div>
+<p>This specifies a context called &#8220;Personal&#8221; in the root context of the model.</p>
+<div class="highlight-python"><pre>@@Personal/Health: description="Health information"</pre>
+</div>
+<p>This specifies a context called &#8220;Health&#8221; in the &#8220;Personal&#8221; context of the model.</p>
+<p>A short string description of the context must be included.</p>
+<p>After a context (&#64;&#64;) line, that context becomes the <em>current</em> context and any additional non-context elements
+are created in that context until the current context is changed by another &#64;&#64; line.</p>
+<p>Components are specified using lines that begin with two minus signs (&#8211;). For example:</p>
+<div class="highlight-python"><pre>--firstname: type="attribute", value_type="string", description="First name", [evidence_type="explicit", value="Alice"]</pre>
+</div>
+<p>this line specifies that a new component called &#8220;firstname&#8221; is created in the current context.
+Attributes of the component are specified using name=value elements.
+Initial evidence for the component is included as a sequence of bracketed sections as shown.</p>
+<p>Subscription rules can also be included with a new component using the &#8220;rule&#8221; attribute. Eg:</p>
+<div class="highlight-python"><pre>--email: type="attribute", value_type="string", description="email address",
+# create a subscription that will notify when email address changes
+        rule="&lt;default!./Personal/email&gt; ~ '*' : NOTIFY 'http://www.somewhere.com/' 'email=' &lt;./Personal/email&gt;"</pre>
+</div>
+<p>lines can be continued by breaking them after a comma.</p>
+<p>Views are specified by lines starting with &#8220;==&#8221; and include a list of component pathnames. Eg:</p>
+<div class="highlight-python"><pre>==fullname: firstname, lastname</pre>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="API.html"
+                        title="previous chapter">Application Program Interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Client.html"
+                        title="next chapter">Client/Server Protocol</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Modeldef.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Client.html" title="Client/Server Protocol"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="Application Program Interface"
+             >previous</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2012, Bob Kummerfeld and Judy Kay.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
