@@ -13,7 +13,6 @@ import httplib2
 
 import cmd
 
-
 def printjson(jsonobj):
     json.dump(sysjson.loads(jsonobj), sys.stdout, sort_keys=True, indent=4)
     print
@@ -43,8 +42,6 @@ def lscontext(um, cont):
         print "Subscriptions: %s" % str(thesubs)
     except ValueError, e:
         print "ask failed: %s" % (e)
-
-um = None
 
 class browse(cmd.Cmd):
 

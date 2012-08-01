@@ -6,7 +6,7 @@ import sys
 import os
 import platform
 import time
-from personis.client import access, context, evidence
+from personis import client
 import json
 
 from oauth2client.file import Storage
@@ -74,20 +74,20 @@ def install_inactivity(um):
     except:
         pass
 
-    ctx_obj = pc.Context(Identifier="activity_monitor", Description="Watch computer usage",
+    ctx_obj = client.Context(Identifier="activity_monitor", Description="Watch computer usage",
                  perms={'ask':True, 'tell':True, "resolvers": ["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     context = ['Devices']
     um.mkcontext(context,ctx_obj)
     context.append('activity_monitor')
 
-    ctx_obj = pc.Context(Identifier="activity", Description="Extract data from activity watcher",
+    ctx_obj = client.Context(Identifier="activity", Description="Extract data from activity watcher",
                  perms={'ask':True, 'tell':True, "resolvers":["all","last10","last1","goal"]},
                  resolver=None, objectType="Context")
     um.mkcontext(context,ctx_obj)
     context.append('activity')
 
-    cobj = personis.Component(Identifier="data", component_type="attribute", 
+    cobj = client.Component(Identifier="data", component_type="attribute", 
         value_type="number",resolver=None,Description="0 on inactivity detection, 1 on activity detection, -1 on shutdown")
     um.mkcomponent(context=context, componentobj=cobj)
 
@@ -99,7 +99,7 @@ class sender(threading.Thread):
         threading.Thread.__init__(self)
 
     def send(self, v, t):
-        ev = personis.Evidence(source='activity_monitor', evidence_type="explicit", value=v, time=t)
+        ev = client.Evidence(source='activity_monitor', evidence_type="explicit", value=v, time=t)
         self.q.put(ev)
         logging.debug('put %s'%(ev))
 
@@ -149,7 +149,7 @@ if __name__ == '__main__':
     cjson = json.loads(credentials.to_json())
     http = httplib2.Http(proxy_info=p)
 
-    um = client.access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
+    um = client.Access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
             credentials = credentials, http = http, debug=True)
     reslist = um.ask(context=["Personal"],view=['firstname'])
     print 'logging for', reslist[0].value

@@ -12,8 +12,7 @@ import cherrypy
 import wsgiref.handlers
 import ConfigParser
 
-import Personis_server, Personis_base
-import connection
+from personis import client
 import yaml
 import time
 
@@ -50,7 +49,7 @@ class LogLlum(object):
             pass
 
         context = ['Apps']
-        ctx_obj = Personis_base.Context(Identifier="Logging",
+        ctx_obj = client.Context(Identifier="Logging",
                   Description="The logging app",
                   perms={'ask':True, 'tell':True,
                   "resolvers": ["all","last10","last1","goal"]},
@@ -59,7 +58,7 @@ class LogLlum(object):
         um.mkcontext(context,ctx_obj)
         context.append('Logging')
 
-        cobj = Personis_base.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
+        cobj = client.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
                                        value_list=[i for i in item_list.keys()], resolver=None ,Description="All the items logged")
         um.mkcomponent(context=context, componentobj=cobj)
 
@@ -72,9 +71,7 @@ class LogLlum(object):
         h = httplib2.Http(proxy_info=p)
         credentials = flow.step2_exchange(cherrypy.request.params, h)
         ht = httplib2.Http(proxy_info=p)
-        c = connection.Connection(uri = self.oauthconf['personis_uri'], credentials = credentials, http = ht)
-        cherrypy.session['connection'] = c
-        um = Personis_server.Access(connection=c, debug=True)
+        um = client.Access(uri = self.oauthconf['personis_uri'], credentials = credentials, http = ht)
         self.install_contexts(um)
         cherrypy.session['um'] = um
         raise cherrypy.HTTPRedirect('/')
@@ -84,7 +81,7 @@ class LogLlum(object):
         if cherrypy.session.get('um') == None:
             raise cherrypy.HTTPError(400, 'Log in first.')
         um = cherrypy.session.get('um')
-        ev = Personis_base.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
+        ev = client.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
         um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
         raise cherrypy.HTTPRedirect('/')
 
@@ -95,13 +92,7 @@ class LogLlum(object):
         um = cherrypy.session.get('um')
         reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
 
-        args = {'firstname': reslist[0].value, 'user_icon':reslist[1].value }
-        i = 0
-        for k,v in item_list.items():
-            args[`i`+'name'] = k
-            args[`i`+'pic'] = v['icon']
-            i = i + 1
-        return '''<!DOCTYPE html>
+        ret = '''<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -119,30 +110,14 @@ class LogLlum(object):
         <div class="mainContentPanel" data-role="content">
         <div id="OTHomeLogo">Hi {0[firstname]}, <img src="{0[user_icon]}" style='max-width:50px; max-height:50px' border="0" class="homeLogo">. Log something!</div>
         <div class="ui-grid-b">
-            <div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[0name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[0pic]}'/></a>
-            </div><!-- /grid-b -->
-            <div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[1name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[1pic]}'/></a>
-            </div><!-- /grid-b -->
-            <div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[2name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[2pic]}'/></a>
-            </div><!-- /grid-b -->
-            <div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[3name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[3pic]}'/></a>
-            </div><!-- /grid-b -->
-            <div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[4name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[4pic]}'/></a>
-            </div><!-- /grid-b -->
-            <div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[5name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[5pic]}'/></a>
-            </div><!-- /grid-b -->
-        </div>
-        </div>
-        </div>
-        </body>
-        </html>
-        '''.format(args)
+        '''.format({'firstname': reslist[0].value, 'user_icon':reslist[1].value })
+        for k, v in item_list.items():
+            ret = ret + '''<div class="ui-block-a">
+                <a class="wrapper" href="/log_me?item={0[name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[pic]}'/></a>
+            </div>
+            '''.format({'name': k, 'pic': v['icon']})
+        ret = ret + '</div></div></div></body></html>'
+        return ret
 
 if __name__ == '__main__':
     httplib2.debuglevel=0

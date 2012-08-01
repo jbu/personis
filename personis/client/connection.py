@@ -1,3 +1,5 @@
+import httplib2
+
 class Connection(object):
 
     def __init__(self, uri = None, credentials = None, http = None):

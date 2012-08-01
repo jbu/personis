@@ -1,4 +1,4 @@
 #!/bin/sh
-export PYTHONPATH=/home/jbu/personis/server/Src
+export PYTHONPATH=/home/jbu/personis
 
 python log-llum.py
