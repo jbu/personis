@@ -1,70 +1,17 @@
 #!/usr/bin/env python
 
-import sys
-sys.path.insert(0, '/home/jbu/personis/server/Src')
-
 import time
-import Personis
-import Personis_a
-import Personis_base
-import Personis_mkmodel
-import Personis_server
+from personis import client
 import json
-import json as sysjson
-import Personis_util
-import connection
 from optparse import OptionParser
 import yaml
 
 from oauth2client.file import Storage
-from oauth2client.client import Credentials, OAuth2WebServerFlow
+from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
 from oauth2client.tools import run
 import httplib2
 
 import cmd
-
-class Struct:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
-
-# utility function to display an object
-def showobj(obj, indent):
-    print "showobj:"
-    for k,v in obj.__dict__.items():
-        if ((k == 'time') or (k == 'creation_time')) and (v != None):
-            print "%*s %s %s %s (%s)" % (indent, " ", k,"=",time.ctime(v),v)
-        elif k == "evidencelist":
-            print "%*s %s %s %d items" % (indent, " ", k,"=",len(v))
-        else:
-            print "%*s %s %s %s" % (indent, " ", k,"=",v)
-
-
-# utility to print a list of component objects + evidence if printev="yes"
-def printcomplist(reslist, printev=None, count=1):
-    print "count =", count
-    for res in reslist:
-        print "==================================================================="
-        print "Component: ", res.Description
-        print "==================================================================="
-        showobj(res, 0)
-        if res.value_type == "JSON":
-            jval = json.loads(res.value)
-            print "Value:",jval
-        if printev == "yes":
-            print "---------------------------------"
-            print "Evidence about it"
-            print "---------------------------------"
-            if res.evidencelist is None:
-                print "no evidence"
-            else:
-                evlist = res.evidencelist
-                evlist.reverse()
-                for ev in evlist[:count]:
-                    if type(ev) == type(dict()):
-                        showobj(Struct(**ev), 10)
-                    else:
-                        showobj(ev, 10)
-                    print "---------------------------------"
 
 
 def printjson(jsonobj):
@@ -96,7 +43,6 @@ def lscontext(um, cont):
         print "Subscriptions: %s" % str(thesubs)
     except ValueError, e:
         print "ask failed: %s" % (e)
-
 
 um = None
 
@@ -148,7 +94,7 @@ class browse(cmd.Cmd):
             return
         self.umname = line[0]
         try:
-            self.um = Personis.Access(modelserver=self.modelserver, credentials=self.credentials)
+            self.um = client.Access(modelserver=self.modelserver, credentials=self.credentials)
         except:
             print "Failed to access model '%s', user '%s', password '%s'" % (self.umname, self.username, self.userpassword)
             return
@@ -170,7 +116,7 @@ class browse(cmd.Cmd):
             else:
                 try:
                     info = self.um.ask(context=self.context, view=[line[0]], resolver=dict(evidence_filter="all"))
-                    printcomplist(info, printev="yes", count=int(self.attrs["evnum"]))
+                    client.util.PrintComplist(info, printev="yes", count=int(self.attrs["evnum"]))
                 except ValueError, e:
                     print "ask failed: %s" % (e)
         else:
@@ -186,17 +132,17 @@ class browse(cmd.Cmd):
         compname = line[0]
         val = raw_input("Value? ")
         print "Evidence type:"
-        for et in Personis_base.EvidenceTypes:
-            print Personis_base.EvidenceTypes.index(et), et
+        for et in client.EvidenceTypes:
+            print client.EvidenceTypes.index(et), et
         etindex = raw_input("Index? [0]")
         if etindex == '':
             etindex = 0
         else:
             etindex = int(etindex)
-        if (etindex < 0) or (etindex > len(Personis_base.EvidenceTypes)-1):
+        if (etindex < 0) or (etindex > len(client.EvidenceTypes)-1):
             print "Index out of range"
             return
-        etype = Personis_base.EvidenceTypes[etindex]
+        etype = client.EvidenceTypes[etindex]
         source = self.username
         flags = []
         while True:
@@ -209,7 +155,7 @@ class browse(cmd.Cmd):
         ok = raw_input("Ok?[N] ")
         if ok != 'Y':
             return
-        ev = Personis_base.Evidence(source=source, evidence_type=etype, flags=flags, value=val)
+        ev = client.Evidence(source=source, evidence_type=etype, flags=flags, value=val)
         try:
             self.um.tell(context=self.context, componentid=compname, evidence=ev)
         except ValueError, e:
@@ -295,14 +241,14 @@ class browse(cmd.Cmd):
         self.um.import_model(context=self.context, partial_model=importfile.read())
         importfile.close()
 
-    def do_importmdef(self, line):
-        """importmdef fromfilename
-                imports a model in modeldef format"""
-        line = line.split()
-        if len(line) != 1:
-            print "usage: importmdef fromfilename"
-            return
-        Personis_mkmodel.mkmodel_um(um,Personis_mkmodel.get_modeldef(line[0]))
+    #def do_importmdef(self, line):
+    #    """importmdef fromfilename
+    #            imports a model in modeldef format"""
+    #    line = line.split()
+    #    if len(line) != 1:
+    #        print "usage: importmdef fromfilename"
+    #        return
+    #    Personis_mkmodel.mkmodel_um(um,Personis_mkmodel.get_modeldef(line[0]))
         #try:
         #       Personis_mkmodel.mkmodel_um(um,Personis_mkmodel.get_modeldef(line[0]))
         #except:
@@ -441,28 +387,28 @@ class browse(cmd.Cmd):
         comp = line[0]
         compdesc = raw_input("Component description? ")
         print "Component type:"
-        for ct in Personis_base.ComponentTypes:
-            print Personis_base.ComponentTypes.index(ct), ct
+        for ct in client.ComponentTypes:
+            print client.ComponentTypes.index(ct), ct
         ctindex = int(raw_input("Index? "))
-        if (ctindex < 0) or (ctindex > len(Personis_base.ComponentTypes)-1):
+        if (ctindex < 0) or (ctindex > len(client.ComponentTypes)-1):
             print "Index out of range"
             return
-        comptype = Personis_base.ComponentTypes[ctindex]
+        comptype = client.ComponentTypes[ctindex]
 
         print "Value type:"
-        for ct in Personis_base.ValueTypes:
-            print Personis_base.ValueTypes.index(ct), ct
+        for ct in client.ValueTypes:
+            print client.ValueTypes.index(ct), ct
         ctindex = int(raw_input("Index? "))
-        if (ctindex < 0) or (ctindex > len(Personis_base.ValueTypes)-1):
+        if (ctindex < 0) or (ctindex > len(client.ValueTypes)-1):
             print "Index out of range"
             return
-        valtype = Personis_base.ValueTypes[ctindex]
+        valtype = client.ValueTypes[ctindex]
 
         print "Creating new component '%s', type '%s', description '%s', value type '%s'" % (comp, comptype, compdesc, valtype)
         ok = raw_input("Ok?[N] ")
         if ok != 'Y':
             return
-        cobj = Personis_base.Component(Identifier=comp, component_type=comptype, Description=compdesc, value_type=valtype)
+        cobj = client.Component(Identifier=comp, component_type=comptype, Description=compdesc, value_type=valtype)
         res = self.um.mkcomponent(context=contxt,  componentobj=cobj)
 
     def do_delcomponent(self, line):
@@ -573,13 +519,8 @@ if __name__ == '__main__':
     f = file(options.oauthconf,'r')
     httplib2.debuglevel = 0
     oauthconf = yaml.load(f)
-    FLOW = OAuth2WebServerFlow(
-        client_id=oauthconf['client_id'],
-        client_secret=oauthconf['client_secret'],
-        scope='https://www.personis.com/auth/model',
-        user_agent='umbrowse-cmdline/1.0',
-        auth_uri=oauthconf['personis_uri']+'authorize',
-        token_uri=oauthconf['personis_uri']+'request_token')
+    FLOW = flow_from_clientsecrets('client_secrets.json',
+        scope='https://www.personis.com/auth/model')
 
     # If the Credentials don't exist or are invalid run through the native client
     # flow. The Storage object will ensure that if successful the good
@@ -595,12 +536,11 @@ if __name__ == '__main__':
     # with our good Credentials.
     http = httplib2.Http(proxy_info=p)
     #http = credentials.authorize(http)
-    c = connection.Connection(uri = oauthconf['personis_uri'], credentials = credentials, http = http)
-
     b = browse()
-    b.um = Personis_server.Access(connection=c, debug=True)
+    b.um = client.Access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
+            credentials = credentials, http = http, debug=True)
     reslist = b.um.ask(context=["Personal"],view=['firstname'])
-    Personis_util.printcomplist(reslist)
+    client.util.PrintComplist(reslist)
     b.username = reslist[0].value
     print b.username
 
