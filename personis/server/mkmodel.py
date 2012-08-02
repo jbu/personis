@@ -310,15 +310,18 @@ def mkmodel_um(um,lines, debug = 1):
 	themodel = um
 	domodeldef(lines)
 
-def mkmodel_remote(model=None, mfile=None, modelserver=None, user=None, password=None):
-	server.MkModel(model=model, modelserver=modelserver, user=user, password=password)
-	um = Personis.Access(model=model, modelserver=modelserver, user=user, password=password)
-	mkmodel_um(um,get_modeldef(mfile))
+#def mkmodel_remote(model=None, mfile=None, modelserver=None, user=None, password=None):
+#	server.MkModel(model=model, modelserver=modelserver, user=user, password=password)
+#	um = client.Access(model=model, modelserver=modelserver, user=user, password=password)
+#	mkmodel_um(um,get_modeldef(mfile))
 	
 
 def mkmodel(model=None, mfile=None, modeldir=None, user=None, password=None):
 	base.MkModel(model=model, modeldir=modeldir, user=user, password=password)
-	um = Personis_a.Access(model=model, modeldir=modeldir, user=user, password=password)
+	um = active.Access(model=model, modeldir=modeldir, user=user, password=password)
+	print 'mfile', mfile
+	import os
+	print os.getcwd()
 	mkmodel_um(um,get_modeldef(mfile))
 
 def get_modeldef(mfile):

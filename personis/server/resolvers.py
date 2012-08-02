@@ -25,8 +25,6 @@
 import time,types,traceback,re
 import json
 
-from exceptions import ModelNotFoundError
-
 
 class Access:
 	"""

@@ -40,509 +40,37 @@ from shove import Shove
 import string
 
 from mkmodel import *
-#import httplib, oauth2
 from optparse import OptionParser
 import httplib2
 import shutil
 
 from oauth2client.file import Storage
 from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
-#from oauth2client.tools import run
 
 from genshi.template import TemplateLoader
-#loader = TemplateLoader('/templates', auto_reload=True)
 
+class Server:
 
-
-
-def MkModel( model=None, modelserver=None, user=None, password=None, description=None, debug=0):
-    if modelserver == None:
-        raise ValueError, "modelserver is None"
-    if ':' in modelserver:
-        modelserver, modelport = modelserver.split(":")
-    else:
-        modelport = 2005 # default port for personis server
-    modelname = model
-    ok = False
-    try:
-        ok = jsoncall.do_call(modelserver, modelport, "mkmodel", {'modelname':modelname,\
-                                                                'descripion':description,\
-                                                                'user':user,\
-                                                                'password':password})
-    except:
-        if debug >0:
-            traceback.print_exc()
-        raise ValueError, "cannot create model '%s', server '%s'" % (modelname, modelserver)
-    if not ok:
-        raise ValueError, "server '%s' cannot create model '%s'" % (modelserver, modelname)
-
-class Access(active.Access):
-    """
-    Client version of access for client/server system
-
-    arguments:
-            model           model name
-            modelserver     model server and port
-            user            user name
-            password        password string
-    returns a user model access object
-    """
-    def __init__(self, modelname = '-', connection=None, debug=0):
-        self.debug =debug
-        self.modelname = modelname
-        self.user = ''
-        self.password = ''
-        self.connection = connection
-        ok = False
-
-        try:
-            if self.debug != 0:
-                print "jsondocall:", connection
-            ok = jsoncall.do_call("access", {}, self.connection)
-            if self.debug != 0:
-                print "---------------------- result returned", ok
-        except:
-            if debug >0:
-                traceback.print_exc()
-            raise ValueError, "cannot access model"
-        if not ok:
-            raise ValueError, "server cannot access model"
-
-    def ask(self,
-            context=[],
-            view=None,
-            resolver=None,
-            showcontexts=None):
-        """
-arguments: (see base for details)
-        context is a list giving the path of context identifiers
-        view is either:
-                an identifier of a view in the context specified
-                a list of component identifiers or full path lists
-                None indicating that the values of all components in
-                        the context be returned
-        resolver specifies a resolver, default is the builtin resolver
-
-returns a list of component objects
-        """
-        reslist = jsoncall.do_call("ask", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'view':view,\
-                                                                        'resolver':resolver,\
-                                                                        'showcontexts':showcontexts},
-                                                                        self.connection)
-        complist = []
-        if showcontexts:
-            cobjlist, contexts, theviews, thesubs = reslist
-            for c in cobjlist:
-                comp = base.Component(**c)
-                if c["evidencelist"]:
-                    comp.evidencelist = [base.Evidence(**e) for e in c["evidencelist"]]
-                complist.append(comp)
-            reslist = [complist, contexts, theviews, thesubs]
-        else:
-            for c in reslist:
-                comp = base.Component(**c)
-                if c["evidencelist"]:
-                    comp.evidencelist = [base.Evidence(**e) for e in c["evidencelist"]]
-                complist.append(comp)
-            reslist = complist
-        return reslist
-
-    def tell(self,
-            context=[],
-            componentid=None,
-            evidence=None):   # evidence obj
-        """
-arguments:
-        context - a list giving the path to the required context
-        componentid - identifier of the component
-        evidence - evidence object to add to the component
-        """
-        if componentid == None:
-            raise ValueError, "tell: componentid is None"
-        if evidence == None:
-            raise ValueError, "tell: no evidence provided"
-
-        return jsoncall.do_call("tell", {'modelname':self.modelname,\
-            'user':self.user,\
-            'password':self.password,\
-            'context':context,\
-            'componentid':componentid,\
-            'evidence':evidence.__dict__},
-            self.connection
-        )
-    def mkcomponent(self,
-            context=[],
-            componentobj=None):
-        """
-Make a new component in a given context
-arguments:
-        context - a list giving the path to the required context
-        componentobj - a Component object
-returns:
-        None on success
-        a string error message on error
-        """
-        if componentobj == None:
-            raise ValueError, "mkcomponent: componentobj is None"
-        return jsoncall.do_call("mkcomponent", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentobj':componentobj.__dict__},
-                                                                        self.connection)
-    def delcomponent(self,
-            context=[],
-            componentid=None):
-        """
-Delete an existing component in a given context
-arguments:
-        context - a list giving the path to the required context
-        id - the id for a componen
-returns:
-        None on success
-        a string error message on error
-        """
-        if componentid == None:
-            raise ValueError, "delcomponent: componentid is None"
-        return jsoncall.do_call("delcomponent", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentid':componentid},
-                                                                        self.connection)
-    def delcontext(self,
-            context=[]):
-        """
-Delete an existing context
-arguments:
-        context - a list giving the path to the required context
-returns:
-        None on success
-        a string error message on error
-        """
-        if context == None:
-            raise ValueError, "delcontext: context is None"
-        return jsoncall.do_call( "delcontext", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context},
-                                                                        self.connection)
-    def getresolvers(self):
-        '''Return a list of the available resolver names'''
-        return jsoncall.do_call("getresolvers", {'modelname':self.modelname,\
-                                                                        'user':self.user, 'password':self.password},
-                                                                        self.connection)
-
-    def setresolver(self,
-            context,
-            componentid,
-            resolver):
-        """
-set the resolver for a given component in a given context
-arguments:
-        context - a list giving the path to the required context
-        componentid - the id for a given component
-        resolver - the id of the resolver
-returns:
-        None on success
-        a string error message on error
-        """
-        if componentid == None:
-            raise ValueError, "setresolver: componentid is None"
-        return jsoncall.do_call("setresolver", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentid':componentid, \
-                                                                        'resolver':resolver},
-                                                                        self.connection)
-
-    def mkview(self,
-            context=[],
-            viewobj=None):
-        """
-Make a new view in a given context
-arguments:
-        context - a list giving the path to the required context
-        viewobj - a View object
-returns:
-        None on success
-        a string error message on error
-        """
-        if viewobj == None:
-            raise ValueError, "mkview: viewobj is None"
-        return jsoncall.do_call("mkview", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'viewobj':viewobj.__dict__},
-                                                                        self.connection)
-    def delview(self,
-            context=[],
-            viewid=None):
-        """
-Delete an existing view in a given context
-arguments:
-        context - a list giving the path to the required context
-        viewid - the id for the view
-returns:
-        None on success
-        """
-        if viewid == None:
-            raise ValueError, "delview: viewid is None"
-        return jsoncall.do_call("delview", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'viewid':viewid},
-                                                                        self.connection)
-
-
-    def mkcontext(self,
-            context= [],
-            contextobj=None):
-        """
-Make a new context in a given context
-arguments:
-        context - a list giving the path to the required context
-        contextobj - a Context object
-        """
-        if contextobj == None:
-            raise ValueError, "mkcontext: contextobj is None"
-        return jsoncall.do_call("mkcontext", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'contextobj':contextobj.__dict__},
-                                                                        self.connection)
-
-
-    def getcontext(self,
-            context=[],
-            getsize=False):
-        """
-Get context information
-arguments:
-        context - a list giving the path to the required context
-        getsize - True if the size in bytes of the context subtree is required
-        """
-        return jsoncall.do_call("getcontext", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'getsize':getsize},
-                                                                        self.connection)
-
-    def subscribe(self,
-            context=[],
-            view=None,
-            subscription=None):
-        """
-arguments:
-        context is a list giving the path of context identifiers
-        view is either:
-                an identifier of a view in the context specified
-                a list of component identifiers or full path lists
-                None indicating that the values of all components in
-                        the context be returned
-                subscription is a subscription object
-        """
-        return  jsoncall.do_call("subscribe", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'view':view,\
-                                                                        'subscription':subscription},
-                                                                        self.connection)
-    def delete_sub(self,
-            context=[],
-            componentid=None,
-            subname=None):
-        """
-arguments:
-        context is a list giving the path of context identifiers
-        componentid designates the component subscribed to
-        subname is the subscription name
-        """
-        return  jsoncall.do_call("delete_sub", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentid':componentid,\
-                                                                        'subname':subname},
-                                                                        self.connection)
-
-    def export_model(self,
-            context=[],
-            resolver=None):
-        """
-arguments:
-        context is the context to export
-        resolver is a string containing the name of a resolver
-                or
-        resolver is a dictionary containing information about resolver(s) to be used and arguments
-                the "resolver" key gives the name of a resolver to use, if not present the default resolver is used
-                the "evidence_filter" key specifies an evidence filter
-                eg 'evidence_filter' =  "all" returns all evidence,
-                                        "last10" returns last 10 evidence items,
-                                        "last1" returns most recent evidence item,
-                                        None returns no evidence
-        """
-        return jsoncall.do_call("export_model", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'resolver':resolver},
-                                                                        self.connection)
-
-    def import_model(self,
-            context=[],
-            partial_model=None):
-        """
-arguments:
-        context is the context to import into
-        partial_model is a json encoded string containing the partial model
-        """
-        return jsoncall.do_call("import_model", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'partial_model':partial_model},
-                                                                        self.connection)
-    def set_goals(self,
-            context=[],
-            componentid=None,
-            goals=None):
-        """
-arguments:
-        context is a list giving the path of context identifiers
-        componentid designates the component with subscriptions attached
-        goals is a list of paths to components that are:
-                goals for this componentid if it is not of type goal
-                components that contribute to this componentid if it is of type goal
-        """
-        return  jsoncall.do_call("set_goals", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentid':componentid,\
-                                                                        'goals':goals},
-                                                                        self.connection)
-
-
-    def list_subs(self,
-            context=[],
-            componentid=None):
-        """
-arguments:
-        context is a list giving the path of context identifiers
-        componentid designates the component with subscriptions attached
-        """
-        return  jsoncall.do_call("list_subs", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context':context,\
-                                                                        'componentid':componentid},
-                                                                        self.connection)
-
-    def registerapp(self, app=None, desc="", password=None):
-        """
-                registers a password for an app
-                app name is a string (needs checking TODO)
-                app passwords are stored at the top level .model db
-        """
-        return jsoncall.do_call("registerapp", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'app':app,\
-                                                                        'description':desc,\
-                                                                        'apppassword':password},
-                                                                        self.connection)
-
-    def deleteapp(self, app=None):
-        """
-                deletes an app
-        """
-        if app == None:
-            raise ValueError, "deleteapp: app is None"
-        return jsoncall.do_call("deleteapp", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'app':app},
-                                                                        self.connection)
-
-    def listapps(self):
-        """
-                returns array of registered app names
-        """
-        return jsoncall.do_call("listapps", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password},
-                                                                        self.connection)
-
-    def setpermission(self, context=None, componentid=None, app=None, permissions={}):
-        """
-                sets ask/tell permission for a context (if componentid is None) or
-                        a component
-        """
-        return jsoncall.do_call("setpermission", {'modelname':self.modelname,\
-                                                                        'user':self.user,\
-                                                                        'password':self.password,\
-                                                                        'context': context,\
-                                                                        'componentid': componentid,\
-                                                                        'app': app,\
-                                                                        'permissions': permissions},
-                                                                        self.connection)
-
-    def getpermission(self, context=None, componentid=None, app=None):
-        """
-gets permissions for a context (if componentid is None) or
-a component
-returns a tuple (ask,tell)
-        """
-        return jsoncall.do_call("getpermission", {'modelname':self.modelname,\
-                                               'user':self.user,\
-                                               'password':self.password,\
-                                               'context': context,\
-                                               'componentid': componentid,\
-                                               'app': app},
-                                               self.connection)
-
-
-class oauth_client(object):
-
-    def __init__(self, client_id, friendly_name, secret, redirect_uri, icon=''):
-        self.client_id = client_id
-        self.friendly_name = friendly_name
-        self.secret = secret
-        self.redirect_uri = redirect_uri
-        self.icon = icon
-        self.auth_codes = {}
-        self.access_tokens = {}
-        self.request_tokens = {}
-        self.refresh_tokens = {}
-
-    def __repr__(self):
-        return '<%s %r>' % (type(self).__name__, self.client_id)
-
-class server:
-
-    def __init__(self, modeldir=None, adminsfile=None, oauthconfig=None):
+    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None):
         self.modeldir = modeldir
         self.admins = yaml.load(file(adminsfile,'r'))
-        self.oauth_clients = Shove('sqlite:///oauth_clients.dat')
+        self.oauth_clients_file = clients
+        self.oauth_clients = json.loads(file(clients,'r').read())
+        if self.oauth_clients == None:
+            self.oauth_clients = {}
         self.access_tokens = Shove('sqlite:///oauth_access_tokens.dat')
-        self.oauthconf = yaml.load(file(oauthconfig,'r'))
 
         def stopper():
             print 'saving persistant data'
-            self.oauth_clients.close()
+            self.save_oauth_clients()
             self.access_tokens.close()
         cherrypy.engine.subscribe('stop', stopper)
+
+    def save_oauth_clients(self):
+        f = open(self.oauth_clients_file,'w')
+        s = json.dumps(self.oauth_clients)
+        f.write(s)
+        f.close()
 
     @cherrypy.expose
     def list_clients(self):
@@ -563,9 +91,9 @@ class server:
 
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
-        tmpl = loader.load('list_clients.html')
+        tmpl = loader.load('html/list_clients.html')
         for k, v in self.oauth_clients.items():
-            print k, v.friendly_name
+            print k, v['friendly_name']
         stream = tmpl.generate(clients=self.oauth_clients.values())
         return stream.render('xhtml')
 
@@ -586,7 +114,7 @@ class server:
 
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
-        tmpl = loader.load('list_apps.html')
+        tmpl = loader.load('html/list_apps.html')
         um = cherrypy.session.get('um')
         apps = um.listapps()
         for k in apps.keys():
@@ -627,7 +155,7 @@ class server:
         # worksfornow
         if id == "removeOneForMe":
             del(self.oauth_clients[value])
-            self.oauth_clients.sync()
+            self.save_oauth_clients()
             print "removed a client"
             raise cherrypy.HTTPRedirect('/list_clients')
         if id == "addOneForMe":
@@ -636,24 +164,22 @@ class server:
             for i in range(32):
                 clid = clid + random.choice(string.hexdigits)
                 secret = secret + random.choice(string.hexdigits)
-            self.oauth_clients[clid] = oauth_client(
-                             client_id = clid,
-                             friendly_name= 'my client',
-                             secret= secret, 
-                             redirect_uri='http://www.example.com/',
-                             icon='/static/images/icon.svg')
-            self.oauth_clients.sync()
+            self.oauth_clients[clid] = {
+                             'client_id': clid,
+                             'friendly_name': 'my client',
+                             'secret': secret, 
+                             'redirect_uri': 'http://www.example.com/',
+                             'icon': '/static/images/icon.svg'}
+            self.save_oauth_clients()
             print "added a client"
             raise cherrypy.HTTPRedirect('/list_clients')
 
         clid, field = id.split('|')
         print 'saving: ',clid, field, value
-        oldc = self.oauth_clients[clid]
-        oldc.__dict__[field] = value
-        self.oauth_clients[clid] = oldc
+        oldc = self.oauth_clients[clid][field] = value
         for k, v in self.oauth_clients.items():
-            print k, v.friendly_name
-        self.oauth_clients.sync()
+            print k, v['friendly_name']
+        self.save_oauth_clients()
         return value
         
     @cherrypy.expose
@@ -722,7 +248,8 @@ class server:
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,usr['id'])):
-            mkmodel(model=usr['id'], mfile='modeldefs/user.prod', modeldir=self.modeldir, user=usr['id'], password='')
+            mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod')
+            mkmodel(model=usr['id'], mfile=mf, modeldir=self.modeldir, user=usr['id'], password='')
             um = active.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
             um.tell(context=["Personal"], componentid='firstname', evidence=ev)
@@ -766,7 +293,7 @@ class server:
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
         tmpl = loader.load('appQuery.html')
-        stream = tmpl.generate(name=usr['given_name'], app=cli.friendly_name, icon=cli.icon, picture=usr['picture'])
+        stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'], icon=cli['icon'], picture=usr['picture'])
         return stream.render('xhtml')
 
     @cherrypy.expose
@@ -794,7 +321,7 @@ class server:
         redr = cli.redirect_uri
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
         cherrypy.session['um'] = um
-        result = um.registerapp(app=cherrypy.session['client_id'], desc=cli.friendly_name, password='')
+        result = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], password='')
         raise cherrypy.HTTPRedirect(rdi)
                
     @cherrypy.expose
@@ -824,12 +351,6 @@ class server:
             if now > v['expires']:
                 #print 'expire access_token',k
                 del(self.access_tokens[k])
-
-        # temporary hack
-        cli.access_tokens = cli.request_tokens
-
-        if type(cli.secret) <> type(u''):
-           cli.secret = unicode(cli.secret)
 
         if grant_type == 'refresh_token':
             code = refresh_token
@@ -889,9 +410,6 @@ class server:
 
         cherrypy.session['admin'] = False
 
-        cl = cherrypy.request.headers['Content-Length']
-        jsonobj = cherrypy.request.body.read(int(cl))
-
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
             #print 'access_tokens', self.access_tokens
@@ -902,13 +420,17 @@ class server:
 Looks like you're coming into the service entrance with a browser. That's not how it works. Ask someme about 'Mneme'. If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>.
 '''
         if not access_token in self.access_tokens:
-	    raise cherrypy.HTTPError(401, 'Incorrect access token')
-        #print 'token',self.access_tokens[access_token]
+    	    raise cherrypy.HTTPError(401, 'Incorrect access token')
+            #print 'token',self.access_tokens[access_token]
         now = time.time()
         if now > self.access_tokens[access_token]['expires']:
-	    print 'expired', access_token
-	    raise cherrypy.HTTPError(401, 'Expired access token')
+	       print 'expired', access_token
+	       raise cherrypy.HTTPError(401, 'Expired access token')
+    
         usr = self.access_tokens[access_token]['userid']
+
+        cl = cherrypy.request.headers['Content-Length']
+        jsonobj = cherrypy.request.body.read(int(cl))
         
         try:
             pargs = json.loads(jsonobj)
@@ -924,7 +446,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
                 del pargs[k]
                 pargs[str(k)] = v
 
-	model = usr
+        model = usr
         if 'model' in pargs:
 		model = pargs['modelname']
 
@@ -1035,7 +557,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
 
         return json.dumps(result)
 
-def runServer(modeldir, config, admins, oauthconfig):
+def runServer(modeldir, config, admins, clients):
     print "serving models in '%s'" % (modeldir)
     print "config file '%s'" % (config)
     print "starting cronserver"
@@ -1050,7 +572,7 @@ def runServer(modeldir, config, admins, oauthconfig):
     try:
         try:
             cherrypy.config.update(os.path.expanduser(config))
-            cherrypy.tree.mount(Personis_server(modeldir, admins, oauthconfig), '/', config=config)
+            cherrypy.tree.mount(Server(modeldir, admins, clients), '/', config=config)
             #cherrypy.server.ssl_certificate = "server.crt"
             #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
@@ -1073,9 +595,16 @@ if __name__ == '__main__':
     parser.add_option("-a", "--admins",
               dest="admins", metavar='FILE',
               help="Admins file", default='admins.yaml')
-    parser.add_option("-o", "--oauthconfig",
-              dest="oauth", metavar='FILE',
-              help="Oauth config file", default='oauth.yaml')
-
+    parser.add_option("-o", "--oauthclients",
+              dest="clients", metavar='FILE',
+              help="Clients json file", default='oauth_clients.json')
+    import os
+    print os.getcwd()
     (options, args) = parser.parse_args()
-    runServer(options.modeldir, options.conf, options.admins, options.oauthconfig)
+
+    options.modeldir = os.path.abspath(options.modeldir)
+    options.conf = os.path.abspath(options.conf)
+    options.admins = os.path.abspath(options.admins)
+    options.clients = os.path.abspath(options.clients)
+
+    runServer(options.modeldir, options.conf, options.admins, options.clients)

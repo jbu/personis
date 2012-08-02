@@ -1,7 +1,3 @@
-
-
-#!/usr/bin/env python2.4
-
 # The Personis system is copyright 2000-2012 University of Sydney
 #       Bob.Kummerfeld@Sydney.edu.au
 
