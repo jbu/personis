@@ -1,31 +1,54 @@
 #!/usr/bin/env python
 
 import unittest
-import Personis_base
+from personis import client, server
 import os
 import shutil
 import sys
+from apiclient.http import HttpMockSequence
+from multiprocessing import Process
+
+from oauth2client.file import Storage
+from oauth2client.client import Credentials
+import json
+import time
+import logging
+import httplib2
 #from Personis_util import printcomplist
 
 class TestPersonisBaseAdd(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        shutil.copytree('models', 'testmodels')
-        cls.um = Personis_base.Access(model="Alice", modeldir='testmodels', user='alice', password='secret')
+        logging.basicConfig(level=logging.INFO)
+        if os.path.exists('models'):
+            shutil.rmtree('models')
+        shutil.copytree('testmodels', 'models')
+        #cls.serverp = Process(target=server.server.runServer, args=('models', 'server-test.conf', 'admins-test.yaml', 'oauth-clients-test.json', 'oauth_access_tokens.dat', logging.DEBUG))
+        #cls.serverp.start()
+
+        #time.sleep(2)
+
+        storage = Storage('credentials.dat')
+        credentials = storage.get()
+        cjson = json.loads(credentials.to_json())
+        h = httplib2.Http(proxy_info=None)
+        cls.um = client.Access(uri = 'http://127.0.0.1:2005/', 
+            credentials = credentials, http=h)
         # create a piece of evidence with Alice as value
-        ev = Personis_base.Evidence(evidence_type="explicit", value="Alice")
+        ev = client.Evidence(evidence_type="explicit", value="Alice")
         # tell this as user alice's first name
         cls.um.tell(context=["Personal"], componentid='firstname', evidence=ev)
 
-        ev = Personis_base.Evidence(evidence_type="explicit", value="Smith")
+        ev = client.Evidence(evidence_type="explicit", value="Smith")
         cls.um.tell(context=["Personal"], componentid='lastname', evidence=ev)
-        ev = Personis_base.Evidence(evidence_type="explicit", value="female")
+        ev = client.Evidence(evidence_type="explicit", value="female")
         cls.um.tell(context=["Personal"], componentid='gender', evidence=ev)
 
     @classmethod
     def tearDownClass(cls):
-        shutil.rmtree('testmodels')
+        #cls.serverp.terminate()
+        shutil.rmtree('models')
 
     def test_ask_firstname(self):
         res = self.um.ask(context=["Personal"], view=['firstname'])
@@ -49,12 +72,6 @@ class TestPersonisBaseAdd(unittest.TestCase):
         res = self.um.ask(context=["Personal"], view=['firstname', 'lastname'])
         self.assertEqual(res[0].value, 'Alice')
         self.assertEqual(res[1].value, 'Smith')
-
-    def test_ask_more(self):
-        res = self.um.ask(context=["Preferences", "Music", "Jazz", "Artists"], 
-                        view=['Miles_Davis', ['Personal', 'firstname']],
-                        resolver={'evidence_filter':"all"})
-        self.assertEqual(res[1].Identifier, 'firstname')
 
 if __name__ == '__main__':
     unittest.main()

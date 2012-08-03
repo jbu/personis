@@ -42,6 +42,7 @@ import string
 from mkmodel import *
 from optparse import OptionParser
 import httplib2
+import logging
 import shutil
 
 from oauth2client.file import Storage
@@ -51,17 +52,17 @@ from genshi.template import TemplateLoader
 
 class Server:
 
-    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None):
+    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None, access_tokens='oauth_access_tokens.dat'):
         self.modeldir = modeldir
         self.admins = yaml.load(file(adminsfile,'r'))
         self.oauth_clients_file = clients
         self.oauth_clients = json.loads(file(clients,'r').read())
         if self.oauth_clients == None:
             self.oauth_clients = {}
-        self.access_tokens = Shove('sqlite:///oauth_access_tokens.dat')
+        self.access_tokens = Shove('sqlite:///'+access_tokens)
 
         def stopper():
-            print 'saving persistant data'
+            logging.info( 'saving persistant data')
             self.save_oauth_clients()
             self.access_tokens.close()
         cherrypy.engine.subscribe('stop', stopper)
@@ -93,7 +94,7 @@ class Server:
         loader = TemplateLoader([base_path])
         tmpl = loader.load('html/list_clients.html')
         for k, v in self.oauth_clients.items():
-            print k, v['friendly_name']
+            logging.debug(  k, v['friendly_name'])
         stream = tmpl.generate(clients=self.oauth_clients.values())
         return stream.render('xhtml')
 
@@ -123,7 +124,7 @@ class Server:
             apps[k]['client_id'] = c.client_id
             apps[k]['icon'] = c.icon
         apps = [apps[k] for k in apps.keys()]
-        print 'apps', apps
+        logging.debug(  'apps', apps)
         stream = tmpl.generate(apps = apps)
         return stream.render('xhtml')
 
@@ -138,7 +139,7 @@ class Server:
         # worksfornow
         um = cherrypy.session.get('um')
         if id == "removeOneForMe":
-            print "removed an app"
+            logging.debug(  "removed an app")
             um.deleteapp(value)
             raise cherrypy.HTTPRedirect('/list_apps')
 
@@ -156,7 +157,7 @@ class Server:
         if id == "removeOneForMe":
             del(self.oauth_clients[value])
             self.save_oauth_clients()
-            print "removed a client"
+            logging.debug(  "removed a client")
             raise cherrypy.HTTPRedirect('/list_clients')
         if id == "addOneForMe":
             clid = u''
@@ -171,14 +172,14 @@ class Server:
                              'redirect_uri': 'http://www.example.com/',
                              'icon': '/static/images/icon.svg'}
             self.save_oauth_clients()
-            print "added a client"
+            logging.debug(  "added a client")
             raise cherrypy.HTTPRedirect('/list_clients')
 
         clid, field = id.split('|')
-        print 'saving: ',clid, field, value
+        logging.debug(  'saving: ',clid, field, value)
         oldc = self.oauth_clients[clid][field] = value
         for k, v in self.oauth_clients.items():
-            print k, v['friendly_name']
+            logging.debug(  k, v['friendly_name'])
         self.save_oauth_clients()
         return value
         
@@ -198,7 +199,7 @@ class Server:
         cli = self.oauth_clients[client_id]
         if state <> None:
             cherrypy.session['state'] = state
-        if cli.redirect_uri <> redirect_uri:
+        if cli['redirect_uri'] <> redirect_uri:
             raise cherrypy.HTTPError(400,'Redirect URIs do not match') 
         raise cherrypy.HTTPRedirect('/login')
 
@@ -240,11 +241,11 @@ class Server:
         try:
             cherrypy.session['user'] = usr['id']
         except:
-            print 'exception on usr', usr
+            logging.debug(  'exception on usr', usr)
             raise IOError()
 
 
-        print 'loggedin session id',cherrypy.session.id
+        logging.debug(  'loggedin session id',cherrypy.session.id)
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,usr['id'])):
@@ -284,14 +285,14 @@ class Server:
 
         # if the app is already registered, it's ok.
         apps = um.listapps()
-        print 'apps:',apps, 'clientid', cherrypy.session.get('client_id')
+        logging.debug(  'apps:',apps, 'clientid', cherrypy.session.get('client_id'))
         if cherrypy.session.get('client_id') in apps:
             raise cherrypy.HTTPRedirect('/allow')
 
         #otherwise, ask yes/no                
         cli = self.oauth_clients[cherrypy.session['client_id']]
         base_path = os.path.dirname(os.path.abspath(__file__))
-        loader = TemplateLoader([base_path])
+        loader = TemplateLoader([os.path.join(base_path, 'html')])
         tmpl = loader.load('appQuery.html')
         stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'], icon=cli['icon'], picture=usr['picture'])
         return stream.render('xhtml')
@@ -310,15 +311,16 @@ class Server:
         val_key = ''
         for i in range(32):
             val_key = val_key+ random.choice(string.hexdigits)
-        rdi = cli.redirect_uri + '?'
+        rdi = cli['redirect_uri'] + '?'
         if 'state' in cherrypy.session:
             rdi = rdi + 'state='+cherrypy.session['state']+'&amp;'
         rdi = rdi + 'code=' + val_key
 
         self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
         self.access_tokens.sync()
+        logging.debug('access tokens: %s',self.access_tokens)
 
-        redr = cli.redirect_uri
+        redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
         cherrypy.session['um'] = um
         result = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], password='')
@@ -341,15 +343,15 @@ class Server:
         (Accessed by the client (Mneme, etc) on behalf of a user.)
         NOTE! This should only be exported over TLS/SSL (ahem!)
         """
-        print 'code %s, redirui %s, clientid %s, clientsec %s, scope %s, granttype %s, refreshtoken %s'%(code, redirect_uri, client_id, client_secret, scope, grant_type, refresh_token)
+        logging.debug(  'code %s, redirui %s, clientid %s, clientsec %s, scope %s, granttype %s, refreshtoken %s'%(code, redirect_uri, client_id, client_secret, scope, grant_type, refresh_token))
         cli = self.oauth_clients[client_id]
 
         # expire old tokens before we look
         now = time.time()
         for k, v in self.access_tokens.items():
-            #print 'access_tokens', k, 'v',v
+            logging.debug(  'access_tokens %s: %s', k,v)
             if now > v['expires']:
-                #print 'expire access_token',k
+                logging.debug (  'expire access_token %s',k)
                 del(self.access_tokens[k])
 
         if grant_type == 'refresh_token':
@@ -373,18 +375,18 @@ class Server:
             #print 'remove refresh_token',code
             #del(self.access_tokens[code])
         
-        if cli.secret <> client_secret:
+        if cli['secret'] <> client_secret:
             raise cherrypy.HTTPError(401, 'Incorrect client information')
 
         userid = tok['userid']
 
         access_expiry =  3600 # an hour
-        refresh_expiry = 3600*24*7*52 # a year
+        refresh_expiry = 3600*24*7*52 *20 # a year
 
         access_token = ''
         access_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
         self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
-        print 'added access_token:',access_token
+        logging.debug(  'added access_token: %s',access_token)
 
         ret = {'access_token': access_token, 
                'token_type': 'bearer',
@@ -395,13 +397,13 @@ class Server:
         if grant_type == 'authorization_code':
             refresh_token = ''
             refresh_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
-            print 'added refresh_token:',refresh_token
+            logging.info(  'added refresh_token:',refresh_token)
             self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
             ret['refresh_token'] = refresh_token
 
         self.access_tokens.sync()
         s = json.dumps(ret)
-        print s
+        logging.info(  s)
         return s
 
 
@@ -412,8 +414,8 @@ class Server:
 
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
-            #print 'access_tokens', self.access_tokens
-            #print 'access_token', `access_token`
+            logging.debug( 'access_tokens %s', self.access_tokens )
+            logging.debug(  'access_token %s', `access_token` )
         except:
             return '''
 <h1>Personis</h1>
@@ -424,7 +426,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
             #print 'token',self.access_tokens[access_token]
         now = time.time()
         if now > self.access_tokens[access_token]['expires']:
-	       print 'expired', access_token
+	       logging.debug(  'expired', access_token)
 	       raise cherrypy.HTTPError(401, 'Expired access token')
     
         usr = self.access_tokens[access_token]['userid']
@@ -435,7 +437,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
         try:
             pargs = json.loads(jsonobj)
         except:
-            print "bad request - cannot decode json - possible access from web browser"
+            logging.debug(  "bad request - cannot decode json - possible access from web browser")
             return json.dumps("Personis User Model server. Not accessible using a web browser.")
 
         # dirty kludge to get around unicode
@@ -450,7 +452,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
         if 'model' in pargs:
 		model = pargs['modelname']
 
-        print 'USER:', usr, 'MODEL:,', model, 'BEARER:', access_token
+        logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
 
         try:
             result = False
@@ -542,13 +544,10 @@ Looks like you're coming into the service entrance with a browser. That's not ho
 
         except Exception, e:
 
-            print "Exception:", e
+            logging.info(  "Exception: %s", e)
             traceback.print_exc()
             if pargs.has_key("version"):
                 new_result = {}
-                #new_result["errorType"] = e.__class__.__name__
-                #new_result["errorData"] = e.__dict__.copy()
-                #new_result["pythonPickel"] = cPickle.dumps(e)
                 new_result["val"] = [e.__class__.__name__, e.__dict__.copy(), cPickle.dumps(e)]
                 new_result["result"] = "error"
                 result = new_result
@@ -557,10 +556,14 @@ Looks like you're coming into the service entrance with a browser. That's not ho
 
         return json.dumps(result)
 
-def runServer(modeldir, config, admins, clients):
-    print "serving models in '%s'" % (modeldir)
-    print "config file '%s'" % (config)
-    print "starting cronserver"
+def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO):
+    logging.basicConfig(level=loglevel)
+    logging.info(  "serving models in '%s'" % (modeldir))
+    logging.info(  "config file '%s'" % (config))
+    logging.info(  "admin file '%s'" % (admins))
+    logging.info(  "clients file '%s'" % (clients))
+    logging.info(  "tokens file '%s'" % (tokens))
+    logging.info(  "starting cronserver")
     cronserver.cronq = Queue()
     p = Process(target=cronserver.cronserver, args=(cronserver.cronq,modeldir))
     p.start()
@@ -572,15 +575,15 @@ def runServer(modeldir, config, admins, clients):
     try:
         try:
             cherrypy.config.update(os.path.expanduser(config))
-            cherrypy.tree.mount(Server(modeldir, admins, clients), '/', config=config)
+            cherrypy.tree.mount(Server(modeldir, admins, clients, tokens), '/', config=config)
             #cherrypy.server.ssl_certificate = "server.crt"
             #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
             cherrypy.engine.block()
         except Exception, E:
-            print "Failed to run Personis Server:" + str(E)
+            logging.info(  "Failed to run Personis Server:" + str(E))
     finally:
-        print "Shutting down Personis Server."
+        logging.info(  "Shutting down Personis Server.")
         cronserver.cronq.put(dict(op="quit"))
         p.join()
 
@@ -598,13 +601,25 @@ if __name__ == '__main__':
     parser.add_option("-o", "--oauthclients",
               dest="clients", metavar='FILE',
               help="Clients json file", default='oauth_clients.json')
-    import os
-    print os.getcwd()
+    parser.add_option("-t", "--tokens",
+              dest="tokens", metavar='FILE',
+              help="Access tokens database", default='oauth_access_tokens.dat')
+    parser.add_option("-l", "--log",
+              dest="logging",
+              help="Log level", default='INFO')
+
     (options, args) = parser.parse_args()
+
+    numeric_level = getattr(logging, options.logging.upper(), None)
+    #cherrypy.log('Debugging%s, %d', options.logging, numeric_level)
+    if not isinstance(numeric_level, int):
+        raise ValueError('Invalid log level: %s' % options.logging)
+    logging.basicConfig(level=numeric_level)
 
     options.modeldir = os.path.abspath(options.modeldir)
     options.conf = os.path.abspath(options.conf)
     options.admins = os.path.abspath(options.admins)
     options.clients = os.path.abspath(options.clients)
+    options.tokens = os.path.abspath(options.tokens)
 
-    runServer(options.modeldir, options.conf, options.admins, options.clients)
+    runServer(options.modeldir, options.conf, options.admins, options.clients, options.tokens, numeric_level)

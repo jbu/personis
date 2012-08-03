@@ -31,6 +31,7 @@ import httplib2
 import pickle
 import types
 import time
+import logging
 
 def do_call(fun, args, connection):
     if (not connection.valid()):
@@ -39,13 +40,19 @@ def do_call(fun, args, connection):
     args_json = json.dumps(args)+'\n'
 
     http = connection.get_http()
-    resp, content = http.request(connection.uri+fun, method="POST", headers={'Content-Type': 'application/json'}, body=args_json)
-
+    uri = connection.uri + fun
+    logging.debug('do_call uri: %s, body: %s', uri, args_json)
+    try:
+        resp, content = http.request(uri, method="POST", headers={'Content-Type': 'application/json'}, body=args_json)
+        logging.debug('Resp: %s, content: %s',resp, content)
+    except Exception as e:
+        logging.debug('httperror: %s',e )
+        raise e
     try:
         result = json.loads(content)
     except:
-        print "json loads failed!"
-        print "<<%s>>" % (content)
+        logging.debug( "json loads failed!")
+        logging.debug( "<<%s>>" % (content))
         raise ValueError, "json loads failed"
     # dirty kludge to get around unicode
     for k,v in result.items():
@@ -57,7 +64,7 @@ def do_call(fun, args, connection):
     ## Unpack the error, and if it is an exception throw it.
     if type(result) == types.DictionaryType and result.has_key("result"):
         if result["result"] == "error":
-            print result
+            logging.debug( result)
             # We have returned with an error, so throw it as an exception.
             if result.has_key("pythonPickel"):
                 raise pickle.loads(result["pythonPickel"])

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import time
+import sys
 from personis import client
 import json
 from optparse import OptionParser
@@ -509,13 +510,7 @@ if __name__ == '__main__':
 
     parser = OptionParser()
  
-    parser.add_option("-o", "--oauthconf",
-              dest="oauthconf", metavar='FILE',
-              help="Oauth Config file", default='oauth.yaml')
-    (options, args) = parser.parse_args()
-    f = file(options.oauthconf,'r')
     httplib2.debuglevel = 0
-    oauthconf = yaml.load(f)
     FLOW = flow_from_clientsecrets('client_secrets.json',
         scope='https://www.personis.com/auth/model')
 
@@ -531,11 +526,10 @@ if __name__ == '__main__':
     cjson = json.loads(credentials.to_json())
     # Create an httplib2.Http object to handle our HTTP requests and authorize it
     # with our good Credentials.
-    http = httplib2.Http(proxy_info=p)
+    #http = httplib2.Http(proxy_info=p)
     #http = credentials.authorize(http)
     b = browse()
-    b.um = client.Access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
-            credentials = credentials, http = http, debug=True)
+    b.um = client.Access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', credentials = credentials)
     reslist = b.um.ask(context=["Personal"],view=['firstname'])
     client.util.PrintComplist(reslist)
     b.username = reslist[0].value

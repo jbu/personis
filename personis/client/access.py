@@ -2,6 +2,7 @@ from connection import Connection
 from evidence import Evidence
 from component import Component
 from util import *
+import logging
 
 class Access(object):
     """
@@ -14,11 +15,10 @@ class Access(object):
             password        password string
     returns a user model access object
     """
-    def __init__(self, connection=None, uri = None, credentials = None, http = None, debug=0, test=True):
+    def __init__(self, model = '-', connection=None, uri = None, credentials = None, http = None, loglevel=logging.INFO, test=True):
         if connection == None:
             connection = Connection(uri, credentials, http)            
-        self.debug =debug
-        self.modelname = '-'
+        self.modelname = model
         self.user = ''
         self.password = ''
         self.connection = connection
@@ -27,14 +27,11 @@ class Access(object):
         if not test: 
             return
         try:
-            if self.debug != 0:
-                print "jsondocall:", connection
+            logging.debug("jsondocall: access %s", self.connection)
             ok = do_call("access", {}, self.connection)
-            if self.debug != 0:
-                print "---------------------- result returned", ok
+            logging.debug("---------------------- result returned %s", ok)
         except:
-            if debug >0:
-                traceback.print_exc()
+            logging.debug(traceback.format_exc())
             raise ValueError, "cannot access model"
         if not ok:
             raise ValueError, "server cannot access model"

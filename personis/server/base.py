@@ -354,21 +354,11 @@ class Access(resolvers.Access,ev_filters.Access):
 		self.moddb = {}
 		for k in mod.keys():
 			self.moddb[k] = mod[k]
-		p = hashlib.md5()
-		if self.password == None:
-			self.password = ''
-		p.update(self.password)
-		#if (self.user == self.moddb['owner']) and (p.hexdigest() == mod['password']):
-		#	self.usertype = 'owner'
-		if self.user <> None:
-			self.usertype='owner'
-		#elif self.user in mod['apps']:
-		#	if p.hexdigest() == mod['apps'][self.user]['password']:
-		#			self.usertype = 'app'
-		#	else:
-		#			raise ValueError, "incorrect password '%s' for user '%s', model '%s'"%(self.password, self.user, self.modelname)
-		#else:
-		#	raise ValueError, "incorrect password '%s' for user '%s', model '%s'"%(self.password, self.user, self.modelname)
+		if (self.user == self.moddb['owner']):
+			self.usertype = 'owner'
+		else:
+			self.usertype = 'app'
+
 		shelf_close(mod, mod_shelf_fd)
 		resolvers.Access.__init__(self)
 		ev_filters.Access.__init__(self)

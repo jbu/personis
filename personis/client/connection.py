@@ -20,3 +20,6 @@ class Connection(object):
             self.credentials.authorize(self.http)
             self.authorized = True
         return self.http
+
+    def __repr__(self):
+        return 'uri: %s, credentials: %s'%(self.uri, self.credentials.to_json())
