@@ -14,14 +14,14 @@ Contents:
    Intro
    Documentation
    Installation
-   Tests.rst
+   Tests
    Tutorial
    Server
    Examples
-   Rulelang
    API
    Modeldef
    Client
+   personis.client
 
 Indices and tables
 ==================

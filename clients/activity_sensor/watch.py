@@ -1,7 +1,6 @@
-#!env python
+#!/usr/bin/env python
 
 import sys
-#sys.path.insert(0, '/home/jbu/personis/server/Src')
 
 import os
 import platform
@@ -135,22 +134,10 @@ active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's 
 
 if __name__ == '__main__':
 
-    httplib2.debuglevel=0
+    #httplib2.debuglevel=0
     logging.basicConfig(level=logging.INFO)
-    storage = Storage('credentials.dat')
-    credentials = storage.get()
-    FLOW = flow_from_clientsecrets('client_secrets.json',
-        scope='https://www.personis.com/auth/model')
 
-    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
-    h = httplib2.Http(proxy_info=p)
-    if credentials is None or credentials.invalid:
-        credentials = run(FLOW, storage, h)
-    cjson = json.loads(credentials.to_json())
-    http = httplib2.Http(proxy_info=p)
-
-    um = client.Access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', 
-            credentials = credentials, http = http, debug=True)
+    um = client.util.LoginFromClientSecrets()
     reslist = um.ask(context=["Personal"],view=['firstname'])
     print 'logging for', reslist[0].value
 

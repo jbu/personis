@@ -520,7 +520,7 @@ the command ./umbrowser.py:
 \$ ./umbrowser.py
 \end{Verbatim}
 
-The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is `yes'). At the end of this you should end up at a prompt:
+The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is `yes'). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 [''] \textgreater{}
@@ -546,65 +546,12 @@ Undocumented commands:
 help
 \end{Verbatim}
 
-To create or access a model you need to specify a username and password
-using the login command:
+Now we can see what is in the model:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-[''] \textgreater{} help login
-login username password
-[''] \textgreater{} login alice secret
-username: alice
-password: secret
-\end{Verbatim}
-
-To operate on models stored in the local file system we use the ``base''
-command. To operate on models stored on a remote server we user the
-``server'' command. For now we will use ``base'' since we can only make new models in the local file system,
-not remotely:
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{p}{[}\PYG{l+s}{'}\PYG{l+s}{'}\PYG{p}{]} \PYG{o}{\textgreater{}} \PYG{n}{base}
-\end{Verbatim}
-
-Now we make a model for alice in the current directory (.) using the
-mkmodel command:
-
-\begin{Verbatim}[commandchars=\\\{\}]
-[''] \textgreater{} help mkmodel
- mkmodel model\_name [model\_directory]
-        makes a new empty model
-        uses username, password specified in login cmd
-
-[''] \textgreater{} mkmodel Alice .
-
-making model 'Alice' in directory '.' with username 'alice' and password 'secret'
-model made
-to access the model, use the command 'model Alice .'
-\end{Verbatim}
-
-Note that we called the model ``Alice''. This could be the same as the login
-name but that is not necessary. For example user alice might want to make a
-model for a temperature sensing device and might call the model ``Temp''.
-Model names are case sensitive, so ``Alice'' is not the same as ``alice''.
-
-Also, we could have put the model anywhere in the file system but chose
-to put it in the current directory (.). The model is actually store in a
-directory with the same name as the model. So, after the mkmodel command
-there will be a new directory called ``Alice'' in our current directory.
-
-Now we want to access the new model, so we use the ``model'' command:
-
-\begin{Verbatim}[commandchars=\\\{\}]
- [''] \textgreater{} model Alice .
-model 'Alice' open, access type is 'base'
-\end{Verbatim}
-
-and now we can see what is in the model (should be empty):
-
-\begin{Verbatim}[commandchars=\\\{\}]
-Alice [''] \textgreater{} ls
+[''] \textgreater{} ls
 Components:
-Contexts: []
+Contexts: [u'Devices', u'Personal', u'Apps', u'Goals']
 Views: \PYGZob{}\PYGZcb{}
 Subscriptions: \PYGZob{}\PYGZcb{}
 \end{Verbatim}
@@ -616,14 +563,14 @@ subscriptions.
 So let's make a new context called ``Prefs'' in the current (root) context:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-Alice [''] \textgreater{} mkcontext Prefs
+[''] \textgreater{} mkcontext Prefs
 Context description? My preferences
 Create new context 'Prefs' in context '['']' with description 'My preferences'
 Ok?[N] Y
 
-Alice [''] \textgreater{} ls
+[''] \textgreater{} ls
 Components:
-Contexts: ['Prefs']
+Contexts: [u'Devices', u'Personal', u'Apps', u'Goals', u'Prefs']
 Views: \PYGZob{}\PYGZcb{}
 Subscriptions: \PYGZob{}\PYGZcb{}
 \end{Verbatim}
@@ -632,9 +579,9 @@ Now we will change context to the new ``Prefs'' context and make a
 component ``food'' for our food preferences:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-Alice [''] \textgreater{} cd Prefs
+[''] \textgreater{} cd Prefs
 
-Alice ['', 'Prefs'] \textgreater{} mkcomponent food
+['', 'Prefs'] \textgreater{} mkcomponent food
 Component description? type of food I prefer
 Component type:
 0 attribute
@@ -654,14 +601,14 @@ Index? 0
 Creating new component 'food', type 'preference', description 'type of food I prefer', value type 'string'
 Ok?[N] Y
 
-Alice ['', 'Prefs'] \textgreater{} ls
+['', 'Prefs'] \textgreater{} ls
 Components:
         food: type of food I prefer
 Contexts: []
 Views: \PYGZob{}\PYGZcb{}
 Subscriptions: \PYGZob{}\PYGZcb{}
 
-Alice ['', 'Prefs'] \textgreater{}
+['', 'Prefs'] \textgreater{}
 \end{Verbatim}
 
 Now we have a model called ``Alice'', owned by ``alice'' that has one
@@ -731,6 +678,54 @@ Try doing the ``tell'' operation again with a different food preference and then
 evidence that has been accreted.
 
 To quit the model browser, use the \emph{quit} command.
+
+
+\section{Logger}
+\label{Tutorial:logger}
+On a web browser (your phone will do) go to \href{http://personislog.appspot.com/}{http://personislog.appspot.com/}. Here you will be able to log some activity like eating some fruit. Click on one of the icons to log an activity. Now, let's see what happened to your model.
+
+Start umbrowser, as in the previous section:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\$ ./umbrowser.py
+Welcome James
+Personis Model Browser
+[''] \textgreater{} ls
+Components:
+Contexts: [u'Devices', u'Personal', u'Apps', u'Prefs']
+Views: \PYGZob{}\PYGZcb{}
+Subscriptions: \PYGZob{}\PYGZcb{}
+[''] \textgreater{} cd Apps
+['', 'Apps'] \textgreater{} ls
+Components:
+Contexts: [u'Logging']
+Views: \PYGZob{}\PYGZcb{}
+Subscriptions: \PYGZob{}\PYGZcb{}
+['', 'Apps'] \textgreater{} cd Logging
+['', 'Apps', 'Logging'] \textgreater{} ls
+Components:
+        logged\_items: All the items logged
+Contexts: []
+Views: \PYGZob{}\PYGZcb{}
+Subscriptions: \PYGZob{}\PYGZcb{}
+['', 'Apps', 'Logging'] \textgreater{}
+['', 'Apps', 'Logging'] \textgreater{} ls logged\_items
+\end{Verbatim}
+
+How did we do this? You can find the source for the logging app, and other personis clients, at \href{https://github.com/jbu/personis/tree/master/clients/}{https://github.com/jbu/personis/tree/master/clients/} (log-llum is the cherrypy version, aelog is the version that runs on appengine). Look at the method log\_me in \href{https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py}{https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py}:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@cherrypy.expose}
+\PYG{k}{def} \PYG{n+nf}{log\PYGZus{}me}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{item}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{if} \PYG{n}{cherrypy}\PYG{o}{.}\PYG{n}{session}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s}{'}\PYG{l+s}{um}\PYG{l+s}{'}\PYG{p}{)} \PYG{o}{==} \PYG{n+nb+bp}{None}\PYG{p}{:}
+        \PYG{k}{raise} \PYG{n}{cherrypy}\PYG{o}{.}\PYG{n}{HTTPError}\PYG{p}{(}\PYG{l+m+mi}{400}\PYG{p}{,} \PYG{l+s}{'}\PYG{l+s}{Log in first.}\PYG{l+s}{'}\PYG{p}{)}
+    \PYG{n}{um} \PYG{o}{=} \PYG{n}{cherrypy}\PYG{o}{.}\PYG{n}{session}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s}{'}\PYG{l+s}{um}\PYG{l+s}{'}\PYG{p}{)}
+    \PYG{n}{ev} \PYG{o}{=} \PYG{n}{client}\PYG{o}{.}\PYG{n}{Evidence}\PYG{p}{(}\PYG{n}{source}\PYG{o}{=}\PYG{l+s}{'}\PYG{l+s}{llum-log}\PYG{l+s}{'}\PYG{p}{,} \PYG{n}{evidence\PYGZus{}type}\PYG{o}{=}\PYG{l+s}{"}\PYG{l+s}{explicit}\PYG{l+s}{"}\PYG{p}{,} \PYG{n}{value}\PYG{o}{=}\PYG{n}{item}\PYG{p}{,} \PYG{n}{time}\PYG{o}{=}\PYG{n}{time}\PYG{o}{.}\PYG{n}{time}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{um}\PYG{o}{.}\PYG{n}{tell}\PYG{p}{(}\PYG{n}{context}\PYG{o}{=}\PYG{p}{[}\PYG{l+s}{'}\PYG{l+s}{Apps}\PYG{l+s}{'}\PYG{p}{,}\PYG{l+s}{'}\PYG{l+s}{Logging}\PYG{l+s}{'}\PYG{p}{]}\PYG{p}{,} \PYG{n}{componentid}\PYG{o}{=}\PYG{l+s}{'}\PYG{l+s}{logged\PYGZus{}items}\PYG{l+s}{'}\PYG{p}{,} \PYG{n}{evidence}\PYG{o}{=}\PYG{n}{ev}\PYG{p}{)}
+    \PYG{k}{raise} \PYG{n}{cherrypy}\PYG{o}{.}\PYG{n}{HTTPRedirect}\PYG{p}{(}\PYG{l+s}{'}\PYG{l+s}{/}\PYG{l+s}{'}\PYG{p}{)}
+\end{Verbatim}
+
+As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.
 
 
 \chapter{Personis Server}

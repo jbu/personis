@@ -5,6 +5,7 @@
 \contentsline {chapter}{\numberline {4}Tests}{11}{chapter.4}
 \contentsline {chapter}{\numberline {5}Tutorial Introduction to Personis}{13}{chapter.5}
 \contentsline {section}{\numberline {5.1}umbrowser}{13}{section.5.1}
+\contentsline {section}{\numberline {5.2}Logger}{16}{section.5.2}
 \contentsline {chapter}{\numberline {6}Personis Server}{17}{chapter.6}
 \contentsline {section}{\numberline {6.1}Running a Server}{17}{section.6.1}
 \contentsline {chapter}{\numberline {7}Example Applications}{19}{chapter.7}

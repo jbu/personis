@@ -203,6 +203,47 @@ showobj:
 evidence that has been accreted.</p>
 <p>To quit the model browser, use the <em>quit</em> command.</p>
 </div>
+<div class="section" id="logger">
+<h2>Logger<a class="headerlink" href="#logger" title="Permalink to this headline">¶</a></h2>
+<p>On a web browser (your phone will do) go to <a class="reference external" href="http://personislog.appspot.com/">http://personislog.appspot.com/</a>. Here you will be able to log some activity like eating some fruit. Click on one of the icons to log an activity. Now, let&#8217;s see what happened to your model.</p>
+<p>Start umbrowser, as in the previous section:</p>
+<div class="highlight-python"><pre>$ ./umbrowser.py
+Welcome James
+Personis Model Browser
+[''] &gt; ls
+Components:
+Contexts: [u'Devices', u'Personal', u'Apps', u'Prefs']
+Views: {}
+Subscriptions: {}
+[''] &gt; cd Apps
+['', 'Apps'] &gt; ls
+Components:
+Contexts: [u'Logging']
+Views: {}
+Subscriptions: {}
+['', 'Apps'] &gt; cd Logging
+['', 'Apps', 'Logging'] &gt; ls
+Components:
+        logged_items: All the items logged
+Contexts: []
+Views: {}
+Subscriptions: {}
+['', 'Apps', 'Logging'] &gt;
+['', 'Apps', 'Logging'] &gt; ls logged_items</pre>
+</div>
+<p>How did we do this? You can find the source for the logging app, and other personis clients, at <a class="reference external" href="https://github.com/jbu/personis/tree/master/clients/">https://github.com/jbu/personis/tree/master/clients/</a> (log-llum is the cherrypy version, aelog is the version that runs on appengine). Look at the method log_me in <a class="reference external" href="https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py">https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@cherrypy.expose</span>
+<span class="k">def</span> <span class="nf">log_me</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;um&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s">&#39;Log in first.&#39;</span><span class="p">)</span>
+    <span class="n">um</span> <span class="o">=</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;um&#39;</span><span class="p">)</span>
+    <span class="n">ev</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">Evidence</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s">&#39;llum-log&#39;</span><span class="p">,</span> <span class="n">evidence_type</span><span class="o">=</span><span class="s">&quot;explicit&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">um</span><span class="o">.</span><span class="n">tell</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Apps&#39;</span><span class="p">,</span><span class="s">&#39;Logging&#39;</span><span class="p">],</span> <span class="n">componentid</span><span class="o">=</span><span class="s">&#39;logged_items&#39;</span><span class="p">,</span> <span class="n">evidence</span><span class="o">=</span><span class="n">ev</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.</p>
+</div>
 </div>
 
 
@@ -215,6 +256,7 @@ evidence that has been accreted.</p>
   <ul>
 <li><a class="reference internal" href="#">Tutorial Introduction to Personis</a><ul>
 <li><a class="reference internal" href="#umbrowser">umbrowser</a></li>
+<li><a class="reference internal" href="#logger">Logger</a></li>
 </ul>
 </li>
 </ul>

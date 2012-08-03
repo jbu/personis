@@ -24,8 +24,11 @@ Application Program Interface
 |modeldef    |definition file                                                 |
 +------------+----------------------------------------------------------------+
 
-.. automodule:: personis.server
-   :members:
+
+
+.. automodule:: personis.client
+	:members:
+
 
 **Constants**
 

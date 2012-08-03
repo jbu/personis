@@ -164,3 +164,46 @@ evidence that has been accreted.
 
 To quit the model browser, use the *quit* command.
 
+Logger
+------
+
+On a web browser (your phone will do) go to http://personislog.appspot.com/. Here you will be able to log some activity like eating some fruit. Click on one of the icons to log an activity. Now, let's see what happened to your model.
+
+Start umbrowser, as in the previous section::
+
+	$ ./umbrowser.py 
+	Welcome James
+	Personis Model Browser
+	[''] > ls
+	Components:
+	Contexts: [u'Devices', u'Personal', u'Apps', u'Prefs']
+	Views: {}
+	Subscriptions: {}
+	[''] > cd Apps
+	['', 'Apps'] > ls
+	Components:
+	Contexts: [u'Logging']
+	Views: {}
+	Subscriptions: {}
+	['', 'Apps'] > cd Logging
+	['', 'Apps', 'Logging'] > ls
+	Components:
+		logged_items: All the items logged
+	Contexts: []
+	Views: {}
+	Subscriptions: {}
+	['', 'Apps', 'Logging'] > 
+	['', 'Apps', 'Logging'] > ls logged_items
+
+How did we do this? You can find the source for the logging app, and other personis clients, at https://github.com/jbu/personis/tree/master/clients/ (log-llum is the cherrypy version, aelog is the version that runs on appengine). Look at the method log_me in https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py::
+
+    @cherrypy.expose
+    def log_me(self, item):
+        if cherrypy.session.get('um') == None:
+            raise cherrypy.HTTPError(400, 'Log in first.')
+        um = cherrypy.session.get('um')
+        ev = client.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
+        um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
+        raise cherrypy.HTTPRedirect('/')
+
+As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.

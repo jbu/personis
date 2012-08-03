@@ -6,11 +6,9 @@ from personis import client
 import json
 from optparse import OptionParser
 import yaml
-
-from oauth2client.file import Storage
-from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
-from oauth2client.tools import run
 import httplib2
+
+
 
 import cmd
 
@@ -130,17 +128,17 @@ class browse(cmd.Cmd):
         compname = line[0]
         val = raw_input("Value? ")
         print "Evidence type:"
-        for et in client.EvidenceTypes:
-            print client.EvidenceTypes.index(et), et
+        for et in client.Evidence.EvidenceTypes:
+            print client.Evidence.EvidenceTypes.index(et), et
         etindex = raw_input("Index? [0]")
         if etindex == '':
             etindex = 0
         else:
             etindex = int(etindex)
-        if (etindex < 0) or (etindex > len(client.EvidenceTypes)-1):
+        if (etindex < 0) or (etindex > len(client.Evidence.EvidenceTypes)-1):
             print "Index out of range"
             return
-        etype = client.EvidenceTypes[etindex]
+        etype = client.Evidence.EvidenceTypes[etindex]
         source = self.username
         flags = []
         while True:
@@ -385,22 +383,22 @@ class browse(cmd.Cmd):
         comp = line[0]
         compdesc = raw_input("Component description? ")
         print "Component type:"
-        for ct in client.ComponentTypes:
-            print client.ComponentTypes.index(ct), ct
+        for ct in client.Component.ComponentTypes:
+            print client.Component.ComponentTypes.index(ct), ct
         ctindex = int(raw_input("Index? "))
-        if (ctindex < 0) or (ctindex > len(client.ComponentTypes)-1):
+        if (ctindex < 0) or (ctindex > len(client.Component.ComponentTypes)-1):
             print "Index out of range"
             return
-        comptype = client.ComponentTypes[ctindex]
+        comptype = client.Component.ComponentTypes[ctindex]
 
         print "Value type:"
-        for ct in client.ValueTypes:
-            print client.ValueTypes.index(ct), ct
+        for ct in client.Component.ValueTypes:
+            print client.Component.ValueTypes.index(ct), ct
         ctindex = int(raw_input("Index? "))
-        if (ctindex < 0) or (ctindex > len(client.ValueTypes)-1):
+        if (ctindex < 0) or (ctindex > len(client.Component.ValueTypes)-1):
             print "Index out of range"
             return
-        valtype = client.ValueTypes[ctindex]
+        valtype = client.Component.ValueTypes[ctindex]
 
         print "Creating new component '%s', type '%s', description '%s', value type '%s'" % (comp, comptype, compdesc, valtype)
         ok = raw_input("Ok?[N] ")
@@ -504,30 +502,10 @@ class browse(cmd.Cmd):
                 print ">>%s" % (line)
             self.cmdqueue.extend(input)
 
-
-def getOauthCredentials():
-    FLOW = flow_from_clientsecrets('client_secrets.json',
-        scope='https://www.personis.com/auth/model')
-
-    # If the Credentials don't exist or are invalid run through the native client
-    # flow. The Storage object will ensure that if successful the good
-    # Credentials will get written back to a file.
-    storage = Storage('credentials.dat')
-    credentials = storage.get()
-    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
-    h = httplib2.Http(proxy_info=p)
-    if credentials is None or credentials.invalid:
-        credentials = run(FLOW, storage, h)
-    return credentials
-
-
 if __name__ == '__main__':
 
-    credentials = getOauthCredentials()
-
     b = browse()
-    personis_uri = json.loads(open('client_secrets.json','r').read())['installed']['token_uri'][:-len('request_token')]
-    b.um = client.Access(uri = personis_uri, credentials = credentials)
+    b.um = client.util.LoginFromClientSecrets()
     reslist = b.um.ask(context=["Personal"],view=['firstname'])
     b.username = reslist[0].value
     print 'Welcome', b.username

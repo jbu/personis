@@ -32,6 +32,12 @@ import pickle
 import types
 import time
 import logging
+import personis.client
+
+from oauth2client.file import Storage
+from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
+from oauth2client.tools import run
+import httplib2
 
 def do_call(fun, args, connection):
     if (not connection.valid()):
@@ -140,3 +146,20 @@ def PrintComplist(reslist, printev=None, count=1):
 class Struct:
     def __init__(self, **entries): 
         self.__dict__.update(entries)
+
+def getOauthCredentialsFromClientSecrets(filename = 'client_secrets.json', http=None):
+
+    # If the Credentials don't exist or are invalid run through the native client
+    # flow. The Storage object will ensure that if successful the good
+    # Credentials will get written back to a file.
+    storage = Storage('credentials.dat')
+    credentials = storage.get()
+    FLOW = flow_from_clientsecrets(filename, scope='https://www.personis.com/auth/model')
+    if credentials is None or credentials.invalid:
+        credentials = run(FLOW, storage, http)
+    personis_uri = json.loads(open('client_secrets.json','r').read())['installed']['token_uri'][:-len('request_token')]
+    return credentials, personis_uri
+
+def LoginFromClientSecrets(filename = 'client_secrets.json', http=None):
+    credentials, personis_uri = getOauthCredentialsFromClientSecrets(filename, http)
+    return personis.client.Access(uri = personis_uri, credentials = credentials)

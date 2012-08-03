@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.17)  3 AUG 2012 15:02
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.17)  3 AUG 2012 16:04
 entering extended mode
  %&-line parsing enabled.
 **Personis.tex
@@ -769,14 +769,6 @@ Package: hypcap 2008/09/08 v1.10 Adjusting anchors of captions (HO)
 
 Writing index file Personis.idx
 (./Personis.aux)
-Runaway argument?
-{{8}{21}{Application Program Interface\relax }{chapter.8} 
-! File ended while scanning use of \@newl@bel.
-<inserted text> 
-                \par 
-l.110 \begin{document}
-                      
-? 
 \openout1 = `Personis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 110.
@@ -794,7 +786,7 @@ LaTeX Font Info:    ... okay on input line 110.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 110.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 110.
 
-(/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
+ (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 110.
@@ -858,7 +850,10 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
-] (./Personis.toc)
+] (./Personis.toc
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
+)
 \tf@toc=\write7
 \openout7 = `Personis.toc'.
 
@@ -891,9 +886,6 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 122.
 (/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 125.
-
 Underfull \hbox (badness 10000) in paragraph at lines 211--213
 []\T1/ptm/m/n/10 Capable of be-ing un-der-stood through study and ob-ser-va-tio
 n, com-pre-hen-si-ble.
@@ -905,18 +897,18 @@ Overfull \hbox (72.44989pt too wide) in paragraph at lines 214--215
 reference/dictionaries/difficultwords/data/d0011288.html) 
  []
 
-<model-tree.jpg, id=39, 568.1225pt x 385.44pt>
+<model-tree.jpg, id=138, 568.1225pt x 385.44pt>
 File: model-tree.jpg Graphic file (type jpg)
  <use model-tree.jpg>
 File: model-tree.jpg Graphic file (type jpg)
 
 <use model-tree.jpg> [4 <./model-tree.jpg>]
-<accretion.jpg, id=44, 708.6475pt x 415.5525pt>
+<accretion.jpg, id=143, 708.6475pt x 415.5525pt>
 File: accretion.jpg Graphic file (type jpg)
  <use accretion.jpg>
 File: accretion.jpg Graphic file (type jpg)
 
-<use accretion.jpg> <resolution.jpg, id=45, 719.68875pt x 383.4325pt>
+<use accretion.jpg> <resolution.jpg, id=144, 719.68875pt x 383.4325pt>
 File: resolution.jpg Graphic file (type jpg)
 
 <use resolution.jpg>
@@ -940,10 +932,11 @@ Chapter 4.
 Chapter 5.
 [13
 
-] [14] [15] [16]
-Chapter 6.
+] [14] [15]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 753.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 718.
+ [16]
+Chapter 6.
 [17
 
 ] [18
@@ -955,46 +948,46 @@ Chapter 7.
 ]
 Chapter 8.
 
-Overfull \hbox (6.45668pt too wide) in paragraph at lines 835--835
+Overfull \hbox (6.45668pt too wide) in paragraph at lines 830--830
 []\T1/ptm/m/n/10 base.py|  
  []
 
 
-Overfull \hbox (3.28673pt too wide) in paragraph at lines 835--835
+Overfull \hbox (3.28673pt too wide) in paragraph at lines 830--830
 \T1/ptm/m/n/10 tive.py|  
  []
 
 
-Overfull \hbox (12.41676pt too wide) in paragraph at lines 835--835
+Overfull \hbox (12.41676pt too wide) in paragraph at lines 830--830
 []\T1/ptm/m/n/10 server.py|  
  []
 
 
-Overfull \hbox (1.8463pt too wide) in paragraph at lines 835--835
+Overfull \hbox (1.8463pt too wide) in paragraph at lines 830--830
 []\T1/ptm/m/n/10 tests/*|  
  []
 
 
-Overfull \hbox (1.28662pt too wide) in paragraph at lines 835--835
+Overfull \hbox (1.28662pt too wide) in paragraph at lines 830--830
 \T1/ptm/m/n/10 model|  
  []
 
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 864.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 859.
 [21] [22]
-Underfull \vbox (badness 10000) detected at line 1085
+Underfull \vbox (badness 10000) detected at line 1080
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1085
+Underfull \vbox (badness 10000) detected at line 1080
  []
 
 [23]
-Underfull \vbox (badness 10000) detected at line 1085
+Underfull \vbox (badness 10000) detected at line 1080
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1085
+Underfull \vbox (badness 10000) detected at line 1080
  []
 
 [24] [25] [26] [27] [28]
@@ -1011,12 +1004,7 @@ Chapter 11.
 
 ] [34
 
-]
-
-LaTeX Warning: Reference `API:module-personis.server' on page 35 undefined on i
-nput line 1459.
-
-[35
+] [35
 
 
 ] (./Personis.ind [36
@@ -1025,33 +1013,26 @@ nput line 1459.
 ] [37
 
 
-]) (./Personis.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+]) (./Personis.aux) ) 
 Here is how much of TeX's memory you used:
- 7998 strings out of 495061
- 107837 string characters out of 1182621
- 209484 words of memory out of 3000000
- 10913 multiletter control sequences out of 15000+50000
+ 8021 strings out of 495061
+ 108105 string characters out of 1182621
+ 209958 words of memory out of 3000000
+ 10935 multiletter control sequences out of 15000+50000
  53102 words of font info for 63 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  45i,12n,45p,688b,410s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
-ve/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
-/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrro8a.p
-fb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/te
-xmf-texlive/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-texlive/font
-s/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times
-/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/sh
-are/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Personis.pdf (41 pages, 357477 bytes).
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</us
+r/share/texmf-texlive/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-texl
+ive/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/ur
+w/courier/ucrro8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a
+.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share
+/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fo
+nts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/
+utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Personis.pdf (41 pages, 371778 bytes).
 PDF statistics:
- 254 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 340 PDF objects out of 1000 (max. 8388607)
+ 63 named destinations out of 1000 (max. 500000)
+ 176 words of extra memory for PDF output out of 10000 (max. 10000000)
 
