@@ -1,3 +1,5 @@
+import time
+
 class Context:
     """ context object
         Identifier  the identifier of the component

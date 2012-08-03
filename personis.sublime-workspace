@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"acc",
+				"access_token"
+			],
+			[
+				"save",
+				"save_oauth_clients"
+			],
+			[
+				"oauth_clients",
+				"oauth_clients_file"
+			],
+			[
 				"Tr",
 				"Thread"
 			],
@@ -67,86 +79,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "README",
-			"settings":
-			{
-				"buffer_size": 4003,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Doc/API.rst",
-			"settings":
-			{
-				"buffer_size": 18271,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "aelog/log-llum.py",
-			"settings":
-			{
-				"buffer_size": 7938,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Doc/Tutorial.rst",
-			"settings":
-			{
-				"buffer_size": 5939,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Doc/Installation.rst",
-			"settings":
-			{
-				"buffer_size": 1502,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Src/Personis_server.py",
-			"settings":
-			{
-				"buffer_size": 49206,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "aelog/oauth.ae.yaml",
-			"settings":
-			{
-				"buffer_size": 246,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Src/Personis_base.py",
-			"settings":
-			{
-				"buffer_size": 40268,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Tests/test_server_tell.py",
-			"settings":
-			{
-				"buffer_size": 2536,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/Src/Personis.py",
-			"settings":
-			{
-				"buffer_size": 3442,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -176,6 +108,92 @@
 	},
 	"file_history":
 	[
+		"/home/jbu/personis/personis/server/connection.py",
+		"/home/jbu/personis/personis/server/test/base-tests",
+		"/home/jbu/personis/personis/server/test/testserver.sh",
+		"/home/jbu/personis/personis/server/test/server-test.conf",
+		"/home/jbu/personis/personis/client/util.py",
+		"/home/jbu/personis/personis/client/access.py",
+		"/home/jbu/personis/server-conf/server.conf",
+		"/home/jbu/personis/clients/browser/umbrowser.py",
+		"/home/jbu/personis/personis/client/__init__.py",
+		"/home/jbu/personis/personis/server/__init__.py",
+		"/home/jbu/personis/personis/server/test/test_server.py",
+		"/home/jbu/personis/personis/server/test/test_base_mkempty.py",
+		"/home/jbu/personis/personis/server/test/test_base.py",
+		"/home/jbu/personis/personis/server/server.py",
+		"/home/jbu/personis/personis/server/base.py",
+		"/home/jbu/personis/personis/client/connection.py",
+		"/home/jbu/personis/personis/server/test/credentials.dat",
+		"/home/jbu/personis/personis/server/test/oauth_access_tokens.dat",
+		"/home/jbu/personis/personis/server/test/oauth-clients-test.json",
+		"/home/jbu/personis/personis/server/test/client_secrets_google.json",
+		"/home/jbu/personis/personis/server/test/admins-test.yaml",
+		"/home/jbu/personis/personis/server/cronserver.py",
+		"/home/jbu/personis/personis/server/modeldefs/empty.prod",
+		"/home/jbu/personis/personis/server/mkmodel.py",
+		"/home/jbu/personis/personis/server/test/test_base_tell.py",
+		"/home/jbu/personis/personis/server/test/test_base_ask.py",
+		"/home/jbu/personis/personis/server/test/test_base_mkmodel.py",
+		"/home/jbu/personis/personis/server/ev_filters.py",
+		"/home/jbu/personis/server-conf/oauth_clients.json",
+		"/home/jbu/personis/personis/server/html/list_clients.html",
+		"/home/jbu/personis/personis/server/html/list_apps.html",
+		"/home/jbu/personis/personis/server/exceptions.py",
+		"/home/jbu/personis/personis/server/resolvers.py",
+		"/home/jbu/personis/server-conf/oauth.yaml",
+		"/home/jbu/personis/server-conf/client_secrets_google.json",
+		"/home/jbu/personis/clients/aelog/personis/client/access.py",
+		"/home/jbu/personis/personis/server/active.py",
+		"/home/jbu/personis/server-conf/runserver.sh",
+		"/home/jbu/personis/personis/server/test/README",
+		"/home/jbu/personis/personis/server/personis.py",
+		"/home/jbu/personis/personis/server/oauth_clients.yaml",
+		"/home/jbu/personis/server-conf/personis_server.conf",
+		"/home/jbu/personis/personis/server/subscription.py",
+		"/home/jbu/personis/personis/client/evidence.py",
+		"/home/jbu/personis/clients/log-llum/log-llum.py",
+		"/home/jbu/personis/clients/aelog/log-llum.py",
+		"/home/jbu/personis/clients/aelog/personis/client/connection.py",
+		"/home/jbu/personis/personis/server/consumer.py",
+		"/home/jbu/personis/server/base.py",
+		"/home/jbu/personis/clients/activity_sensor/watch.py",
+		"/home/jbu/personis/personis/client/component.py",
+		"/home/jbu/personis/clients/log-llum/oauth.yaml",
+		"/home/jbu/personis/clients/log-llum/runserver.sh",
+		"/home/jbu/personis/clients/log-llum/app.yaml",
+		"/home/jbu/personis/clients/log-llum/global.conf",
+		"/home/jbu/personis/personis/client/context.py",
+		"/home/jbu/personis/personis/client/view.py",
+		"/home/jbu/personis/clients/browser/client_secrets.json",
+		"/home/jbu/personis/clients/browser/oauth.yaml",
+		"/home/jbu/personis/server/util.py",
+		"/home/jbu/personis/client/__init__.py",
+		"/home/jbu/personis/client/Component.py",
+		"/home/jbu/personis/client/Evidence.py",
+		"/home/jbu/personis/client/View.py",
+		"/home/jbu/personis/client/Context.py",
+		"/home/jbu/personis/client/Access.py",
+		"/home/jbu/personis/client/Connection.py",
+		"/home/jbu/personis/__init__.py",
+		"/home/jbu/personis/client/connection.py",
+		"/home/jbu/personis/server/Doc/API.rst",
+		"/home/jbu/personis/server/Tests/test_server_tell.py",
+		"/home/jbu/personis/server/Subscription.py",
+		"/home/jbu/personis/server/Personis_server.py",
+		"/home/jbu/personis/server/Personis_mkmodel.py",
+		"/home/jbu/personis/server/Personis.py",
+		"/home/jbu/personis/server/setup.py",
+		"/home/jbu/personis/server/Doc/conf.py",
+		"/home/jbu/personis/server/Doc/Client.rst",
+		"/home/jbu/personis/server/Src/Personis.py",
+		"/home/jbu/personis/server/Src/Personis_base.py",
+		"/home/jbu/personis/aelog/oauth.ae.yaml",
+		"/home/jbu/personis/server/Src/Personis_server.py",
+		"/home/jbu/personis/server/Doc/Installation.rst",
+		"/home/jbu/personis/server/Doc/Tutorial.rst",
+		"/home/jbu/personis/aelog/log-llum.py",
+		"/home/jbu/personis/README",
 		"/home/jbu/personis/server/Src/runserver.ent.sh",
 		"/home/jbu/personis/activity_sensor/personis.py",
 		"/home/jbu/personis/aelog/oauth.yaml",
@@ -183,24 +201,17 @@
 		"/home/jbu/personis/activity_sensor/watch.py",
 		"/home/jbu/personis/inactivity/watch.py",
 		"/home/jbu/personis/inactivity/client_secrets.json",
-		"/home/jbu/personis/aelog/oauth.ae.yaml",
 		"/home/jbu/personis/inactivity/personis.py",
 		"/home/jbu/personis/server/Doc/Makefile",
 		"/home/jbu/personis/server/Doc/README",
-		"/home/jbu/personis/server/Src/Personis_base.py",
-		"/home/jbu/personis/server/Src/Personis_server.py",
 		"/home/jbu/personis/log-llum/gae-log.py",
 		"/home/jbu/personis/log-llum/app.yaml",
 		"/home/jbu/personis/aelog/app.yaml",
 		"/home/jbu/personis/server/Src/cronserver.py",
 		"/home/jbu/personis/server/Src/Subscription.py",
-		"/home/jbu/personis/server/Doc/conf.py",
 		"/home/jbu/personis/server/Doc/Tests.rst",
-		"/home/jbu/personis/server/Doc/Tutorial.rst",
-		"/home/jbu/personis/server/Doc/Installation.rst",
 		"/home/jbu/personis/aelog/appengine_config.py",
 		"/home/jbu/personis/aelog/personis.py",
-		"/home/jbu/personis/aelog/log-llum.py",
 		"/home/jbu/personis/aelog/oauth2client/__init__.py",
 		"/home/jbu/personis/aelog/oauth2client/client.py",
 		"/home/jbu/u",
@@ -209,14 +220,12 @@
 		"/home/jbu/personis/aelog/Personis_base.py",
 		"/home/jbu/personis/aelog/Personis_a.py",
 		"/home/jbu/personis/server/Tests/test_base_ask.py",
-		"/home/jbu/personis/server/Tests/test_server_tell.py",
 		"/home/jbu/personis/server/Tests/Base/example03_resolver.py",
 		"/home/jbu/personis/log-llum/log-llum.py",
 		"/home/jbu/personis/server/Src/Ev_filters.py",
 		"/home/jbu/personis/server/Src/Resolvers.py",
 		"/home/jbu/personis/server/Src/Utils/mkmodel.py",
 		"/home/jbu/personis/server/Src/Utils/mkmodeldef.py",
-		"/home/jbu/personis/server/Src/Personis.py",
 		"/home/jbu/personis/server/Src/Personis_a.py",
 		"/home/jbu/personis/server/Src/Personis_exceptions.py",
 		"/home/jbu/personis/server/Src/Personis_mkmodel.py",
@@ -226,23 +235,7 @@
 		"/home/jbu/personis/server/Src/connection.py",
 		"/home/jbu/personis/server/Src/consumer.py",
 		"/home/jbu/personis/server/Src/gae_server.py",
-		"/home/jbu/personis/server/Src/jsoncall.py",
-		"/home/jbu/personis/server/Tests/Base/example02_asks.py",
-		"/home/jbu/personis/server/Tests/test_tell.py",
-		"/home/jbu/personis/server/Tests/test_ask.py",
-		"/home/jbu/personis/server/Tests/base_test.py",
-		"/home/jbu/personis/client/umbrowser.py",
-		"/home/jbu/personis/server/Src/Modeldefs/user",
-		"/home/jbu/personis/server/Tests/Base/example01_add.py.bak",
-		"/home/jbu/personis/server/Tests/Base/example01_add.py",
-		"/home/jbu/personis/server/Tests/base_add.py",
-		"/home/jbu/personis/server/Tests/base_ask.py",
-		"/home/jbu/personis/server/Tests/example01_add.py",
-		"/home/jbu/personis/log-llum/myapp.log",
-		"/home/jbu/personis/log-llum/mobile_website/app.html",
-		"/home/jbu/personis/log-llum/oauth.yaml",
-		"/home/jbu/personis/log-llum/global.conf",
-		"/home/jbu/.config/sublime-text-2/Packages/User/Python.sublime-settings"
+		"/home/jbu/personis/server/Src/jsoncall.py"
 	],
 	"find":
 	{
@@ -250,9 +243,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			"/home/jbu/personis/server"
 		]
 	},
 	"find_state":
@@ -260,6 +254,18 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"print",
+			"mkmodel",
+			"self.oauthconf",
+			"personis_cli",
+			"mkmodel",
+			"active",
+			"MkModel",
+			"PrintCom",
+			"client",
+			"component",
+			"MkModel",
+			"Personis_server",
 			"print",
 			"ask",
 			"mkmodel",
@@ -299,284 +305,8 @@
 	"groups":
 	[
 		{
-			"selected": 5,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "README",
-					"settings":
-					{
-						"buffer_size": 4003,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"rulers":
-							[
-								80
-							],
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "server/Doc/API.rst",
-					"settings":
-					{
-						"buffer_size": 18271,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3368,
-								3368
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/RestructuredText/reStructuredText.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 459.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "aelog/log-llum.py",
-					"settings":
-					{
-						"buffer_size": 7938,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2418,
-								2418
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 714.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "server/Doc/Tutorial.rst",
-					"settings":
-					{
-						"buffer_size": 5939,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								602,
-								602
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/RestructuredText/reStructuredText.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "server/Doc/Installation.rst",
-					"settings":
-					{
-						"buffer_size": 1502,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								352,
-								352
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/RestructuredText/reStructuredText.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "server/Src/Personis_server.py",
-					"settings":
-					{
-						"buffer_size": 49206,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								47640,
-								47640
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 17035.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "aelog/oauth.ae.yaml",
-					"settings":
-					{
-						"buffer_size": 246,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								244,
-								244
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "server/Src/Personis_base.py",
-					"settings":
-					{
-						"buffer_size": 40268,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								983,
-								983
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 918.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "server/Tests/test_server_tell.py",
-					"settings":
-					{
-						"buffer_size": 2536,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1355,
-								1355
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "server/Src/Personis.py",
-					"settings":
-					{
-						"buffer_size": 3442,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 459.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

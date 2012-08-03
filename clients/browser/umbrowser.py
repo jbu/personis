@@ -440,7 +440,7 @@ class browse(cmd.Cmd):
         ok = raw_input("Ok?[N] ")
         if ok != 'Y':
             return
-        cobj = Personis_base.Context(Identifier=newcontext, Description=contextdesc)
+        cobj = client.Context(Identifier=newcontext, Description=contextdesc)
         if not self.um.mkcontext(self.context, cobj):
             print "Failed to make context. May be already present"
 
@@ -482,7 +482,7 @@ class browse(cmd.Cmd):
             modeldir = line[1]
             print "making model '%s' in directory '%s' with username '%s' and password '%s'" % (self.umname, modeldir, self.username, self.userpassword)
             try:
-                Personis_base.MkModel(model=self.umname, modeldir=modeldir, user=self.username, password=self.userpassword)
+                client.MkModel(model=self.umname, modeldir=modeldir, user=self.username, password=self.userpassword)
             except Exception, e:
                 print "mkmodel failed: ", e
                 return
@@ -505,12 +505,7 @@ class browse(cmd.Cmd):
             self.cmdqueue.extend(input)
 
 
-
-if __name__ == '__main__':
-
-    parser = OptionParser()
- 
-    httplib2.debuglevel = 0
+def getOauthCredentials():
     FLOW = flow_from_clientsecrets('client_secrets.json',
         scope='https://www.personis.com/auth/model')
 
@@ -523,21 +518,19 @@ if __name__ == '__main__':
     h = httplib2.Http(proxy_info=p)
     if credentials is None or credentials.invalid:
         credentials = run(FLOW, storage, h)
-    cjson = json.loads(credentials.to_json())
-    # Create an httplib2.Http object to handle our HTTP requests and authorize it
-    # with our good Credentials.
-    #http = httplib2.Http(proxy_info=p)
-    #http = credentials.authorize(http)
+    return credentials
+
+
+if __name__ == '__main__':
+
+    credentials = getOauthCredentials()
+
     b = browse()
-    b.um = client.Access(uri = 'http://ec2-54-251-12-234.ap-southeast-1.compute.amazonaws.com:2005/', credentials = credentials)
+    personis_uri = json.loads(open('client_secrets.json','r').read())['installed']['token_uri'][:-len('request_token')]
+    b.um = client.Access(uri = personis_uri, credentials = credentials)
     reslist = b.um.ask(context=["Personal"],view=['firstname'])
-    client.util.PrintComplist(reslist)
     b.username = reslist[0].value
-    print b.username
+    print 'Welcome', b.username
 
     b.cmdloop()
-    #resp, content = http.request('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+cjson['access_token'])
-    #usr = json.loads(content)
-    #global username
-    #username = usr['email']
-    #print username
+

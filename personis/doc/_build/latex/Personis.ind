@@ -1,0 +1,7 @@
+\begin{theindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+
+  \bigletter P
+  \item personis.server (module), \hyperpage{21}
+
+\end{theindex}

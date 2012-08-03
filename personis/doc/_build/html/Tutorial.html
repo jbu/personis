@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial Introduction to Personis &mdash; Personis 12.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '12.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Personis 12.9 documentation" href="index.html" />
+    <link rel="next" title="Personis Server" href="Server.html" />
+    <link rel="prev" title="Tests" href="Tests.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Server.html" title="Personis Server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Tests.html" title="Tests"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tutorial-introduction-to-personis">
+<h1>Tutorial Introduction to Personis<a class="headerlink" href="#tutorial-introduction-to-personis" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial assumes you have installed the framework using the instructions in the Installation section.
+Using the <em>umbrowser</em> command line utility, the tutorial will take you through the construction, navigation and
+management of a user model.</p>
+<div class="section" id="umbrowser">
+<h2>umbrowser<a class="headerlink" href="#umbrowser" title="Permalink to this headline">¶</a></h2>
+<p>The umbrowser.py program is a commandline utility that allows most
+operations of the Personis system to be carried out interactively.</p>
+<p>Umbrowser is found in the clients/browser directory of the personis package and is started with
+the command ./umbrowser.py:</p>
+<div class="highlight-python"><pre>$ ./umbrowser.py</pre>
+</div>
+<p>The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is &#8216;yes&#8217;). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt:</p>
+<div class="highlight-python"><pre>[''] &gt;</pre>
+</div>
+<p>The prompt indicates that the browser is waiting for a command. The
+initial part shows the current context, with the root context as an
+empty string.</p>
+<p>The help command gives information about the available commands:</p>
+<div class="highlight-python"><pre>[''] &gt; help
+Documented commands (type help &lt;topic&gt;):
+========================================
+app         delapp        export      login        mkmodel  set       subscribe
+attributes  delcomponent  import      ls           model    setgoals  tell
+base        delsub        importmdef  mkcomponent  quit     setperm
+cd          do            listapps    mkcontext    server   showperm
+
+Undocumented commands:
+======================
+help</pre>
+</div>
+<p>Now we can see what is in the model:</p>
+<div class="highlight-python"><pre>[''] &gt; ls
+Components:
+Contexts: [u'Devices', u'Personal', u'Apps', u'Goals']
+Views: {}
+Subscriptions: {}</pre>
+</div>
+<p>The &#8220;ls&#8221; command is a like the Unix ls command: it lists what is in the
+current context.
+As you can see, the model is empty - no components, contexts, views or
+subscriptions.
+So let&#8217;s make a new context called &#8220;Prefs&#8221; in the current (root) context:</p>
+<div class="highlight-python"><pre>[''] &gt; mkcontext Prefs
+Context description? My preferences
+Create new context 'Prefs' in context '['']' with description 'My preferences'
+Ok?[N] Y
+
+[''] &gt; ls
+Components:
+Contexts: [u'Devices', u'Personal', u'Apps', u'Goals', u'Prefs']
+Views: {}
+Subscriptions: {}</pre>
+</div>
+<p>Now we will change context to the new &#8220;Prefs&#8221; context and make a
+component &#8220;food&#8221; for our food preferences:</p>
+<div class="highlight-python"><pre>[''] &gt; cd Prefs
+
+['', 'Prefs'] &gt; mkcomponent food
+Component description? type of food I prefer
+Component type:
+0 attribute
+1 activity
+2 knowledge
+3 belief
+4 preference
+5 goal
+Index? 4
+Value type:
+0 string
+1 number
+2 boolean
+3 enum
+4 JSON
+Index? 0
+Creating new component 'food', type 'preference', description 'type of food I prefer', value type 'string'
+Ok?[N] Y
+
+['', 'Prefs'] &gt; ls
+Components:
+        food: type of food I prefer
+Contexts: []
+Views: {}
+Subscriptions: {}
+
+['', 'Prefs'] &gt;</pre>
+</div>
+<p>Now we have a model called &#8220;Alice&#8221;, owned by &#8220;alice&#8221; that has one
+context &#8220;Prefs&#8221; containing one component &#8220;food&#8221;.
+Now, Alice likes Thai food so we will add some evidence to her food
+preference component using the &#8220;tell&#8221; command:</p>
+<div class="highlight-python"><pre>Alice ['', 'Prefs'] &gt; tell food
+Value? Thai
+Evidence type:
+0 explicit
+1 implicit
+2 exmachina
+3 inferred
+4 stereotype
+Index? [0]
+Evidence flag? (CR for none)
+Tell value=Thai, type=explicit, flags=[], source=alice, context=['', 'Prefs'], component=food
+Ok?[N] Y
+
+
+Alice ['', 'Prefs'] &gt; ls
+Components:
+        food: type of food I prefer
+Contexts: []
+Views: {}
+Subscriptions: {}</pre>
+</div>
+<p>We can now examine the &#8220;food&#8221; component with the &#8220;ls&#8221; command:</p>
+<div class="highlight-python"><pre>Alice ['', 'Prefs'] &gt; ls food
+===================================================================
+Component:  type of food I prefer
+===================================================================
+showobj:
+  Description = type of food I prefer
+  component_type = preference
+  evidencelist = 1 items
+  value_list = []
+  value = Thai
+  value_type = string
+  goals = []
+  resolver = None
+  Identifier = food
+  objectType = Component
+---------------------------------
+Evidence about it
+---------------------------------
+showobj:
+           comment = None
+           evidence_type = explicit
+           value = Thai
+           objectType = Evidence
+           source = alice
+           flags = ['']
+           time = Thu Apr 28 18:08:55 2011 (1304003335.61)
+           owner = alice
+           exp_time = 0
+           useby = None
+---------------------------------</pre>
+</div>
+<p>Try doing the &#8220;tell&#8221; operation again with a different food preference and then &#8220;ls food&#8221; to see the additional
+evidence that has been accreted.</p>
+<p>To quit the model browser, use the <em>quit</em> command.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial Introduction to Personis</a><ul>
+<li><a class="reference internal" href="#umbrowser">umbrowser</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Tests.html"
+                        title="previous chapter">Tests</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Server.html"
+                        title="next chapter">Personis Server</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Server.html" title="Personis Server"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Tests.html" title="Tests"
+             >previous</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2012, Bob Kummerfeld and Judy Kay.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
