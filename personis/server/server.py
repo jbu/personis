@@ -44,6 +44,7 @@ from optparse import OptionParser
 import httplib2
 import logging
 import shutil
+import threading
 
 from oauth2client.file import Storage
 from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
@@ -419,7 +420,7 @@ class Server:
         except:
             return '''
 <h1>Personis</h1>
-Looks like you're coming into the service entrance with a browser. That's not how it works. Ask someme about 'Mneme'. If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>.
+Looks like you're coming into the service entrance with a browser. That's not how it works. Ask someme about 'Mneme'. If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>, or the <a href="/doc/index.html">the docs</a>. Source at <a href="https://github.com/jbu/personis">github</a>.
 '''
         if not access_token in self.access_tokens:
     	    raise cherrypy.HTTPError(401, 'Incorrect access token')
@@ -556,7 +557,32 @@ Looks like you're coming into the service entrance with a browser. That's not ho
 
         return json.dumps(result)
 
-def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO):
+class ExitThread(threading.Thread):
+    def __init__(self, cp, cronp, cronqueue, queue):
+        self.cp = cp
+        self.q = queue
+        self.cronq = cronqueue
+        self.cronp = cronp
+
+    def run(self):
+        self.running = True
+        logging.info('exit listener running')
+        while self.running:
+            g = self.q.get(block = True)
+            logging.info('exit thread got %s', g)
+            if g == 'exit':
+                self.running = False
+        logging.info('exit listener run ends')
+        self.exit()
+
+    def exit(self):
+        logging.info(  "Shutting down Personis Server. - exit thread")
+        self.cronq.put(dict(op="quit"))
+        self.cronp.join()
+        self.cp.engine.exit()
+        self.join()
+
+def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, exit_queue = None):
     logging.basicConfig(level=loglevel)
     logging.info(  "serving models in '%s'" % (modeldir))
     logging.info(  "config file '%s'" % (config))
@@ -568,10 +594,9 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO):
     p = Process(target=cronserver.cronserver, args=(cronserver.cronq,modeldir))
     p.start()
 
-    # ensure system model exists
+    if exit_queue <> None:
+        e = ExitThread(cherrypy, p, conserver.cronq, exit_queue)
 
-
-    #conf = {'/favion.ico': {'tools.staticfile.on': True,'tools.staticfile.file': os.path.join(os.path.dirname(os.path.abspath(__file__)), '/images/favicon.ico')}}
     try:
         try:
             cherrypy.config.update(os.path.expanduser(config))
@@ -579,14 +604,19 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO):
             #cherrypy.server.ssl_certificate = "server.crt"
             #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
-            cherrypy.engine.block()
+            if exit_queue == None:
+                cherrypy.engine.block()
+            else:
+                e.start()
         except Exception, E:
             logging.info(  "Failed to run Personis Server:" + str(E))
     finally:
-        logging.info(  "Shutting down Personis Server.")
-        cronserver.cronq.put(dict(op="quit"))
-        p.join()
-
+        if exit_queue <> None:
+            exit_queue.put('exit')
+        else:
+            logging.info(  "Shutting down Personis Server.")
+            cronserver.cronq.put(dict(op="quit"))
+            p.join()
 
 if __name__ == '__main__':
     parser = OptionParser()

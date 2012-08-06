@@ -6,7 +6,7 @@ import os
 import shutil
 import sys
 from apiclient.http import HttpMockSequence
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 
 from oauth2client.file import Storage
 from oauth2client.client import Credentials
@@ -24,10 +24,13 @@ class TestPersonisBaseAdd(unittest.TestCase):
         if os.path.exists('models'):
             shutil.rmtree('models')
         shutil.copytree('testmodels', 'models')
-        #cls.serverp = Process(target=server.server.runServer, args=('models', 'server-test.conf', 'admins-test.yaml', 'oauth-clients-test.json', 'oauth_access_tokens.dat', logging.DEBUG))
-        #cls.serverp.start()
+        cls.stopq = Queue()
 
-        #time.sleep(2)
+        cls.serverp = Process(target=server.server.runServer, args=('models', 'server-test.conf', 'admins-test.yaml', 
+            'oauth-clients-test.json', 'oauth_access_tokens.dat', logging.DEBUG, cls.stopq))
+        cls.serverp.start()
+
+        time.sleep(1)
 
         storage = Storage('credentials.dat')
         credentials = storage.get()
@@ -47,7 +50,8 @@ class TestPersonisBaseAdd(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        #cls.serverp.terminate()
+        cls.stopq.put('exit')
+        cls.serverp.join()
         shutil.rmtree('models')
 
     def test_ask_firstname(self):

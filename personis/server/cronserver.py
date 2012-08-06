@@ -21,6 +21,7 @@ from multiprocessing import Process, Queue
 import time
 import subscription
 import base as pmdns
+import logging
 
 cronq = None # message q
 
