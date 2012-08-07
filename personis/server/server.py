@@ -253,7 +253,7 @@ class Server:
         if not os.path.exists(os.path.join(self.modeldir,user)):
             mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod')
             mkmodel(model=user, mfile=mf, modeldir=self.modeldir, user=user, password='')
-            um = active.Access(model=usr['id'], modeldir=self.modeldir, user=user, password='')
+            um = active.Access(model=user, modeldir=self.modeldir, user=user, password='')
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
             um.tell(context=["Personal"], componentid='firstname', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['family_name'])
