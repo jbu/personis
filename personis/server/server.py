@@ -121,9 +121,9 @@ class Server:
         apps = um.listapps()
         for k in apps.keys():
             c = self.oauth_clients[k]
-            apps[k]['friendly_name'] = c.friendly_name
-            apps[k]['client_id'] = c.client_id
-            apps[k]['icon'] = c.icon
+            apps[k]['friendly_name'] = c['friendly_name']
+            apps[k]['client_id'] = c['client_id']
+            apps[k]['icon'] = c['icon']
         apps = [apps[k] for k in apps.keys()]
         logging.debug(  'apps', apps)
         stream = tmpl.generate(apps = apps)
