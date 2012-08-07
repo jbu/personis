@@ -413,7 +413,9 @@ class Server:
         except:
             return '''
 <h1>Personis</h1>
-Looks like you're coming into the service entrance with a browser. That's not how it works. Ask someme about 'Mneme'. If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>, or the <a href="/doc/index.html">the docs</a>. Source at <a href="https://github.com/jbu/personis">github</a>.
+Looks like you're coming into the service entrance with a browser, which is not how this works. Ask someme about 'Mneme', or perhaps you're looking for <a href="/list_apps">your apps</a>.
+<br/>If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>, or the <a href="/doc/index.html">the docs</a>.
+<br/>Source at <a href="https://github.com/jbu/personis">github</a>.
 '''
         if not access_token in self.access_tokens:
     	    raise cherrypy.HTTPError(401, 'Incorrect access token')
