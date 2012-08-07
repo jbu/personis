@@ -17,6 +17,7 @@
 @@Devices: description="Devices related to the user"
 @@Apps: description="Applications related to the user"
 @@Goals: description="Goals related to the user"
+@@Goals/Health: description="Health related goals"
 
 @@modelinfo: description="Model Information"
 --modeled: type="attribute", value_type="string", description="type of entity being modeled"
