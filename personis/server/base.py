@@ -309,6 +309,9 @@ class Context:
 		if self.Identifier == None:
 			return None
 
+	def __str__(self):
+		return 'Identifier {}, Description {}, perms {}'.format(self.Identifier, self.Description, self.perms)
+
 class View:
 	""" view object
 		Identifier	the identifier of the component
@@ -845,6 +848,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		if getsize:
 			contextinfo['size'] = getcontextsize(self._getcontextdir(context))
 
+		logging.info('Context is %s', contextinfo)
 		return contextinfo
 
 	def setcontext(self, context=[], **kwargs):
