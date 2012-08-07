@@ -279,7 +279,7 @@ class Server:
 
         # if the app is already registered, it's ok.
         apps = um.listapps()
-        logging.debug(  'apps:',apps, 'clientid', cherrypy.session.get('client_id'))
+        logging.debug(  'apps: %s, clientid: %s', apps, cherrypy.session.get('client_id'))
         if cherrypy.session.get('client_id') in apps:
             raise cherrypy.HTTPRedirect('/allow')
 
