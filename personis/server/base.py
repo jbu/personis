@@ -31,6 +31,7 @@ import resolvers
 import ev_filters
 import json
 import util
+import logging
 
 PERSONIS_VERSION = "$LastChangedRevision: 727 $"
 
