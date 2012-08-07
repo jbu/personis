@@ -81,7 +81,7 @@ def doflaglist(str, loc, toks):
 	pass
 	flags = []
 	if (len(toks) < 3) or  (toks[0] != '[') or (toks[-1] != ']'):
-		logging.info("*** bad flag list: %s", toks)
+		logging.debug("*** bad flag list: %s", toks)
 		return
 	for i in range(1,len(toks),2):
 		flags.append(toks[i])
@@ -127,11 +127,11 @@ def dotells(ev, compid):
 	global themodel, curcontext
 	evattrs = ["flags", "evidence_type", "source", "owner", "value", "comment", "time", "useby"]
 	if not all([a in evattrs for a in ev]):
-		logging.info( "**** evidence attributes %s must be one of %s" % (ev.keys(), `evattrs`))
+		logging.debug( "**** evidence attributes %s must be one of %s" % (ev.keys(), `evattrs`))
 		return 
 	if "flags" in ev:
 		if type(ev['flags']) != type([]):
-			logging.info( "**** evidence flags %s must be a list" % (ev['flags']))
+			logging.debug( "**** evidence flags %s must be a list" % (ev['flags']))
 			return
 
 	if not Debug:
@@ -139,12 +139,12 @@ def dotells(ev, compid):
 		for k,v in ev.items():
 			evobj.__dict__[k] = v
 		themodel.tell(context=curcontext, componentid=compid, evidence=evobj)
-		logging.info(	"""
+		logging.debug(	"""
 			evobj = base.Evidence(ev)
 			themodel.tell(context=%s, componentid=%s, evidence=%s)
 			""" % (curcontext, compid, evobj.__dict__))
 	else:
-		logging.info(	"""
+		logging.debug(	"""
 			evobj = base.Evidence(ev)
 			themodel.tell(context=%s, componentid=%s, evidence=%s)
 			""" % (curcontext, compid, ev))
@@ -155,9 +155,9 @@ def dotells(ev, compid):
 def docomponent(str, loc, toks):
 	global attrs, keyvals, paths, curcontext, themodel, Debug
 	if curcontext == "":
-		logging.info( "No context defined for component", toks[1])
-	logging.info( "docomponent:: %s", toks[1])
-	logging.info( " \tattrs:: %s", attrs)
+		logging.debug( "No context defined for component", toks[1])
+	logging.debug( "docomponent:: %s", toks[1])
+	logging.debug( " \tattrs:: %s", attrs)
 	required = ['type', 'description', 'value_type']
 	for x in required:
 		if x not in attrs[0]:
@@ -176,8 +176,8 @@ def docomponent(str, loc, toks):
 		except:
 			logging.info( "mkcomponent failed")
 		if res != None:
-			logging.info( res)
-	logging.info( """cobj = base.Component(Identifier="%s",
+			logging.debug( res)
+	logging.debug( """cobj = base.Component(Identifier="%s",
 		component_type="%s",
 		value_type="%s",
 		value_list="%s",
@@ -190,11 +190,11 @@ def docomponent(str, loc, toks):
 		for rule in rules:
 			if not Debug:
 				themodel.subscribe(context=curcontext, view=[toks[1]], subscription=dict(user="bob", password="qwert", statement=rule))
-			logging.info( "\tsub:: %s, %s, %s", curcontext, [toks[1]], dict(user="bob", password="qwert", statement=rule))
-	logging.info( "+++ component created ")
+			logging.debug( "\tsub:: %s, %s, %s", curcontext, [toks[1]], dict(user="bob", password="qwert", statement=rule))
+	logging.debug( "+++ component created ")
 	if len(attrs) > 1: # see if there is some evidence
 		for e in attrs[1:]:
-			logging.info( "\tevidence:: %s", e)
+			logging.debug( "\tevidence:: %s", e)
 			dotells(e, toks[1])
 #	del attrs[0]
 	attrs = []
@@ -203,24 +203,24 @@ def docomponent(str, loc, toks):
 
 def docontext(str, loc, toks):
 	global attrs, paths, curcontext, themodel, Debug, keyvals
-	logging.info( "docontext:: %s", toks)
-	logging.info( " \tpaths:: %s", paths)
-	logging.info( " \tattrs:: %s", attrs)
+	logging.debug( "docontext:: %s", toks)
+	logging.debug( " \tpaths:: %s", paths)
+	logging.debug( " \tattrs:: %s", attrs)
 	if len(paths) != 1:
 		logging.info( "too many paths", paths)
 		raise ParseException, "too many paths " + `paths`
 	curcontext = paths[0]
-	logging.info( "\tcurcontext:: %s", curcontext, curcontext.split('/'))
+	logging.debug( "\tcurcontext:: %s", curcontext, curcontext.split('/'))
 	if 'description' not in attrs[0]:
 		logging.info( "*** description required for ", curcontext)
 		raise ParseException, "description required for " + `curcontext`
 	if not Debug:
 		cobj = base.Context(Identifier=curcontext.split('/')[-1], Description=attrs[0]['description'])
-	logging.info( "\tbase.Context(Identifier='%s', Description='%s')", curcontext.split('/')[-1], attrs[0]['description'])
-	logging.info( "\t %s", curcontext.split('/')[:-1])
+	logging.debug( "\tbase.Context(Identifier='%s', Description='%s')", curcontext.split('/')[-1], attrs[0]['description'])
+	logging.debug( "\t %s", curcontext.split('/')[:-1])
 	if not Debug:
 		if themodel.mkcontext(curcontext.split('/')[:-1], cobj):
-			logging.info( "+++ context created ok")
+			logging.debug( "+++ context created ok")
 		else:
 			logging.info( "+++ context creation failed")
 	keyvals = {}
@@ -229,7 +229,7 @@ def docontext(str, loc, toks):
 
 def domdef(str, loc, toks):
 	#print "domdef::", toks
-	logging.info( "--------------------------------")
+	logging.debug( "--------------------------------")
 
 def dopath(str, loc, toks):
 	global paths
@@ -244,8 +244,8 @@ def doview(str, loc, toks):
 	if paths == []:
 		logging.info( "No paths defined for view %s", toks[1])
 		raise ParseException, "No paths defined for view " + `toks[1]`
-	logging.info( "doview:: %s", toks[1])
-	logging.info( "\t paths:: %s", paths)
+	logging.debug( "doview:: %s", toks[1])
+	logging.debug( "\t paths:: %s", paths)
 	if not Debug:
 		vobj = base.View(Identifier=toks[1], component_list=paths)
 		themodel.mkview(curcontext, vobj)
@@ -337,9 +337,9 @@ def get_modeldef(mfile):
 			continue
 		if mline[:9] == "$include ":
 			inclfile = mline[9:].strip()
-			logging.info( "#### include file: %s\n" % (inclfile))
+			logging.debug( "#### include file: %s\n" % (inclfile))
 			lines = lines + get_modeldef(inclfile)
-			logging.info( "#### end of include file: %s\n" % (inclfile))
+			logging.debug( "#### end of include file: %s\n" % (inclfile))
 		else:
 			lines = lines+mline
 	mf.close()
@@ -377,6 +377,6 @@ if __name__ == '__main__':
 """
 	mmdefstring = get_modeldef("modeldefs/user-test")
 	mdefstring = get_modeldef(sys.argv[1])
-	logging.info( "=====================\n",mdefstring,"\n=====================\n")
+	logging.debug( "=====================\n",mdefstring,"\n=====================\n")
 #	domodeldef(mdefstring)
 
