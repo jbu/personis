@@ -210,7 +210,7 @@ def docontext(str, loc, toks):
 		logging.info( "too many paths", paths)
 		raise ParseException, "too many paths " + `paths`
 	curcontext = paths[0]
-	logging.debug( "\tcurcontext:: "+ curcontext + curcontext.split('/'))
+	logging.debug( "\tcurcontext:: "+ curcontext + `curcontext.split('/')`)
 	if 'description' not in attrs[0]:
 		logging.info( "*** description required for ", curcontext)
 		raise ParseException, "description required for " + `curcontext`
