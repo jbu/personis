@@ -746,7 +746,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			raise ValueError, "tell: component id is not string type"
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
-		logging.debug(print repr(traceback.extract_stack()))
+		logging.debug(repr(traceback.extract_stack()))
 		logging.debug('perms %s',contextinfo)
 		perms = contextinfo['perms']
 		if self.usertype != 'owner':
