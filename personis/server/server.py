@@ -420,7 +420,7 @@ Looks like you're coming into the service entrance with a browser. That's not ho
             #print 'token',self.access_tokens[access_token]
         now = time.time()
         if now > self.access_tokens[access_token]['expires']:
-	       logging.debug(  'expired', access_token)
+	       logging.debug(  'expired %s', access_token)
 	       raise cherrypy.HTTPError(401, 'Expired access token')
     
         usr = self.access_tokens[access_token]['userid']
@@ -456,6 +456,11 @@ Looks like you're coming into the service entrance with a browser. That's not ho
                 result = True
             else:
                 um = active.Access(model=model, modeldir=self.modeldir, user=usr, password='')
+
+            apps = um.listapps()
+            if not self.access_tokens[access_token]['client_id'] in apps.keys():
+                logging.debug(  'client for access token not in model %s, %s', access_token, self.access_tokens[access_token]['client_id'])
+                raise cherrypy.HTTPError(401, 'client for access token not in model')
 
             if args[0] == 'access':
                 result = True
