@@ -391,7 +391,7 @@ class Server:
         if grant_type == 'authorization_code':
             refresh_token = ''
             refresh_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
-            logging.info(  'added refresh_token:',refresh_token)
+            logging.info(  'added refresh_token: %s',refresh_token)
             self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
             ret['refresh_token'] = refresh_token
 
