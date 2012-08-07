@@ -81,7 +81,7 @@ def doflaglist(str, loc, toks):
 	pass
 	flags = []
 	if (len(toks) < 3) or  (toks[0] != '[') or (toks[-1] != ']'):
-		logging.info("*** bad flag list: ", toks)
+		logging.info("*** bad flag list: %s", toks)
 		return
 	for i in range(1,len(toks),2):
 		flags.append(toks[i])
@@ -156,12 +156,12 @@ def docomponent(str, loc, toks):
 	global attrs, keyvals, paths, curcontext, themodel, Debug
 	if curcontext == "":
 		logging.info( "No context defined for component", toks[1])
-	logging.info( "docomponent::", toks[1])
-	logging.info( " \tattrs::", attrs)
+	logging.info( "docomponent:: %s", toks[1])
+	logging.info( " \tattrs:: %s", attrs)
 	required = ['type', 'description', 'value_type']
 	for x in required:
 		if x not in attrs[0]:
-			logging.info( "one or more of the required keyvals", required, "not found for ", toks[1])
+			logging.info( "one or more of the required keyvals", required, "not found for %s", toks[1])
 			logging.info( attrs[0])
 			return
 	if not Debug:
@@ -190,11 +190,11 @@ def docomponent(str, loc, toks):
 		for rule in rules:
 			if not Debug:
 				themodel.subscribe(context=curcontext, view=[toks[1]], subscription=dict(user="bob", password="qwert", statement=rule))
-			logging.info( "\tsub::", curcontext, [toks[1]], dict(user="bob", password="qwert", statement=rule))
+			logging.info( "\tsub:: %s, %s, %s", curcontext, [toks[1]], dict(user="bob", password="qwert", statement=rule))
 	logging.info( "+++ component created ")
 	if len(attrs) > 1: # see if there is some evidence
 		for e in attrs[1:]:
-			logging.info( "\tevidence::", e)
+			logging.info( "\tevidence:: %s", e)
 			dotells(e, toks[1])
 #	del attrs[0]
 	attrs = []
@@ -203,9 +203,9 @@ def docomponent(str, loc, toks):
 
 def docontext(str, loc, toks):
 	global attrs, paths, curcontext, themodel, Debug, keyvals
-	logging.info( "docontext::", toks)
-	logging.info( " \tpaths::", paths)
-	logging.info( " \tattrs::", attrs)
+	logging.info( "docontext:: %s", toks)
+	logging.info( " \tpaths:: %s", paths)
+	logging.info( " \tattrs:: %s", attrs)
 	if len(paths) != 1:
 		logging.info( "too many paths", paths)
 		raise ParseException, "too many paths " + `paths`
@@ -216,8 +216,8 @@ def docontext(str, loc, toks):
 		raise ParseException, "description required for " + `curcontext`
 	if not Debug:
 		cobj = base.Context(Identifier=curcontext.split('/')[-1], Description=attrs[0]['description'])
-	logging.info( "\tbase.Context(Identifier='%s', Description='%s')" % (curcontext.split('/')[-1], attrs[0]['description']))
-	logging.info( "\t", curcontext.split('/')[:-1])
+	logging.info( "\tbase.Context(Identifier='%s', Description='%s')", curcontext.split('/')[-1], attrs[0]['description'])
+	logging.info( "\t %s", curcontext.split('/')[:-1])
 	if not Debug:
 		if themodel.mkcontext(curcontext.split('/')[:-1], cobj):
 			logging.info( "+++ context created ok")
@@ -239,13 +239,13 @@ def dopath(str, loc, toks):
 def doview(str, loc, toks):
 	global paths, curcontext, themodel, Debug
 	if curcontext == "":
-		logging.info( "No context defined for view", toks[1])
+		logging.info( "No context defined for view %s", toks[1])
 		raise ParseException, "No context defined for view " + `toks[1]`
 	if paths == []:
-		logging.info( "No paths defined for view", toks[1])
+		logging.info( "No paths defined for view %s", toks[1])
 		raise ParseException, "No paths defined for view " + `toks[1]`
-	logging.info( "doview::", toks[1])
-	logging.info( "\t paths::", paths)
+	logging.info( "doview:: %s", toks[1])
+	logging.info( "\t paths:: %s", paths)
 	if not Debug:
 		vobj = base.View(Identifier=toks[1], component_list=paths)
 		themodel.mkview(curcontext, vobj)
