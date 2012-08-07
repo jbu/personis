@@ -262,7 +262,7 @@ class Server:
             um.tell(context=["Personal"], componentid='gender', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['email'])
             um.tell(context=["Personal"], componentid='email', evidence=ev)
-            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['gid'])
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['id'])
             um.tell(context=["Personal"], componentid='gid', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
             um.tell(context=["Personal"], componentid='picture', evidence=ev)
