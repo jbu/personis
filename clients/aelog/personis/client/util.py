@@ -31,6 +31,13 @@ import httplib2
 import pickle
 import types
 import time
+import logging
+import personis.client
+
+from oauth2client.file import Storage
+from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
+from oauth2client.tools import run
+import httplib2
 
 def do_call(fun, args, connection):
     if (not connection.valid()):
@@ -39,13 +46,19 @@ def do_call(fun, args, connection):
     args_json = json.dumps(args)+'\n'
 
     http = connection.get_http()
-    resp, content = http.request(connection.uri+fun, method="POST", headers={'Content-Type': 'application/json'}, body=args_json)
-
+    uri = connection.uri + fun
+    logging.debug('do_call uri: %s, body: %s', uri, args_json)
+    try:
+        resp, content = http.request(uri, method="POST", headers={'Content-Type': 'application/json'}, body=args_json)
+        logging.debug('Resp: %s, content: %s',resp, content)
+    except Exception as e:
+        logging.debug('httperror: %s',e )
+        raise e
     try:
         result = json.loads(content)
     except:
-        print "json loads failed!"
-        print "<<%s>>" % (content)
+        logging.debug( "json loads failed!")
+        logging.debug( "<<%s>>" % (content))
         raise ValueError, "json loads failed"
     # dirty kludge to get around unicode
     for k,v in result.items():
@@ -57,7 +70,7 @@ def do_call(fun, args, connection):
     ## Unpack the error, and if it is an exception throw it.
     if type(result) == types.DictionaryType and result.has_key("result"):
         if result["result"] == "error":
-            print result
+            logging.debug( result)
             # We have returned with an error, so throw it as an exception.
             if result.has_key("pythonPickel"):
                 raise pickle.loads(result["pythonPickel"])
@@ -133,3 +146,20 @@ def PrintComplist(reslist, printev=None, count=1):
 class Struct:
     def __init__(self, **entries): 
         self.__dict__.update(entries)
+
+def getOauthCredentialsFromClientSecrets(filename = 'client_secrets.json', http=None):
+
+    # If the Credentials don't exist or are invalid run through the native client
+    # flow. The Storage object will ensure that if successful the good
+    # Credentials will get written back to a file.
+    storage = Storage('credentials.dat')
+    credentials = storage.get()
+    FLOW = flow_from_clientsecrets(filename, scope='https://www.personis.com/auth/model')
+    if credentials is None or credentials.invalid:
+        credentials = run(FLOW, storage, http)
+    personis_uri = json.loads(open('client_secrets.json','r').read())['installed']['token_uri'][:-len('request_token')]
+    return credentials, personis_uri
+
+def LoginFromClientSecrets(filename = 'client_secrets.json', http=None):
+    credentials, personis_uri = getOauthCredentialsFromClientSecrets(filename, http)
+    return personis.client.Access(uri = personis_uri, credentials = credentials, http=http)
