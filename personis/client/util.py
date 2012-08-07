@@ -162,4 +162,4 @@ def getOauthCredentialsFromClientSecrets(filename = 'client_secrets.json', http=
 
 def LoginFromClientSecrets(filename = 'client_secrets.json', http=None):
     credentials, personis_uri = getOauthCredentialsFromClientSecrets(filename, http)
-    return personis.client.Access(uri = personis_uri, credentials = credentials)
+    return personis.client.Access(uri = personis_uri, credentials = credentials, http=http)

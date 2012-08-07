@@ -14,14 +14,6 @@
 
 # root context
 
-@@Location: description="Information about the users' location."
---seenby: type="attribute", value_type="string", description="sensor that has seen this person"
---location: type="attribute", value_type="string", description="Location"
-
-@@Work: description="Information about the users work."
---role: description="the users main role in the organisation", type="attribute", 
-	value_type="enum", value="Academic", value="Postgraduate", value="etc"
-
 @@Devices: description="Devices related to the user"
 --syssensors: type="attribute", value_type="string", description="list of system activity which detect the user"
 --carrying: type="attribute", value_type="string", description="Device(s) being carried"
@@ -35,31 +27,9 @@
 --lastname: type="attribute", value_type="string", description="Last name"
 --gender: type="attribute", value_type="enum", description="Gender", value="male", value="female"
 --email: type="attribute", value_type="string", description="email address"
+--gid: type="attribute", value_type="string", description="Google ID"
 # create a subscription that will notify when email address changes
 
 # ==viewname: list of components from current context
 #	create a view in the current context
 ==fullname: firstname, lastname
-
-@@Personal/Health: description="Health information"
---weight: type="attribute", value_type="number", description="My Weight"
---sleep: type="attribute", value_type="string", description="Sleep info"
-
-@@People: description="Information about people who may be relevant to the user"
---fullname: type="attribute", value_type="JSON", description="first+last name JSON encoded"
-
-
-@@Preferences: description="preferences"
-@@Preferences/Music: description="Music preferences, playlists etc"
---playlist: type="attribute", value_type="string", description="Tracks on my playlist"
---played: type="attribute", value_type="string", description="Tracks played"
-@@Preferences/Music/Jazz: description="preferences for Jazz"
-@@Preferences/Music/Jazz/Artists: description="preferences for Jazz artists"
---Miles_Davis: type="preference", value_type="number", description="Miles Davis"
-
-@@Preferences/Food: description="Food preferences"
-@@Preferences/Food/Thai: description="Thai food preferences"
---orders: type="attribute", value_type="string", description="orders"
---preferences: type="attribute", value_type="string", description="preferred thai dishes"
-
-@@Temp: description="work area"

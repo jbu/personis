@@ -216,9 +216,9 @@ class browse(cmd.Cmd):
             print "export: cannot open ", line[0]
             return
 
-        modeljson = self.um.export_model(context=self.context, evidence_filter="all")
+        modeljson = self.um.export_model(context=self.context, resolver = {'evidence_filter': "all"})
         mm = json.loads(modeljson)
-        expfile.write(sysjson.dumps(mm,sort_keys=True,indent=4))
+        expfile.write(json.dumps(mm,sort_keys=True,indent=4))
         if self.attrs["voluble"]:
             print modeljson
 
@@ -505,7 +505,11 @@ class browse(cmd.Cmd):
 if __name__ == '__main__':
 
     b = browse()
-    b.um = client.util.LoginFromClientSecrets()
+    # get past the uni's stupid proxy server
+    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+
+    # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
+    b.um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))
     reslist = b.um.ask(context=["Personal"],view=['firstname'])
     b.username = reslist[0].value
     print 'Welcome', b.username

@@ -76,11 +76,11 @@ def MkModel(model=None, modeldir=None, user=None, password=None, description=Non
 	mod, mod_shelf_fd = shelf_open(os.path.join(modeldir,".model"), "c")
 	mod['Identifier'] = model
 	mod['owner'] = user
-	p = hashlib.md5()
-	if password == None:
-		password = ''
-	p.update(password)
-	mod['password'] = p.hexdigest()
+	#p = hashlib.md5()
+	#if password == None:
+	#	password = ''
+	#p.update(password)
+	mod['password'] = '' #p.hexdigest()
 	mod['apps'] = {} # dictionary of app names and keys
 	mod['Description'] = description
 	shelf_close(mod, mod_shelf_fd)
@@ -1197,7 +1197,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		if context == None:
 			context = []
 		if type(context) is StringType:
-			context = [x for x in context.split('/') if x not in ['','.','..']]
+			context = [x for x in context.split(os.sep) if x not in ['','.','..']]
 		if not (type(context) is ListType):
 			raise ValueError, "Context <%s> is wrong type"%(context)
 		ctxt = [self.modeldir, self.modelname]+context
