@@ -247,7 +247,7 @@ class Server:
             raise IOError()
 
 
-        logging.debug(  'loggedin session id',cherrypy.session.id)
+        logging.debug(  'loggedin session id %s',cherrypy.session.id)
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,user)):
