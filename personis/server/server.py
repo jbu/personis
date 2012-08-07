@@ -312,7 +312,7 @@ class Server:
 
         self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
         self.access_tokens.sync()
-        logging.debug('access tokens: %s',self.access_tokens)
+        logging.debug('access tokens: %s',`[i for i in self.access_tokens]`)
 
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
