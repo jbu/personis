@@ -238,21 +238,22 @@ class Server:
         cjson = json.loads(cjson)
         content = http.request('https://www.googleapis.com/oauth2/v1/userinfo?access_token='+cjson['access_token'])
         #print 'content', content
-        usr = json.loads(content[1])
         try:
-            cherrypy.session['user'] = usr['id']
+            usr = json.loads(content[1])
+            user = usr['email'].split('@')[0].replace('.','')
+            cherrypy.session['user'] = user
         except:
-            logging.debug(  'exception on usr', usr)
+            logging.debug(  'exception on usr %s', content[1])
             raise IOError()
 
 
         logging.debug(  'loggedin session id',cherrypy.session.id)
 
         # if no model for user, create one.
-        if not os.path.exists(os.path.join(self.modeldir,usr['id'])):
+        if not os.path.exists(os.path.join(self.modeldir,user)):
             mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod')
-            mkmodel(model=usr['id'], mfile=mf, modeldir=self.modeldir, user=usr['id'], password='')
-            um = active.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
+            mkmodel(model=user, mfile=mf, modeldir=self.modeldir, user=user, password='')
+            um = active.Access(model=usr['id'], modeldir=self.modeldir, user=user, password='')
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
             um.tell(context=["Personal"], componentid='firstname', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['family_name'])
@@ -261,24 +262,16 @@ class Server:
             um.tell(context=["Personal"], componentid='gender', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['email'])
             um.tell(context=["Personal"], componentid='email', evidence=ev)
-
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['gid'])
+            um.tell(context=["Personal"], componentid='gid', evidence=ev)
+            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
+            um.tell(context=["Personal"], componentid='picture', evidence=ev)
 
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
             util.printcomplist(reslist)
 
-        um = active.Access(model=usr['id'], modeldir=self.modeldir, user=usr['id'], password='')
-        try:
-            reslist = um.ask(context=["Personal"], view=['picture'])
-        except:
-            #fill in missing icon info
-            cobj = base.Component(Identifier="picture", component_type="attribute", value_type="string",resolver=None,Description="Uri of a picture of the user")
-            um.mkcomponent(context=['Personal'], componentobj=cobj)
-            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
-            um.tell(context=["Personal"], componentid='picture', evidence=ev)
-
-            reslist = um.ask(context=["Personal"], view=['firstname','picture'])
-            util.printcomplist(reslist)
-
+        um = active.Access(model=user, modeldir=self.modeldir, user=user, password='')
+        
         # if we're here from a local url, just redirect. no need to allow.
         if cherrypy.session.get('admin'):
             cherrypy.session['um'] = um

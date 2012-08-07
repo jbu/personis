@@ -15,8 +15,6 @@
 # root context
 
 @@Devices: description="Devices related to the user"
---syssensors: type="attribute", value_type="string", description="list of system activity which detect the user"
---carrying: type="attribute", value_type="string", description="Device(s) being carried"
 
 @@modelinfo: description="Model Information"
 --modeled: type="attribute", value_type="string", description="type of entity being modeled"
@@ -28,7 +26,7 @@
 --gender: type="attribute", value_type="enum", description="Gender", value="male", value="female"
 --email: type="attribute", value_type="string", description="email address"
 --gid: type="attribute", value_type="string", description="Google ID"
-# create a subscription that will notify when email address changes
+--picture: type="attribute", value_type="string", description="Uri of a picture of the user"
 
 # ==viewname: list of components from current context
 #	create a view in the current context
