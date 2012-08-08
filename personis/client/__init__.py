@@ -1,5 +1,7 @@
 import time
 import httplib2
+from util import *
+import logging
 
 class Connection(object):
 
@@ -150,8 +152,7 @@ class Component:
             if (self.value_type == "enum") and not (self.value in self.value_list):
                 raise ValueError, "value '%s' not in value_list for type 'enum'" % (self.value)
 
-from util import *
-import logging
+
 
 class Access(object):
     """
@@ -176,9 +177,9 @@ class Access(object):
         if not test: 
             return
         try:
-            logging.debug("jsondocall: access %s", self.connection)
+            logging.info("jsondocall: access %s", self.connection)
             ok = do_call("access", {}, self.connection)
-            logging.debug("---------------------- result returned %s", ok)
+            logging.info("---------------------- result returned %s", ok)
         except:
             logging.debug(traceback.format_exc())
             raise ValueError, "cannot access model"

@@ -119,12 +119,12 @@ component "food" for our food preferences::
 	
 	['', 'Prefs'] > 
 
-Now we have a model called "Alice", owned by "alice" that has one
+Now we have a model owned by you that has one 
 context "Prefs" containing one component "food".
-Now, Alice likes Thai food so we will add some evidence to her food
+Now, imagine that you like Thai food so we will add some evidence to your food
 preference component using the "tell" command::
 
-	Alice ['', 'Prefs'] > tell food
+	['', 'Prefs'] > tell food
 	Value? Thai
 	Evidence type:
 	0 explicit
@@ -138,7 +138,7 @@ preference component using the "tell" command::
 	Ok?[N] Y
 
 	
-	Alice ['', 'Prefs'] > ls
+	['', 'Prefs'] > ls
 	Components:
 		food: type of food I prefer
 	Contexts: []
@@ -147,35 +147,19 @@ preference component using the "tell" command::
 
 We can now examine the "food" component with the "ls" command::
 
-	Alice ['', 'Prefs'] > ls food
+	['', 'Prefs'] > ls food
 	===================================================================
 	Component:  type of food I prefer
 	===================================================================
 	showobj:
-	  Description = type of food I prefer
-	  component_type = preference
-	  evidencelist = 1 items
-	  value_list = []
+	[...]
 	  value = Thai
-	  value_type = string
-	  goals = []
-	  resolver = None
-	  Identifier = food
-	  objectType = Component
+	[...]
 	---------------------------------
 	Evidence about it
 	---------------------------------
 	showobj:
-	           comment = None
-	           evidence_type = explicit
-	           value = Thai
-	           objectType = Evidence
-	           source = alice
-	           flags = ['']
-	           time = Thu Apr 28 18:08:55 2011 (1304003335.61)
-	           owner = alice
-	           exp_time = 0
-	           useby = None
+		[...]
 	---------------------------------
 	
 Try doing the "tell" operation again with a different food preference and then "ls food" to see the additional
@@ -227,3 +211,17 @@ How did we do this? You can find the source for the logging app, and other perso
         raise cherrypy.HTTPRedirect('/')
 
 As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.
+We will now do a similar exercise.
+ 
+* Create a new directory (u:\comp5047\asker). 
+* Save [this file](https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json) into a file called client_secrets.json. 
+* Copy this code skeleton into a file called ask.py::
+
+	from personis import client
+	import httplib2
+    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+    um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))
+
+If we execute it
+
+	\comp5047\Scripts.python.exe ask.py

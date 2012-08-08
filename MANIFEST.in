@@ -1,3 +1,4 @@
 include COPYING
 include README
-recursive-include personisc *.html *.css *.png *.gif *.yaml *.json *.conf
+include server-conf/models/README
+recursive-include personis *.html *.css *.png *.gif *.yaml *.json *.conf *.rst *.jpg *.ico

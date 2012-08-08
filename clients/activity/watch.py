@@ -137,7 +137,12 @@ if __name__ == '__main__':
     #httplib2.debuglevel=0
     logging.basicConfig(level=logging.INFO)
 
-    um = client.util.LoginFromClientSecrets()
+    # get past the uni's stupid proxy server
+    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+
+    # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
+    um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))
+
     reslist = um.ask(context=["Personal"],view=['firstname'])
     print 'logging for', reslist[0].value
 

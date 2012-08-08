@@ -157,11 +157,11 @@ Subscriptions: {}
 
 ['', 'Prefs'] &gt;</pre>
 </div>
-<p>Now we have a model called &#8220;Alice&#8221;, owned by &#8220;alice&#8221; that has one
+<p>Now we have a model owned by you that has one
 context &#8220;Prefs&#8221; containing one component &#8220;food&#8221;.
-Now, Alice likes Thai food so we will add some evidence to her food
+Now, imagine that you like Thai food so we will add some evidence to your food
 preference component using the &#8220;tell&#8221; command:</p>
-<div class="highlight-python"><pre>Alice ['', 'Prefs'] &gt; tell food
+<div class="highlight-python"><pre>['', 'Prefs'] &gt; tell food
 Value? Thai
 Evidence type:
 0 explicit
@@ -175,7 +175,7 @@ Tell value=Thai, type=explicit, flags=[], source=alice, context=['', 'Prefs'], c
 Ok?[N] Y
 
 
-Alice ['', 'Prefs'] &gt; ls
+['', 'Prefs'] &gt; ls
 Components:
         food: type of food I prefer
 Contexts: []
@@ -183,35 +183,19 @@ Views: {}
 Subscriptions: {}</pre>
 </div>
 <p>We can now examine the &#8220;food&#8221; component with the &#8220;ls&#8221; command:</p>
-<div class="highlight-python"><pre>Alice ['', 'Prefs'] &gt; ls food
+<div class="highlight-python"><pre>['', 'Prefs'] &gt; ls food
 ===================================================================
 Component:  type of food I prefer
 ===================================================================
 showobj:
-  Description = type of food I prefer
-  component_type = preference
-  evidencelist = 1 items
-  value_list = []
+[...]
   value = Thai
-  value_type = string
-  goals = []
-  resolver = None
-  Identifier = food
-  objectType = Component
+[...]
 ---------------------------------
 Evidence about it
 ---------------------------------
 showobj:
-           comment = None
-           evidence_type = explicit
-           value = Thai
-           objectType = Evidence
-           source = alice
-           flags = ['']
-           time = Thu Apr 28 18:08:55 2011 (1304003335.61)
-           owner = alice
-           exp_time = 0
-           useby = None
+        [...]
 ---------------------------------</pre>
 </div>
 <p>Try doing the &#8220;tell&#8221; operation again with a different food preference and then &#8220;ls food&#8221; to see the additional
@@ -257,7 +241,24 @@ Subscriptions: {}
     <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.</p>
+<p>As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.
+We will now do a similar exercise.</p>
+<ul>
+<li><p class="first">Create a new directory (u:comp5047asker).</p>
+</li>
+<li><p class="first">Save [this file](<a class="reference external" href="https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json">https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json</a>) into a file called client_secrets.json.</p>
+</li>
+<li><p class="first">Copy this code skeleton into a file called ask.py:</p>
+<div class="highlight-python"><pre>    from personis import client
+    import httplib2
+p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))</pre>
+</div>
+</li>
+</ul>
+<p>If we execute it</p>
+<blockquote>
+<div>comp5047Scripts.python.exe ask.py</div></blockquote>
 </div>
 </div>
 

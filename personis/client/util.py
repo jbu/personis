@@ -47,18 +47,18 @@ def do_call(fun, args, connection):
 
     http = connection.get_http()
     uri = connection.uri + fun
-    logging.debug('do_call uri: %s, body: %s', uri, args_json)
+    logging.info('do_call uri: %s, body: %s', uri, args_json)
     try:
         resp, content = http.request(uri, method="POST", headers={'Content-Type': 'application/json'}, body=args_json)
-        logging.debug('Resp: %s, content: %s',resp, content)
+        logging.info('Resp: %s, content: %s',resp, content)
     except Exception as e:
-        logging.debug('httperror: %s',e )
+        logging.info('httperror: %s',e )
         raise e
     try:
         result = json.loads(content)
     except:
-        logging.debug( "json loads failed!")
-        logging.debug( "<<%s>>" % (content))
+        logging.info( "json loads failed!")
+        logging.info( "<<%s>>" % (content))
         raise ValueError, "json loads failed"
     # dirty kludge to get around unicode
     for k,v in result.items():
@@ -70,7 +70,7 @@ def do_call(fun, args, connection):
     ## Unpack the error, and if it is an exception throw it.
     if type(result) == types.DictionaryType and result.has_key("result"):
         if result["result"] == "error":
-            logging.debug( result)
+            logging.info( result)
             # We have returned with an error, so throw it as an exception.
             if result.has_key("pythonPickel"):
                 raise pickle.loads(result["pythonPickel"])
@@ -98,8 +98,7 @@ def MkModel( model=None, modelserver=None, user=None, password=None, description
                                                                 'user':user,\
                                                                 'password':password})
     except:
-        if debug >0:
-            traceback.print_exc()
+        logging.info(traceback.format_exc())
         raise ValueError, "cannot create model '%s', server '%s'" % (modelname, modelserver)
     if not ok:
         raise ValueError, "server '%s' cannot create model '%s'" % (modelserver, modelname)
