@@ -95,7 +95,7 @@ class LogLlum(webapp2.RequestHandler):
     def get(self):
         session = get_current_session()
         if session.get('connection') == None:
-            logging.info('no connection found. logging in')
+            logging.debug('no connection found. logging in')
             return self.redirect('/do_login')
         connection = pickle.loads(session.get('connection'))
         um = client.Access(connection=connection, test=False)
@@ -106,7 +106,7 @@ class LogLlum(webapp2.RequestHandler):
             return self.redirect('/do_login')
 
         ret = '''<!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -117,6 +117,12 @@ class LogLlum(webapp2.RequestHandler):
         </script>
         <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js">
         </script>
+        <!-- Le styles -->
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="assets/css/docs.css" rel="stylesheet">
+        <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body id="home-index-action" class="ot">
         <div id="homePage" data-role="page" data-theme="o" class="homeBody">
@@ -134,10 +140,10 @@ class LogLlum(webapp2.RequestHandler):
 
 
 httplib2.debuglevel=0
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 config = {}
 config['oauthconf'] = yaml.load(file('oauth.ae.yaml','r'))
-#config['webapp2_extras.sessions'] = {'secret_key': '0srag7dr89at7t034hjt'}
+
 app = webapp2.WSGIApplication([
         webapp2.Route(r'/do_login', handler=LogLlum, handler_method='do_login'),
         webapp2.Route(r'/authorized', handler=LogLlum, handler_method='authorized'),
