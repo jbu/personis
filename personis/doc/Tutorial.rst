@@ -14,7 +14,7 @@ Create a sandbox directory (u:\\comp5047, perhaps). Download https://raw.github.
 
 Install necessary libraries
 
-	u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis
+	u:\\comp5047\\Scripts\\pip install google-api-python-client pyyaml personis
 
 Install the client examples from https://github.com/downloads/jbu/personis/clients.zip
 
@@ -222,13 +222,13 @@ We will now do a similar exercise.
     p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
     um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))
 
-If we execute it
+If we execute it::
 
-	\comp5047\Scripts\python.exe ask.py
+	\\comp5047\\Scripts\\python.exe ask.py
 
 it should take you through an authentication routine (involving web browsers, google, and a personis server) and then exit.
 
-Lets say we want to ask the model what we have been eating (assuming we have been logging our meals with the logging app shown above)
+Lets say we want to ask the model what we have been eating (assuming we have been logging our meals with the logging app shown above)::
 
 	   kiwi : ***
 	  grape : *
