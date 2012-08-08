@@ -9,12 +9,12 @@ But as a quick recap for installing the client only:
 Create a sandbox directory (u:\\comp5047, perhaps). Download https://raw.github.com/pypa/virtualenv/master/virtualenv.py to the directory. Create a python sandbox::
 
 	u:
-	cd \\comp5047
-	c:\\python2.6\\python.exe virtualenv.py .
+	cd \comp5047
+	c:\python2.6\python.exe virtualenv.py .
 
 Install necessary libraries
 
-	u:\\comp5047\\Scripts\\pip install google-api-python-client pyyaml personis
+	u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis
 
 Install the client examples from https://github.com/downloads/jbu/personis/clients.zip
 
@@ -35,8 +35,8 @@ the command ./umbrowser.py (unix)::
 or for windows::
 
 	u:
-	cd \\comp5047
-	\\comp5047\\Scripts\\python.exe umbrowser.py
+	cd \comp5047
+	\comp5047\Scripts\python.exe umbrowser.py
 
 The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is 'yes'). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt::
 
@@ -224,4 +224,17 @@ We will now do a similar exercise.
 
 If we execute it
 
-	\\comp5047\\Scripts\\python.exe ask.py
+	\comp5047\Scripts\python.exe ask.py
+
+it should take you through an authentication routine (involving web browsers, google, and a personis server) and then exit.
+
+Lets say we want to ask the model what we have been eating (assuming we have been logging our meals with the logging app shown above)
+
+	   kiwi : ***
+	  grape : *
+	  apple : **
+	   pear : ****
+	 orange : ***
+	 banana : *
+
+Can you add to ask.py to replicate this? You will probably need to use umbrowser to discover the model structure.

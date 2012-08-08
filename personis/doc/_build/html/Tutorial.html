@@ -60,12 +60,12 @@
 But as a quick recap for installing the client only:</p>
 <p>Create a sandbox directory (u:\comp5047, perhaps). Download <a class="reference external" href="https://raw.github.com/pypa/virtualenv/master/virtualenv.py">https://raw.github.com/pypa/virtualenv/master/virtualenv.py</a> to the directory. Create a python sandbox:</p>
 <div class="highlight-python"><pre>u:
-cd \\comp5047
-c:\\python2.6\\python.exe virtualenv.py .</pre>
+cd \comp5047
+c:\python2.6\python.exe virtualenv.py .</pre>
 </div>
 <p>Install necessary libraries</p>
 <blockquote>
-<div>u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis</div></blockquote>
+<div>u:comp5047Scriptspip install google-api-python-client pyyaml personis</div></blockquote>
 <p>Install the client examples from <a class="reference external" href="https://github.com/downloads/jbu/personis/clients.zip">https://github.com/downloads/jbu/personis/clients.zip</a></p>
 <p>Using the <em>umbrowser</em> command line utility, the tutorial will take you through the construction, navigation and
 management of a user model.</p>
@@ -79,8 +79,8 @@ the command ./umbrowser.py (unix):</p>
 </div>
 <p>or for windows:</p>
 <div class="highlight-python"><pre>u:
-cd \\comp5047
-\\comp5047\\Scripts\\python.exe umbrowser.py</pre>
+cd \comp5047
+\comp5047\Scripts\python.exe umbrowser.py</pre>
 </div>
 <p>The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is &#8216;yes&#8217;). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt:</p>
 <div class="highlight-python"><pre>[''] &gt;</pre>
@@ -258,7 +258,22 @@ um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))</pre>
 </ul>
 <p>If we execute it</p>
 <blockquote>
-<div>\comp5047\Scripts\python.exe ask.py</div></blockquote>
+<div>comp5047Scriptspython.exe ask.py</div></blockquote>
+<p>it should take you through an authentication routine (involving web browsers, google, and a personis server) and then exit.</p>
+<p>Lets say we want to ask the model what we have been eating (assuming we have been logging our meals with the logging app shown above)</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div>kiwi : <a href="#id1"><span class="problematic" id="id2">**</span></a><a href="#id3"><span class="problematic" id="id4">*</span></a></div></blockquote>
+<p>grape : *
+apple : **</p>
+<blockquote>
+<div>pear : <a href="#id5"><span class="problematic" id="id6">**</span></a><a href="#id7"><span class="problematic" id="id8">**</span></a></div></blockquote>
+</div></blockquote>
+<p>orange : <a href="#id9"><span class="problematic" id="id10">**</span></a>*
+banana : *</p>
+</div></blockquote>
+<p>Can you add to ask.py to replicate this? You will probably need to use umbrowser to discover the model structure.</p>
 </div>
 </div>
 
