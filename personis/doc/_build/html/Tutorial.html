@@ -63,9 +63,9 @@ But as a quick recap for installing the client only:</p>
 cd \comp5047
 c:\python2.6\python.exe virtualenv.py .</pre>
 </div>
-<p>Install necessary libraries</p>
+<p>Install necessary libraries:</p>
 <blockquote>
-<div>u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis</div></blockquote>
+<div>u:comp5047Scriptspip install google-api-python-client pyyaml personis</div></blockquote>
 <p>Install the client examples from <a class="reference external" href="https://github.com/downloads/jbu/personis/clients.zip">https://github.com/downloads/jbu/personis/clients.zip</a></p>
 <p>Using the <em>umbrowser</em> command line utility, the tutorial will take you through the construction, navigation and
 management of a user model.</p>
@@ -249,25 +249,31 @@ We will now do a similar exercise.</p>
 <li><p class="first">Save <a class="reference external" href="https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json">https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json</a> into the new directory.</p>
 </li>
 <li><p class="first">Copy this code skeleton into a file in the directory called ask.py:</p>
-<div class="highlight-python"><pre>    from personis import client
-    import httplib2
-p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
-um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">personis</span> <span class="kn">import</span> <span class="n">client</span>
+<span class="kn">import</span> <span class="nn">httplib2</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">httplib2</span><span class="o">.</span><span class="n">ProxyInfo</span><span class="p">(</span><span class="n">proxy_type</span><span class="o">=</span><span class="n">httplib2</span><span class="o">.</span><span class="n">socks</span><span class="o">.</span><span class="n">PROXY_TYPE_HTTP_NO_TUNNEL</span><span class="p">,</span> <span class="n">proxy_host</span><span class="o">=</span><span class="s">&#39;www-cache.it.usyd.edu.au&#39;</span><span class="p">,</span> <span class="n">proxy_port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<span class="n">um</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">LoginFromClientSecrets</span><span class="p">(</span><span class="n">http</span><span class="o">=</span><span class="n">httplib2</span><span class="o">.</span><span class="n">Http</span><span class="p">(</span><span class="n">proxy_info</span><span class="o">=</span><span class="n">p</span><span class="p">))</span>
+</pre></div>
 </div>
 </li>
 </ul>
 <p>If we execute it:</p>
-<div class="highlight-python"><pre>\\comp5047\\Scripts\\python.exe ask.py</pre>
-</div>
+<blockquote>
+<div>comp5047Scriptspython.exe ask.py</div></blockquote>
 <p>it should take you through an authentication routine (involving web browsers, google, and a personis server) and then exit.</p>
 <p>Lets say we want to ask the model what we have been eating (assuming we have been logging our meals with the logging app shown above):</p>
-<div class="highlight-python"><pre>  kiwi : ***
- grape : *
- apple : **
-  pear : ****
-orange : ***
-banana : *</pre>
-</div>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div>kiwi : <a href="#id1"><span class="problematic" id="id2">**</span></a><a href="#id3"><span class="problematic" id="id4">*</span></a></div></blockquote>
+<p>grape : *
+apple : **</p>
+<blockquote>
+<div>pear : <a href="#id5"><span class="problematic" id="id6">**</span></a><a href="#id7"><span class="problematic" id="id8">**</span></a></div></blockquote>
+</div></blockquote>
+<p>orange : <a href="#id9"><span class="problematic" id="id10">**</span></a>*
+banana : *</p>
+</div></blockquote>
 <p>Can you add to ask.py to replicate this? You will probably need to use umbrowser to discover the model structure.</p>
 </div>
 </div>
