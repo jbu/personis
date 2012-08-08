@@ -251,7 +251,10 @@ class Server:
         logging.debug(  'loggedin session id %s',cherrypy.session.id)
 
         if not 'picture' in usr:
-            usr['picture'] = 'http://www.lacasadeviena.com/wp-content/uploads/2012/06/magritte-sonofman1-300x362.jpg'
+            if usr['gender'].lower() == 'male':
+                usr['picture'] = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/161px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg'
+            else:
+                usr['picture'] = 'http://www.lacasadeviena.com/wp-content/uploads/2012/06/magritte-sonofman1-300x362.jpg'
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,user)):
