@@ -53,10 +53,11 @@ from genshi.template import TemplateLoader
 
 class Server:
 
-    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None, access_tokens='oauth_access_tokens.dat'):
+    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None, access_tokens='oauth_access_tokens.dat', client_secrets='client_secrets_google.json'):
         self.modeldir = modeldir
         self.admins = yaml.load(file(adminsfile,'r'))
         self.oauth_clients_file = clients
+        self.client_secrets = client_secrets
         self.oauth_clients = json.loads(file(clients,'r').read())
         if self.oauth_clients == None:
             self.oauth_clients = {}
@@ -211,7 +212,7 @@ class Server:
         enter. there is no client_id etc because personis is not being
         used as an oauth server.
         """
-        flow = flow_from_clientsecrets('client_secrets_google.json',
+        flow = flow_from_clientsecrets(self.client_secrets,
     scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
         callback = cherrypy.request.base + '/logged_in'
         authorize_url = flow.step1_get_authorize_url(callback)
@@ -582,13 +583,14 @@ class ExitThread(threading.Thread):
         self.cp.engine.exit()
         self.join()
 
-def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, exit_queue = None):
+def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, exit_queue = None, client_secrets = 'client_secrets_google.json'):
     logging.basicConfig(level=loglevel)
     logging.info(  "serving models in '%s'" % (modeldir))
     logging.info(  "config file '%s'" % (config))
     logging.info(  "admin file '%s'" % (admins))
     logging.info(  "clients file '%s'" % (clients))
     logging.info(  "tokens file '%s'" % (tokens))
+    logging.info(  "client secrets file '%s'" % (client_secrets))
     logging.info(  "starting cronserver")
     cronserver.cronq = Queue()
     p = Process(target=cronserver.cronserver, args=(cronserver.cronq,modeldir))
@@ -600,7 +602,7 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
     try:
         try:
             cherrypy.config.update(os.path.expanduser(config))
-            cherrypy.tree.mount(Server(modeldir, admins, clients, tokens), '/', config=config)
+            cherrypy.tree.mount(Server(modeldir, admins, clients, tokens, client_secrets), '/', config=config)
             #cherrypy.server.ssl_certificate = "server.crt"
             #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
@@ -637,6 +639,9 @@ if __name__ == '__main__':
     parser.add_option("-l", "--log",
               dest="logging",
               help="Log level", default='INFO')
+    parser.add_option("-s", "--clientsecrets",
+              dest="client_secrets",
+              help="Client secrets file", default='client_secrets_google.json')
 
     (options, args) = parser.parse_args()
 
@@ -651,5 +656,6 @@ if __name__ == '__main__':
     options.admins = os.path.abspath(options.admins)
     options.clients = os.path.abspath(options.clients)
     options.tokens = os.path.abspath(options.tokens)
+    options.client_secrets = os.path.abspath(options.client_secrets)
 
-    runServer(options.modeldir, options.conf, options.admins, options.clients, options.tokens, numeric_level)
+    runServer(options.modeldir, options.conf, options.admins, options.clients, options.tokens, numeric_level, client_secrets)
