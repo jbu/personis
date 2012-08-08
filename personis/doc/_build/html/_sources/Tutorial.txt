@@ -4,6 +4,20 @@ Tutorial Introduction to Personis
 =================================
 
 This tutorial assumes you have installed the framework using the instructions in the Installation section.
+But as a quick recap for installing the client only:
+
+Create a sandbox directory (u:\comp5047, perhaps). Download [virtualenv.py](https://raw.github.com/pypa/virtualenv/master/virtualenv.py) to the directory. Create a python sandbox::
+
+	u:
+	cd \comp5047
+	c:\python2.6\python.exe virtualenv.py .
+
+Install necessary libraries
+
+	u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis
+
+Install the client examples from https://github.com/downloads/jbu/personis/clients.zip
+
 Using the *umbrowser* command line utility, the tutorial will take you through the construction, navigation and 
 management of a user model.
 
@@ -14,9 +28,15 @@ The umbrowser.py program is a commandline utility that allows most
 operations of the Personis system to be carried out interactively.
 
 Umbrowser is found in the clients/browser directory of the personis package and is started with
-the command ./umbrowser.py::
+the command ./umbrowser.py (unix)::
 
 	$ ./umbrowser.py
+
+or for windows::
+
+	u:
+	cd \comp5047
+	\comp5047\Scripts.python.exe umbrowser.py
 
 The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is 'yes'). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt::
 

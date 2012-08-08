@@ -57,15 +57,30 @@
   <div class="section" id="tutorial-introduction-to-personis">
 <h1>Tutorial Introduction to Personis<a class="headerlink" href="#tutorial-introduction-to-personis" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial assumes you have installed the framework using the instructions in the Installation section.
-Using the <em>umbrowser</em> command line utility, the tutorial will take you through the construction, navigation and
+But as a quick recap for installing the client only:</p>
+<p>Create a sandbox directory (u:comp5047, perhaps). Download [virtualenv.py](https://raw.github.com/pypa/virtualenv/master/virtualenv.py) to the directory. Create a python sandbox:</p>
+<div class="highlight-python"><pre>u:
+cd \comp5047
+c:\python2.6\python.exe virtualenv.py .</pre>
+</div>
+<p>Install necessary libraries</p>
+<blockquote>
+<div>u:comp5047Scriptspip install google-api-python-client pyyaml personis</div></blockquote>
+<p>Install the client examples from <a class="reference external" href="https://github.com/downloads/jbu/personis/clients.zip">https://github.com/downloads/jbu/personis/clients.zip</a></p>
+<p>Using the <em>umbrowser</em> command line utility, the tutorial will take you through the construction, navigation and
 management of a user model.</p>
 <div class="section" id="umbrowser">
 <h2>umbrowser<a class="headerlink" href="#umbrowser" title="Permalink to this headline">¶</a></h2>
 <p>The umbrowser.py program is a commandline utility that allows most
 operations of the Personis system to be carried out interactively.</p>
 <p>Umbrowser is found in the clients/browser directory of the personis package and is started with
-the command ./umbrowser.py:</p>
+the command ./umbrowser.py (unix):</p>
 <div class="highlight-python"><pre>$ ./umbrowser.py</pre>
+</div>
+<p>or for windows:</p>
+<div class="highlight-python"><pre>u:
+cd \comp5047
+\comp5047\Scripts.python.exe umbrowser.py</pre>
 </div>
 <p>The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is &#8216;yes&#8217;). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt:</p>
 <div class="highlight-python"><pre>[''] &gt;</pre>

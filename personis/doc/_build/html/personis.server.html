@@ -1861,8 +1861,24 @@ last piece of given, goal evidence</p>
 <div class="section" id="module-personis.server.server">
 <span id="server-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">server</span></tt> Module<a class="headerlink" href="#module-personis.server.server" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="personis.server.server.ExitThread">
+<em class="property">class </em><tt class="descclassname">personis.server.server.</tt><tt class="descname">ExitThread</tt><big>(</big><em>cp</em>, <em>cronp</em>, <em>cronqueue</em>, <em>queue</em><big>)</big><a class="headerlink" href="#personis.server.server.ExitThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></tt></p>
+<dl class="method">
+<dt id="personis.server.server.ExitThread.exit">
+<tt class="descname">exit</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.ExitThread.exit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.ExitThread.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.ExitThread.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="personis.server.server.Server">
-<em class="property">class </em><tt class="descclassname">personis.server.server.</tt><tt class="descname">Server</tt><big>(</big><em>modeldir='models'</em>, <em>adminsfile='admins.yaml'</em>, <em>clients=None</em>, <em>access_tokens='oauth_access_tokens.dat'</em><big>)</big><a class="headerlink" href="#personis.server.server.Server" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">personis.server.server.</tt><tt class="descname">Server</tt><big>(</big><em>modeldir='models'</em>, <em>adminsfile='admins.yaml'</em>, <em>clients=None</em>, <em>access_tokens='oauth_access_tokens.dat'</em>, <em>client_secrets='client_secrets_google.json'</em><big>)</big><a class="headerlink" href="#personis.server.server.Server" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="personis.server.server.Server.allow">
 <tt class="descname">allow</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.allow" title="Permalink to this definition">¶</a></dt>
@@ -1958,7 +1974,7 @@ NOTE! This should only be exported over TLS/SSL (ahem!)</p>
 
 <dl class="function">
 <dt id="personis.server.server.runServer">
-<tt class="descclassname">personis.server.server.</tt><tt class="descname">runServer</tt><big>(</big><em>modeldir</em>, <em>config</em>, <em>admins</em>, <em>clients</em>, <em>tokens</em>, <em>loglevel=20</em><big>)</big><a class="headerlink" href="#personis.server.server.runServer" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">personis.server.server.</tt><tt class="descname">runServer</tt><big>(</big><em>modeldir</em>, <em>config</em>, <em>admins</em>, <em>clients</em>, <em>tokens</em>, <em>loglevel=20</em>, <em>exit_queue=None</em>, <em>client_secrets='client_secrets_google.json'</em><big>)</big><a class="headerlink" href="#personis.server.server.runServer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
