@@ -96,7 +96,7 @@ class Server:
         loader = TemplateLoader([base_path])
         tmpl = loader.load('html/list_clients.html')
         for k, v in self.oauth_clients.items():
-            logging.debug(  k, v['friendly_name'])
+            logging.debug( 'clients %s, %s', k, v['friendly_name'])
         stream = tmpl.generate(clients=self.oauth_clients.values())
         return stream.render('xhtml')
 
