@@ -736,6 +736,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		componentid - identifier of the component
 		evidence - evidence object to add to the component
 		"""
+		logging.debug('context: %s, componentid %s, evidence %s, dosubs %s', repr(context), repr(componentid), repr(evidence), dosubs)
 		if componentid == None:
 			raise ValueError, "tell: component id is None"
 		if evidence == None:
