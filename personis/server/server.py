@@ -597,7 +597,7 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
     p.start()
 
     if exit_queue <> None:
-        e = ExitThread(cherrypy, p, conserver.cronq, exit_queue)
+        e = ExitThread(cherrypy, p, cronserver.cronq, exit_queue)
 
     try:
         try:
