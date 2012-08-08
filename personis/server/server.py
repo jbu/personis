@@ -250,6 +250,9 @@ class Server:
 
         logging.debug(  'loggedin session id %s',cherrypy.session.id)
 
+        if not 'picture' in usr:
+            usr['picture'] = 'http://www.lacasadeviena.com/wp-content/uploads/2012/06/magritte-sonofman1-300x362.jpg'
+
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,user)):
             mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod')
@@ -267,6 +270,7 @@ class Server:
             um.tell(context=["Personal"], componentid='gid', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['picture'])
             um.tell(context=["Personal"], componentid='picture', evidence=ev)
+
 
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
             util.printcomplist(reslist)
