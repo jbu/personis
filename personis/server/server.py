@@ -658,4 +658,4 @@ if __name__ == '__main__':
     options.tokens = os.path.abspath(options.tokens)
     options.client_secrets = os.path.abspath(options.client_secrets)
 
-    runServer(options.modeldir, options.conf, options.admins, options.clients, options.tokens, numeric_level, options.client_secrets)
+    runServer(modeldir=options.modeldir, config=options.conf, admins=options.admins, clients=options.clients, tokens=options.tokens, loglevel=numeric_level, client_secrets=options.client_secrets)
