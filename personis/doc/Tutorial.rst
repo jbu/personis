@@ -6,15 +6,15 @@ Tutorial Introduction to Personis
 This tutorial assumes you have installed the framework using the instructions in the Installation section.
 But as a quick recap for installing the client only:
 
-Create a sandbox directory (u:\comp5047, perhaps). Download [virtualenv.py](https://raw.github.com/pypa/virtualenv/master/virtualenv.py) to the directory. Create a python sandbox::
+Create a sandbox directory (u:\\comp5047, perhaps). Download https://raw.github.com/pypa/virtualenv/master/virtualenv.py to the directory. Create a python sandbox::
 
 	u:
-	cd \comp5047
-	c:\python2.6\python.exe virtualenv.py .
+	cd \\comp5047
+	c:\\python2.6\\python.exe virtualenv.py .
 
 Install necessary libraries
 
-	u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis
+	u:\\comp5047\\Scripts\\pip install google-api-python-client pyyaml personis
 
 Install the client examples from https://github.com/downloads/jbu/personis/clients.zip
 
@@ -35,8 +35,8 @@ the command ./umbrowser.py (unix)::
 or for windows::
 
 	u:
-	cd \comp5047
-	\comp5047\Scripts.python.exe umbrowser.py
+	cd \\comp5047
+	\\comp5047\\Scripts\\python.exe umbrowser.py
 
 The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is 'yes'). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt::
 
@@ -212,10 +212,10 @@ How did we do this? You can find the source for the logging app, and other perso
 
 As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.
 We will now do a similar exercise.
- 
-* Create a new directory (u:\comp5047\asker). 
-* Save [this file](https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json) into a file called client_secrets.json. 
-* Copy this code skeleton into a file called ask.py::
+
+* Create a new directory (u:\\comp5047\\asker). 
+* Save https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json into the new directory. 
+* Copy this code skeleton into a file in the directory called ask.py::
 
 	from personis import client
 	import httplib2
@@ -224,4 +224,4 @@ We will now do a similar exercise.
 
 If we execute it
 
-	\comp5047\Scripts.python.exe ask.py
+	\\comp5047\\Scripts\\python.exe ask.py

@@ -58,14 +58,14 @@
 <h1>Tutorial Introduction to Personis<a class="headerlink" href="#tutorial-introduction-to-personis" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial assumes you have installed the framework using the instructions in the Installation section.
 But as a quick recap for installing the client only:</p>
-<p>Create a sandbox directory (u:comp5047, perhaps). Download [virtualenv.py](https://raw.github.com/pypa/virtualenv/master/virtualenv.py) to the directory. Create a python sandbox:</p>
+<p>Create a sandbox directory (u:\comp5047, perhaps). Download <a class="reference external" href="https://raw.github.com/pypa/virtualenv/master/virtualenv.py">https://raw.github.com/pypa/virtualenv/master/virtualenv.py</a> to the directory. Create a python sandbox:</p>
 <div class="highlight-python"><pre>u:
-cd \comp5047
-c:\python2.6\python.exe virtualenv.py .</pre>
+cd \\comp5047
+c:\\python2.6\\python.exe virtualenv.py .</pre>
 </div>
 <p>Install necessary libraries</p>
 <blockquote>
-<div>u:comp5047Scriptspip install google-api-python-client pyyaml personis</div></blockquote>
+<div>u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis</div></blockquote>
 <p>Install the client examples from <a class="reference external" href="https://github.com/downloads/jbu/personis/clients.zip">https://github.com/downloads/jbu/personis/clients.zip</a></p>
 <p>Using the <em>umbrowser</em> command line utility, the tutorial will take you through the construction, navigation and
 management of a user model.</p>
@@ -79,8 +79,8 @@ the command ./umbrowser.py (unix):</p>
 </div>
 <p>or for windows:</p>
 <div class="highlight-python"><pre>u:
-cd \comp5047
-\comp5047\Scripts.python.exe umbrowser.py</pre>
+cd \\comp5047
+\\comp5047\\Scripts\\python.exe umbrowser.py</pre>
 </div>
 <p>The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is &#8216;yes&#8217;). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt:</p>
 <div class="highlight-python"><pre>[''] &gt;</pre>
@@ -244,11 +244,11 @@ Subscriptions: {}
 <p>As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.
 We will now do a similar exercise.</p>
 <ul>
-<li><p class="first">Create a new directory (u:comp5047asker).</p>
+<li><p class="first">Create a new directory (u:\comp5047\asker).</p>
 </li>
-<li><p class="first">Save [this file](<a class="reference external" href="https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json">https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json</a>) into a file called client_secrets.json.</p>
+<li><p class="first">Save <a class="reference external" href="https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json">https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json</a> into the new directory.</p>
 </li>
-<li><p class="first">Copy this code skeleton into a file called ask.py:</p>
+<li><p class="first">Copy this code skeleton into a file in the directory called ask.py:</p>
 <div class="highlight-python"><pre>    from personis import client
     import httplib2
 p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
@@ -258,7 +258,7 @@ um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))</pre>
 </ul>
 <p>If we execute it</p>
 <blockquote>
-<div>comp5047Scripts.python.exe ask.py</div></blockquote>
+<div>\comp5047\Scripts\python.exe ask.py</div></blockquote>
 </div>
 </div>
 
