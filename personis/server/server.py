@@ -596,7 +596,7 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
     p = Process(target=cronserver.cronserver, args=(cronserver.cronq,modeldir))
     p.start()
 
-    if exit_queue <> None:
+    if exit_queue:
         e = ExitThread(cherrypy, p, cronserver.cronq, exit_queue)
 
     try:
@@ -606,14 +606,14 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
             #cherrypy.server.ssl_certificate = "server.crt"
             #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
-            if exit_queue == None:
+            if not exit_queue:
                 cherrypy.engine.block()
             else:
                 e.start()
         except Exception, E:
             logging.info(  "Failed to run Personis Server:" + str(E))
     finally:
-        if exit_queue <> None:
+        if exit_queue:
             exit_queue.put('exit')
         else:
             logging.info(  "Shutting down Personis Server.")
