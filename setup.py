@@ -1,6 +1,6 @@
 from setuptools import setup
-
-
+import fnmatch
+import os
 
 long_desc = """The Google API Client for Python is a client library for
 accessing the Plus, Moderator, and many other Google APIs."""
@@ -14,22 +14,32 @@ install_requires=[
     ]
 
 packages = [
-  'personis'
+  'personis',
+  'personis.client',
+  'personis.examples',
+  'personis.examples.browser',
+  'personis.examples.activity',
+  'personis.examples.asker',
+  'personis.examples.log-llum',
+  'personis.examples.aelog',
+  'personis.server',
+  'personis.server.test'
   ]
 
-needs_json = True
-try:
-  import json
-  needs_json = False
-except ImportError:
-  try:
-    import simplejson
-    needs_json = False
-  except ImportError:
-    needs_json = True
 
-if needs_json:
-  install_requires.append('simplejson')
+include_patterns = '*.html *.css *.png *.gif *.yaml *.json *.conf *.rst *.jpg *.ico *.txt *.js *.doctree Makefile README *.pdf *.sh *.svg'.split()
+matches = []
+for root, dirnames, filenames in os.walk('personis'):
+    for pat in include_patterns:
+        for filename in fnmatch.filter(filenames, pat):
+            matches.append(os.path.join(root, filename))
+
+#matches = [i for i in matches if (i.startswith('./personis') or i.startswith('./server_conf'))]
+
+packagedat = {
+    'personis': matches,
+    'personis.examples': ['personis/examples/*/*.json']
+    }
 
 long_desc = """The Personis user model server and associated client library. Also some sample clients."""
 
@@ -45,15 +55,17 @@ setup(name="personis",
     url='http://github.com/jbu/personis',
     install_requires=install_requires,
     packages=packages,
-    package_data={},
     scripts=[],
     license="GPL3",
+    package_data=packagedat,
     keywords="personis user-model server",
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: GPL3',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Operating System :: POSIX',
-        'Topic :: Internet :: WWW/HTTP'
+        'Framework :: CherryPy',
+        'Programming Language :: Python',
+        'Topic :: Scientific/Engineering :: Human Machine Interfaces'
     ]
 )

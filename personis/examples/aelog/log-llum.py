@@ -15,12 +15,11 @@ import time
 import logging
 import pickle
 
-item_list = {'apple':{'icon':'http://appleadayproject.files.wordpress.com/2011/03/apple-full2.jpg'},
-            'pear':{'icon': 'http://4.bp.blogspot.com/-IgzE0L2YSdg/T1Pg-z8t6-I/AAAAAAAAAhU/cWfds0ulbLI/s1600/Pear.jpg'}, 
-            'banana':{'icon': 'http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/220px-Banana-Single.jpg'}, 
-            'orange':{'icon': 'http://freeimagesarchive.com/data/media/38/7_orange.jpg'},
-            'kiwi':{'icon': 'http://1.bp.blogspot.com/-XK8RbZ1MFz8/T88vJy9THfI/AAAAAAAABts/FWCuZptW_d0/s1600/kiwi+fruit.jpg'},
-            'grape':{'icon': 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Table_grapes_on_white.jpg/220px-Table_grapes_on_white.jpg'}}
+item_list = {'fruit':{'icon':'http://2.bp.blogspot.com/-jDaZn2jh-8g/T_nBaiND65I/AAAAAAAAEEU/xfTEI7jn9WA/s400/800px-Culinary_fruits_front_view.jpg'},
+            'vegetables':{'icon': 'http://vegansolution.files.wordpress.com/2009/11/nutrition.jpg?w=500'}, 
+            'running':{'icon': 'http://media.tumblr.com/tumblr_lr1zbqDTYY1qbjt03.jpg'},
+            'walking':{'icon': 'http://www.thenordicwalking.com/wp-content/uploads/2011/02/nw123.jpg'}, 
+            }
 
         
 
@@ -105,37 +104,78 @@ class LogLlum(webapp2.RequestHandler):
             logging.info('access token refresh error '+e)
             return self.redirect('/do_login')
 
-        ret = '''<!DOCTYPE html>
-<html lang="en">
+        ret = '''
+<!DOCTYPE html>
+<html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Logger</title>
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        <title>
+        </title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+        <link rel="stylesheet" href="my.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
         </script>
-        <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js">
         </script>
-        <!-- Le styles -->
-        <link href="assets/css/bootstrap.css" rel="stylesheet">
-        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-        <link href="assets/css/docs.css" rel="stylesheet">
-        <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="my.js">
+        </script>
     </head>
-    <body id="home-index-action" class="ot">
-        <div id="homePage" data-role="page" data-theme="o" class="homeBody">
-        <div class="mainContentPanel" data-role="content">
-        <div id="OTHomeLogo">Hi {0[firstname]}, <img src="{0[user_icon]}" style='max-width:50px; max-height:50px' border="0" class="homeLogo">. Log something!</div>
-        <div class="ui-grid-b">
-        '''.format({'firstname': reslist[0].value, 'user_icon':reslist[1].value })
-        for k, v in item_list.items():
-            ret = ret + '''<div class="ui-block-a">
-                <a class="wrapper" href="/log_me?item={0[name]}" id="ByName"><img style='max-width:100px; max-height:100px' src='{0[pic]}'/></a>
+    <body>
+        <!-- Home -->
+        <div data-role="page" id="page1">
+            <div data-theme="a" data-role="header" data-position="fixed">
+                <h3>
+                    My Health Logger
+                </h3>
             </div>
-            '''.format({'name': k, 'pic': v['icon']})
-        ret = ret + '</div></div></div></body></html>'
+            <div data-role="content" style="padding: 15px">
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a" align="center">
+                        <h2>
+                            Food
+                        </h2>
+                    </div>
+                    <div class="ui-block-b" align="center">
+                        <h2>
+                            Activity
+                        </h2>
+                    </div>
+        '''
+        l = 'a'
+        for k, v in item_list.items():
+            ret = ret + '''<div class="ui-block-{0[l]}">
+                    <div style=" text-align:center; padding: 5px">
+                        <a class="wrapper" href="/log_me?item={0[name]}" id="ByName"><img style='width:100%; ' src='{0[pic]}'/></a>
+                    </div>
+                </div>
+            '''.format({'l': l,'name': k, 'pic': v['icon']})
+            l = 'a' if l == 'b' else 'b'
+        ret = ret + '''
+                    
+                </div>
+                <div data-role="collapsible-set" data-theme="" data-content-theme="">
+                    <div data-role="collapsible" data-collapsed="false">
+                        <h3>
+                            Activity
+                        </h3>
+                    </div>
+                </div>
+                <a data-role="button" data-transition="fade" href="#page1">
+                    Undo
+                </a>
+            </div>
+        </div>
+        <script>
+            //App custom javascript
+        </script>
+    </body>
+</html>
+        '''
         self.response.write(ret)
 
 
