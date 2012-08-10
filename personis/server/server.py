@@ -202,6 +202,7 @@ class Server:
         if state <> None:
             cherrypy.session['state'] = state
         if cli['redirect_uri'] <> redirect_uri:
+            logging.debug("redirect uris don't match expected %s got %s",cli['redirect_uri'], redirect_uri)
             raise cherrypy.HTTPError(400,'Redirect URIs do not match') 
         raise cherrypy.HTTPRedirect('/login')
 
