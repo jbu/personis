@@ -7,7 +7,9 @@ import json
 from optparse import OptionParser
 import yaml
 import httplib2
-
+import os
+import gflags
+import logging
 
 
 import cmd
@@ -502,17 +504,33 @@ class browse(cmd.Cmd):
                 print ">>%s" % (line)
             self.cmdqueue.extend(input)
 
-if __name__ == '__main__':
+# The gflags module makes defining command-line options easy for
+# applications. Run this program with the '--help' argument to see
+# all the flags that it understands.
+gflags.DEFINE_enum('logging_level', 'ERROR',
+    ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+    'Set the level of logging detail.')
 
-    b = browse()
-    # get past the uni's stupid proxy server
-    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+# Let the gflags module process the command-line arguments
+try:
+    argv = gflags.FLAGS(sys.argv)
+except gflags.FlagsError, e:
+    print '%s\\nUsage: %s ARGS\\n%s' % (e, sys.argv[0], FLAGS)
+    sys.exit(1)
 
-    # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
-    b.um = client.util.LoginFromClientSecrets(http=httplib2.Http(proxy_info=p))
-    reslist = b.um.ask(context=["Personal"],view=['firstname'])
-    b.username = reslist[0].value
-    print 'Welcome', b.username
+# Set the logging according to the command-line flag
+logging.getLogger().setLevel(getattr(logging, gflags.FLAGS.logging_level))
 
-    b.cmdloop()
+b = browse()
+# get past the uni's stupid proxy server
+p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+
+# Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
+client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
+b.um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p), credentials='browser_cred.dat')
+reslist = b.um.ask(context=["Personal"],view=['firstname'])
+b.username = reslist[0].value
+print 'Welcome', b.username
+
+b.cmdloop()
 

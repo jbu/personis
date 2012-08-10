@@ -1,0 +1,2149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>server Package &mdash; Personis 12.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '12.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Personis 12.9 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="server-package">
+<h1>server Package<a class="headerlink" href="#server-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">server</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-personis.server"></span></div>
+<div class="section" id="module-personis.server.active">
+<span id="active-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">active</span></tt> Module<a class="headerlink" href="#module-personis.server.active" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.active.Access">
+<em class="property">class </em><tt class="descclassname">personis.server.active.</tt><tt class="descname">Access</tt><big>(</big><em>model=None</em>, <em>modeldir=None</em>, <em>user=None</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#personis.server.active.Access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.base.Access" title="personis.server.base.Access"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.base.Access</span></tt></a></p>
+<dl class="method">
+<dt id="personis.server.active.Access.checksubs">
+<tt class="descname">checksubs</tt><big>(</big><em>context</em>, <em>componentid</em><big>)</big><a class="headerlink" href="#personis.server.active.Access.checksubs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.active.Access.delete_sub">
+<tt class="descname">delete_sub</tt><big>(</big><em>context=None</em>, <em>componentid=None</em>, <em>subname=None</em><big>)</big><a class="headerlink" href="#personis.server.active.Access.delete_sub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.active.Access.list_subs">
+<tt class="descname">list_subs</tt><big>(</big><em>context=None</em>, <em>componentid=None</em><big>)</big><a class="headerlink" href="#personis.server.active.Access.list_subs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.active.Access.subscribe">
+<tt class="descname">subscribe</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>view=None</em>, <em>subscription=None</em><big>)</big><a class="headerlink" href="#personis.server.active.Access.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is a list giving the path of context identifiers
+view is either:</p>
+<blockquote>
+<div><p>an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in</p>
+<blockquote>
+<div>the context be returned</div></blockquote>
+</div></blockquote>
+<p>subscription is a dictionary containing owner, password and subscription statement string</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.base">
+<span id="base-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">base</span></tt> Module<a class="headerlink" href="#module-personis.server.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.base.Access">
+<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Access</tt><big>(</big><em>model=None</em>, <em>modeldir=''</em>, <em>user=None</em>, <em>password=None</em>, <em>debug=0</em><big>)</big><a class="headerlink" href="#personis.server.base.Access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.resolvers.Access" title="personis.server.resolvers.Access"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.resolvers.Access</span></tt></a>, <a class="reference internal" href="#personis.server.ev_filters.Access" title="personis.server.ev_filters.Access"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.ev_filters.Access</span></tt></a></p>
+<dl class="docutils">
+<dt>arguments:</dt>
+<dd>model           model name
+modeldir        model directory
+user            user name
+password        password string</dd>
+</dl>
+<p>returns a user model access object</p>
+<dl class="method">
+<dt id="personis.server.base.Access.ask">
+<tt class="descname">ask</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>view=None</em>, <em>resolver=None</em>, <em>showcontexts=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.ask" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments:</dt>
+<dd><p class="first">context is a list giving the path of context identifiers
+view is either:</p>
+<blockquote>
+<div><p>an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in</p>
+<blockquote>
+<div>the context be returned</div></blockquote>
+</div></blockquote>
+<dl class="last docutils">
+<dt>resolver is a string containing the name of a resolver</dt>
+<dd>or</dd>
+<dt>resolver is a dictionary containing information about resolver(s) to be used and arguments</dt>
+<dd><p class="first">the &#8220;resolver&#8221; key gives the name of a resolver to use, if not present the default resolver is used
+the &#8220;evidence_filter&#8221; key specifies an evidence filter
+eg &#8216;evidence_filter&#8217; =  &#8220;all&#8221; returns all evidence,</p>
+<blockquote class="last">
+<div>&#8220;last10&#8221; returns last 10 evidence items,
+&#8220;last1&#8221; returns most recent evidence item,
+None returns no evidence</div></blockquote>
+</dd>
+<dt>showcontexts: if True, a tuple is returned containing </dt>
+<dd>(list of component objects, 
+list of contexts in the current context,
+list of views in the current context,
+list of subscriptions in the current context)</dd>
+</dl>
+</dd>
+</dl>
+<p>returns a list of component objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.checkpermission">
+<tt class="descname">checkpermission</tt><big>(</big><em>context=None</em>, <em>componentid=None</em>, <em>app=None</em>, <em>permname=None</em>, <em>permval=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.checkpermission" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>gets permissions for a context (if componentid is None) or</dt>
+<dd>a component # not implemented ####</dd>
+<dt>returns True is the app has the nominated permission</dt>
+<dd>False if not</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.checksubs">
+<tt class="descname">checksubs</tt><big>(</big><em>context</em>, <em>componentid</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.checksubs" title="Permalink to this definition">¶</a></dt>
+<dd><p>check subscriptions for componentid in current context</p>
+<p>implemented in active</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.delcomponent">
+<tt class="descname">delcomponent</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.delcomponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an existing component in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context 
+id - the id for a componen</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.delcontext">
+<tt class="descname">delcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.server.base.Access.delcontext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a context
+saves an archive of the context (debug)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.deleteapp">
+<tt class="descname">deleteapp</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.deleteapp" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletes an app</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.delview">
+<tt class="descname">delview</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>viewid=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.delview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an existing view within a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context 
+viewid - view identifier</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>on success, None
+on failure, a string reporting the problem</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.existcontext">
+<tt class="descname">existcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.server.base.Access.existcontext" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments:</dt>
+<dd>context - a list giving the path to the required context</dd>
+<dt>returns:</dt>
+<dd>True if context exists
+False if the context doesn&#8217;t exist</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.export_model">
+<tt class="descname">export_model</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>resolver=None</em>, <em>level=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.export_model" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>context is a list giving the path of context identifiers</dt>
+<dd>this is the root of the um tree to export</dd>
+<dt>resolver is a string containing the name of a resolver</dt>
+<dd>or</dd>
+<dt>resolver is a dictionary containing information about resolver(s) to be used and arguments</dt>
+<dd><p class="first">the &#8220;resolver&#8221; key gives the name of a resolver to use, if not present the default resolver is used
+the &#8220;evidence_filter&#8221; key specifies an evidence filter
+eg &#8216;evidence_filter&#8217; =  &#8220;all&#8221; returns all evidence,</p>
+<blockquote class="last">
+<div>&#8220;last10&#8221; returns last 10 evidence items,
+&#8220;last1&#8221; returns most recent evidence item,
+None returns no evidence</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>returns a JSON encoded representation of the um tree</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.getcontext">
+<tt class="descname">getcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>getsize=False</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.getcontext" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments:</dt>
+<dd>context - a list giving the path to the required context</dd>
+<dt>returns:</dt>
+<dd>a dictionary containing information associated with the context</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.getpermission">
+<tt class="descname">getpermission</tt><big>(</big><em>context=None</em>, <em>componentid=None</em>, <em>app=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.getpermission" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>gets permissions for a context (if componentid is None) or</dt>
+<dd>a component # not implemented yet ####</dd>
+</dl>
+<p>returns a tuple (ask,tell)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.getresolvers">
+<tt class="descname">getresolvers</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.base.Access.getresolvers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.import_model">
+<tt class="descname">import_model</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>partial_model=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.import_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context - context to import partial model to</p>
+<blockquote>
+<div>if None, use root of model</div></blockquote>
+<dl class="docutils">
+<dt>partial_model - string containing JSON representation of model dictionary</dt>
+<dd><p class="first">OR
+a dictionary with elements:</p>
+<blockquote class="last">
+<div>contextinfo - Description, Identifier, perms, resolver
+contexts - sub contexts
+components
+views
+subs</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.listapps">
+<tt class="descname">listapps</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.base.Access.listapps" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns an dictionary of apps that are registered
+key is app name, &#8216;description&#8217; is app description</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.mkcomponent">
+<tt class="descname">mkcomponent</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentobj=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.mkcomponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new component in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context 
+componentobj - a Component object</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.mkcontext">
+<tt class="descname">mkcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>contextobj=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.mkcontext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new context in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the context that will hold the new context 
+contextobj - a Context object</div></blockquote>
+<p>return True if created ok, False otherwise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.mkview">
+<tt class="descname">mkview</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>viewobj=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.mkview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new view in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context 
+viewobj - a View object</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.registerapp">
+<tt class="descname">registerapp</tt><big>(</big><em>app=None</em>, <em>desc=''</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.registerapp" title="Permalink to this definition">¶</a></dt>
+<dd><p>registers a password for an app
+app name is a string (needs checking TODO)
+desc is the app description string
+app passwords are stored at the top level .model db
+returns a dictionary containing description and password(access key)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.set_goals">
+<tt class="descname">set_goals</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em>, <em>goals=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.set_goals" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the goal list for a component
+requires &#8220;tell&#8221; permission
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+componentid - identifier of the component
+goals - list of goal component paths</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.setcomponentoption">
+<tt class="descname">setcomponentoption</tt><big>(</big><em>context</em>, <em>componentid</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.setcomponentoption" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments:</dt>
+<dd><p class="first">context - a list giving the path to the required context 
+componentid - name of the component to set items on
+<a href="#id2"><span class="problematic" id="id3">**</span></a>kwargs - a set of keyword arguments giving information to associate</p>
+<blockquote class="last">
+<div>with the component</div></blockquote>
+</dd>
+<dt>returns:</dt>
+<dd>True on success
+False if the component doesn&#8217;t exist</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.setcontext">
+<tt class="descname">setcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.setcontext" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments:</dt>
+<dd><p class="first">context - a list giving the path to the required context 
+<a href="#id4"><span class="problematic" id="id5">**</span></a>kwargs - a set of keyword arguments giving information to associate</p>
+<blockquote class="last">
+<div>with the context</div></blockquote>
+</dd>
+<dt>returns:</dt>
+<dd>True on success
+False if the context doesn&#8217;t exist</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.setpermission">
+<tt class="descname">setpermission</tt><big>(</big><em>context=None</em>, <em>componentid=None</em>, <em>app=None</em>, <em>permissions={}</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.setpermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets ask/tell permission for a context (if componentid is None) or
+a component</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.setresolver">
+<tt class="descname">setresolver</tt><big>(</big><em>context</em>, <em>componentid</em>, <em>resolver</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.setresolver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Access.tell">
+<tt class="descname">tell</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em>, <em>evidence=None</em>, <em>dosubs=True</em><big>)</big><a class="headerlink" href="#personis.server.base.Access.tell" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context - a list giving the path to the required context
+componentid - identifier of the component
+evidence - evidence object to add to the component</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.base.Component">
+<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Component</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Component" title="Permalink to this definition">¶</a></dt>
+<dd><p>component object
+Identifier      the identifier of the component</p>
+<blockquote>
+<div>unique in the context</div></blockquote>
+<p>Description     readable description
+creation_time   time of creation of the component
+component_type  [&#8220;attribute&#8221;, &#8220;activity&#8221;, &#8220;knowledge&#8221;, &#8220;belief&#8221;, &#8220;preference&#8221;, &#8220;goal&#8221;]
+value_type      [&#8220;string&#8221;, &#8220;number&#8221;,&#8221;boolean&#8221;, &#8220;enum&#8221;, &#8220;JSON&#8221;]
+value_list        a list of strings that are the possible values for type &#8220;enum&#8221;
+value           the resolved value
+resolver        default resolver for this component
+goals           list of component paths eg [ [&#8216;Personal&#8217;, &#8216;Health&#8217;, &#8216;weight&#8217;], ...]
+evidencelist    list of evidence objects</p>
+<dl class="method">
+<dt id="personis.server.base.Component.filterevidence">
+<tt class="descname">filterevidence</tt><big>(</big><em>model=None</em>, <em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>resolver_args=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Component.filterevidence" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>if evidence_filter is &#8220;all&#8221;: </dt>
+<dd>returns all evidence objects for this component in a list</dd>
+<dt>if evidence_filter is &#8220;last10&#8221;:</dt>
+<dd>return only the last 10 elements</dd>
+<dt>if evidence_filter is &#8220;last1&#8221;:</dt>
+<dd>return only the last element</dd>
+<dt>if evidence_filter is None:</dt>
+<dd>return empty list</dd>
+</dl>
+<p>else returns a list of evidence objects for which evidence_filter(evidence)
+returns true</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Component.findevidence">
+<tt class="descname">findevidence</tt><big>(</big><em>model=None</em>, <em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>evidence_time=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Component.findevidence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.base.Component.getevidence">
+<tt class="descname">getevidence</tt><big>(</big><em>model=None</em>, <em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>count=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Component.getevidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>if count is None, returns (last evidence obj, count)
+else returns (count evidence obj, count)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.base.Context">
+<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Context</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>context object
+Identifier      the identifier of the component</p>
+<blockquote>
+<div>unique in the context</div></blockquote>
+<p>Description     readable description
+resolver        default resolver for components in this context</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.base.Evidence">
+<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Evidence</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Evidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>evidence object
+evidence_type   &#8220;explicit&#8221;, # given by the user</p>
+<blockquote>
+<div>&#8220;implicit&#8221;, # observed by the machine
+&#8220;exmachina&#8221;, # told (to the user) by the machine
+&#8220;inferred&#8221;, # evidence generated by a subscription inference 
+&#8220;stereotype&#8221;] # evidence added by a stereotype</div></blockquote>
+<p>source  string indicating source of evidence
+value   any python object
+comment string with extra information about the evidence
+flags   a list of strings eg &#8220;goal&#8221;
+time    notional creation time optionally given by user
+creation_time actual time evidence item was created
+useby   timestamp evidence expires (if required)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="personis.server.base.EvidenceTypes">
+<tt class="descclassname">personis.server.base.</tt><tt class="descname">EvidenceTypes</tt><em class="property"> = ['explicit', 'implicit', 'exmachina', 'inferred', 'stereotype']</em><a class="headerlink" href="#personis.server.base.EvidenceTypes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>model database stored in &#8221;.model&#8221; in the model directory</dt>
+<dd><p class="first">Identifier      modelname
+Description     of the model
+owner           owner of the model
+password        md5 hash of owner password for this model
+apps            dictionary of app names and keys</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>appname         dictionary of info about that app</dt>
+<dd>password        md5 hash of the apps access key (password)
+description     of the app</dd>
+</dl>
+</div></blockquote>
+</dd>
+<dt>context database stored in &#8221;.context&#8221; in each context directory</dt>
+<dd><p class="first">Identifier      context name
+Description     of the context
+perms           a dictionary of permissions for apps</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>appname         dictionary of permission info for that app</dt>
+<dd><dl class="first last docutils">
+<dt>permname        True/False value indicates permname permission for the app</dt>
+<dd>eg {&#8220;ask&#8221;:False, &#8220;tell&#8221;:True} can tell values but not ask</dd>
+<dt>&#8220;resolvers&#8221;     list of resolvers that the app is allowed to use</dt>
+<dd>eg {&#8220;resolvers&#8221;:[&#8220;last1&#8221;, &#8220;goal&#8221;]}</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.base.MkModel">
+<tt class="descclassname">personis.server.base.</tt><tt class="descname">MkModel</tt><big>(</big><em>model=None</em>, <em>modeldir=None</em>, <em>user=None</em>, <em>password=None</em>, <em>description=None</em><big>)</big><a class="headerlink" href="#personis.server.base.MkModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>make a model with name &#8220;model&#8221; in directory modeldir for &#8220;user&#8221;/&#8221;password&#8221; with &#8220;description&#8221;</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.base.View">
+<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">View</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.View" title="Permalink to this definition">¶</a></dt>
+<dd><p>view object
+Identifier      the identifier of the component</p>
+<blockquote>
+<div>unique in the context</div></blockquote>
+<p>Description     readable description</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.base.shelf_close">
+<tt class="descclassname">personis.server.base.</tt><tt class="descname">shelf_close</tt><big>(</big><em>theShelf</em>, <em>shelf_fd</em><big>)</big><a class="headerlink" href="#personis.server.base.shelf_close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.base.shelf_open">
+<tt class="descclassname">personis.server.base.</tt><tt class="descname">shelf_open</tt><big>(</big><em>shelf_name</em>, <em>mode</em><big>)</big><a class="headerlink" href="#personis.server.base.shelf_open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.connection">
+<span id="connection-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">connection</span></tt> Module<a class="headerlink" href="#module-personis.server.connection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.connection.Connection">
+<em class="property">class </em><tt class="descclassname">personis.server.connection.</tt><tt class="descname">Connection</tt><big>(</big><em>uri=None</em>, <em>credentials=None</em>, <em>http=None</em><big>)</big><a class="headerlink" href="#personis.server.connection.Connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="personis.server.connection.Connection.get_http">
+<tt class="descname">get_http</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.connection.Connection.get_http" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.connection.Connection.valid">
+<tt class="descname">valid</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.connection.Connection.valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.cronserver">
+<span id="cronserver-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">cronserver</span></tt> Module<a class="headerlink" href="#module-personis.server.cronserver" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="personis.server.cronserver.checksub">
+<tt class="descclassname">personis.server.cronserver.</tt><tt class="descname">checksub</tt><big>(</big><em>modeldir</em>, <em>m</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.checksub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.cronserver.chkspec">
+<tt class="descclassname">personis.server.cronserver.</tt><tt class="descname">chkspec</tt><big>(</big><em>t</em>, <em>spec</em>, <em>orig</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.chkspec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.cronserver.cronserver">
+<tt class="descclassname">personis.server.cronserver.</tt><tt class="descname">cronserver</tt><big>(</big><em>q</em>, <em>modeldir</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.cronserver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="personis.server.cronserver.crontab_parser">
+<em class="property">class </em><tt class="descclassname">personis.server.cronserver.</tt><tt class="descname">crontab_parser</tt><big>(</big><em>max_=60</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.crontab_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Parser for crontab expressions. Any expression of the form &#8216;groups&#8217;
+(see BNF grammar below) is accepted and expanded to a set of numbers.
+These numbers represent the units of time that the crontab needs to
+run on:</p>
+<div class="highlight-python"><pre>digit   :: '0'..'9'
+dow     :: 'a'..'z'
+number  :: digit+ | dow+
+steps   :: number
+range   :: number ( '-' number ) ?
+numspec :: '*' | range
+expr    :: numspec ( '/' steps ) ?
+groups  :: expr ( ',' expr ) *</pre>
+</div>
+<p>The parser is a general purpose one, useful for parsing hours, minutes and
+day_of_week expressions.  Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">minutes</span> <span class="o">=</span> <span class="n">crontab_parser</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;*/15&quot;</span><span class="p">)</span>
+<span class="go">[0, 15, 30, 45]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hours</span> <span class="o">=</span> <span class="n">crontab_parser</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;*/4&quot;</span><span class="p">)</span>
+<span class="go">[0, 4, 8, 12, 16, 20]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">day_of_week</span> <span class="o">=</span> <span class="n">crontab_parser</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="personis.server.cronserver.crontab_parser.ParseException">
+<tt class="descname">ParseException</tt><em class="property"> = 'ParseException'</em><a class="headerlink" href="#personis.server.cronserver.crontab_parser.ParseException" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.cronserver.crontab_parser.parse">
+<tt class="descname">parse</tt><big>(</big><em>spec</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.crontab_parser.parse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.cronserver.time_in_spec">
+<tt class="descclassname">personis.server.cronserver.</tt><tt class="descname">time_in_spec</tt><big>(</big><em>t</em>, <em>spec</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.time_in_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.cronserver.weekday">
+<tt class="descclassname">personis.server.cronserver.</tt><tt class="descname">weekday</tt><big>(</big><em>dayname</em><big>)</big><a class="headerlink" href="#personis.server.cronserver.weekday" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.ev_filters">
+<span id="ev-filters-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">ev_filters</span></tt> Module<a class="headerlink" href="#module-personis.server.ev_filters" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.ev_filters.Access">
+<em class="property">class </em><tt class="descclassname">personis.server.ev_filters.</tt><tt class="descname">Access</tt><a class="headerlink" href="#personis.server.ev_filters.Access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evidence filter mixin for Personis Access</p>
+<p>Contains evidence filter methods that are used before a resolver runs
+To add a new filter, add the method to this class and add an</p>
+<blockquote>
+<div>entry to the self.evidencefilterlist dictionary</div></blockquote>
+<dl class="method">
+<dt id="personis.server.ev_filters.Access.goal_filter">
+<tt class="descname">goal_filter</tt><big>(</big><em>elist=None</em>, <em>arguments=None</em><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Access.goal_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>return elements with flag &#8220;goal&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.ev_filters.Access.last10_filter">
+<tt class="descname">last10_filter</tt><big>(</big><em>elist=None</em>, <em>arguments=None</em><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Access.last10_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>return last 10 evidence items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.ev_filters.Access.last1_filter">
+<tt class="descname">last1_filter</tt><big>(</big><em>elist=None</em>, <em>arguments=None</em><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Access.last1_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>return last 1 evidence item</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.ev_filters.Access.recent_count_filter">
+<tt class="descname">recent_count_filter</tt><big>(</big><em>elist=None</em>, <em>arguments=None</em><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Access.recent_count_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the last arguments[&#8220;recent_count&#8221;] elements</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.ev_filters.Access.since_time_filter">
+<tt class="descname">since_time_filter</tt><big>(</big><em>elist=None</em>, <em>arguments=None</em><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Access.since_time_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>return elements with creation_time after arguments[&#8220;since_time&#8221;]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.ev_filters.Evidence_list">
+<em class="property">class </em><tt class="descclassname">personis.server.ev_filters.</tt><tt class="descname">Evidence_list</tt><big>(</big><em>elist=None</em>, <em>model=None</em>, <em>componentid=None</em><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Evidence_list" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="personis.server.ev_filters.Evidence_list.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.ev_filters.Evidence_list.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.exceptions">
+<span id="exceptions-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">exceptions</span></tt> Module<a class="headerlink" href="#module-personis.server.exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Exceptions used in the Personis System</p>
+<dl class="exception">
+<dt id="personis.server.exceptions.ModelNotFoundError">
+<em class="property">exception </em><tt class="descclassname">personis.server.exceptions.</tt><tt class="descname">ModelNotFoundError</tt><a class="headerlink" href="#personis.server.exceptions.ModelNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.IOError</span></tt></p>
+<p>Used to indicate that no model can be found for given modelname</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="personis.server.exceptions.ModelServerError">
+<em class="property">exception </em><tt class="descclassname">personis.server.exceptions.</tt><tt class="descname">ModelServerError</tt><a class="headerlink" href="#personis.server.exceptions.ModelServerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.IOError</span></tt></p>
+<p>Used to indicate that the required model server is returning an error</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.jsoncall">
+<span id="jsoncall-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">jsoncall</span></tt> Module<a class="headerlink" href="#module-personis.server.jsoncall" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="personis.server.jsoncall.do_call">
+<tt class="descclassname">personis.server.jsoncall.</tt><tt class="descname">do_call</tt><big>(</big><em>fun</em>, <em>args</em>, <em>connection</em><big>)</big><a class="headerlink" href="#personis.server.jsoncall.do_call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.mkmodel">
+<span id="mkmodel-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mkmodel</span></tt> Module<a class="headerlink" href="#module-personis.server.mkmodel" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Personis_mkmodel - library functions used to create sets of models.</dt>
+<dd>Used by the program mkmodel</dd>
+</dl>
+<p>mkmodel takes a definition of a model (stored in modeldefinitionfile)
+and creates a model in modeldirectory for each model</p>
+<dl class="function">
+<dt id="personis.server.mkmodel.docomponent">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">docomponent</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.docomponent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.docontext">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">docontext</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.docontext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.doevidence">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">doevidence</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.doevidence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.doevidencelist">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">doevidencelist</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.doevidencelist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.doflaglist">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">doflaglist</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.doflaglist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.dokeyval">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">dokeyval</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.dokeyval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.dokeyval_list">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">dokeyval_list</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.dokeyval_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.domdef">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">domdef</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.domdef" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.domodeldef">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">domodeldef</tt><big>(</big><em>mdefstring</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.domodeldef" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to parse a modeldef statement
+arg is a string containing the mdef statement</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.doname">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">doname</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.doname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.dopath">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">dopath</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.dopath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.dotells">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">dotells</tt><big>(</big><em>ev</em>, <em>compid</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.dotells" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.doview">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">doview</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.doview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.get_modeldef">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">get_modeldef</tt><big>(</big><em>mfile</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.get_modeldef" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.mkmodel">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">mkmodel</tt><big>(</big><em>model=None</em>, <em>mfile=None</em>, <em>modeldir=None</em>, <em>user=None</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.mkmodel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mkmodel.mkmodel_um">
+<tt class="descclassname">personis.server.mkmodel.</tt><tt class="descname">mkmodel_um</tt><big>(</big><em>um</em>, <em>lines</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#personis.server.mkmodel.mkmodel_um" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a model from the model definition in the string &#8220;lines&#8221;</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.mypyparsing">
+<span id="mypyparsing-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mypyparsing</span></tt> Module<a class="headerlink" href="#module-personis.server.mypyparsing" title="Permalink to this headline">¶</a></h2>
+<p>pyparsing module - Classes and methods to define and execute parsing grammars</p>
+<p>The pyparsing module is an alternative approach to creating and executing simple grammars, 
+vs. the traditional lex/yacc approach, or the use of regular expressions.  With pyparsing, you
+don&#8217;t need to learn a new syntax for defining grammars or matching expressions - the parsing module 
+provides a library of classes that you use to construct the grammar directly in Python.</p>
+<p>Here is a program to parse &#8220;Hello, World!&#8221; (or any greeting of the form &#8220;&lt;salutation&gt;, &lt;addressee&gt;!&#8221;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyparsing</span> <span class="kn">import</span> <span class="n">Word</span><span class="p">,</span> <span class="n">alphas</span>
+
+<span class="c"># define grammar of a greeting</span>
+<span class="n">greet</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span> <span class="n">alphas</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="n">Word</span><span class="p">(</span> <span class="n">alphas</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span> 
+
+<span class="n">hello</span> <span class="o">=</span> <span class="s">&quot;Hello, World!&quot;</span>
+<span class="k">print</span> <span class="n">hello</span><span class="p">,</span> <span class="s">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">greet</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span> <span class="n">hello</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>The program outputs the following:</p>
+<div class="highlight-python"><pre>Hello, World! -&gt; ['Hello', ',', 'World', '!']</pre>
+</div>
+<p>The Python representation of the grammar is quite readable, owing to the self-explanatory 
+class names, and the use of &#8216;+&#8217;, &#8216;|&#8217; and &#8216;^&#8217; operators.</p>
+<p>The parsed results returned from parseString() can be accessed as a nested list, a dictionary, or an 
+object with named attributes.</p>
+<dl class="docutils">
+<dt>The pyparsing module handles some of the problems that are typically vexing when writing text parsers:</dt>
+<dd><ul class="first last simple">
+<li>extra or missing whitespace (the above program will also handle &#8220;Hello,World!&#8221;, &#8220;Hello  ,  World  !&#8221;, etc.)</li>
+<li>quoted strings</li>
+<li>embedded comments</li>
+</ul>
+</dd>
+</dl>
+<dl class="class">
+<dt id="personis.server.mypyparsing.And">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">And</tt><big>(</big><em>exprs</em>, <em>savelist=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.And" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseExpression" title="personis.server.mypyparsing.ParseExpression"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseExpression</span></tt></a></p>
+<p>Requires all given ParseExpressions to be found in the given order.
+Expressions may be separated by whitespace.
+May be constructed using the &#8216;+&#8217; operator.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.And.checkRecursion">
+<tt class="descname">checkRecursion</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.And.checkRecursion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.And.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.And.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.CaselessLiteral">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">CaselessLiteral</tt><big>(</big><em>matchString</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.CaselessLiteral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Literal" title="personis.server.mypyparsing.Literal"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Literal</span></tt></a></p>
+<p>Token to match a specified string, ignoring case of letters.
+Note: the matched results will always be in the case of the given
+match string, NOT the case of the input text.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.CaselessLiteral.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.CaselessLiteral.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.CharsNotIn">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">CharsNotIn</tt><big>(</big><em>notChars</em>, <em>min=1</em>, <em>max=0</em>, <em>exact=0</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.CharsNotIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>Token for matching words composed of characters <em>not</em> in a given set.
+Defined with string containing all disallowed characters, and an optional 
+minimum, maximum, and/or exact length.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.CharsNotIn.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.CharsNotIn.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Combine">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Combine</tt><big>(</big><em>expr</em>, <em>joinString=''</em>, <em>adjacent=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.TokenConverter" title="personis.server.mypyparsing.TokenConverter"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.TokenConverter</span></tt></a></p>
+<p>Converter to concatenate all matching tokens to a single string.
+By default, the matching patterns must also be contiguous in the input string;
+this can be disabled by specifying &#8216;adjacent=False&#8217; in the constructor.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Combine.ignore">
+<tt class="descname">ignore</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Combine.ignore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Combine.postParse">
+<tt class="descname">postParse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>tokenlist</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Combine.postParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Dict">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Dict</tt><big>(</big><em>exprs</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.TokenConverter" title="personis.server.mypyparsing.TokenConverter"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.TokenConverter</span></tt></a></p>
+<p>Converter to return a repetitive expression as a list, but also as a dictionary.
+Each element can also be referenced using the first token in the expression as its key.
+Useful for tabular report scraping when the first column can be used as a item key.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Dict.postParse">
+<tt class="descname">postParse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>tokenlist</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Dict.postParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Each">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Each</tt><big>(</big><em>exprs</em>, <em>savelist=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Each" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseExpression" title="personis.server.mypyparsing.ParseExpression"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseExpression</span></tt></a></p>
+<p>Requires all given ParseExpressions to be found, but in any order.
+Expressions may be separated by whitespace.
+May be constructed using the &#8216;&amp;&#8217; operator.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Each.checkRecursion">
+<tt class="descname">checkRecursion</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Each.checkRecursion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Each.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Each.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Empty">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Empty</tt><a class="headerlink" href="#personis.server.mypyparsing.Empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>An empty token, will always match.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.FollowedBy">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">FollowedBy</tt><big>(</big><em>expr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.FollowedBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Lookahead matching of the given parse expression.  FollowedBy
+does <em>not</em> advance the parsing position within the input string, it only 
+verifies that the specified parse expression matches at the current 
+position.  FollowedBy always returns a null token list.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.FollowedBy.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.FollowedBy.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Forward">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Forward</tt><big>(</big><em>other=None</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Forward declaration of an expression to be defined later -
+used for recursive grammars, such as algebraic infix notation.
+When the expression is known, it is assigned to the Forward variable using the &#8216;&lt;&lt;&#8217; operator.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Forward.leaveWhitespace">
+<tt class="descname">leaveWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Forward.leaveWhitespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Forward.streamline">
+<tt class="descname">streamline</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Forward.streamline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Forward.validate">
+<tt class="descname">validate</tt><big>(</big><em>validateTrace=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Forward.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.GoToColumn">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">GoToColumn</tt><big>(</big><em>colno</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.GoToColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.PositionToken" title="personis.server.mypyparsing.PositionToken"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.PositionToken</span></tt></a></p>
+<p>Token to advance to a specific column of input text; useful for tabular report scraping.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.GoToColumn.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.GoToColumn.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.GoToColumn.preParse">
+<tt class="descname">preParse</tt><big>(</big><em>instring</em>, <em>loc</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.GoToColumn.preParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Group">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Group</tt><big>(</big><em>expr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.TokenConverter" title="personis.server.mypyparsing.TokenConverter"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.TokenConverter</span></tt></a></p>
+<p>Converter to return the matched tokens as a list - useful for returning tokens of ZeroOrMore and OneOrMore expressions.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Group.postParse">
+<tt class="descname">postParse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>tokenlist</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Group.postParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Keyword">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Keyword</tt><big>(</big><em>matchString</em>, <em>identChars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'</em>, <em>caseless=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Keyword" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>Token to exactly match a specified string as a keyword, that is, it must be 
+immediately followed by a non-keyword character.  Compare with Literal:</p>
+<div class="highlight-python"><pre>Literal("if") will match the leading 'if' in 'ifAndOnlyIf'.
+Keyword("if") will not; it will only match the leading 'if in 'if x=1', or 'if(y==2)'</pre>
+</div>
+<p>Accepts two optional constructor arguments in addition to the keyword string:
+identChars is a string of characters that would be valid identifier characters,
+defaulting to all alphanumerics + &#8220;_&#8221; and &#8220;$&#8221;; caseless allows case-insensitive
+matching, default is False.</p>
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.Keyword.DEFAULT_KEYWORD_CHARS">
+<tt class="descname">DEFAULT_KEYWORD_CHARS</tt><em class="property"> = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$'</em><a class="headerlink" href="#personis.server.mypyparsing.Keyword.DEFAULT_KEYWORD_CHARS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Keyword.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Keyword.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Keyword.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Keyword.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="personis.server.mypyparsing.Keyword.setDefaultKeywordChars">
+<em class="property">static </em><tt class="descname">setDefaultKeywordChars</tt><big>(</big><em>chars</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Keyword.setDefaultKeywordChars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default Keyword chars</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.LineEnd">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">LineEnd</tt><a class="headerlink" href="#personis.server.mypyparsing.LineEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.PositionToken" title="personis.server.mypyparsing.PositionToken"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.PositionToken</span></tt></a></p>
+<p>Matches if current position is at the end of a line within the parse string</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.LineEnd.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.LineEnd.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.LineStart">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">LineStart</tt><a class="headerlink" href="#personis.server.mypyparsing.LineStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.PositionToken" title="personis.server.mypyparsing.PositionToken"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.PositionToken</span></tt></a></p>
+<p>Matches if current position is at the beginning of a line within the parse string</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.LineStart.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.LineStart.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.LineStart.preParse">
+<tt class="descname">preParse</tt><big>(</big><em>instring</em>, <em>loc</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.LineStart.preParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Literal">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Literal</tt><big>(</big><em>matchString</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>Token to exactly match a specified string.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Literal.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Literal.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.MatchFirst">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">MatchFirst</tt><big>(</big><em>exprs</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.MatchFirst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseExpression" title="personis.server.mypyparsing.ParseExpression"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseExpression</span></tt></a></p>
+<p>Requires that at least one ParseExpression is found.
+If two expressions match, the first one listed is the one that will match.
+May be constructed using the &#8216;|&#8217; operator.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.MatchFirst.checkRecursion">
+<tt class="descname">checkRecursion</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.MatchFirst.checkRecursion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.MatchFirst.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.MatchFirst.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.NoMatch">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">NoMatch</tt><a class="headerlink" href="#personis.server.mypyparsing.NoMatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>A token that will never match.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.NoMatch.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.NoMatch.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.NotAny">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">NotAny</tt><big>(</big><em>expr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.NotAny" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Lookahead to disallow matching with the given parse expression.  NotAny
+does <em>not</em> advance the parsing position within the input string, it only 
+verifies that the specified parse expression does <em>not</em> match at the current 
+position.  Also, NotAny does <em>not</em> skip over leading whitespace. NotAny 
+always returns a null token list.  May be constructed using the &#8216;~&#8217; operator.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.NotAny.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.NotAny.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.OneOrMore">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">OneOrMore</tt><big>(</big><em>expr</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.OneOrMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Repetition of one or more of the given expression.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.OneOrMore.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.OneOrMore.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.OneOrMore.setResultsName">
+<tt class="descname">setResultsName</tt><big>(</big><em>name</em>, <em>listAllMatches=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.OneOrMore.setResultsName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Optional">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Optional</tt><big>(</big><em>exprs</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Optional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Optional matching of the given expression.
+A default return string can also be specified, if the optional expression
+is not found.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Optional.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Optional.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Or">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Or</tt><big>(</big><em>exprs</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Or" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseExpression" title="personis.server.mypyparsing.ParseExpression"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseExpression</span></tt></a></p>
+<p>Requires that at least one ParseExpression is found.
+If two expressions match, the expression that matches the longest string will be used.
+May be constructed using the &#8216;^&#8217; operator.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Or.checkRecursion">
+<tt class="descname">checkRecursion</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Or.checkRecursion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Or.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Or.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="personis.server.mypyparsing.ParseBaseException">
+<em class="property">exception </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParseBaseException</tt><big>(</big><em>pstr</em>, <em>loc</em>, <em>msg</em>, <em>elem=None</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseBaseException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>base exception class for all parsing runtime exceptions</p>
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.ParseBaseException.loc">
+<tt class="descname">loc</tt><a class="headerlink" href="#personis.server.mypyparsing.ParseBaseException.loc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseBaseException.markInputline">
+<tt class="descname">markInputline</tt><big>(</big><em>markerString='&gt;!&lt;'</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseBaseException.markInputline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts the exception line from the input string, and marks 
+the location of the exception with a special symbol.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.ParseBaseException.msg">
+<tt class="descname">msg</tt><a class="headerlink" href="#personis.server.mypyparsing.ParseBaseException.msg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.ParseBaseException.parserElement">
+<tt class="descname">parserElement</tt><a class="headerlink" href="#personis.server.mypyparsing.ParseBaseException.parserElement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.ParseBaseException.pstr">
+<tt class="descname">pstr</tt><a class="headerlink" href="#personis.server.mypyparsing.ParseBaseException.pstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.ParseElementEnhance">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParseElementEnhance</tt><big>(</big><em>expr</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParserElement" title="personis.server.mypyparsing.ParserElement"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParserElement</span></tt></a></p>
+<p>Abstract subclass of ParserElement, for combining and post-processing parsed tokens.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseElementEnhance.checkRecursion">
+<tt class="descname">checkRecursion</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance.checkRecursion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseElementEnhance.ignore">
+<tt class="descname">ignore</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance.ignore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseElementEnhance.leaveWhitespace">
+<tt class="descname">leaveWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance.leaveWhitespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseElementEnhance.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseElementEnhance.streamline">
+<tt class="descname">streamline</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance.streamline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseElementEnhance.validate">
+<tt class="descname">validate</tt><big>(</big><em>validateTrace=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseElementEnhance.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="personis.server.mypyparsing.ParseException">
+<em class="property">exception </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParseException</tt><big>(</big><em>pstr</em>, <em>loc</em>, <em>msg</em>, <em>elem=None</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseBaseException" title="personis.server.mypyparsing.ParseBaseException"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseBaseException</span></tt></a></p>
+<p>exception thrown when parse expressions don&#8217;t match class</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.ParseExpression">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParseExpression</tt><big>(</big><em>exprs</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParserElement" title="personis.server.mypyparsing.ParserElement"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParserElement</span></tt></a></p>
+<p>Abstract subclass of ParserElement, for combining and post-processing parsed tokens.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseExpression.append">
+<tt class="descname">append</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression.append" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseExpression.ignore">
+<tt class="descname">ignore</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression.ignore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseExpression.leaveWhitespace">
+<tt class="descname">leaveWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression.leaveWhitespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends leaveWhitespace defined in base class, and also invokes leaveWhitespace on
+all contained expressions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseExpression.setResultsName">
+<tt class="descname">setResultsName</tt><big>(</big><em>name</em>, <em>listAllMatches=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression.setResultsName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseExpression.streamline">
+<tt class="descname">streamline</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression.streamline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseExpression.validate">
+<tt class="descname">validate</tt><big>(</big><em>validateTrace=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseExpression.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="personis.server.mypyparsing.ParseFatalException">
+<em class="property">exception </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParseFatalException</tt><big>(</big><em>pstr</em>, <em>loc</em>, <em>msg</em>, <em>elem=None</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseFatalException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseBaseException" title="personis.server.mypyparsing.ParseBaseException"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseBaseException</span></tt></a></p>
+<p>user-throwable exception thrown when inconsistent parse content
+is found; stops all parsing immediately</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.ParseResults">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParseResults</tt><big>(</big><em>toklist</em>, <em>name=None</em>, <em>asList=True</em>, <em>modal=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Structured parse results, to provide multiple means of access to the parsed data:
+- as a list (len(results))
+- by list index (results[0], results[1], etc.)
+- by attribute (results.&lt;resultsName&gt;)</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.asDict">
+<tt class="descname">asDict</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.asDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the named parse results as dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.asList">
+<tt class="descname">asList</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.asList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parse results as a nested list of matching tokens, all converted to strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.asXML">
+<tt class="descname">asXML</tt><big>(</big><em>doctag=None</em>, <em>namedItemsOnly=False</em>, <em>indent=''</em>, <em>formatted=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.asXML" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parse results as XML. Tags are created for tokens and lists that have defined results names.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new copy of a ParseResults object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.getName">
+<tt class="descname">getName</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.getName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the results name for this token expression.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.items">
+<tt class="descname">items</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all named result keys and values as a list of tuples.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.keys">
+<tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all named result keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParseResults.values">
+<tt class="descname">values</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParseResults.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all named result values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.ParserElement">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ParserElement</tt><big>(</big><em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Abstract base level parser element class.</p>
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.ParserElement.DEFAULT_WHITE_CHARS">
+<tt class="descname">DEFAULT_WHITE_CHARS</tt><em class="property"> = ' \n\t\r'</em><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.DEFAULT_WHITE_CHARS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.checkRecursion">
+<tt class="descname">checkRecursion</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.checkRecursion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a copy of this ParseElement.  Useful for defining different parse actions
+for the same parsing pattern, using copies of the original parse element.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.ignore">
+<tt class="descname">ignore</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define expression to be ignored (e.g., comments) while doing pattern 
+matching; may be called repeatedly, to define multiple comment or other
+ignorable patterns.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.leaveWhitespace">
+<tt class="descname">leaveWhitespace</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.leaveWhitespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables the skipping of whitespace before matching the characters in the 
+ParserElement&#8217;s defined pattern.  This is normally only used internally by
+the pyparsing module, but may be needed in some whitespace-sensitive grammars.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.parse">
+<tt class="descname">parse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em>, <em>callPreParse=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.parse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.parseFile">
+<tt class="descname">parseFile</tt><big>(</big><em>file_or_filename</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.parseFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the parse expression on the given file or filename.
+If a filename is specified (instead of a file object),
+the entire file is opened, read, and closed before parsing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.parseString">
+<tt class="descname">parseString</tt><big>(</big><em>instring</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.parseString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the parse expression with the given string.
+This is the main interface to the client code, once the complete 
+expression has been built.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.parseWithTabs">
+<tt class="descname">parseWithTabs</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.parseWithTabs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides default behavior to expand &lt;TAB&gt;s to spaces before parsing the input string.
+Must be called before parseString when the input grammar contains elements that 
+match &lt;TAB&gt; characters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.postParse">
+<tt class="descname">postParse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>tokenlist</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.postParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.preParse">
+<tt class="descname">preParse</tt><big>(</big><em>instring</em>, <em>loc</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.preParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.scanString">
+<tt class="descname">scanString</tt><big>(</big><em>instring</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.scanString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scan the input string for expression matches.  Each match will return the matching tokens, start location, and end location.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.setDebug">
+<tt class="descname">setDebug</tt><big>(</big><em>flag=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setDebug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable display of debugging messages while doing pattern matching.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.setDebugActions">
+<tt class="descname">setDebugActions</tt><big>(</big><em>startAction</em>, <em>successAction</em>, <em>exceptionAction</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setDebugActions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable display of debugging messages while doing pattern matching.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="personis.server.mypyparsing.ParserElement.setDefaultWhitespaceChars">
+<em class="property">static </em><tt class="descname">setDefaultWhitespaceChars</tt><big>(</big><em>chars</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setDefaultWhitespaceChars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default whitespace chars</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.setName">
+<tt class="descname">setName</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define name for this expression, for use in debugging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.setParseAction">
+<tt class="descname">setParseAction</tt><big>(</big><em>fn</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setParseAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define action to perform when successfully matching parse element definition.
+Parse action fn is a callable method with the arguments (s, loc, toks) where:</p>
+<blockquote>
+<div><ul class="simple">
+<li>s   = the original string being parsed</li>
+<li>loc = the location of the matching substring</li>
+<li>toks = a list of the matched tokens, packaged as a ParseResults object</li>
+</ul>
+</div></blockquote>
+<p>If the function fn modifies the tokens, it can return them as the return
+value from fn, and the modified list of tokens will replace the original.
+Otherwise, fn does not need to return any value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.setResultsName">
+<tt class="descname">setResultsName</tt><big>(</big><em>name</em>, <em>listAllMatches=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setResultsName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define name for referencing matching tokens as a nested attribute 
+of the returned parse results.
+NOTE: this returns a <em>copy</em> of the original ParseElement object;
+this is so that the client can define a basic element, such as an
+integer, and reference it in multiple places with different names.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.setWhitespaceChars">
+<tt class="descname">setWhitespaceChars</tt><big>(</big><em>chars</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.setWhitespaceChars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the default whitespace chars</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.skipIgnorables">
+<tt class="descname">skipIgnorables</tt><big>(</big><em>instring</em>, <em>loc</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.skipIgnorables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.streamline">
+<tt class="descname">streamline</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.streamline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.suppress">
+<tt class="descname">suppress</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.suppress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suppresses the output of this ParseElement; useful to keep punctuation from
+cluttering up returned output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.transformString">
+<tt class="descname">transformString</tt><big>(</big><em>instring</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.transformString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extension to scanString, to modify matching text with modified tokens that may
+be returned from a parse action.  To use transformString, define a grammar and 
+attach a parse action to it that modifies the returned token list.  
+Invoking transformString() on a target string will then scan for matches, 
+and replace the matched text patterns according to the logic in the parse 
+action.  transformString() returns the resulting transformed string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.tryParse">
+<tt class="descname">tryParse</tt><big>(</big><em>instring</em>, <em>loc</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.tryParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ParserElement.validate">
+<tt class="descname">validate</tt><big>(</big><em>validateTrace=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ParserElement.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check defined expressions for valid structure, check for infinite recursive definitions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.PositionToken">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">PositionToken</tt><a class="headerlink" href="#personis.server.mypyparsing.PositionToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="personis.server.mypyparsing.RecursiveGrammarException">
+<em class="property">exception </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">RecursiveGrammarException</tt><big>(</big><em>parseElementList</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.RecursiveGrammarException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>exception thrown by validate() if the grammar could be improperly recursive</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.SkipTo">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">SkipTo</tt><big>(</big><em>other</em>, <em>include=False</em>, <em>ignore=None</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.SkipTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Token for skipping over all undefined text until the matched expression is found.
+If include is set to true, the matched expression is also consumed.  The ignore
+argument is used to define grammars (typically quoted strings and comments) that 
+might contain false matches.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.SkipTo.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.SkipTo.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.StringEnd">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">StringEnd</tt><a class="headerlink" href="#personis.server.mypyparsing.StringEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.PositionToken" title="personis.server.mypyparsing.PositionToken"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.PositionToken</span></tt></a></p>
+<p>Matches if current position is at the end of the parse string</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.StringEnd.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.StringEnd.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.StringStart">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">StringStart</tt><a class="headerlink" href="#personis.server.mypyparsing.StringStart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.PositionToken" title="personis.server.mypyparsing.PositionToken"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.PositionToken</span></tt></a></p>
+<p>Matches if current position is at the beginning of the parse string</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.StringStart.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.StringStart.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Suppress">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Suppress</tt><big>(</big><em>expr</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Suppress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.TokenConverter" title="personis.server.mypyparsing.TokenConverter"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.TokenConverter</span></tt></a></p>
+<p>Converter for ignoring the results of a parsed expression.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Suppress.postParse">
+<tt class="descname">postParse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>tokenlist</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Suppress.postParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.Suppress.suppress">
+<tt class="descname">suppress</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Suppress.suppress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Token">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Token</tt><a class="headerlink" href="#personis.server.mypyparsing.Token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParserElement" title="personis.server.mypyparsing.ParserElement"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParserElement</span></tt></a></p>
+<p>Abstract ParserElement subclass, for defining atomic matching patterns.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Token.setName">
+<tt class="descname">setName</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Token.setName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.TokenConverter">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">TokenConverter</tt><big>(</big><em>expr</em>, <em>savelist=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.TokenConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Abstract subclass of ParseExpression, for converting parsed results.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Upcase">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Upcase</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Upcase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.TokenConverter" title="personis.server.mypyparsing.TokenConverter"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.TokenConverter</span></tt></a></p>
+<p>Converter to upper case all matching tokens.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Upcase.postParse">
+<tt class="descname">postParse</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>tokenlist</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Upcase.postParse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.White">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">White</tt><big>(</big><em>ws=' trn'</em>, <em>min=1</em>, <em>max=0</em>, <em>exact=0</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.White" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>Special matching class for matching whitespace.  Normally, whitespace is ignored
+by pyparsing grammars.  This class is included when some whitespace structures
+are significant.  Define with a string containing the whitespace characters to be
+matched; default is &#8221; tn&#8221;.  Also takes optional min, max, and exact arguments,
+as defined for the Word class.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.White.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.White.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personis.server.mypyparsing.White.whiteStrs">
+<tt class="descname">whiteStrs</tt><em class="property"> = {'\t': '&lt;TAB&gt;', ' ': '&lt;SPC&gt;', '\n': '&lt;LF&gt;', '\r': '&lt;CR&gt;', '\x0c': '&lt;FF&gt;'}</em><a class="headerlink" href="#personis.server.mypyparsing.White.whiteStrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.Word">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">Word</tt><big>(</big><em>initChars</em>, <em>bodyChars=None</em>, <em>min=1</em>, <em>max=0</em>, <em>exact=0</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.Token" title="personis.server.mypyparsing.Token"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.Token</span></tt></a></p>
+<p>Token for matching words composed of allowed character sets.
+Defined with string containing all allowed initial characters,
+an optional string containing allowed body characters (if omitted,
+defaults to the initial character set), and an optional minimum,
+maximum, and/or exact length.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.Word.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.Word.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.mypyparsing.ZeroOrMore">
+<em class="property">class </em><tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">ZeroOrMore</tt><big>(</big><em>expr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ZeroOrMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#personis.server.mypyparsing.ParseElementEnhance" title="personis.server.mypyparsing.ParseElementEnhance"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.mypyparsing.ParseElementEnhance</span></tt></a></p>
+<p>Optional repetition of zero or more of the given expression.</p>
+<dl class="method">
+<dt id="personis.server.mypyparsing.ZeroOrMore.parseImpl">
+<tt class="descname">parseImpl</tt><big>(</big><em>instring</em>, <em>loc</em>, <em>doActions=True</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ZeroOrMore.parseImpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.mypyparsing.ZeroOrMore.setResultsName">
+<tt class="descname">setResultsName</tt><big>(</big><em>name</em>, <em>listAllMatches=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.ZeroOrMore.setResultsName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.col">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">col</tt><big>(</big><em>loc</em>, <em>strg</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current column within a string, counting newlines as line separators
+The first column is number 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.delimitedList">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">delimitedList</tt><big>(</big><em>expr</em>, <em>delim='</em>, <em>'</em>, <em>combine=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.delimitedList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to define a delimited list of expressions - the delimiter defaults to &#8216;,&#8217;.
+By default, the list elements and delimiters can have intervening whitespace, and 
+comments, but this can be overridden by passing &#8216;combine=True&#8217; in the constructor.
+If combine is set to True, the matching tokens are returned as a single token
+string, with the delimiters included; otherwise, the matching tokens are returned
+as a list of tokens, with the delimiters suppressed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.dictOf">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">dictOf</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.dictOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to easily and clearly define a dictionary by specifying the respective patterns
+for the key and value.  Takes care of defining the Dict, ZeroOrMore, and Group tokens
+in the proper order.  The key pattern can include delimiting markers or punctuation,
+as long as they are suppressed, thereby leaving the significant key text.  The value
+pattern can include named results, so that the Dict results can include named token 
+fields.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.downcaseTokens">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">downcaseTokens</tt><big>(</big><em>s</em>, <em>l</em>, <em>t</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.downcaseTokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper parse action to convert tokens to lower case.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.line">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">line</tt><big>(</big><em>loc</em>, <em>strg</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the line of text containing loc within a string, counting newlines as line separators
+The first line is number 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.lineno">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">lineno</tt><big>(</big><em>loc</em>, <em>strg</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.lineno" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current line number within a string, counting newlines as line separators
+The first line is number 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.makeHTMLTags">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">makeHTMLTags</tt><big>(</big><em>tagStr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.makeHTMLTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to construct opening and closing tag expressions for HTML, given a tag name</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.makeXMLTags">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">makeXMLTags</tt><big>(</big><em>tagStr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.makeXMLTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to construct opening and closing tag expressions for XML, given a tag name</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.nullDebugAction">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">nullDebugAction</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.nullDebugAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8216;Do-nothing&#8217; debug action, to suppress debugging output during parsing.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.oneOf">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">oneOf</tt><big>(</big><em>strs</em>, <em>caseless=False</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.oneOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to quickly define a set of alternative Literals, and makes sure to do 
+longest-first testing when there is a conflict, regardless of the input order, 
+but returns a MatchFirst for best performance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.removeQuotes">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">removeQuotes</tt><big>(</big><em>s</em>, <em>l</em>, <em>t</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.removeQuotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper parse action for removing quotation marks from parsed quoted strings.
+To use, add this parse action to quoted string using::
+quotedString.setParseAction( removeQuotes )</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.replaceWith">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">replaceWith</tt><big>(</big><em>replStr</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.replaceWith" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method for common parse actions that simply return a literal value.  Especially 
+useful when used with transformString().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.srange">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">srange</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.srange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to easily define string ranges for use in Word construction.  Borrows
+syntax from regexp &#8216;[]&#8217; string range definitions:</p>
+<div class="highlight-python"><pre>srange("[0-9]")   -&gt; "0123456789"
+srange("[a-z]")   -&gt; "abcdefghijklmnopqrstuvwxyz"
+srange("[a-z$_]") -&gt; "abcdefghijklmnopqrstuvwxyz$_"</pre>
+</div>
+<p>The input string must be enclosed in []&#8217;s, and the returned string is the expanded 
+character set joined into a single string.
+The values enclosed in the []&#8217;s may be:</p>
+<div class="highlight-python"><pre>a single character
+an escaped character with a leading backslash (such as \- or \])
+an escaped hex character with a leading '\0x' (\0x21, which is a '!' character)
+an escaped octal character with a leading '\0' (\041, which is a '!' character)
+a range of any of the above, separated by a dash ('a-z', etc.)
+any combination of the above ('aeiouy', 'a-zA-Z0-9_$', etc.)</pre>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.mypyparsing.upcaseTokens">
+<tt class="descclassname">personis.server.mypyparsing.</tt><tt class="descname">upcaseTokens</tt><big>(</big><em>s</em>, <em>l</em>, <em>t</em><big>)</big><a class="headerlink" href="#personis.server.mypyparsing.upcaseTokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper parse action to convert tokens to upper case.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.resolvers">
+<span id="resolvers-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">resolvers</span></tt> Module<a class="headerlink" href="#module-personis.server.resolvers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.resolvers.Access">
+<em class="property">class </em><tt class="descclassname">personis.server.resolvers.</tt><tt class="descname">Access</tt><a class="headerlink" href="#personis.server.resolvers.Access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolver mixin for Personis Access</p>
+<p>Contains resolver methods that can be specified on an &#8220;ask&#8221; operation
+To add a new resolver, add the method to this class and add an</p>
+<blockquote>
+<div>entry to the self.resolverlist dictionary</div></blockquote>
+<dl class="method">
+<dt id="personis.server.resolvers.Access.GoalResolver">
+<tt class="descname">GoalResolver</tt><big>(</big><em>model=None</em>, <em>component=None</em>, <em>context=None</em>, <em>resolver_args=None</em><big>)</big><a class="headerlink" href="#personis.server.resolvers.Access.GoalResolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>resolver function used if none specified
+sets component value to the value from the 
+last piece of given, goal evidence</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.resolvers.Access.RecentResolver">
+<tt class="descname">RecentResolver</tt><big>(</big><em>model=None</em>, <em>component=None</em>, <em>context=None</em>, <em>resolver_args=None</em><big>)</big><a class="headerlink" href="#personis.server.resolvers.Access.RecentResolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>resolver function used if none specified
+sets component value to the value from the 
+last piece of given, goal evidence</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.server">
+<span id="server-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">server</span></tt> Module<a class="headerlink" href="#module-personis.server.server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.server.ExitThread">
+<em class="property">class </em><tt class="descclassname">personis.server.server.</tt><tt class="descname">ExitThread</tt><big>(</big><em>cp</em>, <em>cronp</em>, <em>cronqueue</em>, <em>queue</em><big>)</big><a class="headerlink" href="#personis.server.server.ExitThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></tt></p>
+<dl class="method">
+<dt id="personis.server.server.ExitThread.exit">
+<tt class="descname">exit</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.ExitThread.exit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.ExitThread.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.ExitThread.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.server.server.Server">
+<em class="property">class </em><tt class="descclassname">personis.server.server.</tt><tt class="descname">Server</tt><big>(</big><em>modeldir='models'</em>, <em>adminsfile='admins.yaml'</em>, <em>clients=None</em>, <em>access_tokens='oauth_access_tokens.dat'</em>, <em>client_secrets='client_secrets_google.json'</em><big>)</big><a class="headerlink" href="#personis.server.server.Server" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="personis.server.server.Server.allow">
+<tt class="descname">allow</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.allow" title="Permalink to this definition">¶</a></dt>
+<dd><p>In the case that they do want the client to use personis on their
+behalf, we register the client in um, and redirect back to the
+client with a temporary authorization key.
+(Accessed by a user with a web browser, redirected from /logged_in)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.authorize">
+<tt class="descname">authorize</tt><big>(</big><em>client_id</em>, <em>redirect_uri</em>, <em>scope</em>, <em>access_type</em>, <em>response_type='code'</em>, <em>approval_prompt='auto'</em>, <em>state=None</em><big>)</big><a class="headerlink" href="#personis.server.server.Server.authorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the entry point for client authentication against Personis. 
+(accessed by a user with a web browser, redirected from a client).
+Personis becomes an oauth2 server at this point. The session
+now contains the client_id but not much else.
+Only for oauth use. Don&#8217;t come in this way if you want 
+to use list_clients!!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.default">
+<tt class="descname">default</tt><big>(</big><em>*args</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.server.Server.default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.dissallow">
+<tt class="descname">dissallow</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.dissallow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.list_apps">
+<tt class="descname">list_apps</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.list_apps" title="Permalink to this definition">¶</a></dt>
+<dd><p>App admin interface for Personis users. 
+(To be accessed by a user with a web browser)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.list_apps_save">
+<tt class="descname">list_apps_save</tt><big>(</big><em>id</em>, <em>value</em>, <em>_method='get'</em><big>)</big><a class="headerlink" href="#personis.server.server.Server.list_apps_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>AJAX helper for list_clients. No real user interface</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.list_clients">
+<tt class="descname">list_clients</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.list_clients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Admin interface for Personis. See admins.yaml for configuration
+(To be accessed by a user with a web browser)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.list_clients_save">
+<tt class="descname">list_clients_save</tt><big>(</big><em>id</em>, <em>value</em>, <em>_method='get'</em><big>)</big><a class="headerlink" href="#personis.server.server.Server.list_clients_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>AJAX helper for list_clients. No real user interface</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.logged_in">
+<tt class="descname">logged_in</tt><big>(</big><em>code</em><big>)</big><a class="headerlink" href="#personis.server.server.Server.logged_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step 2 of the oauth dance. At this point Google has said this is a 
+known user. We then go and get more user info about them from google,
+save the info in a persistant store, create a model if none exists,
+and then ask them if they&#8217;re happy to let the client they&#8217;re using 
+access personis on their behalf.
+(Accessed by the user with a web browser redirected from /authorized)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.login">
+<tt class="descname">login</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step 1.5. This is where clients of the personis web interface
+enter. there is no client_id etc because personis is not being
+used as an oauth server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.request_token">
+<tt class="descname">request_token</tt><big>(</big><em>client_id</em>, <em>client_secret</em>, <em>grant_type</em>, <em>code=None</em>, <em>redirect_uri=None</em>, <em>scope=None</em>, <em>refresh_token=None</em><big>)</big><a class="headerlink" href="#personis.server.server.Server.request_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client (mneme) has a temporary key (see /allow) but the key 
+has been to web browsers and back so it is not safe. It must be 
+exchanged by the client taking to personis directly (no web browser
+involvement) for a real token. Tokens have expiration dates etc.
+(Accessed by the client (Mneme, etc) on behalf of a user.)
+NOTE! This should only be exported over TLS/SSL (ahem!)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.server.server.Server.save_oauth_clients">
+<tt class="descname">save_oauth_clients</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.server.server.Server.save_oauth_clients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.server.runServer">
+<tt class="descclassname">personis.server.server.</tt><tt class="descname">runServer</tt><big>(</big><em>modeldir</em>, <em>config</em>, <em>admins</em>, <em>clients</em>, <em>tokens</em>, <em>loglevel=20</em>, <em>exit_queue=None</em>, <em>client_secrets='client_secrets_google.json'</em><big>)</big><a class="headerlink" href="#personis.server.server.runServer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="subscription-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">subscription</span></tt> Module<a class="headerlink" href="#subscription-module" title="Permalink to this headline">¶</a></h2>
+<p>Subscription statement grammar:</p>
+<blockquote>
+<div>resolvername := ID
+evidencetype := ID
+componentval := &#8216;&lt;&#8217; [ resolvername &#8216;!&#8217; ] component &#8216;&gt;&#8217;
+componentname := ID | componentval
+modelname := &#8216;.&#8217; | componentname
+component := modelname [ &#8216;/&#8217; componentname ]*
+cronspec := &#8216;[&#8216; QUOTEDSTRING &#8216;]&#8217;
+item := component | QUOTEDSTRING
+patternmatch := item &#8216;~&#8217; item
+tell := &#8216;TELL&#8217; item &#8216;,&#8217; evidencetype &#8216;:&#8217; item
+tellchanged := &#8216;TELLCHANGED&#8217; item &#8216;,&#8217; evidencetype &#8216;:&#8217; item
+notify := &#8216;NOTIFY&#8217; item [item]*
+action := tell | tellchanged | notify
+statement := [ cronspec ] patternmatch &#8216;:&#8217; action</div></blockquote>
+<dl class="docutils">
+<dt>Note:</dt>
+<dd>a cronspec string is similar to a crontab entry: &#8220;minute hour day_of_month month day_of_week&#8221;</dd>
+</dl>
+<p>Examples:</p>
+<p>&lt;froomBT/seen&gt; ~ &#8216;.*&#8217; : TELL &lt;froomBT/seen&gt;/location, &lt;froomBT/location&gt;&#8221;
+&lt;froomBT/seen&gt; ~ &#8216;.*&#8217; : NOTIFY &#8216;<a class="reference external" href="http://www/qqq.cgi">http://www/qqq.cgi</a>&#8216;&#8221;
+&lt;froomBT/seen&gt; ~ &#8216;.*&#8217; : TELL bob/personal/location, explicit:&lt;froomBT/location&gt;
+&lt;bob/personal/location&gt; ~ &#8216;.*&#8217; : NOTIFY &#8216;<a class="reference external" href="http://www.it.usyd.edu.au/~bob/Personis/tst.cgi">http://www.it.usyd.edu.au/~bob/Personis/tst.cgi</a>&#8216;
+[&#8220;<em>/15 * * * *&#8221;] &lt;bob/personal/location&gt; ~ &#8216;.</em>&#8216; : NOTIFY &#8216;<a class="reference external" href="http://www.it.usyd.edu.au/~bob/Personis/tst.cgi">http://www.it.usyd.edu.au/~bob/Personis/tst.cgi</a>&#8216;
+&lt;default!bob/personal/location&gt; ~ &#8216;.*&#8217; : NOTIFY &#8216;<a class="reference external" href="http://www.it.usyd.edu.au/~bob/Personis/tst.cgi">http://www.it.usyd.edu.au/~bob/Personis/tst.cgi</a>&#8216;
+&lt;default!bob/personal/location&gt; ~ &#8216;.*&#8217; : NOTIFY &#8216;<a class="reference external" href="http://www.it.usyd.edu.au/~bob/Personis/tst.cgi">http://www.it.usyd.edu.au/~bob/Personis/tst.cgi</a>&#8216;
+&lt;bobPhone/seenby&gt; ~ &#8216;.*&#8217; : TELL bobPhone/location, explicit:&lt;&lt;bobPhone/seenby&gt;/location&gt;
+&lt;default!./personal/location&gt; ~ &#8216;.*&#8217; : NOTIFY &#8216;<a class="reference external" href="http://www.it.usyd.edu.au/~bob/Personis/tst.cgi">http://www.it.usyd.edu.au/~bob/Personis/tst.cgi</a>?&#8217; &#8216;location=&#8217; &lt;./personal/location&gt;  &#8216;&amp;name=&#8217; &lt;./personal/firstname&gt;</p>
+<dl class="class">
+<dt id="personis.server.subscription.Dummyum">
+<em class="property">class </em><tt class="descclassname">personis.server.subscription.</tt><tt class="descname">Dummyum</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#personis.server.subscription.Dummyum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.askval">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">askval</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.subscription.askval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.domatch">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">domatch</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.subscription.domatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.donotify">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">donotify</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.subscription.donotify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.dosub">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">dosub</tt><big>(</big><em>sub</em>, <em>um</em><big>)</big><a class="headerlink" href="#personis.server.subscription.dosub" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to parse and execute a subscription statement
+takes one dictionary argument containing:
+user, password to be used in Access&#8217;ing the model and
+statement, a string containing the subscription statement</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.dotell">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">dotell</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.subscription.dotell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.dotell_body">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">dotell_body</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em>, <em>changed_only=False</em><big>)</big><a class="headerlink" href="#personis.server.subscription.dotell_body" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.subscription.dotellchanged">
+<tt class="descclassname">personis.server.subscription.</tt><tt class="descname">dotellchanged</tt><big>(</big><em>str</em>, <em>loc</em>, <em>toks</em><big>)</big><a class="headerlink" href="#personis.server.subscription.dotellchanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-personis.server.util">
+<span id="util-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">util</span></tt> Module<a class="headerlink" href="#module-personis.server.util" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="personis.server.util.Struct">
+<em class="property">class </em><tt class="descclassname">personis.server.util.</tt><tt class="descname">Struct</tt><big>(</big><em>**entries</em><big>)</big><a class="headerlink" href="#personis.server.util.Struct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.util.printcomplist">
+<tt class="descclassname">personis.server.util.</tt><tt class="descname">printcomplist</tt><big>(</big><em>reslist</em>, <em>printev=None</em><big>)</big><a class="headerlink" href="#personis.server.util.printcomplist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.util.printjson">
+<tt class="descclassname">personis.server.util.</tt><tt class="descname">printjson</tt><big>(</big><em>jsonobj</em><big>)</big><a class="headerlink" href="#personis.server.util.printjson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="personis.server.util.showobj">
+<tt class="descclassname">personis.server.util.</tt><tt class="descname">showobj</tt><big>(</big><em>obj</em>, <em>indent</em><big>)</big><a class="headerlink" href="#personis.server.util.showobj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">server Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">server</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-personis.server.active"><tt class="docutils literal"><span class="pre">active</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.base"><tt class="docutils literal"><span class="pre">base</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.connection"><tt class="docutils literal"><span class="pre">connection</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.cronserver"><tt class="docutils literal"><span class="pre">cronserver</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.ev_filters"><tt class="docutils literal"><span class="pre">ev_filters</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.exceptions"><tt class="docutils literal"><span class="pre">exceptions</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.jsoncall"><tt class="docutils literal"><span class="pre">jsoncall</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.mkmodel"><tt class="docutils literal"><span class="pre">mkmodel</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.mypyparsing"><tt class="docutils literal"><span class="pre">mypyparsing</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.resolvers"><tt class="docutils literal"><span class="pre">resolvers</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.server"><tt class="docutils literal"><span class="pre">server</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subscription-module"><tt class="docutils literal"><span class="pre">subscription</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-personis.server.util"><tt class="docutils literal"><span class="pre">util</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/personis.server.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2012, Bob Kummerfeld and Judy Kay.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

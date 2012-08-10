@@ -1,0 +1,1271 @@
+[02/Aug/2012:15:22:29] ENGINE Bus STARTING
+[02/Aug/2012:15:22:29] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:22:29] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:22:29] ENGINE Serving on enterprise.it.usyd.edu.au:2005
+[02/Aug/2012:15:22:29] ENGINE Bus STARTED
+[02/Aug/2012:15:22:42] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:22:42] ENGINE Bus STOPPING
+[02/Aug/2012:15:22:42] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 2005)) shut down
+[02/Aug/2012:15:22:42] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:22:42] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:22:42] ENGINE Bus STOPPED
+[02/Aug/2012:15:22:42] ENGINE Bus EXITING
+[02/Aug/2012:15:22:42] ENGINE Bus EXITED
+[02/Aug/2012:15:22:42] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:23:24] ENGINE Bus STARTING
+[02/Aug/2012:15:23:24] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:23:24] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:23:24] ENGINE Serving on enterprise.it.usyd.edu.au:2005
+[02/Aug/2012:15:23:24] ENGINE Bus STARTED
+[02/Aug/2012:15:23:26] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:23:26] ENGINE Bus STOPPING
+[02/Aug/2012:15:23:26] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 2005)) shut down
+[02/Aug/2012:15:23:26] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:23:26] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:23:26] ENGINE Bus STOPPED
+[02/Aug/2012:15:23:26] ENGINE Bus EXITING
+[02/Aug/2012:15:23:26] ENGINE Bus EXITED
+[02/Aug/2012:15:23:26] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:23:40] ENGINE Bus STARTING
+[02/Aug/2012:15:23:40] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:23:40] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:23:40] ENGINE Serving on enterprise.it.usyd.edu.au:2005
+[02/Aug/2012:15:23:40] ENGINE Bus STARTED
+[02/Aug/2012:15:24:37] ENGINE Restarting because /home/jbu/personis/personis/server/test/test_server.py changed.
+[02/Aug/2012:15:24:37] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:24:37] ENGINE Bus STOPPING
+[02/Aug/2012:15:24:37] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 2005)) shut down
+[02/Aug/2012:15:24:37] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:24:37] ENGINE Bus STOPPED
+[02/Aug/2012:15:24:37] ENGINE Bus EXITING
+[02/Aug/2012:15:24:37] ENGINE Bus EXITED
+[02/Aug/2012:15:24:37] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:24:37] ENGINE Re-spawning python -m unittest test_server
+[02/Aug/2012:15:27:54] ENGINE Bus STARTING
+[02/Aug/2012:15:27:54] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:27:54] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:27:54] ENGINE Serving on enterprise.it.usyd.edu.au:2005
+[02/Aug/2012:15:27:54] ENGINE Bus STARTED
+[02/Aug/2012:15:27:56] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:27:56] ENGINE Bus STOPPING
+[02/Aug/2012:15:27:56] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 2005)) shut down
+[02/Aug/2012:15:27:56] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:27:56] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:27:56] ENGINE Bus STOPPED
+[02/Aug/2012:15:27:56] ENGINE Bus EXITING
+[02/Aug/2012:15:27:56] ENGINE Bus EXITED
+[02/Aug/2012:15:27:56] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:28:08] ENGINE Bus STARTING
+[02/Aug/2012:15:28:08] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:28:08] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:28:08] ENGINE Serving on enterprise.it.usyd.edu.au:2005
+[02/Aug/2012:15:28:08] ENGINE Bus STARTED
+[02/Aug/2012:15:28:09] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:28:09] ENGINE Bus STOPPING
+[02/Aug/2012:15:28:09] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 2005)) shut down
+[02/Aug/2012:15:28:09] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:28:09] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:28:09] ENGINE Bus STOPPED
+[02/Aug/2012:15:28:09] ENGINE Bus EXITING
+[02/Aug/2012:15:28:09] ENGINE Bus EXITED
+[02/Aug/2012:15:28:09] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:28:51] ENGINE Bus STARTING
+[02/Aug/2012:15:28:51] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:28:51] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:28:51] ENGINE Serving on enterprise.it.usyd.edu.au:2005
+[02/Aug/2012:15:28:51] ENGINE Bus STARTED
+[02/Aug/2012:15:29:01] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:29:01] ENGINE Bus STOPPING
+[02/Aug/2012:15:29:01] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('enterprise.it.usyd.edu.au', 2005)) shut down
+[02/Aug/2012:15:29:01] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:29:01] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:29:01] ENGINE Bus STOPPED
+[02/Aug/2012:15:29:01] ENGINE Bus EXITING
+[02/Aug/2012:15:29:01] ENGINE Bus EXITED
+[02/Aug/2012:15:29:01] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:30:23] ENGINE Bus STARTING
+[02/Aug/2012:15:30:23] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:30:23] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:30:23] ENGINE Serving on localhost:2005
+[02/Aug/2012:15:30:23] ENGINE Bus STARTED
+[02/Aug/2012:15:30:28] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:15:30:30] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:30:30] ENGINE Bus STOPPING
+[02/Aug/2012:15:30:30] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('localhost', 2005)) shut down
+[02/Aug/2012:15:30:30] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:30:30] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:15:30:30] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:30:30] ENGINE Bus STOPPED
+[02/Aug/2012:15:30:30] ENGINE Bus EXITING
+[02/Aug/2012:15:30:30] ENGINE Bus EXITED
+[02/Aug/2012:15:30:30] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:36:04] ENGINE Bus STARTING
+[02/Aug/2012:15:36:04] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:36:04] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:36:04] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:15:36:04] ENGINE Bus STARTED
+[02/Aug/2012:15:36:12] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:36:12] ENGINE Bus STOPPING
+[02/Aug/2012:15:36:12] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:15:36:12] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:36:12] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:36:12] ENGINE Bus STOPPED
+[02/Aug/2012:15:36:12] ENGINE Bus EXITING
+[02/Aug/2012:15:36:12] ENGINE Bus EXITED
+[02/Aug/2012:15:36:12] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:50:07] ENGINE Bus STARTING
+[02/Aug/2012:15:50:07] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:50:07] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:50:07] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:15:50:07] ENGINE Bus STARTED
+[02/Aug/2012:15:53:20] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:15:53:20] ENGINE Bus STOPPING
+[02/Aug/2012:15:53:20] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:15:53:20] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:53:20] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:53:20] ENGINE Bus STOPPED
+[02/Aug/2012:15:53:20] ENGINE Bus EXITING
+[02/Aug/2012:15:53:20] ENGINE Bus EXITED
+[02/Aug/2012:15:53:20] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:56:00] ENGINE Bus STARTING
+[02/Aug/2012:15:56:00] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:56:00] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:56:00] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:15:56:00] ENGINE Bus STARTED
+[02/Aug/2012:15:56:09] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:15:56:09] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:56:09] ENGINE Bus STOPPING
+[02/Aug/2012:15:56:09] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:15:56:09] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:56:09] ENGINE Bus STOPPED
+[02/Aug/2012:15:56:09] ENGINE Bus EXITING
+[02/Aug/2012:15:56:09] ENGINE Bus EXITED
+[02/Aug/2012:15:56:09] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:56:09] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:15:56:09] ENGINE Bus STARTING
+[02/Aug/2012:15:56:09] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:56:09] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:56:09] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:15:56:09] ENGINE Bus STARTED
+[02/Aug/2012:15:58:02] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:15:58:02] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:15:58:02] ENGINE Bus STOPPING
+[02/Aug/2012:15:58:02] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:15:58:02] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:15:58:02] ENGINE Bus STOPPED
+[02/Aug/2012:15:58:02] ENGINE Bus EXITING
+[02/Aug/2012:15:58:02] ENGINE Bus EXITED
+[02/Aug/2012:15:58:02] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:15:58:02] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:15:58:02] ENGINE Bus STARTING
+[02/Aug/2012:15:58:02] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:15:58:02] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:15:58:02] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:15:58:02] ENGINE Bus STARTED
+[02/Aug/2012:16:20:46] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:20:46] ENGINE Bus STOPPING
+[02/Aug/2012:16:20:46] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:20:46] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:20:46] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:20:46] ENGINE Bus STOPPED
+[02/Aug/2012:16:20:46] ENGINE Bus EXITING
+[02/Aug/2012:16:20:46] ENGINE Bus EXITED
+[02/Aug/2012:16:20:46] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:21:53] ENGINE Bus STARTING
+[02/Aug/2012:16:21:53] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:21:53] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:21:53] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:21:53] ENGINE Bus STARTED
+[02/Aug/2012:16:22:15] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:26:06] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:26:06] ENGINE Bus STOPPING
+[02/Aug/2012:16:26:06] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:26:06] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:26:06] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:26:06] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:26:06] ENGINE Bus STOPPED
+[02/Aug/2012:16:26:06] ENGINE Bus EXITING
+[02/Aug/2012:16:26:06] ENGINE Bus EXITED
+[02/Aug/2012:16:26:06] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:26:43] ENGINE Bus STARTING
+[02/Aug/2012:16:26:43] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:26:43] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:26:43] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:26:43] ENGINE Bus STARTED
+[02/Aug/2012:16:26:52] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:28:06] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:28:06] ENGINE Bus STOPPING
+[02/Aug/2012:16:28:06] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:28:06] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:28:06] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:28:06] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:28:06] ENGINE Bus STOPPED
+[02/Aug/2012:16:28:06] ENGINE Bus EXITING
+[02/Aug/2012:16:28:06] ENGINE Bus EXITED
+[02/Aug/2012:16:28:06] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:28:20] ENGINE Bus STARTING
+[02/Aug/2012:16:28:20] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:28:20] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:28:20] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:28:20] ENGINE Bus STARTED
+[02/Aug/2012:16:28:28] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:29:30] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:29:30] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:29:30] ENGINE Bus STOPPING
+[02/Aug/2012:16:29:30] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:29:30] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:29:30] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:29:30] ENGINE Bus STOPPED
+[02/Aug/2012:16:29:30] ENGINE Bus EXITING
+[02/Aug/2012:16:29:30] ENGINE Bus EXITED
+[02/Aug/2012:16:29:30] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:29:30] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:29:30] ENGINE Bus STARTING
+[02/Aug/2012:16:29:30] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:29:30] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:29:30] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:29:30] ENGINE Bus STARTED
+[02/Aug/2012:16:29:42] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:29:42] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:29:42] ENGINE Bus STOPPING
+[02/Aug/2012:16:29:42] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:29:42] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:29:42] ENGINE Bus STOPPED
+[02/Aug/2012:16:29:42] ENGINE Bus EXITING
+[02/Aug/2012:16:29:42] ENGINE Bus EXITED
+[02/Aug/2012:16:29:42] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:29:42] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:29:42] ENGINE Bus STARTING
+[02/Aug/2012:16:29:42] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:29:42] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:29:43] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:29:43] ENGINE Bus STARTED
+[02/Aug/2012:16:29:45] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:30:31] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:30:31] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:30:31] ENGINE Bus STOPPING
+[02/Aug/2012:16:30:31] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:30:31] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:30:31] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:30:31] ENGINE Bus STOPPED
+[02/Aug/2012:16:30:31] ENGINE Bus EXITING
+[02/Aug/2012:16:30:31] ENGINE Bus EXITED
+[02/Aug/2012:16:30:31] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:30:31] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:30:31] ENGINE Bus STARTING
+[02/Aug/2012:16:30:31] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:30:31] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:30:31] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:30:31] ENGINE Bus STARTED
+[02/Aug/2012:16:30:39] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:30:39] ENGINE Bus STOPPING
+[02/Aug/2012:16:30:39] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:30:39] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:30:39] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:30:39] ENGINE Bus STOPPED
+[02/Aug/2012:16:30:39] ENGINE Bus EXITING
+[02/Aug/2012:16:30:39] ENGINE Bus EXITED
+[02/Aug/2012:16:30:39] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:30:46] ENGINE Bus STARTING
+[02/Aug/2012:16:30:46] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:30:46] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:30:46] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:30:46] ENGINE Bus STARTED
+[02/Aug/2012:16:30:49] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:30:49] ENGINE Bus STOPPING
+[02/Aug/2012:16:30:49] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:30:49] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:30:49] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:30:49] ENGINE Bus STOPPED
+[02/Aug/2012:16:30:49] ENGINE Bus EXITING
+[02/Aug/2012:16:30:49] ENGINE Bus EXITED
+[02/Aug/2012:16:30:49] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:35:10] ENGINE Bus STARTING
+[02/Aug/2012:16:35:10] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:35:10] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:35:10] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:35:10] ENGINE Bus STARTED
+[02/Aug/2012:16:35:12] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:35:12] ENGINE Bus STOPPING
+[02/Aug/2012:16:35:12] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:35:12] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:35:12] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:35:12] ENGINE Bus STOPPED
+[02/Aug/2012:16:35:12] ENGINE Bus EXITING
+[02/Aug/2012:16:35:12] ENGINE Bus EXITED
+[02/Aug/2012:16:35:12] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:35:38] ENGINE Bus STARTING
+[02/Aug/2012:16:35:38] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:35:38] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:35:38] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:35:38] ENGINE Bus STARTED
+[02/Aug/2012:16:35:42] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:36:26] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:36:26] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:36:26] ENGINE Bus STOPPING
+[02/Aug/2012:16:36:26] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:36:26] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:36:26] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:36:26] ENGINE Bus STOPPED
+[02/Aug/2012:16:36:26] ENGINE Bus EXITING
+[02/Aug/2012:16:36:26] ENGINE Bus EXITED
+[02/Aug/2012:16:36:26] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:36:26] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:36:27]  Init server
+[02/Aug/2012:16:36:27] ENGINE Bus STARTING
+[02/Aug/2012:16:36:27] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:36:27] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:36:27] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:36:27] ENGINE Bus STARTED
+[02/Aug/2012:16:36:29] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:39:12] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:39:12] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:39:12] ENGINE Bus STOPPING
+[02/Aug/2012:16:39:12] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:39:12] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:39:12] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:39:12] ENGINE Bus STOPPED
+[02/Aug/2012:16:39:12] ENGINE Bus EXITING
+[02/Aug/2012:16:39:12] ENGINE Bus EXITED
+[02/Aug/2012:16:39:12] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:39:12] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:39:12]  Init server
+[02/Aug/2012:16:39:12] ENGINE Bus STARTING
+[02/Aug/2012:16:39:12] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:39:12] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:39:12] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:39:12] ENGINE Bus STARTED
+[02/Aug/2012:16:39:44] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:39:44] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:39:44] ENGINE Bus STOPPING
+[02/Aug/2012:16:39:44] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:39:44] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:39:44] ENGINE Bus STOPPED
+[02/Aug/2012:16:39:44] ENGINE Bus EXITING
+[02/Aug/2012:16:39:44] ENGINE Bus EXITED
+[02/Aug/2012:16:39:44] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:39:44] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:39:44]  Init server
+[02/Aug/2012:16:39:44] ENGINE Bus STARTING
+[02/Aug/2012:16:39:44] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:39:44] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:39:44] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:39:44] ENGINE Bus STARTED
+[02/Aug/2012:16:39:46] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:39:58] ENGINE Keyboard Interrupt: shutting down bus
+[02/Aug/2012:16:39:58] ENGINE Bus STOPPING
+[02/Aug/2012:16:39:58] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:39:58] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:39:58] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:39:58] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:39:58] ENGINE Bus STOPPED
+[02/Aug/2012:16:39:58] ENGINE Bus EXITING
+[02/Aug/2012:16:39:58] ENGINE Bus EXITED
+[02/Aug/2012:16:39:58] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:41:09]  Init server
+[02/Aug/2012:16:41:10] ENGINE Bus STARTING
+[02/Aug/2012:16:41:10] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:41:10] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:41:10] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:41:10] ENGINE Bus STARTED
+[02/Aug/2012:16:41:12] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:42:57] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:42:57] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:42:57] ENGINE Bus STOPPING
+[02/Aug/2012:16:42:57] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:42:57] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:42:57] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:42:57] ENGINE Bus STOPPED
+[02/Aug/2012:16:42:57] ENGINE Bus EXITING
+[02/Aug/2012:16:42:57] ENGINE Bus EXITED
+[02/Aug/2012:16:42:57] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:42:57] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:42:57]  Init server
+[02/Aug/2012:16:42:57] ENGINE Bus STARTING
+[02/Aug/2012:16:42:57] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:42:57] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:42:58] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:42:58] ENGINE Bus STARTED
+[02/Aug/2012:16:43:01] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:44:16] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:44:16] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:44:16] ENGINE Bus STOPPING
+[02/Aug/2012:16:44:16] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:44:16] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:44:16] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:44:16] ENGINE Bus STOPPED
+[02/Aug/2012:16:44:16] ENGINE Bus EXITING
+[02/Aug/2012:16:44:16] ENGINE Bus EXITED
+[02/Aug/2012:16:44:16] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:44:16] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:44:16]  Init server
+[02/Aug/2012:16:44:16] ENGINE Bus STARTING
+[02/Aug/2012:16:44:16] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:44:16] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:44:16] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:44:16] ENGINE Bus STARTED
+[02/Aug/2012:16:45:57] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:45:57] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:45:57] ENGINE Bus STOPPING
+[02/Aug/2012:16:45:57] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:45:57] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:45:57] ENGINE Bus STOPPED
+[02/Aug/2012:16:45:57] ENGINE Bus EXITING
+[02/Aug/2012:16:45:57] ENGINE Bus EXITED
+[02/Aug/2012:16:45:57] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:45:57] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:46:30]  Init server
+[02/Aug/2012:16:46:30] ENGINE Bus STARTING
+[02/Aug/2012:16:46:30] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:46:30] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:46:30] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:46:30] ENGINE Bus STARTED
+[02/Aug/2012:16:46:35] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:47:57] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:47:57] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:47:57] ENGINE Bus STOPPING
+[02/Aug/2012:16:47:57] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:47:57] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:47:57] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:47:57] ENGINE Bus STOPPED
+[02/Aug/2012:16:47:57] ENGINE Bus EXITING
+[02/Aug/2012:16:47:57] ENGINE Bus EXITED
+[02/Aug/2012:16:47:57] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:47:57] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:47:57]  Init server
+[02/Aug/2012:16:47:57] ENGINE Bus STARTING
+[02/Aug/2012:16:47:57] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:47:57] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:47:57] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:47:57] ENGINE Bus STARTED
+[02/Aug/2012:16:48:08] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:48:08] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:48:08] ENGINE Bus STOPPING
+[02/Aug/2012:16:48:08] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:48:08] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:48:08] ENGINE Bus STOPPED
+[02/Aug/2012:16:48:08] ENGINE Bus EXITING
+[02/Aug/2012:16:48:08] ENGINE Bus EXITED
+[02/Aug/2012:16:48:08] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:48:08] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:48:08]  Init server
+[02/Aug/2012:16:48:08] ENGINE Bus STARTING
+[02/Aug/2012:16:48:08] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:48:08] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:48:09] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:48:09] ENGINE Bus STARTED
+[02/Aug/2012:16:48:23] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:48:23] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:48:23] ENGINE Bus STOPPING
+[02/Aug/2012:16:48:23] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:48:23] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:48:23] ENGINE Bus STOPPED
+[02/Aug/2012:16:48:23] ENGINE Bus EXITING
+[02/Aug/2012:16:48:23] ENGINE Bus EXITED
+[02/Aug/2012:16:48:23] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:48:23] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:48:23]  Init server
+[02/Aug/2012:16:48:23] ENGINE Bus STARTING
+[02/Aug/2012:16:48:23] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:48:23] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:48:23] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:48:23] ENGINE Bus STARTED
+[02/Aug/2012:16:48:26] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:48:26] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:48:26] ENGINE Bus STOPPING
+[02/Aug/2012:16:48:26] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:48:26] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:48:26] ENGINE Bus STOPPED
+[02/Aug/2012:16:48:26] ENGINE Bus EXITING
+[02/Aug/2012:16:48:26] ENGINE Bus EXITED
+[02/Aug/2012:16:48:26] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:48:26] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:48:26]  Init server
+[02/Aug/2012:16:48:26] ENGINE Bus STARTING
+[02/Aug/2012:16:48:26] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:48:26] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:48:26] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:48:26] ENGINE Bus STARTED
+[02/Aug/2012:16:48:28] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:49:53] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 203, in authorize
+    if cli.redirect_uri <> redirect_uri:
+AttributeError: 'dict' object has no attribute 'redirect_uri'
+
+[02/Aug/2012:16:49:53] HTTP 
+Request Headers:
+  HOST: 127.0.0.1:2005
+  CONNECTION: keep-alive
+  Remote-Addr: 127.0.0.1
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.57 Safari/537.1
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[02/Aug/2012:16:50:16] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[02/Aug/2012:16:50:16] ENGINE Stopped thread 'Autoreloader'.
+[02/Aug/2012:16:50:16] ENGINE Bus STOPPING
+[02/Aug/2012:16:50:16] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[02/Aug/2012:16:50:16] ENGINE Stopped thread '_TimeoutMonitor'.
+[02/Aug/2012:16:50:16] ENGINE Stopped thread 'Session cleanup'.
+[02/Aug/2012:16:50:16] ENGINE Bus STOPPED
+[02/Aug/2012:16:50:16] ENGINE Bus EXITING
+[02/Aug/2012:16:50:16] ENGINE Bus EXITED
+[02/Aug/2012:16:50:16] ENGINE Waiting for child threads to terminate...
+[02/Aug/2012:16:50:16] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[02/Aug/2012:16:50:16]  Init server
+[02/Aug/2012:16:50:16] ENGINE Bus STARTING
+[02/Aug/2012:16:50:16] ENGINE Started monitor thread '_TimeoutMonitor'.
+[02/Aug/2012:16:50:16] ENGINE Started monitor thread 'Autoreloader'.
+[02/Aug/2012:16:50:16] ENGINE Serving on 127.0.0.1:2005
+[02/Aug/2012:16:50:16] ENGINE Bus STARTED
+[02/Aug/2012:16:50:21] ENGINE Started monitor thread 'Session cleanup'.
+[02/Aug/2012:16:50:38] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 297, in logged_in
+    tmpl = loader.load('appQuery.html')
+  File "/usr/lib/python2.7/dist-packages/genshi/template/loader.py", line 246, in load
+    raise TemplateNotFound(filename, search_path)
+TemplateNotFound: Template "appQuery.html" not found
+
+[02/Aug/2012:16:50:38] HTTP 
+Request Headers:
+  COOKIE: session_id=45e58cf1338c2daa97a40c880783d110ae441000
+  HOST: 127.0.0.1:2005
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 127.0.0.1
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.57 Safari/537.1
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  X-CHROME-VARIATIONS: CP+1yQEIjbbJAQietskBCKK2yQEIp7bJAQiptskBCMGDygE=
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[03/Aug/2012:10:22:36] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:22:36] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:22:36] ENGINE Bus STOPPING
+[03/Aug/2012:10:22:37] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:22:37] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:22:37] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:22:37] ENGINE Bus STOPPED
+[03/Aug/2012:10:22:37] ENGINE Bus EXITING
+[03/Aug/2012:10:22:37] ENGINE Bus EXITED
+[03/Aug/2012:10:22:37] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:22:37] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:22:39]  Init server
+[03/Aug/2012:10:22:39] ENGINE Bus STARTING
+[03/Aug/2012:10:22:39] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:22:39] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:22:39] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:22:39] ENGINE Bus STARTED
+[03/Aug/2012:10:22:46] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:22:52] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 298, in logged_in
+    tmpl = loader.load('appQuery.html')
+  File "/usr/lib/python2.7/dist-packages/genshi/template/loader.py", line 246, in load
+    raise TemplateNotFound(filename, search_path)
+TemplateNotFound: Template "appQuery.html" not found
+
+[03/Aug/2012:10:22:52] HTTP 
+Request Headers:
+  COOKIE: session_id=f7f417e8e8f1a6bb9ec8d50fc0e511bc73620c05
+  HOST: 127.0.0.1:2005
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 127.0.0.1
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.57 Safari/537.1
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  X-CHROME-VARIATIONS: CP+1yQEIjbbJAQietskBCKK2yQEIp7bJAQiptskBCMGDygE=
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[03/Aug/2012:10:24:02] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:24:02] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:24:02] ENGINE Bus STOPPING
+[03/Aug/2012:10:24:02] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:24:02] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:24:02] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:24:02] ENGINE Bus STOPPED
+[03/Aug/2012:10:24:02] ENGINE Bus EXITING
+[03/Aug/2012:10:24:02] ENGINE Bus EXITED
+[03/Aug/2012:10:24:02] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:24:02] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:24:02]  Init server
+[03/Aug/2012:10:24:02] ENGINE Bus STARTING
+[03/Aug/2012:10:24:02] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:24:02] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:24:02] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:24:02] ENGINE Bus STARTED
+[03/Aug/2012:10:24:09] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:24:19] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 315, in allow
+    rdi = cli.redirect_uri + '?'
+AttributeError: 'dict' object has no attribute 'redirect_uri'
+
+[03/Aug/2012:10:24:19] HTTP 
+Request Headers:
+  REFERER: http://127.0.0.1:2005/logged_in?code=4/1PI6LbXLl-hwfn1y4uYCvxpS9yH-.8saIn8hhK7IcgrKXntQAax1aLMDTcQI
+  HOST: 127.0.0.1:2005
+  CONNECTION: keep-alive
+  Remote-Addr: 127.0.0.1
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.57 Safari/537.1
+  COOKIE: session_id=559cd114d331b8804ded6e26812cfc12ce55dbc6
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[03/Aug/2012:10:24:40] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:24:40] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:24:40] ENGINE Bus STOPPING
+[03/Aug/2012:10:24:40] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:24:40] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:24:40] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:24:40] ENGINE Bus STOPPED
+[03/Aug/2012:10:24:40] ENGINE Bus EXITING
+[03/Aug/2012:10:24:40] ENGINE Bus EXITED
+[03/Aug/2012:10:24:40] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:24:40] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:24:40]  Init server
+[03/Aug/2012:10:24:40] ENGINE Bus STARTING
+[03/Aug/2012:10:24:40] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:24:40] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:24:40] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:24:40] ENGINE Bus STARTED
+[03/Aug/2012:10:24:47] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:24:47] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:24:47] ENGINE Bus STOPPING
+[03/Aug/2012:10:24:47] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:24:47] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:24:47] ENGINE Bus STOPPED
+[03/Aug/2012:10:24:47] ENGINE Bus EXITING
+[03/Aug/2012:10:24:47] ENGINE Bus EXITED
+[03/Aug/2012:10:24:48] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:24:48] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:24:48]  Init server
+[03/Aug/2012:10:24:48] ENGINE Bus STARTING
+[03/Aug/2012:10:24:48] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:24:48] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:24:48] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:24:48] ENGINE Bus STARTED
+[03/Aug/2012:10:25:00] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:25:07] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 379, in request_token
+    if cli.secret <> client_secret:
+AttributeError: 'dict' object has no attribute 'secret'
+
+[03/Aug/2012:10:25:07] HTTP 
+Request Headers:
+  HOST: 127.0.01:2005
+  Remote-Addr: 127.0.0.1
+  Content-Length: 230
+  USER-AGENT: Python-httplib2/0.7.4 (gzip)
+  Content-Type: application/x-www-form-urlencoded
+  ACCEPT-ENCODING: gzip, deflate
+[03/Aug/2012:10:25:27] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:25:27] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:25:27] ENGINE Bus STOPPING
+[03/Aug/2012:10:25:27] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:25:27] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:25:27] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:25:27] ENGINE Bus STOPPED
+[03/Aug/2012:10:25:27] ENGINE Bus EXITING
+[03/Aug/2012:10:25:27] ENGINE Bus EXITED
+[03/Aug/2012:10:25:27] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:25:27] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:25:27]  Init server
+[03/Aug/2012:10:25:27] ENGINE Bus STARTING
+[03/Aug/2012:10:25:27] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:25:27] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:25:27] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:25:27] ENGINE Bus STARTED
+[03/Aug/2012:10:25:41] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:27:03] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:27:03] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:27:03] ENGINE Bus STOPPING
+[03/Aug/2012:10:27:03] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:27:03] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:27:03] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:27:03] ENGINE Bus STOPPED
+[03/Aug/2012:10:27:03] ENGINE Bus EXITING
+[03/Aug/2012:10:27:03] ENGINE Bus EXITED
+[03/Aug/2012:10:27:03] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:27:03] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:27:03]  Init server
+[03/Aug/2012:10:27:03] ENGINE Bus STARTING
+[03/Aug/2012:10:27:03] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:27:03] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:27:03] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:27:03] ENGINE Bus STARTED
+[03/Aug/2012:10:27:06] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:27:06] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 456, in default
+    logging.debug(  'USER: %s, MODEL: %s,BEARER:'%s, usr, model, access_token)
+NameError: global name 's' is not defined
+
+[03/Aug/2012:10:27:06] HTTP 
+Request Headers:
+  AUTHORIZATION: Bearer 2Da4d4c963AdFEc83bCcA9F8bDD948EF
+  HOST: 127.0.0.1:2005
+  Remote-Addr: 127.0.0.1
+  Content-Length: 137
+  USER-AGENT: Python-httplib2/0.7.4 (gzip)
+  Content-Type: application/json
+  ACCEPT-ENCODING: gzip, deflate
+[03/Aug/2012:10:27:15] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:27:15] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:27:15] ENGINE Bus STOPPING
+[03/Aug/2012:10:27:16] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:27:16] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:27:16] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:27:16] ENGINE Bus STOPPED
+[03/Aug/2012:10:27:16] ENGINE Bus EXITING
+[03/Aug/2012:10:27:16] ENGINE Bus EXITED
+[03/Aug/2012:10:27:16] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:27:16] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:27:17]  Init server
+[03/Aug/2012:10:27:17] ENGINE Bus STARTING
+[03/Aug/2012:10:27:17] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:27:17] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:27:17] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:27:17] ENGINE Bus STARTED
+[03/Aug/2012:10:27:18] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:27:44] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:27:44] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:27:44] ENGINE Bus STOPPING
+[03/Aug/2012:10:27:44] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:27:44] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:27:44] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:27:44] ENGINE Bus STOPPED
+[03/Aug/2012:10:27:44] ENGINE Bus EXITING
+[03/Aug/2012:10:27:44] ENGINE Bus EXITED
+[03/Aug/2012:10:27:44] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:27:44] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:27:44]  Init server
+[03/Aug/2012:10:27:44] ENGINE Bus STARTING
+[03/Aug/2012:10:27:44] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:27:44] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:27:44] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:27:44] ENGINE Bus STARTED
+[03/Aug/2012:10:27:46] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:29:31] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:29:31] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:29:31] ENGINE Bus STOPPING
+[03/Aug/2012:10:29:31] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:29:31] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:29:31] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:29:31] ENGINE Bus STOPPED
+[03/Aug/2012:10:29:31] ENGINE Bus EXITING
+[03/Aug/2012:10:29:31] ENGINE Bus EXITED
+[03/Aug/2012:10:29:31] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:29:31] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:29:31]  Init server
+[03/Aug/2012:10:29:31] ENGINE Bus STARTING
+[03/Aug/2012:10:29:31] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:29:31] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:29:31] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:29:31] ENGINE Bus STARTED
+[03/Aug/2012:10:29:33] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:10:29:33] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:29:33] ENGINE Bus STOPPING
+[03/Aug/2012:10:29:33] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:29:33] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:29:33] ENGINE Bus STOPPED
+[03/Aug/2012:10:29:33] ENGINE Bus EXITING
+[03/Aug/2012:10:29:33] ENGINE Bus EXITED
+[03/Aug/2012:10:29:33] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:29:33] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:10:29:33]  Init server
+[03/Aug/2012:10:29:33] ENGINE Bus STARTING
+[03/Aug/2012:10:29:33] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:29:33] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:29:34] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:29:34] ENGINE Bus STARTED
+[03/Aug/2012:10:29:37] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:10:29:37] ENGINE Bus STOPPING
+[03/Aug/2012:10:29:37] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:29:37] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:29:37] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:29:37] ENGINE Bus STOPPED
+[03/Aug/2012:10:29:37] ENGINE Bus EXITING
+[03/Aug/2012:10:29:37] ENGINE Bus EXITED
+[03/Aug/2012:10:29:37] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:29:52]  Init server
+[03/Aug/2012:10:29:52] ENGINE Bus STARTING
+[03/Aug/2012:10:29:52] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:29:52] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:29:52] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:29:52] ENGINE Bus STARTED
+[03/Aug/2012:10:29:55] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:30:01] HTTP Traceback (most recent call last):
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cprequest.py", line 656, in respond
+    response.body = self.handler()
+  File "/usr/lib/python2.7/dist-packages/cherrypy/lib/encoding.py", line 188, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/usr/lib/python2.7/dist-packages/cherrypy/_cpdispatch.py", line 34, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/home/jbu/personis/personis/server/server.py", line 277, in logged_in
+    um.tell(context=["Personal"], componentid='picture', evidence=ev)
+  File "/home/jbu/personis/personis/server/base.py", line 755, in tell
+    cobj = comps[componentid]
+  File "/usr/lib/python2.7/shelve.py", line 122, in __getitem__
+    value = Unpickler(f).load()
+ImportError: No module named base
+
+[03/Aug/2012:10:30:01] HTTP 
+Request Headers:
+  COOKIE: session_id=18ed05160482b7db4c72e20d751d34e0a15dd9ea
+  HOST: 127.0.0.1:2005
+  CONNECTION: keep-alive
+  CACHE-CONTROL: max-age=0
+  Remote-Addr: 127.0.0.1
+  ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+  ACCEPT-CHARSET: ISO-8859-1,utf-8;q=0.7,*;q=0.3
+  USER-AGENT: Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.57 Safari/537.1
+  ACCEPT-LANGUAGE: en-GB,en-US;q=0.8,en;q=0.6
+  X-CHROME-VARIATIONS: CP+1yQEIjbbJAQietskBCKK2yQEIp7bJAQiptskBCMGDygE=
+  ACCEPT-ENCODING: gzip,deflate,sdch
+[03/Aug/2012:10:30:59] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:10:30:59] ENGINE Bus STOPPING
+[03/Aug/2012:10:30:59] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:30:59] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:30:59] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:30:59] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:30:59] ENGINE Bus STOPPED
+[03/Aug/2012:10:30:59] ENGINE Bus EXITING
+[03/Aug/2012:10:30:59] ENGINE Bus EXITED
+[03/Aug/2012:10:30:59] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:31:15]  Init server
+[03/Aug/2012:10:31:15] ENGINE Bus STARTING
+[03/Aug/2012:10:31:15] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:31:15] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:31:15] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:31:15] ENGINE Bus STARTED
+[03/Aug/2012:10:31:17] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:10:31:54] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:10:31:54] ENGINE Bus STOPPING
+[03/Aug/2012:10:31:54] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:31:54] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:31:54] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:31:54] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:10:31:54] ENGINE Bus STOPPED
+[03/Aug/2012:10:31:54] ENGINE Bus EXITING
+[03/Aug/2012:10:31:54] ENGINE Bus EXITED
+[03/Aug/2012:10:31:54] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:38:02]  Init server
+[03/Aug/2012:10:38:02] ENGINE Bus STARTING
+[03/Aug/2012:10:38:02] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:38:02] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:38:02] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:38:02] ENGINE Bus STARTED
+[03/Aug/2012:10:38:13] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:10:38:13] ENGINE Bus STOPPING
+[03/Aug/2012:10:38:13] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:38:13] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:38:13] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:38:13] ENGINE Bus STOPPED
+[03/Aug/2012:10:38:13] ENGINE Bus EXITING
+[03/Aug/2012:10:38:13] ENGINE Bus EXITED
+[03/Aug/2012:10:38:13] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:41:13]  Init server
+[03/Aug/2012:10:41:13] ENGINE Bus STARTING
+[03/Aug/2012:10:41:13] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:41:13] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:41:13] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:41:13] ENGINE Bus STARTED
+[03/Aug/2012:10:41:21] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:10:41:21] ENGINE Bus STOPPING
+[03/Aug/2012:10:41:21] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:41:21] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:41:21] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:41:21] ENGINE Bus STOPPED
+[03/Aug/2012:10:41:21] ENGINE Bus EXITING
+[03/Aug/2012:10:41:21] ENGINE Bus EXITED
+[03/Aug/2012:10:41:21] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:53:44]  Init server
+[03/Aug/2012:10:53:44] ENGINE Bus STARTING
+[03/Aug/2012:10:53:44] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:53:44] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:53:44] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:53:44] ENGINE Bus STARTED
+[03/Aug/2012:10:53:51] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:10:53:51] ENGINE Bus STOPPING
+[03/Aug/2012:10:53:51] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:53:51] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:53:51] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:53:51] ENGINE Bus STOPPED
+[03/Aug/2012:10:53:51] ENGINE Bus EXITING
+[03/Aug/2012:10:53:51] ENGINE Bus EXITED
+[03/Aug/2012:10:53:51] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:54:41]  Init server
+[03/Aug/2012:10:54:41] ENGINE Bus STARTING
+[03/Aug/2012:10:54:41] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:54:41] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:54:42] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:54:42] ENGINE Bus STARTED
+[03/Aug/2012:10:55:24] ENGINE Restarting because /home/jbu/personis/personis/server/test/test_server.py changed.
+[03/Aug/2012:10:55:24] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:55:24] ENGINE Bus STOPPING
+[03/Aug/2012:10:55:24] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:55:24] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:55:24] ENGINE Bus STOPPED
+[03/Aug/2012:10:55:24] ENGINE Bus EXITING
+[03/Aug/2012:10:55:24] ENGINE Bus EXITED
+[03/Aug/2012:10:55:24] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:55:24] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:10:56:48]  Init server
+[03/Aug/2012:10:56:48] ENGINE Bus STARTING
+[03/Aug/2012:10:56:48] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:56:48] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:56:48] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:56:48] ENGINE Bus STARTED
+[03/Aug/2012:10:58:10] ENGINE Restarting because /home/jbu/personis/personis/client/connection.py changed.
+[03/Aug/2012:10:58:10] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:10:58:10] ENGINE Bus STOPPING
+[03/Aug/2012:10:58:10] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:10:58:10] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:10:58:10] ENGINE Bus STOPPED
+[03/Aug/2012:10:58:10] ENGINE Bus EXITING
+[03/Aug/2012:10:58:10] ENGINE Bus EXITED
+[03/Aug/2012:10:58:10] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:10:58:10] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:10:58:15]  Init server
+[03/Aug/2012:10:58:16] ENGINE Bus STARTING
+[03/Aug/2012:10:58:16] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:10:58:16] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:10:58:16] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:10:58:16] ENGINE Bus STARTED
+[03/Aug/2012:11:03:28] ENGINE Restarting because /home/jbu/personis/personis/client/connection.py changed.
+[03/Aug/2012:11:03:28] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:03:28] ENGINE Bus STOPPING
+[03/Aug/2012:11:03:28] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:03:28] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:03:28] ENGINE Bus STOPPED
+[03/Aug/2012:11:03:28] ENGINE Bus EXITING
+[03/Aug/2012:11:03:28] ENGINE Bus EXITED
+[03/Aug/2012:11:03:28] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:03:28] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:03:51]  Init server
+[03/Aug/2012:11:03:51] ENGINE Bus STARTING
+[03/Aug/2012:11:03:51] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:03:51] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:03:51] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:03:51] ENGINE Bus STARTED
+[03/Aug/2012:11:04:08] ENGINE Restarting because /home/jbu/personis/personis/client/connection.py changed.
+[03/Aug/2012:11:04:08] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:04:08] ENGINE Bus STOPPING
+[03/Aug/2012:11:04:08] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:04:08] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:04:08] ENGINE Bus STOPPED
+[03/Aug/2012:11:04:08] ENGINE Bus EXITING
+[03/Aug/2012:11:04:08] ENGINE Bus EXITED
+[03/Aug/2012:11:04:08] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:04:08] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:04:13]  Init server
+[03/Aug/2012:11:04:13] ENGINE Bus STARTING
+[03/Aug/2012:11:04:13] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:04:13] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:04:13] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:04:13] ENGINE Bus STARTED
+[03/Aug/2012:11:05:24] ENGINE Restarting because /home/jbu/personis/personis/client/util.py changed.
+[03/Aug/2012:11:05:24] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:05:24] ENGINE Bus STOPPING
+[03/Aug/2012:11:05:24] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:05:24] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:05:24] ENGINE Bus STOPPED
+[03/Aug/2012:11:05:24] ENGINE Bus EXITING
+[03/Aug/2012:11:05:24] ENGINE Bus EXITED
+[03/Aug/2012:11:05:24] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:05:24] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:06:19]  Init server
+[03/Aug/2012:11:06:19] ENGINE Bus STARTING
+[03/Aug/2012:11:06:19] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:06:19] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:06:19] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:06:19] ENGINE Bus STARTED
+[03/Aug/2012:11:07:09] ENGINE Restarting because /home/jbu/personis/personis/client/util.py changed.
+[03/Aug/2012:11:07:09] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:07:09] ENGINE Bus STOPPING
+[03/Aug/2012:11:07:09] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:07:09] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:07:09] ENGINE Bus STOPPED
+[03/Aug/2012:11:07:09] ENGINE Bus EXITING
+[03/Aug/2012:11:07:09] ENGINE Bus EXITED
+[03/Aug/2012:11:07:09] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:07:09] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:07:13]  Init server
+[03/Aug/2012:11:07:13] ENGINE Bus STARTING
+[03/Aug/2012:11:07:13] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:07:13] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:07:13] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:07:13] ENGINE Bus STARTED
+[03/Aug/2012:11:07:32] ENGINE Restarting because /home/jbu/personis/personis/client/util.py changed.
+[03/Aug/2012:11:07:32] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:07:32] ENGINE Bus STOPPING
+[03/Aug/2012:11:07:32] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:07:32] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:07:32] ENGINE Bus STOPPED
+[03/Aug/2012:11:07:32] ENGINE Bus EXITING
+[03/Aug/2012:11:07:32] ENGINE Bus EXITED
+[03/Aug/2012:11:07:32] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:07:32] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:10:04]  Init server
+[03/Aug/2012:11:10:04] ENGINE Bus STARTING
+[03/Aug/2012:11:10:04] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:10:04] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:10:04] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:10:04] ENGINE Bus STARTED
+[03/Aug/2012:11:11:34] ENGINE Restarting because /home/jbu/personis/personis/client/util.py changed.
+[03/Aug/2012:11:11:34] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:11:34] ENGINE Bus STOPPING
+[03/Aug/2012:11:11:34] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:11:34] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:11:34] ENGINE Bus STOPPED
+[03/Aug/2012:11:11:34] ENGINE Bus EXITING
+[03/Aug/2012:11:11:34] ENGINE Bus EXITED
+[03/Aug/2012:11:11:34] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:11:34] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:11:37]  Init server
+[03/Aug/2012:11:11:37] ENGINE Bus STARTING
+[03/Aug/2012:11:11:37] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:11:37] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:11:37] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:11:37] ENGINE Bus STARTED
+[03/Aug/2012:11:12:22] ENGINE Restarting because /home/jbu/personis/personis/client/util.py changed.
+[03/Aug/2012:11:12:22] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:12:22] ENGINE Bus STOPPING
+[03/Aug/2012:11:12:22] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:12:22] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:12:22] ENGINE Bus STOPPED
+[03/Aug/2012:11:12:22] ENGINE Bus EXITING
+[03/Aug/2012:11:12:22] ENGINE Bus EXITED
+[03/Aug/2012:11:12:22] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:12:22] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:12:38]  Init server
+[03/Aug/2012:11:12:38] ENGINE Bus STARTING
+[03/Aug/2012:11:12:38] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:12:38] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:12:38] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:12:38] ENGINE Bus STARTED
+[03/Aug/2012:11:13:26] ENGINE Restarting because /home/jbu/personis/personis/client/util.py changed.
+[03/Aug/2012:11:13:26] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:13:26] ENGINE Bus STOPPING
+[03/Aug/2012:11:13:26] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:13:26] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:13:26] ENGINE Bus STOPPED
+[03/Aug/2012:11:13:26] ENGINE Bus EXITING
+[03/Aug/2012:11:13:26] ENGINE Bus EXITED
+[03/Aug/2012:11:13:26] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:13:26] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:13:28]  Init server
+[03/Aug/2012:11:13:28] ENGINE Bus STARTING
+[03/Aug/2012:11:13:28] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:13:28] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:13:28] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:13:28] ENGINE Bus STARTED
+[03/Aug/2012:11:14:49] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:11:14:49] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:14:49] ENGINE Bus STOPPING
+[03/Aug/2012:11:14:49] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:14:49] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:14:49] ENGINE Bus STOPPED
+[03/Aug/2012:11:14:49] ENGINE Bus EXITING
+[03/Aug/2012:11:14:49] ENGINE Bus EXITED
+[03/Aug/2012:11:14:49] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:14:49] ENGINE Re-spawning python -m unittest test_server
+[03/Aug/2012:11:15:05]  Init server
+[03/Aug/2012:11:15:05] ENGINE Bus STARTING
+[03/Aug/2012:11:15:05] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:15:05] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:15:05] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:15:05] ENGINE Bus STARTED
+[03/Aug/2012:11:15:21] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:11:15:21] ENGINE Bus STOPPING
+[03/Aug/2012:11:15:21] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:15:21] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:15:21] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:15:21] ENGINE Bus STOPPED
+[03/Aug/2012:11:15:21] ENGINE Bus EXITING
+[03/Aug/2012:11:15:21] ENGINE Bus EXITED
+[03/Aug/2012:11:15:21] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:16:36]  Init server
+[03/Aug/2012:11:16:36] ENGINE Bus STARTING
+[03/Aug/2012:11:16:36] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:16:36] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:16:36] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:16:36] ENGINE Bus STARTED
+[03/Aug/2012:11:16:44] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:11:16:44] ENGINE Bus STOPPING
+[03/Aug/2012:11:16:44] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:16:44] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:16:44] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:16:44] ENGINE Bus STOPPED
+[03/Aug/2012:11:16:44] ENGINE Bus EXITING
+[03/Aug/2012:11:16:44] ENGINE Bus EXITED
+[03/Aug/2012:11:16:44] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:17:54]  Init server
+[03/Aug/2012:11:17:54] ENGINE Bus STARTING
+[03/Aug/2012:11:17:54] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:17:54] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:17:54] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:17:54] ENGINE Bus STARTED
+[03/Aug/2012:11:17:57] ENGINE Keyboard Interrupt: shutting down bus
+[03/Aug/2012:11:17:57] ENGINE Bus STOPPING
+[03/Aug/2012:11:17:57] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:11:17:57] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:11:17:57] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:11:17:57] ENGINE Bus STOPPED
+[03/Aug/2012:11:17:57] ENGINE Bus EXITING
+[03/Aug/2012:11:17:57] ENGINE Bus EXITED
+[03/Aug/2012:11:17:57] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:11:18:03]  Init server
+[03/Aug/2012:11:18:03] ENGINE Bus STARTING
+[03/Aug/2012:11:18:03] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:11:18:03] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:11:18:03] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:11:18:03] ENGINE Bus STARTED
+[03/Aug/2012:11:21:59] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:00:16] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:12:00:16] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:12:00:16] ENGINE Bus STOPPING
+[03/Aug/2012:12:00:16] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:12:00:16] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:12:00:16] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:12:00:16] ENGINE Bus STOPPED
+[03/Aug/2012:12:00:16] ENGINE Bus EXITING
+[03/Aug/2012:12:00:16] ENGINE Bus EXITED
+[03/Aug/2012:12:00:16] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:12:00:16] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:12:00:16]  Init server
+[03/Aug/2012:12:00:16] ENGINE Bus STARTING
+[03/Aug/2012:12:00:16] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:00:16] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:00:17] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:00:17] ENGINE Bus STARTED
+[03/Aug/2012:12:01:35] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:02:28] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:12:02:28] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:12:02:28] ENGINE Bus STOPPING
+[03/Aug/2012:12:02:28] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:12:02:28] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:12:02:28] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:12:02:28] ENGINE Bus STOPPED
+[03/Aug/2012:12:02:28] ENGINE Bus EXITING
+[03/Aug/2012:12:02:28] ENGINE Bus EXITED
+[03/Aug/2012:12:02:28] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:12:02:28] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:12:02:28]  Init server
+[03/Aug/2012:12:02:28] ENGINE Bus STARTING
+[03/Aug/2012:12:02:28] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:02:28] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:02:28] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:02:28] ENGINE Bus STARTED
+[03/Aug/2012:12:02:30] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:04:28] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:12:04:28] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:12:04:28] ENGINE Bus STOPPING
+[03/Aug/2012:12:04:28] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:12:04:28] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:12:04:28] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:12:04:28] ENGINE Bus STOPPED
+[03/Aug/2012:12:04:28] ENGINE Bus EXITING
+[03/Aug/2012:12:04:28] ENGINE Bus EXITED
+[03/Aug/2012:12:04:28] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:12:04:28] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=DEBUG
+[03/Aug/2012:12:04:28]  Init server
+[03/Aug/2012:12:04:28] ENGINE Bus STARTING
+[03/Aug/2012:12:04:28] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:04:28] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:04:28] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:04:28] ENGINE Bus STARTED
+[03/Aug/2012:12:04:33] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:05:31]  Init server
+[03/Aug/2012:12:05:31] ENGINE Bus STARTING
+[03/Aug/2012:12:05:31] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:05:31] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:05:31] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:05:31] ENGINE Bus STARTED
+[03/Aug/2012:12:05:40] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:06:37] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:12:06:37] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:12:06:37] ENGINE Bus STOPPING
+[03/Aug/2012:12:06:37] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:12:06:37] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:12:06:37] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:12:06:37] ENGINE Bus STOPPED
+[03/Aug/2012:12:06:37] ENGINE Bus EXITING
+[03/Aug/2012:12:06:37] ENGINE Bus EXITED
+[03/Aug/2012:12:06:37] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:12:06:37] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=INFO
+[03/Aug/2012:12:06:37] ENGINE Bus STARTING
+[03/Aug/2012:12:06:37] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:06:37] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:06:38] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:06:38] ENGINE Bus STARTED
+[03/Aug/2012:12:06:52] ENGINE Restarting because /home/jbu/personis/personis/server/server.py changed.
+[03/Aug/2012:12:06:52] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:12:06:52] ENGINE Bus STOPPING
+[03/Aug/2012:12:06:52] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:12:06:52] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:12:06:52] ENGINE Bus STOPPED
+[03/Aug/2012:12:06:52] ENGINE Bus EXITING
+[03/Aug/2012:12:06:52] ENGINE Bus EXITED
+[03/Aug/2012:12:06:52] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:12:06:52] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=INFO
+[03/Aug/2012:12:06:52] ENGINE Bus STARTING
+[03/Aug/2012:12:06:52] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:06:52] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:06:52] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:06:52] ENGINE Bus STARTED
+[03/Aug/2012:12:06:59] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:07:29] ENGINE Bus STARTING
+[03/Aug/2012:12:07:29] ENGINE Started monitor thread 'Autoreloader'.
+[03/Aug/2012:12:07:29] ENGINE Started monitor thread '_TimeoutMonitor'.
+[03/Aug/2012:12:07:29] ENGINE Serving on 127.0.0.1:2005
+[03/Aug/2012:12:07:29] ENGINE Bus STARTED
+[03/Aug/2012:12:07:32] ENGINE Started monitor thread 'Session cleanup'.
+[03/Aug/2012:12:46:30] ENGINE Restarting because /home/jbu/personis/personis/server/active.py changed.
+[03/Aug/2012:12:46:30] ENGINE Stopped thread 'Autoreloader'.
+[03/Aug/2012:12:46:30] ENGINE Bus STOPPING
+[03/Aug/2012:12:46:30] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[03/Aug/2012:12:46:30] ENGINE Stopped thread '_TimeoutMonitor'.
+[03/Aug/2012:12:46:30] ENGINE Stopped thread 'Session cleanup'.
+[03/Aug/2012:12:46:30] ENGINE Bus STOPPED
+[03/Aug/2012:12:46:30] ENGINE Bus EXITING
+[03/Aug/2012:12:46:30] ENGINE Bus EXITED
+[03/Aug/2012:12:46:31] ENGINE Waiting for child threads to terminate...
+[03/Aug/2012:12:46:31] ENGINE Re-spawning /home/jbu/personis/personis/server/server.py --models=models/ --config=server-test.conf --oauthclients=oauth-clients-test.json --admins=admins-test.yaml --log=INFO

@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>client Package &mdash; Personis 12.9 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '12.9',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Personis 12.9 documentation" href="index.html" />
+    <link rel="prev" title="Client/Server Protocol" href="Client.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Client.html" title="Client/Server Protocol"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="client-package">
+<h1>client Package<a class="headerlink" href="#client-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">client</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-personis.client"></span><dl class="class">
+<dt id="personis.client.Access">
+<em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Access</tt><big>(</big><em>model='-'</em>, <em>connection=None</em>, <em>uri=None</em>, <em>credentials=None</em>, <em>http=None</em>, <em>loglevel=20</em>, <em>test=True</em><big>)</big><a class="headerlink" href="#personis.client.Access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Client version of access for client/server system</p>
+<dl class="docutils">
+<dt>arguments:</dt>
+<dd>model           model name
+modelserver     model server and port
+user            user name
+password        password string</dd>
+</dl>
+<p>returns a user model access object</p>
+<dl class="method">
+<dt id="personis.client.Access.ask">
+<tt class="descname">ask</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>view=None</em>, <em>resolver=None</em>, <em>showcontexts=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.ask" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>arguments: (see Personis_base for details)</dt>
+<dd><p class="first">context is a list giving the path of context identifiers
+view is either:</p>
+<blockquote>
+<div><p>an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in</p>
+<blockquote>
+<div>the context be returned</div></blockquote>
+</div></blockquote>
+<p class="last">resolver specifies a resolver, default is the builtin resolver</p>
+</dd>
+</dl>
+<p>returns a list of component objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.delcomponent">
+<tt class="descname">delcomponent</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.delcomponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an existing component in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+id - the id for a componen</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.delcontext">
+<tt class="descname">delcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#personis.client.Access.delcontext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an existing context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.delete_sub">
+<tt class="descname">delete_sub</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em>, <em>subname=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.delete_sub" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is a list giving the path of context identifiers
+componentid designates the component subscribed to
+subname is the subscription name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.deleteapp">
+<tt class="descname">deleteapp</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.deleteapp" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletes an app</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.delview">
+<tt class="descname">delview</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>viewid=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.delview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an existing view in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+viewid - the id for the view</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.export_model">
+<tt class="descname">export_model</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>resolver=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.export_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is the context to export
+resolver is a string containing the name of a resolver</p>
+<blockquote>
+<div>or</div></blockquote>
+<dl class="docutils">
+<dt>resolver is a dictionary containing information about resolver(s) to be used and arguments</dt>
+<dd><p class="first">the &#8220;resolver&#8221; key gives the name of a resolver to use, if not present the default resolver is used
+the &#8220;evidence_filter&#8221; key specifies an evidence filter
+eg &#8216;evidence_filter&#8217; =  &#8220;all&#8221; returns all evidence,</p>
+<blockquote class="last">
+<div>&#8220;last10&#8221; returns last 10 evidence items,
+&#8220;last1&#8221; returns most recent evidence item,
+None returns no evidence</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.getcontext">
+<tt class="descname">getcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>getsize=False</em><big>)</big><a class="headerlink" href="#personis.client.Access.getcontext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get context information
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+getsize - True if the size in bytes of the context subtree is required</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.getpermission">
+<tt class="descname">getpermission</tt><big>(</big><em>context=None</em>, <em>componentid=None</em>, <em>app=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.getpermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets permissions for a context (if componentid is None) or
+a component
+returns a tuple (ask,tell)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.getresolvers">
+<tt class="descname">getresolvers</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.client.Access.getresolvers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the available resolver names</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.import_model">
+<tt class="descname">import_model</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>partial_model=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.import_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is the context to import into
+partial_model is a json encoded string containing the partial model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.list_subs">
+<tt class="descname">list_subs</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.list_subs" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is a list giving the path of context identifiers
+componentid designates the component with subscriptions attached</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.listapps">
+<tt class="descname">listapps</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.client.Access.listapps" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns array of registered app names</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.mkcomponent">
+<tt class="descname">mkcomponent</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentobj=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.mkcomponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new component in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+componentobj - a Component object</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.mkcontext">
+<tt class="descname">mkcontext</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>contextobj=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.mkcontext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new context in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+contextobj - a Context object</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.mkview">
+<tt class="descname">mkview</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>viewobj=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.mkview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new view in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+viewobj - a View object</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.registerapp">
+<tt class="descname">registerapp</tt><big>(</big><em>app=None</em>, <em>desc=''</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.registerapp" title="Permalink to this definition">¶</a></dt>
+<dd><p>registers a password for an app
+app name is a string (needs checking TODO)
+app passwords are stored at the top level .model db</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.set_goals">
+<tt class="descname">set_goals</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em>, <em>goals=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.set_goals" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is a list giving the path of context identifiers
+componentid designates the component with subscriptions attached
+goals is a list of paths to components that are:</p>
+<blockquote>
+<div>goals for this componentid if it is not of type goal
+components that contribute to this componentid if it is of type goal</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.setpermission">
+<tt class="descname">setpermission</tt><big>(</big><em>context=None</em>, <em>componentid=None</em>, <em>app=None</em>, <em>permissions={}</em><big>)</big><a class="headerlink" href="#personis.client.Access.setpermission" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets ask/tell permission for a context (if componentid is None) or
+a component</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.setresolver">
+<tt class="descname">setresolver</tt><big>(</big><em>context</em>, <em>componentid</em>, <em>resolver</em><big>)</big><a class="headerlink" href="#personis.client.Access.setresolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the resolver for a given component in a given context
+arguments:</p>
+<blockquote>
+<div>context - a list giving the path to the required context
+componentid - the id for a given component
+resolver - the id of the resolver</div></blockquote>
+<dl class="docutils">
+<dt>returns:</dt>
+<dd>None on success
+a string error message on error</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.subscribe">
+<tt class="descname">subscribe</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>view=None</em>, <em>subscription=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context is a list giving the path of context identifiers
+view is either:</p>
+<blockquote>
+<div><p>an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in</p>
+<blockquote>
+<div>the context be returned</div></blockquote>
+<p>subscription is a Subscription object</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Access.tell">
+<tt class="descname">tell</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>componentid=None</em>, <em>evidence=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.tell" title="Permalink to this definition">¶</a></dt>
+<dd><p>arguments:
+context - a list giving the path to the required context
+componentid - identifier of the component
+evidence - evidence object to add to the component</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.client.Component">
+<em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Component</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.Component" title="Permalink to this definition">¶</a></dt>
+<dd><p>component object
+Identifier  the identifier of the component</p>
+<blockquote>
+<div>unique in the context</div></blockquote>
+<p>Description readable description
+creation_time   time of creation of the component
+component_type  [&#8220;attribute&#8221;, &#8220;activity&#8221;, &#8220;knowledge&#8221;, &#8220;belief&#8221;, &#8220;preference&#8221;, &#8220;goal&#8221;]
+value_type  [&#8220;string&#8221;, &#8220;number&#8221;,&#8221;boolean&#8221;, &#8220;enum&#8221;, &#8220;JSON&#8221;]
+value_list    a list of strings that are the possible values for type &#8220;enum&#8221;
+value       the resolved value
+resolver    default resolver for this component
+goals       list of component paths eg [ [&#8216;Personal&#8217;, &#8216;Health&#8217;, &#8216;weight&#8217;], ...]
+evidencelist    list of evidence objects</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.client.Context">
+<em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Context</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>context object
+Identifier  the identifier of the component</p>
+<blockquote>
+<div>unique in the context</div></blockquote>
+<p>Description readable description
+resolver    default resolver for components in this context</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.client.Evidence">
+<em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Evidence</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.Evidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>evidence object
+evidence_type   &#8220;explicit&#8221;, # given by the user</p>
+<blockquote>
+<div>&#8220;implicit&#8221;, # observed by the machine
+&#8220;exmachina&#8221;, # told (to the user) by the machine
+&#8220;inferred&#8221;, # evidence generated by a subscription inference 
+&#8220;stereotype&#8221;] # evidence added by a stereotype</div></blockquote>
+<p>source  string indicating source of evidence
+value   any python object
+comment string with extra information about the evidence
+flags   a list of strings eg &#8220;goal&#8221;
+time    notional creation time optionally given by user
+creation_time actual time evidence item was created
+useby   timestamp evidence expires (if required)</p>
+<dl class="attribute">
+<dt id="personis.client.Evidence.EvidenceTypes">
+<tt class="descname">EvidenceTypes</tt><em class="property"> = ['explicit', 'implicit', 'exmachina', 'inferred', 'stereotype']</em><a class="headerlink" href="#personis.client.Evidence.EvidenceTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>explicit: given by the user  (given)
+implicit: observed by the machine (observation)
+exmachina: told (to the user) by the machine (told)
+inferred: evidence generated by inference (external or internal)
+stereotype: evidence added by a stereotype</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.client.View">
+<em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">View</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.View" title="Permalink to this definition">¶</a></dt>
+<dd><p>view object
+Identifier  the identifier of the component</p>
+<blockquote>
+<div>unique in the context</div></blockquote>
+<p>Description readable description</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-personis.client.util">
+<span id="util-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">util</span></tt> Module<a class="headerlink" href="#module-personis.client.util" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">client Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">client</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-personis.client.util"><tt class="docutils literal"><span class="pre">util</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Client.html"
+                        title="previous chapter">Client/Server Protocol</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/personis.client.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Client.html" title="Client/Server Protocol"
+             >previous</a> |</li>
+        <li><a href="index.html">Personis 12.9 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011-2012, Bob Kummerfeld and Judy Kay.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

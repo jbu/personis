@@ -1,0 +1,22 @@
+
+The documentation is included as a pdf in the Doc directory. 
+
+It is called Personis.pdf and you should consult that now to get Personis
+installed and working.
+
+Should you want to alter it or have it in another form (html or epub)
+you should use "sphinx", a python based documentation generation tool
+used to maintain it.
+
+Sphinx can make the documentation in many forms. To use the tool you
+need sphinx and its dependencies installed, and latex if you want to
+make the pdf version.
+
+To make the various versions the command is:
+
+	make html
+	make latexpdf
+	make epub
+
+The generated versions are placed in the subdirectory "_build".
+

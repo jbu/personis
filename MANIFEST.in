@@ -1,5 +1,2 @@
 include COPYING
-include README
-include server-conf/models/README
 global-include *.html *.css *.png *.gif *.yaml *.json *.conf *.rst *.jpg *.ico *.txt *.js *.doctree Makefile README *.pdf *.sh *.svg *.py
-graft personis/server

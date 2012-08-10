@@ -1,0 +1,298 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      lang="en">
+<head>
+<title>Personis User Model Server - App Authorization</title>
+<style type="text/css">
+body {
+	margin: 0;
+	background-color: #f1f1f1;
+	border: 0;
+	padding: 0;
+	color: #000;
+	font-family: "Lucida Grande", Lucida, "Trebuchet MS", Helvetica, sans-serif; 
+	font-size: 11pt;
+}
+
+.frame {
+	background-color: white;
+	border-right: 1px solid #a3a3a3;
+	border-left: 1px solid #a3a3a3;
+	border-bottom: 1px solid #a3a3a3;
+}
+.framedata { }
+.column { }
+.columndata { /*padding: 10px;*/}
+.cell { }
+
+/*.loginbanner {
+	background-color: #fed;
+	border:	1px solid #dcb;
+	padding: 3px 10px;
+	font-size: 80%; font-weight: bold;
+	background: url(Images/banner_bg.png) repeat-x;
+	color: #39628b;
+}*/
+
+.cellbanner {
+	color: #000;
+	padding: 3px 5px;
+	border-bottom: 1px solid #d6d1bb;
+	font-weight: bold;
+}
+
+.menubanner { }
+
+.cellbody {
+	background-color: white;
+	padding: 8px 6px 6px;
+}
+
+table.breadcrumb {
+	/*background-color: #f9f6e7;*/
+	background: url(Images/banner_bg.png) repeat-x;
+	border:	1px solid #dcb;
+	padding: 0px 5px 0;
+	font-size: 80%; font-weight: bold;
+	color: #39628b;
+	margin: 0px;
+}
+
+/* order is important */
+a:link { color: black; }
+a:visited { color: black; }
+a:hover { color: #39628b; }
+a:active { color: black; }
+
+a.non { text-decoration: none; }
+a.smallnon { font-size: 80%; text-decoration: none; }
+
+p.hang {
+	text-indent: -1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.bdblue { font-weight: bold; color: darkblue; }
+.bdred { font-weight: bold; color: darkred; }
+.dgreen { color: darkgreen; }
+.dblue { color: darkblue; }
+.dred { color: darkred; }
+
+span.logname {
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.logtext {
+	font-size: 80%;
+}
+
+span.sestext {
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.button {
+	margin: 0;
+	border: 1px solid #dcb;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	background-color: #f9f6e7;
+	padding: 0 2px 0 2px; 
+	color: #39628b;
+	font-weight: bold;
+}
+
+.logout {
+	padding: 0;
+	font-weight: bold;
+	font-size: 80%;
+	float: right;
+}
+
+.login {
+	padding: 0;
+	font-weight: bold;
+}
+
+.inlin { display: inline; }
+
+table.role { margin: 0px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+td.role { text-align: right; font-size: 100%; font-weight: bold; color: #fff; }
+td img.decor { display: block; }
+
+table { font-size: 10pt; }
+
+a.external { text-decoration: none; }
+a.external:link { color: #fff }
+a.external:visited { color: #fff }
+a.external:hover { color: #ffc }
+a.external:active { color: #ffc }
+
+span.edit { float: right; }
+a.edit { text-decoration: none; color: #c7c7c7; }
+a.edit:hover { color: #39628b; }
+a.edit:active { color: #39628b; }
+
+ul.menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 11px;
+	margin-left: 3px;
+}
+li.menu {
+    margin: 1px 0 0;
+}
+
+ul.submenu {
+    list-style-type: none;
+	border: 1px dotted #d6d1bb;
+	padding: 5px 5px 5px 12.5px;
+	margin: 10px;
+}
+li.submenu {
+    margin: 1px 0 0;
+}
+
+a.menu {
+    display: block;
+    width:125px;
+    padding: 2px 2px 2px 10px;
+
+   	/*background: url(Images/banner_bg.png) repeat-x;*/
+    text-decoration: none;
+   	/*color: #39628b;*/
+   	color: black;
+	border: 1px none #d6d1bb;
+	border-bottom-style: dashed;
+}
+
+a.menu:hover {
+    /*border: 1px solid #39628b;*/
+    /*background: #39628b;*/
+    background: url(Images/banner_fg.png) repeat-x;
+    color: #FFFFFF;
+}
+
+a.submenu {
+    display: list-item;
+    /*width:70;*/
+    color: black;
+    text-decoration: none;
+    height: 14px;
+	/*background-color: #e6e6e6;*/
+	/*margin-left: 8px;
+	margin-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 15px;*/
+}
+
+a.submenu:hover {
+    text-decoration: underline;
+}
+
+table.seminarlist {
+    font-size: 12px;
+}
+
+img.profile { 
+    max-width:230px;
+}
+
+.clear { clear: both; height: 1px; }
+.sitemap { float: left; width: 60%; padding-bottom: 10px; }
+.sitemap li { float: left; list-style: none; line-height: 130%; font-size: 80%; }
+.cellerator { float: right; width: 20%; vertical-align: bottom; margin-top: -30px; }
+
+.button {
+   border-top: 1px solid #96d1f8;
+   background: #65a9d7;
+   background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+   background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+   background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+   background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+   background: -o-linear-gradient(top, #3e779d, #65a9d7);
+   padding: 5px 10px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 14px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   border-top-color: #28597a;
+   background: #28597a;
+   color: #ccc;
+   }
+.button:active {
+   border-top-color: #1b435e;
+   background: #1b435e;
+   }
+</style>
+</head>
+<body>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="role">
+  <tbody><tr>
+    <td style="width: 200px;">
+      <a href="http://www.usyd.edu.au/">
+        <img border="0" src="http://www.it.usyd.edu.au/images/common/university_sydney_logo.gif" alt="School of IT" class="decor"/>
+      </a>
+    </td>
+    <td style="width: 100%;"></td>
+    <td style="width: 400px;">
+      <a href="Home">
+        <img border="0" class="decor" alt="CHAI: computer human adapted interaction" src="http://chai.it.usyd.edu.au/Images/chai_banner.png"/>
+      </a>
+    </td>
+  </tr>
+</tbody></table>
+<br/>
+<br/>
+
+<div style="
+    max-width:  600px;
+    margin:  0 auto;
+    border: 2px black solid;
+    padding:  30px;
+    border-radius: 5px;
+">
+<table border='0' width="100%">
+<tr>
+<td valign='top' halign='center' style='padding-right: 30px'><img src="/static/images/icon.svg" width="100"/></td>
+<td>
+ <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div>
+<img src="$picture" style="float: right; width: 50px"/>
+ <h1>Welcome $name!</h1>
+<br/>
+<img src='$icon' style="float: right; width: 100px"/>
+<div style="font-size: 18px">
+ The <span style="font-weight: bold">$app</span> application is requesting access to your model. Do you want to allow this?
+ <br/>
+<br/>
+</div>
+<div style='margin: 10px'>
+ <a class='button' href="/allow">yes</a>    <a class='button' href="dissallow">no</a>
+</div>
+
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

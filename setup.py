@@ -1,6 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import fnmatch
 import os
+
+import distribute_setup
+distribute_setup.use_setuptools()
 
 long_desc = """The Google API Client for Python is a client library for
 accessing the Plus, Moderator, and many other Google APIs."""
@@ -8,9 +11,10 @@ accessing the Plus, Moderator, and many other Google APIs."""
 install_requires=[
     'google-api-python-client',
     'pyyaml',
-    'cherrypy>=3.0',
+    'cherrypy >= 3.0',
     'pyparsing',
-    'shove'
+    'shove',
+    'distribute'
     ]
 
 packages = [
@@ -37,8 +41,7 @@ for root, dirnames, filenames in os.walk('personis'):
 #matches = [i for i in matches if (i.startswith('./personis') or i.startswith('./server_conf'))]
 
 packagedat = {
-    'personis': matches,
-    'personis.examples': ['personis/examples/*/*.json']
+    '': matches
     }
 
 long_desc = """The Personis user model server and associated client library. Also some sample clients."""
@@ -46,7 +49,8 @@ long_desc = """The Personis user model server and associated client library. Als
 import personis
 version = personis.__version__
 
-setup(name="personis",
+setup(
+    name="personis",
     version=version,
     description="Peronis user model library",
     long_description=long_desc,
@@ -59,6 +63,7 @@ setup(name="personis",
     license="GPL3",
     package_data=packagedat,
     keywords="personis user-model server",
+    include_package_data = True,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',

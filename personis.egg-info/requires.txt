@@ -1,0 +1,6 @@
+google-api-python-client
+pyyaml
+cherrypy >= 3.0
+pyparsing
+shove
+distribute
