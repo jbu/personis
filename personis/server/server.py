@@ -26,20 +26,20 @@
 import os, traceback
 import json
 import yaml
-import jsoncall
+from . import jsoncall
 import cherrypy
-import base
-import active
-import util
+from . import base
+from . import active
+from . import util
 import cPickle
 from multiprocessing import Process, Queue
-import cronserver
+from . import cronserver
 import random, time
-import connection
+from . import connection
 from shove import Shove
 import string
 
-from mkmodel import *
+from .mkmodel import *
 from optparse import OptionParser
 import httplib2
 import logging
@@ -89,7 +89,7 @@ class Server:
             cherrypy.session['target_url'] = '/list_clients'
             raise cherrypy.HTTPRedirect('/login')
         # check if user is actually allowed to be here
-        if not cherrypy.session.get('user') in self.admins.keys():
+        if not cherrypy.session.get('user') in self.admins:
             raise cherrypy.HTTPError(401, 'Admin only')
 
         base_path = os.path.dirname(os.path.abspath(__file__))
@@ -120,7 +120,7 @@ class Server:
         tmpl = loader.load('html/list_apps.html')
         um = cherrypy.session.get('um')
         apps = um.listapps()
-        for k in apps.keys():
+        for k in apps:
             c = self.oauth_clients[k]
             apps[k]['friendly_name'] = c['friendly_name']
             apps[k]['client_id'] = c['client_id']
@@ -152,7 +152,7 @@ class Server:
         """
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
-        if not cherrypy.session.get('user') in self.admins.keys():
+        if not cherrypy.session.get('user') in self.admins:
             raise cherrypy.HTTPError()
         # This uses a get parameter, where it should be del or post. 
         # worksfornow
@@ -162,8 +162,8 @@ class Server:
             logging.debug(  "removed a client")
             raise cherrypy.HTTPRedirect('/list_clients')
         if id == "addOneForMe":
-            clid = u''
-            secret = u''
+            clid = ''
+            secret = ''
             for i in range(32):
                 clid = clid + random.choice(string.hexdigits)
                 secret = secret + random.choice(string.hexdigits)
@@ -199,9 +199,9 @@ class Server:
         cherrypy.session['client_id'] = client_id
         
         cli = self.oauth_clients[client_id]
-        if state <> None:
+        if state != None:
             cherrypy.session['state'] = state
-        if cli['redirect_uri'] <> redirect_uri:
+        if cli['redirect_uri'] != redirect_uri:
             logging.debug("redirect uris don't match expected %s got %s",cli['redirect_uri'], redirect_uri)
             raise cherrypy.HTTPError(400,'Redirect URIs do not match') 
         raise cherrypy.HTTPRedirect('/login')
@@ -321,7 +321,7 @@ class Server:
 
         self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
         self.access_tokens.sync()
-        logging.debug('access tokens: %s',`[i for i in self.access_tokens.iterkeys()]`)
+        logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
 
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
@@ -371,14 +371,14 @@ class Server:
 
         tok = self.access_tokens[code]
 
-        if tok['client_id'] <> client_id:
+        if tok['client_id'] != client_id:
             raise cherrypy.HTTPError(401, 'Incorrect client')
 
         #if tok['type'] == 'refresh_token':
             #print 'remove refresh_token',code
             #del(self.access_tokens[code])
         
-        if cli['secret'] <> client_secret:
+        if cli['secret'] != client_secret:
             raise cherrypy.HTTPError(401, 'Incorrect client information')
 
         userid = tok['userid']
@@ -418,7 +418,7 @@ class Server:
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
             logging.debug( 'access_tokens %s', self.access_tokens )
-            logging.debug(  'access_token %s', `access_token` )
+            logging.debug(  'access_token %s', repr(access_token) )
         except:
             return '''
 <h1>Personis</h1>
@@ -447,9 +447,9 @@ Looks like you're coming into the service entrance with a browser, which is not 
 
         # dirty kludge to get around unicode
         for k,v in pargs.items():
-            if type(v) == type(u''):
+            if type(v) == type(''):
                 pargs[k] = str(v)
-            if type(k) == type(u''):
+            if type(k) == type(''):
                 del pargs[k]
                 pargs[str(k)] = v
 
@@ -469,7 +469,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
                 um = active.Access(model=model, modeldir=self.modeldir, user=usr, password='')
 
             apps = um.listapps()
-            if not self.access_tokens[access_token]['client_id'] in apps.keys():
+            if not self.access_tokens[access_token]['client_id'] in apps:
                 logging.debug(  'client for access token not in model %s, %s', access_token, self.access_tokens[access_token]['client_id'])
                 raise cherrypy.HTTPError(401, 'client for access token not in model')
 
@@ -552,7 +552,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
                 new_result["val"] = result
                 result = new_result
 
-        except Exception, e:
+        except Exception as e:
 
             logging.info(  "Exception: %s", e)
             traceback.print_exc()
@@ -575,14 +575,14 @@ class ExitThread(threading.Thread):
 
     def run(self):
         self.running = True
-        print 'exit thread running'
+        print('exit thread running')
         logging.info('exit listener running')
         while self.running:
             g = self.q.get(block = True)
             logging.info('exit thread got %s', g)
             if g == 'exit':
                 self.running = False
-            print 'qgot', g
+            print('qgot', g)
         logging.info('exit listener run ends')
         self.exit()
 
@@ -620,7 +620,7 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
                 cherrypy.engine.block()
             else:
                 e.start()
-        except Exception, E:
+        except Exception as E:
             logging.info(  "Failed to run Personis Server:" + str(E))
     finally:
         if exit_queue:
