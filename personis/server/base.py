@@ -27,10 +27,10 @@ try:
 except:
 	import bsddb3 as bsddb
 from types import *
-import resolvers
-import ev_filters
+from . import resolvers
+from . import ev_filters
 import json
-import util
+from . import util
 import logging
 import traceback
 
@@ -72,7 +72,7 @@ def MkModel(model=None, modeldir=None, user=None, password=None, description=Non
 	"""
 
 	if modeldir == None:
-		raise ValueError, "modeldir is None in MkModel"
+		raise ValueError("modeldir is None in MkModel")
 	modeldir = os.path.join(modeldir, model)
 	os.mkdir(modeldir)
 	mod, mod_shelf_fd = shelf_open(os.path.join(modeldir,".model"), "c")
@@ -140,17 +140,17 @@ class Component:
 		if self.Identifier == None:
 			return None
 		if not self.component_type in ComponentTypes:
-			raise TypeError, "bad component type %s"%(self.component_type)
+			raise TypeError("bad component type %s"%(self.component_type))
 		if not self.value_type in ValueTypes:
-			raise ValueError, "bad component value definition %s"%(self.value_type)
+			raise ValueError("bad component value definition %s"%(self.value_type))
 		if (self.value_type == "enum") and (len(self.value_list) == 0):
-			raise ValueError, "type 'enum' requires non-empty value-list"
+			raise ValueError("type 'enum' requires non-empty value-list")
 		if self.value != None:
 			if (self.value_type == "enum") and not (self.value in self.value_list):
-				raise ValueError, "value '%s' not in value_list for type 'enum'" % (self.value)
+				raise ValueError("value '%s' not in value_list for type 'enum'" % (self.value))
 
 	def __str__(self):
-		return 'Component: '+ `self.__dict__`
+		return 'Component: '+ repr(self.__dict__)
 
 	def filterevidence(self, model=None, context=[], resolver_args=None):
 		"""
@@ -167,22 +167,22 @@ class Component:
 		"""
 		strId = str(self.Identifier)
 		if resolver_args == None:
-			raise ValueError, 'no evidence filter'
+			raise ValueError('no evidence filter')
 		evidence_filter = resolver_args.get('evidence_filter')
 		if evidence_filter == None:
 			evidence_filter = 'all'
 		if evidence_filter in model.evidencefilterlist:
 			efilter = model.evidencefilterlist[evidence_filter]
 		else:
-			raise ValueError, 'unknown evidence filter "%s"'%(`evidence_filter`)
+			raise ValueError('unknown evidence filter "%s"'%(repr(evidence_filter)))
 
 		try:
 			evdb,evdb_fd = shelf_open(model._getcontextdir(context)+"/.evidence", "r")
 		except:
-			raise ValueError, "tell: no evidence db for %s"%(`context`)
+			raise ValueError("tell: no evidence db for %s"%(repr(context)))
 		
 		evidence_list = []
-		for k in evdb.keys():
+		for k in list(evdb.keys()):
 			if k.startswith(strId+':'):
 				evidence_list += [evdb[k].__dict__]
 		evidence_list = efilter(elist=evidence_list, arguments=resolver_args)
@@ -199,7 +199,7 @@ class Component:
 		try:
 			evdb,evdb_fd = shelf_open(model._getcontextdir(context)+"/.evidence", "r")
 		except:
-			raise ValueError, "tell: no evidence db for %s"%(`context`)
+			raise ValueError("tell: no evidence db for %s"%(repr(context)))
 		if strId not in evdb:
 			shelf_close(evdb, evdb_fd)
 			return (None, None) # no evidence for this component
@@ -214,11 +214,11 @@ class Component:
 
 	def findevidence(self, model=None, context=[], evidence_time=None):
 		if evidence_time == None:
-			raise ValueError, "findevidence: no evidence time specified"
+			raise ValueError("findevidence: no evidence time specified")
 		try:
 			evdb,evdb_fd = shelf_open(model._getcontextdir(context)+"/.evidence", "r")
 		except:
-			raise ValueError, "tell: no evidence db for %s"%(`context`)
+			raise ValueError("tell: no evidence db for %s"%(repr(context)))
 		if self.Identifier not in evdb:
 			shelf_close(evdb, evdb_fd)
 			return (None, None) # no evidence for this component
@@ -286,10 +286,10 @@ class Evidence:
 		for k,v in kargs.items():
 			self.__dict__[k] = v
 		if self.evidence_type not in EvidenceTypes:
-			raise TypeError, "bad evidence type %s"%(self.evidence_type)
+			raise TypeError("bad evidence type %s"%(self.evidence_type))
 
 	def __str__(self):
-		return 'evidence: '+`self.__dict__`
+		return 'evidence: '+repr(self.__dict__)
 
 class Context:
 	""" context object
@@ -341,7 +341,7 @@ class Access(resolvers.Access,ev_filters.Access):
 	"""
 	def __init__(self, model=None, modeldir="", user=None, password=None, debug=0):
 		if model == None:
-			raise ValueError, "model is None"
+			raise ValueError("model is None")
 		if modeldir[0] != '/':
 			self.modeldir = os.getcwd()+'/'+modeldir
 		else:
@@ -351,11 +351,11 @@ class Access(resolvers.Access,ev_filters.Access):
 		self.password = password
 		self.debug = debug
 		if not os.path.isdir(os.path.join(self.modeldir,self.modelname)):
-			raise ValueError, "no model dir for '%s'"%(self.modelname)
+			raise ValueError("no model dir for '%s'"%(self.modelname))
 		try:
 			mod,mod_shelf_fd = shelf_open(os.path.join(self.modeldir,self.modelname,".model"), "r")
 		except:
-			raise ValueError, "no model db for '%s'"%(self.modelname)
+			raise ValueError("no model db for '%s'"%(self.modelname))
 		self.moddb = {}
 		for k in mod.keys():
 			self.moddb[k] = mod[k]
@@ -402,7 +402,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		contextinfo = self.getcontext(context)
 		if 'perms' not in contextinfo:
 			perms = []
-			print 'no perms!'
+			print('no perms!')
 		else:
 			perms = contextinfo['perms']
 		if self.usertype != 'owner':
@@ -426,28 +426,28 @@ class Access(resolvers.Access,ev_filters.Access):
 			subs = None
 		try:
 			contexts = os.listdir(self.curcontext)
-			contexts = filter(lambda x: os.path.isdir(self.curcontext+"/"+x),contexts)
-		except OSError, e:
+			contexts = [x for x in contexts if os.path.isdir(self.curcontext+"/"+x)]
+		except OSError as e:
 			raise ValueError("Component/Context not found: %s/%s" % (context, view))
 		cidlist = []
 		cobjlist = []
-		if type(view) == type(u''):
+		if type(view) == type(''):
 			view = str(view)
 
 		if type(view) is StringType:
 			if views != None:
 				if view not in views:
-					raise ValueError, '"%s" view not found'%(view)
+					raise ValueError('"%s" view not found'%(view))
 				cidlist = views[view].component_list
 			else:
-				raise ValueError, '"%s" view not found'%(view)
+				raise ValueError('"%s" view not found'%(view))
 		elif type(view) is ListType:
 			cidlist = view
 		elif view == None: 
 			if comps != None:
 				cidlist = comps.keys()
 		else:
-			raise TypeError, 'view "%s" has unknown type'%(`view`)
+			raise TypeError('view "%s" has unknown type'%(repr(view)))
 		self.theresolver = None
 		resolver_args = {}
 		if resolver != None: 
@@ -458,9 +458,9 @@ class Access(resolvers.Access,ev_filters.Access):
 				if resolver in self.resolverlist:
 					self.theresolver = self.resolverlist[resolver]
 				else:
-					raise ValueError, 'unknown resolver "%s"'%(`resolver`)
+					raise ValueError('unknown resolver "%s"'%(repr(resolver)))
 		for cid in cidlist:
-			if type(cid) == type(u''):
+			if type(cid) == type(''):
 				cid = cid.encode('ascii')
 			if type(cid) is StringType:
 				if comps != None:
@@ -480,29 +480,29 @@ class Access(resolvers.Access,ev_filters.Access):
 								if contresname in self.resolverlist:
 									compresolver = self.resolverlist[contresname]
 								else:
-									raise ValueError,'unknown resolver "%s"'%(contresname)
+									raise ValueError('unknown resolver "%s"'%(contresname))
 							else:
 								compresolver = self.resolverlist["default"]
 						elif compresname in self.resolverlist:
 							compresolver = self.resolverlist[compresname]
 						else:
-							raise ValueError, 'unknown resolver "%s"'%(compresname)
+							raise ValueError('unknown resolver "%s"'%(compresname))
 						cobjlist.append(compresolver(model=self, 
 												component=comps[cid],
 												context=context, 
 												resolver_args=resolver_args)
 										)
 					else:
-						raise ValueError, 'component "%s" not in view "%s" (%s)'%(cid,view,cidlist)
+						raise ValueError('component "%s" not in view "%s" (%s)'%(cid,view,cidlist))
 				else:
-					raise ValueError, 'component "%s" not found'%(cid)
+					raise ValueError('component "%s" not found'%(cid))
 			elif type(cid) is ListType:
 				vcontext = self._getcontextdir(cid[:-1])
 				last_cid = str(cid[-1])
 				try:
 					vcomps,vcomps_shelf_fd = shelf_open(vcontext+"/.components", "r")
 				except:
-					raise ValueError, 'context "%s" not in view "%s"'%(last_cid,`view`)
+					raise ValueError('context "%s" not in view "%s"'%(last_cid,repr(view)))
 				if last_cid in vcomps:
 					if 'resolver' in vcomps[last_cid].__dict__ :
 						compresname = vcomps[last_cid].resolver
@@ -515,11 +515,11 @@ class Access(resolvers.Access,ev_filters.Access):
 					elif compresname in self.resolverlist:
 						compresolver = self.resolverlist[compresname]
 					else:
-						raise ValueError, 'unknown resolver "%s"'%(compresname)
+						raise ValueError('unknown resolver "%s"'%(compresname))
 					cobjlist.append(compresolver(model=self, component=vcomps[last_cid], \
 								context=context, resolver_args=resolver_args))
 				else:
-					raise ValueError, 'component "%s" not in view "%s"'%(last_cid,`view`)
+					raise ValueError('component "%s" not in view "%s"'%(last_cid,repr(view)))
 				shelf_close(vcomps, vcomps_shelf_fd)
 					
 		if comps != None:
@@ -583,7 +583,7 @@ class Access(resolvers.Access,ev_filters.Access):
 				if resolver in self.resolverlist:
 					self.theresolver = self.resolverlist[resolver]
 				else:
-					raise ValueError, 'unknown resolver "%s"'%(`resolver`)
+					raise ValueError('unknown resolver "%s"'%(repr(resolver)))
 
 		try:
 			comps,comps_shelf_fd = shelf_open(self.curcontext+"/.components", "r")
@@ -599,8 +599,8 @@ class Access(resolvers.Access,ev_filters.Access):
 			subs = None
 		try:
 			contexts = os.listdir(self.curcontext)
-			contexts = filter(lambda x: os.path.isdir(self.curcontext+"/"+x),contexts)
-		except OSError, e:
+			contexts = [x for x in contexts if os.path.isdir(self.curcontext+"/"+x)]
+		except OSError as e:
 			raise ValueError("Context not found: %s" % (context))
 		
 		if contexts != []:
@@ -680,7 +680,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			return
 		if type(partial_model) == type(""):
 			newmodel = json.loads(partial_model)
-		elif type(partial_model) == type(u''):
+		elif type(partial_model) == type(''):
 			newmodel = json.loads(str(partial_model))
 		else:
 			newmodel = partial_model
@@ -690,7 +690,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			con = Context(Identifier=cinfo['Identifier'], Description=cinfo['Description'], resolver=cinfo['resolver'], perms=cinfo['perms'])
 			self.mkcontext(context=context, contextobj=con)
 		else:
-			print newcontext, "exists"
+			print (newcontext, "exists")
 		for compname, comp in newmodel['components'].items():
 			newcobj = Component()
 			for k,v in comp.items():
@@ -703,7 +703,7 @@ class Access(resolvers.Access,ev_filters.Access):
 				evv = Evidence(evidence_type="explicit") # evidence type will be overwritten by imported evidence
 				for k,v in ev.items():
 					evv.__dict__[k] = v
-				print "=>> tell", newcontext, compname, evv.__dict__
+				print("=>> tell", newcontext, compname, evv.__dict__)
 				self.tell(context=newcontext, componentid=compname, evidence=evv, dosubs=False)
 		for viewname, view in newmodel['views'].items():
 			newview = View()
@@ -712,15 +712,15 @@ class Access(resolvers.Access,ev_filters.Access):
 			try:
 				self.mkview(newcontext, newview)
 			except:
-				print "View exists:", newcontext, newview
-			print ">>VIEW", viewname, view
+				print("View exists:", newcontext, newview)
+			print(">>VIEW", viewname, view)
 		for subname, sub in newmodel['subs'].items():
 			for k,v in sub.items():
-				print ">>SUB", subname, k, v
+				print(">>SUB", subname, k, v)
 				self.subscribe(context=newcontext, view=[subname], subscription=v)
 		if newmodel['contexts'] != None:
 			for contextname, cont in newmodel['contexts'].items():
-				print ">>CONTEXT", contextname, cont
+				print(">>CONTEXT", contextname, cont)
 				self.import_model(newcontext, cont)
 		
 		return newmodel
@@ -738,13 +738,13 @@ class Access(resolvers.Access,ev_filters.Access):
 		"""
 		logging.debug('context: %s, componentid %s, evidence %s, dosubs %s', repr(context), repr(componentid), repr(evidence), dosubs)
 		if componentid == None:
-			raise ValueError, "tell: component id is None"
+			raise ValueError("tell: component id is None")
 		if evidence == None:
-			raise ValueError, "tell: no evidence provided"
-		if type(componentid) == type(u''):
+			raise ValueError("tell: no evidence provided")
+		if type(componentid) == type(''):
 			componentid = str(componentid)
 		if type(componentid) != type(""):
-			raise ValueError, "tell: component id is not string type"
+			raise ValueError("tell: component id is not string type")
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
 		logging.debug('contextinfo %s',contextinfo)
@@ -763,13 +763,13 @@ class Access(resolvers.Access,ev_filters.Access):
 			cobj = comps[componentid]
 			if cobj.value_type == "enum":
 				if evidence.value not in cobj.value_list:
-					raise ValueError, "tell: value '%s' not in value list %s for component '%s' of type 'enum'" % (evidence.value, `cobj.value_list`, componentid)
+					raise ValueError("tell: value '%s' not in value list %s for component '%s' of type 'enum'" % (evidence.value, repr(cobj.value_list), componentid))
 			try:
 				evdb,evdb_fd = shelf_open(self.curcontext+"/.evidence", "w")
 			except:
-				raise ValueError, "tell: no evidence db for %s"%(self.curcontext)
+				raise ValueError("tell: no evidence db for %s"%(self.curcontext))
 			if componentid not in evdb:
-				raise ValueError, "tell: no evidence db entry for %s"%(componentid)
+				raise ValueError("tell: no evidence db entry for %s"%(componentid))
 			evcount = evdb[componentid]+1
 			evdb[componentid] = evcount
 			evidence.source = self.user
@@ -778,7 +778,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			if dosubs:
 				self.checksubs(context, componentid)
 		else:
-			raise ValueError, "tell: component id %s not found"%(componentid)
+			raise ValueError("tell: component id %s not found"%(componentid))
 		shelf_close(comps, comps_shelf_fd)
 		return None
 
@@ -795,9 +795,9 @@ class Access(resolvers.Access,ev_filters.Access):
 		goals - list of goal component paths
 		"""
 		if componentid == None:
-			raise ValueError, "set_goals: component id is None"
+			raise ValueError("set_goals: component id is None")
 		if goals == None:
-			raise ValueError, "set_goals: no goal list provided"
+			raise ValueError("set_goals: no goal list provided")
 		self.curcontext = self._getcontextdir(context)
 		contextinfo = self.getcontext(context)
 		perms = contextinfo['perms']
@@ -811,7 +811,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		if componentid in comps:
 			cobj = comps[componentid]
 		else:
-			raise ValueError, "set_goals: component id %s not found"%(componentid)
+			raise ValueError("set_goals: component id %s not found"%(componentid))
 		cobj.goals = goals
 		comps[componentid] = cobj
 		shelf_close(comps, comps_shelf_fd)
@@ -911,9 +911,9 @@ class Access(resolvers.Access,ev_filters.Access):
 		try:
 			evdb,evdb_fd = shelf_open(self.curcontext+"/.evidence", "w")
 		except:
-			raise ValueError, "mkcomponent: no evidence db for %s"%(self.curcontext)
+			raise ValueError("mkcomponent: no evidence db for %s"%(self.curcontext))
 		if str(componentobj.Identifier) in evdb:
-			raise ValueError, "mkcomponent: evidence db entry for %s already present"%(componentid)
+			raise ValueError("mkcomponent: evidence db entry for %s already present"%(componentid))
 		evdb[str(componentobj.Identifier)] = 0
 		shelf_close(evdb, evdb_fd)
 		return None # all ok
@@ -932,7 +932,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		"""
 		if componentid == None:
 			return "no component specified for deletion"
-		if type(componentid) == type(u''):
+		if type(componentid) == type(''):
 			componentid = str(componentid)
 		self.curcontext = self._getcontextdir(context)
 		comps, comps_shelf_fd = shelf_open(self.curcontext+"/.components", "w")
@@ -945,9 +945,9 @@ class Access(resolvers.Access,ev_filters.Access):
 		try:
 			evdb,evdb_fd = shelf_open(self.curcontext+"/.evidence", "w")
 		except:
-			raise ValueError, "delcomponent: no evidence db for %s"%(self.curcontext)
+			raise ValueError("delcomponent: no evidence db for %s"%(self.curcontext))
 		if componentid not in evdb:
-			raise ValueError, "mkcomponent: no evidence db entry for %s "%(componentid)
+			raise ValueError("mkcomponent: no evidence db entry for %s "%(componentid))
 		evcount = evdb[componentid]
 		for evcount in range(evdb[componentid]):
 			del evdb["%s:%d"%(componentid, evcount+1)]
@@ -964,7 +964,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			returns a dictionary containing description and password(access key)
 		"""
 		if self.usertype != 'owner':
-			raise ValueError, "registerapp: must be owner to set password for %s" % (app)
+			raise ValueError("registerapp: must be owner to set password for %s" % (app))
 		p = hashlib.md5()
 		if password == None:
 			password = ''
@@ -984,9 +984,9 @@ class Access(resolvers.Access,ev_filters.Access):
 			deletes an app
 		"""
 		if app not in self.moddb['apps']:
-			raise ValueError, "deleteapp: app %s not registered"%(app)
+			raise ValueError("deleteapp: app %s not registered"%(app))
 		if self.usertype != 'owner':
-			raise ValueError, "deleteapp: must be owner to delete app %s" % (app)
+			raise ValueError("deleteapp: must be owner to delete app %s" % (app))
 		del self.moddb['apps'][app]
 		mod, mod_shelf_fd = shelf_open(os.path.join(self.modeldir,self.modelname,".model"), "w")
 		mod['apps'] = self.moddb['apps']
@@ -1010,15 +1010,15 @@ class Access(resolvers.Access,ev_filters.Access):
 				a component
 		"""
 		if self.usertype != "owner":
-			raise ValueError, "must be model owner to set permissions"
+			raise ValueError("must be model owner to set permissions")
 		if componentid == None:
 			try:
 				contextdb,contextdb_shelf_fd = shelf_open(self._getcontextdir(context)+"/.context", "w")
 			except:
-				raise ValueError, "setpermission: no context db for %s"%(context)
+				raise ValueError("setpermission: no context db for %s"%(context))
 			perms = contextdb['perms']
 			if app not in self.moddb['apps']:
-				raise ValueError, "setpermission: app %s not registered"%(app)
+				raise ValueError("setpermission: app %s not registered"%(app))
 			if app not in perms:
 				perms[app] = {}
 			for k,v in permissions.items():
@@ -1034,12 +1034,12 @@ class Access(resolvers.Access,ev_filters.Access):
 			returns a tuple (ask,tell)
 				"""
 		if app not in self.moddb['apps']:
-			raise ValueError, "getpermission: app %s not registered"%(app)
+			raise ValueError("getpermission: app %s not registered"%(app))
 		if componentid == None:
 			try:
 				contextdb,contextdb_shelf_fd = shelf_open(self._getcontextdir(context)+"/.context", "r")
 			except:
-				raise ValueError, "getpermission: no context db for %s"%(context)
+				raise ValueError("getpermission: no context db for %s"%(context))
 			perms = contextdb['perms']
 			shelf_close(contextdb, contextdb_shelf_fd)
 			return perms.get(app)
@@ -1134,7 +1134,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		for c in context:
 			ok = False not in [x in okchars for x in list(c)]
 			if not ok:
-				raise ValueError, 'bad character in context name'
+				raise ValueError('bad character in context name')
 		ctxtdir = [self.modelname]+context
 		delcontext = ctxtdir[-1]  # directory to remove
 		
@@ -1167,12 +1167,12 @@ class Access(resolvers.Access,ev_filters.Access):
 		viewobj - a View object
 		"""
 		if viewobj == None:
-			raise ValueError, 'view object is None'
+			raise ValueError('view object is None')
 		view_id = str(viewobj.Identifier)
 		self.curcontext = self._getcontextdir(context)
 		views, views_shelf_fd = shelf_open(self.curcontext+"/.views", "w")
 		if view_id in views:
-			raise ValueError, "view %s already exists"%(viewobj.Identifier)
+			raise ValueError("view %s already exists"%(viewobj.Identifier))
 		views[view_id] = viewobj
 		shelf_close(views, views_shelf_fd)
 		return None
@@ -1208,7 +1208,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		if type(context) is StringType:
 			context = [x for x in context.split(os.sep) if x not in ['','.','..']]
 		if not (type(context) is ListType):
-			raise ValueError, "Context <%s> is wrong type"%(context)
+			raise ValueError("Context <%s> is wrong type"%(context))
 		ctxt = [self.modeldir, self.modelname]+context
 		return os.path.join(*ctxt)
 
