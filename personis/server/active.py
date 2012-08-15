@@ -113,7 +113,7 @@ class Access(base.Access):
 				try:
 					vcomps,vcomps_shelf_fd = base.shelf_open(vcontext+"/.components", "r")
 				except:
-					raise ValueError, 'context "%s" not in view "%s"'%(cid[-1],repr(view)
+					raise ValueError, 'context "%s" not in view "%s"'%(cid[-1],repr(view))
 				if cid[-1] in vcomps:
 					# add sub dict to subs for cid[-1] #########
 					if cid[-1] not in subs:
@@ -125,7 +125,7 @@ class Access(base.Access):
 					if cronsub:
 						cronserver.cronq.put(dict(op="put",context=context, comp=cid, subscription=subscription))
 				else:
-					raise ValueError, 'component "%s" not in view "%s"'%(cid[-1],repr(view)
+					raise ValueError, 'component "%s" not in view "%s"'%(cid[-1],repr(view))
 				base.shelf_close(vcomps, vcomps_shelf_fd)
 					
 		if comps != None:
