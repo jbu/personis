@@ -427,7 +427,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		try:
 			contexts = os.listdir(self.curcontext)
 			print 'c1',self.curcontext, contexts
-			contexts = [x for x in contexts if os.path.isdir(os.path.join(self.curcontext,x)]
+			contexts = [x for x in contexts if os.path.isdir(os.path.join(self.curcontext,x))]
 			print 'c2',contexts
 		except OSError as e:
 			raise ValueError("Component/Context not found: %s/%s" % (context, view))
