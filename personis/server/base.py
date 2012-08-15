@@ -426,9 +426,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			subs = None
 		try:
 			contexts = os.listdir(self.curcontext)
-			print 'c1',self.curcontext, contexts
 			contexts = [x for x in contexts if os.path.isdir(os.path.join(self.curcontext,x))]
-			print 'c2',contexts
 		except OSError as e:
 			raise ValueError("Component/Context not found: %s/%s" % (context, view))
 		cidlist = []
@@ -462,10 +460,11 @@ class Access(resolvers.Access,ev_filters.Access):
 				else:
 					raise ValueError('unknown resolver "%s"'%(repr(resolver)))
 		for cid in cidlist:
-			if type(cid) == type(''):
+			if type(cid) == type(u''):
 				cid = cid.encode('ascii')
 			if type(cid) is StringType:
 				if comps != None:
+					print 'cid', cid, comps
 					if cid in comps:
 						if 'resolver' in comps[cid].__dict__:
 							compresname = comps[cid].resolver
