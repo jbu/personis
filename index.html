@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Personis by jbu</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Personis</h1>
+        <h2>llum server</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/jbu/personis/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/jbu/personis/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/jbu/personis" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>Personis user model server</h1>
+
+<p>The project consists of 4 parts (so far). </p>
+
+<ul>
+<li> server - the user model server</li>
+<li>client - a command line client for manipulating a user model</li>
+<li>log-llum - a really simple web server logging app that uses the personis
+            server. Use as an example.</li>
+<li>activity_sensor - a sensor that logs period of user activity
+              to personis.</li>
+</ul><p>All are implemented in python. Python2.7.4 has been the development version.</p>
+
+<h1>Installation</h1>
+
+<p>Server: 
+  The server is most handily run using the runserver.sh script. Edit this
+script to adjust the required paths and to pass in the correct config
+files. You can see that there are a few config files:
+   python Personis.py --models=../models/ --config=personis_server.conf --oauthconfig=oauth.yaml --admins=admins.yaml
+ --models gives the models directory
+ --config is the cherrypy server conf
+ --oauthconfig is the config for the oauth CLIENT side of personis server
+ --admins is the yaml file of people who can admin the server</p>
+
+<p>Personis server is a client to the google oauth service, and gets user
+ information from google. </p>
+
+<p>If you want to run Personis independently of the original setup (ie, you're
+not in our research group) you can create your own google API project at <a href="https://code.google.com/apis/console#access">https://code.google.com/apis/console#access</a> and set up a new google 
+API project to get your own client id and secret for personis. These go
+in oauth.yaml
+You can find the user id for admins.yaml by looking for the long number
+in the url for your google+ profile.</p>
+
+<p>When you run the server, take note of the URI of the server.</p>
+
+<p>Clients:
+  Clients require some information to associate with the personis server.
+The server also needs each client registered.
+  Go to the server /list_clients page (ie the URI + /list_clients) (you need
+  to be a server admin)
+  Press the + button on the page to add an entry for the client. This will
+  give you a client id and secret, but you can change the friendly name, 
+  icon url, and you will need to change the callback url to wherever you
+  installed the client. (command line clients just need a localhost url)</p>
+
+<p>Each client has an oauth.yaml. Copy the client secret and id to the yaml file,
+add the personis server url. Make sure the callback entry is correct.</p>
+
+<p>Command line clients are just run (python xxx.py). They start a web browser
+to do the authentication stuff - just follow along.</p>
+
+<h1>Inner workings of server</h1>
+
+<p>The server exposes a number of URLs. Some are for authentication, some for
+administration, and the rest as part of the personis protocol. Here are the 
+most important ones:</p>
+
+<p>/authorize is the oauth2 authentication start point for clients logging in
+             (well actually the web browser trying to access the client)
+             so log-llum or mneme redirect web browsers here.
+  /list_clients is for administrators to register clients with personis
+  /list_apps is for users to administer which apps have permission to use
+             their model
+  /xxxx the 'default' method implements urls for the personis protocol, like
+        'ask' or 'tell'. Should only be accessed by json clients. not browsers.</p>
+
+<p>Of less importance for most people are:</p>
+
+<p>admin:
+  /list_clients_save and /list_apps_save - for editing the client and app lists</p>
+
+<p>other auth bits:
+  /login - the auth point for users/admins loging into the /list pages
+  /logged_in - the callback from the google oauth servers. Should be called
+               when the request has been validated by google.
+  /allow - called when the user says that the client should have access
+           to their user model
+  /dissallow - opposite.
+  /request_token - called by the client to exchange their temporary access
+                   token for a real one. Usually the client is at this point
+                   the web service (like log-llum or mneme), not a web browser.
+                   Ideally (in fact MUST) this is only accessed over TLS/SSL.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
