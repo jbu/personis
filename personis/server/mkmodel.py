@@ -31,7 +31,6 @@ and creates a model in modeldirectory for each model
 import sys
 from . import base
 from . import active
-from . import server
 import logging
 
 
