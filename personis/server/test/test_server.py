@@ -27,8 +27,9 @@ class TestPersonisBaseAdd(unittest.TestCase):
         cls.stopq = Queue()
 
         cls.serverp = Process(target=server.server.runServer, args=('models', 'server-test.conf', 'admins-test.yaml', 
-            'oauth-clients-test.json', 'oauth_access_tokens.dat', logging.DEBUG, cls.stopq))
+            'oauth-clients-test.json', 'oauth_access_tokens.dat', logging.DEBUG, cls.stopq, 'client_secrets_google.json'))
         cls.serverp.start()
+        cls.stopq.put('test')
 
         time.sleep(1)
 
@@ -51,7 +52,9 @@ class TestPersonisBaseAdd(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.stopq.put('exit')
+        print 'here1'
         cls.serverp.join()
+        print 'here2'
         shutil.rmtree('models')
 
     def test_ask_firstname(self):

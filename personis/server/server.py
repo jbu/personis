@@ -546,7 +546,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
 
 
             # Repackage result code with error values IF there is a version string.
-            if pargs.has_key("version"):
+            if 'version' in pargs:
                 new_result = {}
                 new_result["result"] = "ok"
                 new_result["val"] = result
@@ -556,7 +556,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
 
             logging.info(  "Exception: %s", e)
             traceback.print_exc()
-            if pargs.has_key("version"):
+            if 'version' in pargs:
                 new_result = {}
                 new_result["val"] = [e.__class__.__name__, e.__dict__.copy(), cPickle.dumps(e)]
                 new_result["result"] = "error"
@@ -575,12 +575,14 @@ class ExitThread(threading.Thread):
 
     def run(self):
         self.running = True
+        print 'exit thread running'
         logging.info('exit listener running')
         while self.running:
             g = self.q.get(block = True)
             logging.info('exit thread got %s', g)
             if g == 'exit':
                 self.running = False
+            print 'qgot', g
         logging.info('exit listener run ends')
         self.exit()
 

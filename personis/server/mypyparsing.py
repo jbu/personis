@@ -235,7 +235,7 @@ class ParseResults(object):
         del self.__toklist[i]
 
     def __contains__( self, k ):
-        return self.__tokdict.has_key(k)
+        return k in self.__tokdict
         
     def __len__( self ): return len( self.__toklist )
     def __iter__( self ): return iter( self.__toklist )
@@ -253,7 +253,7 @@ class ParseResults(object):
 
     def __getattr__( self, name ):
         if name not in self.__slots__:
-            if self.__tokdict.has_key( name ):
+            if name in self.__tokdict:
                 if self.__modal:
                     return self.__tokdict[name][-1][0]
                 else:

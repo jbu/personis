@@ -1,0 +1,865 @@
+{
+    "components": {}, 
+    "contextinfo": {
+        "Description": "root context", 
+        "Identifier": ".", 
+        "perms": {}
+    }, 
+    "contexts": {
+        "Apps": {
+            "components": {}, 
+            "contextinfo": {
+                "Description": "Applications related to the user", 
+                "Identifier": "Apps", 
+                "creation_time": 1344993559.848101, 
+                "objectType": "Context", 
+                "perms": {}, 
+                "resolver": null
+            }, 
+            "contexts": {
+                "Logging": {
+                    "components": {
+                        "logged_items": {
+                            "Description": "All the items logged", 
+                            "Identifier": "logged_items", 
+                            "component_type": "activity", 
+                            "creation_time": 1344486711.17874, 
+                            "evidencelist": [
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.413657, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344494105.18624, 
+                                    "useby": null, 
+                                    "value": "running"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.453721, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344494099.43062, 
+                                    "useby": null, 
+                                    "value": "fruit"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.49419, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344488056.64843, 
+                                    "useby": null, 
+                                    "value": "fruit"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.536502, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344488040.8142, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.588721, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344487810.06328, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.611118, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344487806.05745, 
+                                    "useby": null, 
+                                    "value": "running"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.663681, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486884.67146, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.686235, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486882.39273, 
+                                    "useby": null, 
+                                    "value": "walking"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.739074, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486880.4436, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.762077, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486878.41828, 
+                                    "useby": null, 
+                                    "value": "fruit"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.803325, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486876.50309, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.836438, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486874.2731, 
+                                    "useby": null, 
+                                    "value": "walking"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.878147, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486870.43372, 
+                                    "useby": null, 
+                                    "value": "fruit"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.911485, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486867.92709, 
+                                    "useby": null, 
+                                    "value": "running"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.944685, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486863.95451, 
+                                    "useby": null, 
+                                    "value": "walking"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993587.977933, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486858.91459, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993588.013145, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486719.07979, 
+                                    "useby": null, 
+                                    "value": "fruit"
+                                }, 
+                                {
+                                    "comment": null, 
+                                    "creation_time": 1344993588.044781, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": 1344486715.23197, 
+                                    "useby": null, 
+                                    "value": "vegetables"
+                                }
+                            ], 
+                            "goals": [], 
+                            "objectType": "Component", 
+                            "resolver": null, 
+                            "value": "vegetables", 
+                            "value_list": [
+                                "vegetables", 
+                                "fruit", 
+                                "running", 
+                                "walking"
+                            ], 
+                            "value_type": "enum"
+                        }
+                    }, 
+                    "contextinfo": {
+                        "Description": "The logging app", 
+                        "Identifier": "Logging", 
+                        "creation_time": 1344993587.182382, 
+                        "objectType": "Context", 
+                        "perms": {
+                            "ask": true, 
+                            "resolvers": [
+                                "all", 
+                                "last10", 
+                                "last1", 
+                                "goal"
+                            ], 
+                            "tell": true
+                        }, 
+                        "resolver": null
+                    }, 
+                    "contexts": null, 
+                    "subs": {}, 
+                    "views": {}
+                }
+            }, 
+            "subs": {}, 
+            "views": {}
+        }, 
+        "Devices": {
+            "components": {}, 
+            "contextinfo": {
+                "Description": "Devices related to the user", 
+                "Identifier": "Devices", 
+                "creation_time": 1344993559.665334, 
+                "objectType": "Context", 
+                "perms": {}, 
+                "resolver": null
+            }, 
+            "contexts": {
+                "Fitbit": {
+                    "components": {
+                        "@apicall": {
+                            "Description": "Fitbit apicall for accessing data", 
+                            "Identifier": "@apicall", 
+                            "component_type": "attribute", 
+                            "creation_time": 1344493937.584958, 
+                            "evidencelist": [
+                                {
+                                    "comment": "first call", 
+                                    "creation_time": 1344993588.343143, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": null, 
+                                    "useby": null, 
+                                    "value": 1
+                                }
+                            ], 
+                            "goals": [], 
+                            "objectType": "Component", 
+                            "resolver": null, 
+                            "value": 1, 
+                            "value_list": [], 
+                            "value_type": "number"
+                        }, 
+                        "@fitbit_access_token": {
+                            "Description": "Fitbit access token", 
+                            "Identifier": "@fitbit_access_token", 
+                            "component_type": "attribute", 
+                            "creation_time": 1344493937.393433, 
+                            "evidencelist": [
+                                {
+                                    "comment": "first installation of fitbit.", 
+                                    "creation_time": 1344993588.416943, 
+                                    "evidence_type": "explicit", 
+                                    "flags": [], 
+                                    "objectType": "Evidence", 
+                                    "owner": "jamesuther", 
+                                    "source": "jamesuther", 
+                                    "time": null, 
+                                    "useby": null, 
+                                    "value": "oauth_token_secret=6dd9a652ab880934a26e37fec2dfb2bc&oauth_token=54b4e207fbad3fe5a9f2dc2f03cfdaa9"
+                                }
+                            ], 
+                            "goals": [], 
+                            "objectType": "Component", 
+                            "resolver": null, 
+                            "value": "oauth_token_secret=6dd9a652ab880934a26e37fec2dfb2bc&oauth_token=54b4e207fbad3fe5a9f2dc2f03cfdaa9", 
+                            "value_list": [], 
+                            "value_type": "string"
+                        }
+                    }, 
+                    "contextinfo": {
+                        "Description": "Extract data from fitbit server", 
+                        "Identifier": "Fitbit", 
+                        "creation_time": 1344993588.085821, 
+                        "objectType": "Context", 
+                        "perms": {
+                            "ask": true, 
+                            "resolvers": [
+                                "all", 
+                                "last10", 
+                                "last1", 
+                                "goal"
+                            ], 
+                            "tell": true
+                        }, 
+                        "resolver": null
+                    }, 
+                    "contexts": {
+                        "Activity": {
+                            "components": {
+                                "active_score": {
+                                    "Description": "Fitbit 1-minute active score data", 
+                                    "Identifier": "active_score", 
+                                    "component_type": "attribute", 
+                                    "creation_time": 1344493920.707348, 
+                                    "evidencelist": [], 
+                                    "goals": [], 
+                                    "objectType": "Component", 
+                                    "resolver": null, 
+                                    "value": null, 
+                                    "value_list": [], 
+                                    "value_type": "number"
+                                }, 
+                                "calories": {
+                                    "Description": "Fitbit 1-minute calorie data", 
+                                    "Identifier": "calories", 
+                                    "component_type": "attribute", 
+                                    "creation_time": 1344493920.603951, 
+                                    "evidencelist": [], 
+                                    "goals": [], 
+                                    "objectType": "Component", 
+                                    "resolver": null, 
+                                    "value": null, 
+                                    "value_list": [], 
+                                    "value_type": "number"
+                                }, 
+                                "steps": {
+                                    "Description": "Fitbit 1-minute step data", 
+                                    "Identifier": "steps", 
+                                    "component_type": "attribute", 
+                                    "creation_time": 1344493920.573694, 
+                                    "evidencelist": [], 
+                                    "goals": [], 
+                                    "objectType": "Component", 
+                                    "resolver": null, 
+                                    "value": null, 
+                                    "value_list": [], 
+                                    "value_type": "number"
+                                }
+                            }, 
+                            "contextinfo": {
+                                "Description": "Extract data from fitbit server", 
+                                "Identifier": "Activity", 
+                                "creation_time": 1344993588.466439, 
+                                "objectType": "Context", 
+                                "perms": {
+                                    "ask": true, 
+                                    "resolvers": [
+                                        "all", 
+                                        "last10", 
+                                        "last1", 
+                                        "goal"
+                                    ], 
+                                    "tell": true
+                                }, 
+                                "resolver": null
+                            }, 
+                            "contexts": null, 
+                            "subs": {}, 
+                            "views": {}
+                        }
+                    }, 
+                    "subs": {}, 
+                    "views": {}
+                }, 
+                "activity_monitor": {
+                    "components": {}, 
+                    "contextinfo": {
+                        "Description": "Watch computer usage", 
+                        "Identifier": "activity_monitor", 
+                        "creation_time": 1344993588.847415, 
+                        "objectType": "Context", 
+                        "perms": {
+                            "ask": true, 
+                            "resolvers": [
+                                "all", 
+                                "last10", 
+                                "last1", 
+                                "goal"
+                            ], 
+                            "tell": true
+                        }, 
+                        "resolver": null
+                    }, 
+                    "contexts": {
+                        "activity": {
+                            "components": {
+                                "data": {
+                                    "Description": "0 on inactivity detection, 1 on activity detection, -1 on shutdown", 
+                                    "Identifier": "data", 
+                                    "component_type": "attribute", 
+                                    "creation_time": 1344564775.582695, 
+                                    "evidencelist": [
+                                        {
+                                            "comment": null, 
+                                            "creation_time": 1344993589.412682, 
+                                            "evidence_type": "explicit", 
+                                            "flags": [], 
+                                            "objectType": "Evidence", 
+                                            "owner": "jamesuther", 
+                                            "source": "jamesuther", 
+                                            "time": 1344564787.710905, 
+                                            "useby": null, 
+                                            "value": -1
+                                        }, 
+                                        {
+                                            "comment": null, 
+                                            "creation_time": 1344993589.435538, 
+                                            "evidence_type": "explicit", 
+                                            "flags": [], 
+                                            "objectType": "Evidence", 
+                                            "owner": "jamesuther", 
+                                            "source": "jamesuther", 
+                                            "time": 1344564781.682347, 
+                                            "useby": null, 
+                                            "value": 1
+                                        }, 
+                                        {
+                                            "comment": null, 
+                                            "creation_time": 1344993589.497554, 
+                                            "evidence_type": "explicit", 
+                                            "flags": [], 
+                                            "objectType": "Evidence", 
+                                            "owner": "jamesuther", 
+                                            "source": "jamesuther", 
+                                            "time": 1344564776.677399, 
+                                            "useby": null, 
+                                            "value": 0
+                                        }
+                                    ], 
+                                    "goals": [], 
+                                    "objectType": "Component", 
+                                    "resolver": null, 
+                                    "value": 0, 
+                                    "value_list": [], 
+                                    "value_type": "number"
+                                }
+                            }, 
+                            "contextinfo": {
+                                "Description": "Extract data from activity watcher", 
+                                "Identifier": "activity", 
+                                "creation_time": 1344993589.134806, 
+                                "objectType": "Context", 
+                                "perms": {
+                                    "ask": true, 
+                                    "resolvers": [
+                                        "all", 
+                                        "last10", 
+                                        "last1", 
+                                        "goal"
+                                    ], 
+                                    "tell": true
+                                }, 
+                                "resolver": null
+                            }, 
+                            "contexts": null, 
+                            "subs": {}, 
+                            "views": {}
+                        }
+                    }, 
+                    "subs": {}, 
+                    "views": {}
+                }
+            }, 
+            "subs": {}, 
+            "views": {}
+        }, 
+        "Goals": {
+            "components": {}, 
+            "contextinfo": {
+                "Description": "Goals related to the user", 
+                "Identifier": "Goals", 
+                "creation_time": 1344993560.116389, 
+                "objectType": "Context", 
+                "perms": {}, 
+                "resolver": null
+            }, 
+            "contexts": {
+                "Health": {
+                    "components": {}, 
+                    "contextinfo": {
+                        "Description": "Health related goals", 
+                        "Identifier": "Health", 
+                        "creation_time": 1344993560.330228, 
+                        "objectType": "Context", 
+                        "perms": {}, 
+                        "resolver": null
+                    }, 
+                    "contexts": null, 
+                    "subs": {}, 
+                    "views": {}
+                }
+            }, 
+            "subs": {}, 
+            "views": {}
+        }, 
+        "Personal": {
+            "components": {
+                "email": {
+                    "Description": "email address", 
+                    "Identifier": "email", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993561.084988, 
+                    "evidencelist": [
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993561.336185, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "james.uther@gmail.com"
+                        }, 
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993587.15813, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "james.uther@gmail.com"
+                        }
+                    ], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": "james.uther@gmail.com", 
+                    "value_list": null, 
+                    "value_type": "string"
+                }, 
+                "firstname": {
+                    "Description": "First name", 
+                    "Identifier": "firstname", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993561.029975, 
+                    "evidencelist": [
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993561.225748, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "James"
+                        }, 
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993587.091967, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "James"
+                        }
+                    ], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": "James", 
+                    "value_list": null, 
+                    "value_type": "string"
+                }, 
+                "gender": {
+                    "Description": "Gender", 
+                    "Identifier": "gender", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993561.068726, 
+                    "evidencelist": [
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993561.294119, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "male"
+                        }, 
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993587.108125, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "male"
+                        }
+                    ], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": "male", 
+                    "value_list": [
+                        "male", 
+                        "female"
+                    ], 
+                    "value_type": "enum"
+                }, 
+                "gid": {
+                    "Description": "Google ID", 
+                    "Identifier": "gid", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993561.148235, 
+                    "evidencelist": [
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993561.377453, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "117572263564136503318"
+                        }, 
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993587.124939, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "117572263564136503318"
+                        }
+                    ], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": "117572263564136503318", 
+                    "value_list": null, 
+                    "value_type": "string"
+                }, 
+                "lastname": {
+                    "Description": "Last name", 
+                    "Identifier": "lastname", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993561.051897, 
+                    "evidencelist": [
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993561.25268, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "Uther"
+                        }, 
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993587.14167, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "Uther"
+                        }
+                    ], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": "Uther", 
+                    "value_list": null, 
+                    "value_type": "string"
+                }, 
+                "picture": {
+                    "Description": "Uri of a picture of the user", 
+                    "Identifier": "picture", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993561.176774, 
+                    "evidencelist": [
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993561.418965, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "https://lh6.googleusercontent.com/-tXwYONXd3S0/AAAAAAAAAAI/AAAAAAAADCM/g-v66L7uj_E/photo.jpg"
+                        }, 
+                        {
+                            "comment": null, 
+                            "creation_time": 1344993587.071761, 
+                            "evidence_type": "explicit", 
+                            "flags": [], 
+                            "objectType": "Evidence", 
+                            "owner": "jamesuther", 
+                            "source": "jamesuther", 
+                            "time": null, 
+                            "useby": null, 
+                            "value": "https://lh6.googleusercontent.com/-tXwYONXd3S0/AAAAAAAAAAI/AAAAAAAADCM/g-v66L7uj_E/photo.jpg"
+                        }
+                    ], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": "https://lh6.googleusercontent.com/-tXwYONXd3S0/AAAAAAAAAAI/AAAAAAAADCM/g-v66L7uj_E/photo.jpg", 
+                    "value_list": null, 
+                    "value_type": "string"
+                }
+            }, 
+            "contextinfo": {
+                "Description": "Personal data", 
+                "Identifier": "Personal", 
+                "creation_time": 1344993560.83496, 
+                "objectType": "Context", 
+                "perms": {}, 
+                "resolver": null
+            }, 
+            "contexts": null, 
+            "subs": {}, 
+            "views": {
+                "fullname": {
+                    "Description": "", 
+                    "Identifier": "fullname", 
+                    "component_list": [
+                        "firstname", 
+                        "lastname"
+                    ], 
+                    "objectType": "View"
+                }
+            }
+        }, 
+        "modelinfo": {
+            "components": {
+                "modeled": {
+                    "Description": "type of entity being modeled", 
+                    "Identifier": "modeled", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993560.743798, 
+                    "evidencelist": [], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": null, 
+                    "value_list": null, 
+                    "value_type": "string"
+                }, 
+                "personisversion": {
+                    "Description": "version of the Personis version in use", 
+                    "Identifier": "personisversion", 
+                    "component_type": "attribute", 
+                    "creation_time": 1344993560.812235, 
+                    "evidencelist": [], 
+                    "goals": [], 
+                    "objectType": "Component", 
+                    "resolver": null, 
+                    "value": null, 
+                    "value_list": null, 
+                    "value_type": "string"
+                }
+            }, 
+            "contextinfo": {
+                "Description": "Model Information", 
+                "Identifier": "modelinfo", 
+                "creation_time": 1344993560.540487, 
+                "objectType": "Context", 
+                "perms": {}, 
+                "resolver": null
+            }, 
+            "contexts": null, 
+            "subs": {}, 
+            "views": {}
+        }
+    }, 
+    "subs": {}, 
+    "views": {}
+}

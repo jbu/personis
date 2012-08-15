@@ -5,6 +5,12 @@ import os
 import distribute_setup
 distribute_setup.use_setuptools()
 
+try:
+    from distutils.command.build_py import build_py_2to3 as build_py
+except ImportError:
+    # 2.x
+    from distutils.command.build_py import build_py
+
 long_desc = """The Google API Client for Python is a client library for
 accessing the Plus, Moderator, and many other Google APIs."""
 
@@ -50,6 +56,7 @@ import personis
 version = personis.__version__
 
 setup(
+    use_2to3=True,
     name="personis",
     version=version,
     description="Peronis user model library",

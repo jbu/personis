@@ -68,11 +68,11 @@ def do_call(fun, args, connection):
             del result[k]
             result[str(k)] = v
     ## Unpack the error, and if it is an exception throw it.
-    if type(result) == types.DictionaryType and result.has_key("result"):
+    if type(result) == types.DictionaryType and 'result' in result:
         if result["result"] == "error":
             logging.debug( result)
             # We have returned with an error, so throw it as an exception.
-            if result.has_key("pythonPickel"):
+            if 'pythonPickel' in result:
                 raise pickle.loads(result["pythonPickel"])
             elif len(result["val"]) == 3:
                 raise pickle.loads(str(result["val"][2]))

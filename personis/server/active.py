@@ -77,7 +77,7 @@ class Access(base.Access):
 		cobjlist = []
 		if type(view) is StringType:
 			if views != None:
-				if not views.has_key(view):
+				if not view in views:
 					raise ValueError, '"%s" view not found'%(view)
 				cidlist = views[view].component_list
 			else:
@@ -94,9 +94,9 @@ class Access(base.Access):
 				cid = str(cid)
 			if type(cid) is StringType:
 				if comps != None:
-					if comps.has_key(cid):
+					if cid in comps:
 						# add sub dict to subs for cid ######
-						if subs.has_key(cid):
+						if cid in subs:
 							newsub = subs[cid]
 						else:
 							newsub = {}
@@ -114,9 +114,9 @@ class Access(base.Access):
 					vcomps,vcomps_shelf_fd = base.shelf_open(vcontext+"/.components", "r")
 				except:
 					raise ValueError, 'context "%s" not in view "%s"'%(cid[-1],`view`)
-				if vcomps.has_key(cid[-1]):
+				if cid[-1] in vcomps:
 					# add sub dict to subs for cid[-1] #########
-					if not subs.has_key(cid[-1]):
+					if cid[-1] not in subs:
 						newsub = {}
 					else:
 						newsub = subs[cid[-1]]
@@ -144,7 +144,7 @@ class Access(base.Access):
 			subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "w")
 		except:
 			raise ValueError, 'no subs db when deleting sub %s for component "%s" in context "%s" not found'%(subname, componentid,self.curcontext)
-		if not subs.has_key(componentid):
+		if componentid not in subs:
 			raise ValueError, 'sub %s for component "%s" in context "%s" not found'%(subname, componentid,self.curcontext)
 		subdict = subs[componentid]
 		try:
@@ -162,7 +162,7 @@ class Access(base.Access):
 			subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "r")
 		except:
 			raise ValueError, 'no subs db when listing subs for component "%s" in context "%s" '%(componentid,self.curcontext)
-		if not subs.has_key(componentid):
+		if componentid not in subs:
 			raise ValueError, 'no subs for component "%s" in context "%s" not found'%(componentid,self.curcontext)
 		subdict = subs[componentid]
 		if subs != None:
@@ -174,7 +174,7 @@ class Access(base.Access):
 		subs,subs_shelf_fd = base.shelf_open(self.curcontext+"/.subscriptions", "r")
 		#print ">>>subs in context '%s': %s" % (self.curcontext, subs.keys())
 		#print "checking subs for '%s'"%(componentid)
-		if subs.has_key(componentid):
+		if componentid in subs:
 			subdict = subs[componentid]
 			for subname,sub in subdict.items():
 				if sub == {}:
