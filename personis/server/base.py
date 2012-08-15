@@ -687,7 +687,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		cinfo = newmodel['contextinfo']
 		newcontext = context+[cinfo['Identifier']]
 		if not self.existcontext(newcontext):
-			con = Context(Identifier=cinfo['Identifier'], Description=cinfo['Description'], resolver=cinfo['resolver'])
+			con = Context(Identifier=cinfo['Identifier'], Description=cinfo['Description'], resolver=cinfo['resolver'], perms=cinfo['perms'])
 			self.mkcontext(context=context, contextobj=con)
 		else:
 			print newcontext, "exists"
