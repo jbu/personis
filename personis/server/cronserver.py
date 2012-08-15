@@ -19,8 +19,8 @@
 
 from multiprocessing import Process, Queue
 import time
-import subscription
-import base as pmdns
+from . import subscription
+from . import base as pmdns
 import logging
 
 cronq = None # message q
@@ -38,13 +38,13 @@ def time_in_spec(t, spec):
 def chkspec(t,spec,orig):
 	full = dict(minset=set(range(60)), hourset = set(range(24)), domset = set(range(31)), monthset = set(range(12)), dowset = set(range(7)))
 	now = dict(minset=set([t.tm_min]), hourset = set([t.tm_hour]), domset = set([t.tm_mday]), monthset = set([t.tm_mon]), dowset = set([t.tm_wday]))
-	print "full = ",full
-	print "spec = ",spec
+	print("full = ",full)
+	print("spec = ",spec)
 	for s in ['minset','hourset','domset','monthset','dowset']:
 		if spec[s] != full[s]:
-			print "%s : %s" % (s, spec[s])
+			print("%s : %s" % (s, spec[s]))
 			if now[s].issubset(spec[s]):
-				print ">>%s : %s" % (s, orig[s].difference(now[s]))
+				print(">>%s : %s" % (s, orig[s].difference(now[s])))
 				speccopy = spec.copy()
 				speccopy[s] = orig[s].difference(now[s])
 				return speccopy
@@ -55,15 +55,15 @@ def checksub(modeldir, m):
 	try:	
 		um = pmdns.Access(modeldir=modeldir, model=sub['modelname'], user=sub['user'], password=sub['password'])
 	except:
-		print "Access failed", sub
+		print("Access failed", sub)
 		return
-	print "Access OK", sub
+	print("Access OK", sub)
 	try:
 		subscription.dosub(sub,um)
 	except:
-		print "dosub failed"
+		print("dosub failed")
 		return
-	print "dosub ok"
+	print("dosub ok")
 	
 
 def cronserver(q, modeldir):
@@ -108,13 +108,13 @@ else
 				if newspec == []:
 					if time_in_spec(tnow, cronspec):
 						newspec = chkspec(tnow, cronspec, cronspec)
-						print "=== FIRED cronspec ===", time.ctime(), newspec
+						print("=== FIRED cronspec ===", time.ctime(), newspec)
 						checksub(modeldir, crondb[i])
 						#print i,":",crondb[i]
 				else:
 					if time_in_spec(tnow, newspec):
 						newspec = chkspec(tnow, newspec, cronspec)
-						print "=== FIRED newspec ===", time.ctime(), newspec
+						print("=== FIRED newspec ===", time.ctime(), newspec)
 						checksub(modeldir, crondb[i])
 						#print i,":",crondb[i]
 				crondb[i]['newspec'] = newspec
@@ -137,7 +137,7 @@ else
 			m['cronspec'] = dict(minset=minset, hourset=hourset, domset=domset, monthset=monthset, dowset=dowset)
 			m['newspec'] = []
 			crondb[crondblen] = m
-			print "put:", m
+			print("put:", m)
 			crondblen += 1
 
 
@@ -204,7 +204,7 @@ class crontab_parser(object):
         fr = self._expand_number(toks[0])
         if len(toks) > 1:
             to = self._expand_number(toks[1])
-            return range(fr, min(to + 1, self.max_ + 1))
+            return list(range(fr, min(to + 1, self.max_ + 1)))
         return [fr]
  
     def _range_steps(self, toks):
@@ -221,7 +221,7 @@ class crontab_parser(object):
         return [n for n in numbers if n % steps == 0]
  
     def _expand_star(self, *args):
-        return range(self.max_)
+        return list(range(self.max_))
  
     def _expand_number(self, s):
         if isinstance(s, basestring) and s[0] == '-':

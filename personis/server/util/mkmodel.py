@@ -36,8 +36,8 @@ from Personis_mkmodel import *
 
 def doit():
 	if len(sys.argv) < 4 or '--modelserver'== sys.argv[-1]:
-		print "usage: mkmodel modelfile modeldir model-name ...."
-		print "or: mkmodel --modelserver modelservername:port modelfile model-name ...."
+		print("usage: mkmodel modelfile modeldir model-name ....")
+		print("or: mkmodel --modelserver modelservername:port modelfile model-name ....")
 		sys.exit(0)
 
 	modelserver = None
@@ -52,7 +52,7 @@ def doit():
 	else:
 		for m in sys.argv[3:]:
 			mname,user,password = m.split(":")
-			print mname, sys.argv[1], sys.argv[2], user, password
+			print(mname, sys.argv[1], sys.argv[2], user, password)
 			mkmodel(model=mname, mfile=sys.argv[1], modeldir=sys.argv[2], user=user, password=password)
 
 

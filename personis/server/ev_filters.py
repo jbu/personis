@@ -93,7 +93,7 @@ class Evidence_list:
 			try:
 				self.evdb,self.evdb_fd = shelf_open(model.curcontext+"/.evidence", "r")
 			except:
-				raise ValueError, "tell: no evidence db for %s"%(model.curcontext)
+				raise ValueError("tell: no evidence db for %s"%(model.curcontext))
 			if self.componentid not in self.evdb:
 				shelf_close(self.evdb, self.evdb_fd)
 				return None # no evidence for this component

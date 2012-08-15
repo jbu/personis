@@ -20,7 +20,7 @@
 import httplib2, types, cPickle
 import json
 import cherrypy, oauth2client
-import connection
+from . import connection
 
 def do_call(fun, args, connection):
 	if (not connection.valid()):
@@ -35,27 +35,27 @@ def do_call(fun, args, connection):
 	try:
 		result = json.loads(content)
 	except:
-		print "json loads failed!"
-		print "<<%s>>" % (content)
-		raise ValueError, "json loads failed"
+		print("json loads failed!")
+		print("<<%s>>" % (content))
+		raise ValueError("json loads failed")
 	# dirty kludge to get around unicode
 	for k,v in result.items():
-		if type(v) == type(u''):
+		if type(v) == type(''):
 			result[k] = str(v)
-		if type(k) == type(u''):
+		if type(k) == type(''):
 			del result[k]
 			result[str(k)] = v
 	## Unpack the error, and if it is an exception throw it.
-	if type(result) == types.DictionaryType and 'result' in result:
+	if type(result) == dict and 'result' in result:
 		if result["result"] == "error":
-			print result
+			print(result)
 			# We have returned with an error, so throw it as an exception.
 			if 'pythonPickel' in result:
 				raise cPickle.loads(result["pythonPickel"])
 			elif len(result["val"]) == 3:
 				raise cPickle.loads(str(result["val"][2]))
 			else:
-				raise Exception, str(result["val"])
+				raise Exception(str(result["val"]))
 		else:
 			# Unwrap the result, and return as normal. 
 			result = result["val"]

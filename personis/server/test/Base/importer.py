@@ -10,7 +10,7 @@ from Personis_util import printcomplist, printjson
 
 um = Personis_a.Access(model="Alice", modeldir='Tests/Models', user='alice', password='secret')
 modelfile = "exprev"
-print "importing:", modelfile
+print("importing:", modelfile)
 modeljson = open(modelfile).read()
 um.import_model(partial_model=modeljson)
 

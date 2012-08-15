@@ -15,8 +15,8 @@ um.tell(context=["Personal"], componentid='firstname', evidence=ev)
 ev = Personis_base.Evidence(evidence_type="explicit", value="Smith")
 um.tell(context=["Personal"], componentid='lastname', evidence=ev)
 
-print "==================================================================="
-print "Now check the evidence list for Alice's names"
+print("===================================================================")
+print("Now check the evidence list for Alice's names")
 reslist = um.ask(context=["Personal"], view='fullname')
 printcomplist(reslist, printev = "yes")
 

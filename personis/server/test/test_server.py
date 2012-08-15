@@ -52,9 +52,9 @@ class TestPersonisBaseAdd(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.stopq.put('exit')
-        print 'here1'
+        print('here1')
         cls.serverp.join()
-        print 'here2'
+        print('here2')
         shutil.rmtree('models')
 
     def test_ask_firstname(self):

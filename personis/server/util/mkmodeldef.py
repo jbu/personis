@@ -33,21 +33,21 @@ import json
 
 def doit():
 	if len(sys.argv) != 2:
-		print "usage: mkmodeldef json-model-file ...."
+		print("usage: mkmodeldef json-model-file ....")
 		sys.exit(0)
 	partial_model = "".join(open(sys.argv[1]).readlines())
 	dump_model(partial_model=partial_model)
 
 def printlist(v):
-	print "[",
+	print("[", end=' ')
 	first = True
 	for e in v:
 		if first == True:
 			first = False
 		else:
-			print ", ",
-		print '"%s"' % (e),
-	print "]",
+			print(", ", end=' ')
+		print('"%s"' % (e), end=' ')
+	print("]", end=' ')
 
 def dump_model(context=[], partial_model=None):
 	"""
@@ -73,56 +73,56 @@ def dump_model(context=[], partial_model=None):
 		newmodel = partial_model
 	cinfo = newmodel['contextinfo']
 	newcontext = context+[cinfo['Identifier']]
-	print "\n\n@@%s:" % ("/".join(newcontext))
+	print("\n\n@@%s:" % ("/".join(newcontext)))
 	for compname, comp in newmodel['components'].items():
-		print "\n--%s: " % (compname),
+		print("\n--%s: " % (compname), end=' ')
 		first = True
 		for k,v in comp.items():
 			if (k != "evidencelist") and (k != "Identifier"):
 				if first == True:
 					first = False
 				else:
-					print ", ",
-				print '%s='% (k),
+					print(", ", end=' ')
+				print('%s='% (k), end=' ')
 				if type(v) == type([]):
 					printlist(v)
 				else:
-					print '"%s"' % (v),
+					print('"%s"' % (v), end=' ')
 		if compname in newmodel['subs']:
 			for subname, sub in newmodel['subs'][compname].items():
-				print ', rule="%s"' % (sub['statement'])
+				print(', rule="%s"' % (sub['statement']))
 		comp["evidencelist"].reverse()
 		if comp["evidencelist"] != []:
-			print ","
+			print(",")
 		for ev in comp["evidencelist"]:
-			print "[",
+			print("[", end=' ')
 			first = True
-			for k,v in ev.items():
+			for k,v in v.items():
 				if k == "objectType":
 					continue
 				if first == True:
 					first = False
 				else:
-					print ", ",
-				print '%s='% (k),
+					print(", ", end=' ')
+				print('%s='% (k), end=' ')
 				if type(v) == type([]):
 					printlist(v)
 				else:
-					print '"%s"' % (v),
-			print "]"
+					print('"%s"' % (v), end=' ')
+			print("]")
 	for viewname, view in newmodel['views'].items():
-		print "==%s:" % (viewname),
+		print("==%s:" % (viewname), end=' ')
 		first = True
 		for k,v in view.items():
 			if first == True:
 				first = False
 			else:
-				print ", ",
-			print '%s='% (k),
+				print(", ", end=' ')
+			print('%s='% (k), end=' ')
 			if type(v) == type([]):
 				printlist(v)
 			else:
-				print '"%s"' % (v),
+				print('"%s"' % (v), end=' ')
 	if newmodel['contexts'] != None:
 		for contextname, cont in newmodel['contexts'].items():
 			#print "\n\n>>CONTEXT", contextname, cont

@@ -16,13 +16,13 @@ um.tell(context=["Personal"], componentid='firstname', evidence=ev)
 ev = Personis_base.Evidence(evidence_type="explicit", value="Smith")
 um.tell(context=["Personal"], componentid='lastname', evidence=ev)
 
-print "==================================================================="
-print "Now add a new resolver to um"
+print("===================================================================")
+print("Now add a new resolver to um")
 
 def myresolver(model=None, component=None, context=None, resolver_args=None):
 	"""     new resolver function 
 	"""
-	print "new resolver called with ", `component`
+	print("new resolver called with ", repr(component))
 	if resolver_args == None:
 		ev_filter = None
 	else:
@@ -32,13 +32,13 @@ def myresolver(model=None, component=None, context=None, resolver_args=None):
 		component.value = component.evidencelist[-1]['value']
 
 	r = model.ask(context=["Personal"], view=["lastname"])
-	print r[0].__dict__
+	print(r[0].__dict__)
 	return component
 
 um.resolverlist["myresolver"] = myresolver
 
-print "now ask for fullname"
+print("now ask for fullname")
 reslist = um.ask(context=["Personal"], view='fullname', resolver=dict(resolver="myresolver", evidence_filter="all"))
-print "and print result"
+print("and print result")
 printcomplist(reslist, printev = "yes")
 

@@ -29,9 +29,9 @@ and creates a model in modeldirectory for each model
 """
 
 import sys
-import base
-import active
-import server
+from . import base
+from . import active
+from . import server
 import logging
 
 
@@ -60,7 +60,7 @@ import logging
 ==fullname: Personal/firstname, Personal/lastname
 
 """
-from mypyparsing import Word, alphas, alphanums, Literal, ZeroOrMore, quotedString, Forward, removeQuotes, ParseException, Optional, OneOrMore
+from .mypyparsing import Word, alphas, alphanums, Literal, ZeroOrMore, quotedString, Forward, removeQuotes, ParseException, Optional, OneOrMore
 
 keyvals = {} # dictionary to hold list of key/value pairs for an element of the  modeldef
 attrs = []
@@ -127,7 +127,7 @@ def dotells(ev, compid):
 	global themodel, curcontext
 	evattrs = ["flags", "evidence_type", "source", "owner", "value", "comment", "time", "useby"]
 	if not all([a in evattrs for a in ev]):
-		logging.debug( "**** evidence attributes %s must be one of %s" % (ev.keys(), `evattrs`))
+		logging.debug( "**** evidence attributes %s must be one of %s" % (ev.keys(), repr(evattrs)))
 		return 
 	if "flags" in ev:
 		if type(ev['flags']) != type([]):
@@ -136,7 +136,7 @@ def dotells(ev, compid):
 
 	if not Debug:
 		evobj = base.Evidence(evidence_type="explicit")
-		for k,v in ev.items():
+		for k,v in v.items():
 			evobj.__dict__[k] = v
 		themodel.tell(context=curcontext, componentid=compid, evidence=evobj)
 		logging.debug(	"""
@@ -208,12 +208,12 @@ def docontext(str, loc, toks):
 	logging.debug( " \tattrs:: %s", attrs)
 	if len(paths) != 1:
 		logging.info( "too many paths", paths)
-		raise ParseException, "too many paths " + `paths`
+		raise ParseException("too many paths " + repr(paths))
 	curcontext = paths[0]
-	logging.debug( "\tcurcontext:: "+ curcontext + `curcontext.split('/')`)
+	logging.debug( "\tcurcontext:: "+ curcontext + repr(curcontext.split('/')))
 	if 'description' not in attrs[0]:
 		logging.info( "*** description required for ", curcontext)
-		raise ParseException, "description required for " + `curcontext`
+		raise ParseException("description required for " + repr(curcontext))
 	if not Debug:
 		cobj = base.Context(Identifier=curcontext.split('/')[-1], Description=attrs[0]['description'])
 	logging.debug( "\tbase.Context(Identifier='%s', Description='%s')", curcontext.split('/')[-1], attrs[0]['description'])
@@ -240,10 +240,10 @@ def doview(str, loc, toks):
 	global paths, curcontext, themodel, Debug
 	if curcontext == "":
 		logging.info( "No context defined for view %s", toks[1])
-		raise ParseException, "No context defined for view " + `toks[1]`
+		raise ParseException("No context defined for view " + repr(toks[1]))
 	if paths == []:
 		logging.info( "No paths defined for view %s", toks[1])
-		raise ParseException, "No paths defined for view " + `toks[1]`
+		raise ParseException("No paths defined for view " + repr(toks[1]))
 	logging.debug( "doview:: %s", toks[1])
 	logging.debug( "\t paths:: %s", paths)
 	if not Debug:
@@ -293,13 +293,13 @@ def domodeldef(mdefstring):
 	#print "statement:", mdefstring
 	try:
 		toks = mdef.parseString(mdefstring)
-	except ParseException, err:
+	except ParseException as err:
 		logging.info( '****  Parse Failure  ****')
 		logging.info( err.line)
 		logging.info( " "*(err.column-1) + "^")
 		logging.info( err)
 
-		raise ValueError, "parse failed"
+		raise ValueError("parse failed")
 
 
 """====================================================================================================================="""

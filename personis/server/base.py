@@ -357,7 +357,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		except:
 			raise ValueError("no model db for '%s'"%(self.modelname))
 		self.moddb = {}
-		for k in mod.keys():
+		for k in mod:
 			self.moddb[k] = mod[k]
 		if (self.user == self.moddb['owner']):
 			self.usertype = 'owner'
@@ -445,7 +445,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			cidlist = view
 		elif view == None: 
 			if comps != None:
-				cidlist = comps.keys()
+				cidlist = comps
 		else:
 			raise TypeError('view "%s" has unknown type'%(repr(view)))
 		self.theresolver = None
@@ -526,14 +526,14 @@ class Access(resolvers.Access,ev_filters.Access):
 			shelf_close(comps, comps_shelf_fd)
 		if views != None:
 			theviews = {}
-			for v in views.keys():
+			for v in views:
 				theviews[v] = views[v]
 			shelf_close(views, views_shelf_fd)
 		else:
 			theviews = None
 		if subs != None:
 			thesubs = {}
-			for s in subs.keys():
+			for s in subs:
 				thesubs[s] = subs[s]
 			shelf_close(subs, subs_shelf_fd)
 		else:
@@ -616,7 +616,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			compresolver = self.resolverlist["default"]
 		if comps != None:
 			thecomps = {}
-			for c in comps.keys():
+			for c in comps:
 				#evlist = comps[c].filterevidence(model=self, context=context, resolver=resolver)
 				#evlist2 = []
 				#if type(evlist) == type([]):
@@ -631,14 +631,14 @@ class Access(resolvers.Access,ev_filters.Access):
 			thecomps = None
 		if subs != None:
 			thesubs = {}
-			for s in subs.keys():
+			for s in subs:
 				thesubs[s] = subs[s]
 			shelf_close(subs, subs_shelf_fd)
 		else:
 			thesubs = None
 		if views != None:
 			theviews = {}
-			for v in views.keys():
+			for v in views:
 				theviews[v] = views[v].__dict__
 			shelf_close(views, views)
 		else:
@@ -690,7 +690,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			con = Context(Identifier=cinfo['Identifier'], Description=cinfo['Description'], resolver=cinfo['resolver'], perms=cinfo['perms'])
 			self.mkcontext(context=context, contextobj=con)
 		else:
-			print (newcontext, "exists")
+			print(newcontext, "exists")
 		for compname, comp in newmodel['components'].items():
 			newcobj = Component()
 			for k,v in comp.items():
@@ -847,7 +847,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		except:
 			return {} # root context - FIX
 		contextinfo = {}
-		for k in contextdb.keys():
+		for k in contextdb:
 			contextinfo[k] = contextdb[k]
 		shelf_close(contextdb, contextdb_shelf_fd)
 		if getsize:
@@ -1092,7 +1092,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		return self.setcomponentoption(context,componentid,resolver=resolver)
 
 	def getresolvers(self):
-		return self.resolverlist.keys()
+		return list(self.resolverlist.keys())
 
 	def mkcontext(self, 
 		context= [],
