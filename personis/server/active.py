@@ -49,7 +49,7 @@ class Access(base.Access):
 		subscription is a dictionary containing owner, password and subscription statement string
 		"""
 		subscription['modelname'] = self.modelname
-		print "subscription>>> %s %s %s" % (`context`, `view`, `subscription`)
+		print "subscription>>> %s %s %s" % (repr(context), repr(view), repr(subscription)
 		cronsub = subscription["statement"].strip().startswith("[")
 		token = "%s:%f" % (self.user, time.time())
 		for elt in ("user", "password", "statement"):
@@ -88,7 +88,7 @@ class Access(base.Access):
 			if comps != None:
 				cidlist = comps.keys()
 		else:
-			raise TypeError, 'view "%s" has unknown type'%(`view`)
+			raise TypeError, 'view "%s" has unknown type'%(repr(view)
 		for cid in cidlist:
 			if type(cid) == type(u''):
 				cid = str(cid)
@@ -113,7 +113,7 @@ class Access(base.Access):
 				try:
 					vcomps,vcomps_shelf_fd = base.shelf_open(vcontext+"/.components", "r")
 				except:
-					raise ValueError, 'context "%s" not in view "%s"'%(cid[-1],`view`)
+					raise ValueError, 'context "%s" not in view "%s"'%(cid[-1],repr(view)
 				if cid[-1] in vcomps:
 					# add sub dict to subs for cid[-1] #########
 					if cid[-1] not in subs:
@@ -125,7 +125,7 @@ class Access(base.Access):
 					if cronsub:
 						cronserver.cronq.put(dict(op="put",context=context, comp=cid, subscription=subscription))
 				else:
-					raise ValueError, 'component "%s" not in view "%s"'%(cid[-1],`view`)
+					raise ValueError, 'component "%s" not in view "%s"'%(cid[-1],repr(view)
 				base.shelf_close(vcomps, vcomps_shelf_fd)
 					
 		if comps != None:

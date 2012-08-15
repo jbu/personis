@@ -69,7 +69,7 @@ class Evidence:
             raise TypeError, "bad evidence type %s"%(self.evidence_type)
 
     def __str__(self):
-        return 'evidence: '+`self.__dict__`
+        return 'evidence: '+repr(self.__dict__)
 
 class View:
     """ view object

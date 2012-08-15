@@ -27,7 +27,7 @@ for res in reslist:
 # get the length of the longest string in the keys of d. Don't try this at home.
 leng = len(reduce(lambda x, y: x if len(x) > len(y) else y, d.keys()))
 # use it to create a format string
-f = '{:>'+`leng + 1`+'} : {}'
+f = '{:>'+repr(leng + 1)+'} : {}'
 # print the dict using the format
 for k, v in d.items():
 	print f.format(k, '*'*v)
