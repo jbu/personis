@@ -464,7 +464,6 @@ class Access(resolvers.Access,ev_filters.Access):
 				cid = cid.encode('ascii')
 			if type(cid) is StringType:
 				if comps != None:
-					print 'cid', cid, comps
 					if cid in comps:
 						if 'resolver' in comps[cid].__dict__:
 							compresname = comps[cid].resolver
