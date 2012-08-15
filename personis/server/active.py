@@ -88,9 +88,9 @@ class Access(base.Access):
 			if comps != None:
 				cidlist = comps.keys()
 		else:
-			raise TypeError, 'view "%s" has unknown type'%(repr(view)
+			raise TypeError, 'view "%s" has unknown type'%(repr(view))
 		for cid in cidlist:
-			if type(cid) == type(u''):
+			if type(cid) == type(u""):
 				cid = str(cid)
 			if type(cid) is StringType:
 				if comps != None:
