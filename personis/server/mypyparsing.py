@@ -2185,7 +2185,7 @@ commaSeparatedList = delimitedList( Optional( quotedString | _commasepitem, defa
 if __name__ == "__main__":
 
     def test( teststring ):
-        print(teststring,"->", end=' ')
+        print(teststring, "->")
         try:
             tokens = simpleSQL.parseString( teststring )
             tokenlist = tokens.asList()
