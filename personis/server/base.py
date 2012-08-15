@@ -23,7 +23,7 @@
 import os, shelve, sys, fcntl, time, string, glob
 import hashlib
 try:
-	import pybsddb as bsddb
+	import bsddb
 except:
 	import bsddb3 as bsddb
 from types import *
