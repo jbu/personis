@@ -11,8 +11,8 @@ cobj = Personis_base.Context(Identifier="Deltest", Description="testing context 
 um.mkcontext(context=["Personal"], contextobj=cobj)
 
 print("getting context information:")
-print("Info with size:", um.getcontext(context=["Personal"], getsize=True))
-print(um.getcontext(context=["Personal", "Deltest"]))
+print(("Info with size:", um.getcontext(context=["Personal"], getsize=True)))
+print((um.getcontext(context=["Personal", "Deltest"])))
 
 print("now deleting it")
 if um.delcontext(context=["Personal", "Deltest"]):

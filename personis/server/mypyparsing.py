@@ -85,7 +85,7 @@ def _ustr(obj):
         # unicode object (being a subclass of basestring) count as a "string
         # object"?
         # If so, then return a unicode object:
-        return unicode(obj)
+        return str(obj)
         # Else encode it... but how? There are many choices... :)
         # Replace unprintables with escape codes?
         #return unicode(obj).encode(sys.getdefaultencoding(), 'backslashreplace_errors')
@@ -198,7 +198,7 @@ class ParseResults(object):
                 name = _ustr(name) # will always return a str, but use _ustr for consistency
             self.__name = name
             if toklist:
-                if isinstance(toklist,basestring):
+                if isinstance(toklist,str):
                     toklist = [ toklist ]
                 if asList:
                     if isinstance(toklist,ParseResults):
@@ -313,7 +313,7 @@ class ParseResults(object):
 
     def asDict( self ):
         """Returns the named parse results as dictionary."""
-        return dict( self.items() )
+        return dict( list(self.items()) )
 
     def copy( self ):
         """Returns a new copy of a ParseResults object."""
@@ -394,7 +394,7 @@ class ParseResults(object):
                 return None
         elif (len(self) == 1 and 
                len(self.__tokdict) == 1 and
-               self.__tokdict.values()[0][0][1] in (0,-1)):
+               list(self.__tokdict.values())[0][0][1] in (0,-1)):
             return list(self.__tokdict.keys())[0]
         else:
             return None
@@ -670,49 +670,49 @@ class ParserElement(object):
 
     def __add__(self, other ):
         """Implementation of + operator - returns And"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return And( [ self, other ] )
 
     def __radd__(self, other ):
         """Implementation of += operator"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return other + self
 
     def __or__(self, other ):
         """Implementation of | operator - returns MatchFirst"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return MatchFirst( [ self, other ] )
 
     def __ror__(self, other ):
         """Implementation of |= operator"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return other | self
 
     def __xor__(self, other ):
         """Implementation of ^ operator - returns Or"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return Or( [ self, other ] )
 
     def __rxor__(self, other ):
         """Implementation of ^= operator"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return other ^ self
 
     def __and__(self, other ):
         """Implementation of & operator - returns Each"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return Each( [ self, other ] )
 
     def __rand__(self, other ):
         """Implementation of right-& operator"""
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return other & self
 
@@ -985,7 +985,7 @@ class Word(Token):
         if max > 0:
             self.maxLen = max
         else:
-            self.maxLen = sys.maxint
+            self.maxLen = sys.maxsize
 
         if exact > 0:
             self.maxLen = exact
@@ -1064,7 +1064,7 @@ class CharsNotIn(Token):
         if max > 0:
             self.maxLen = max
         else:
-            self.maxLen = sys.maxint
+            self.maxLen = sys.maxsize
 
         if exact > 0:
             self.maxLen = exact
@@ -1143,7 +1143,7 @@ class White(Token):
         if max > 0:
             self.maxLen = max
         else:
-            self.maxLen = sys.maxint
+            self.maxLen = sys.maxsize
 
         if exact > 0:
             self.maxLen = exact
@@ -1287,7 +1287,7 @@ class ParseExpression(ParserElement):
         super(ParseExpression,self).__init__(savelist)
         if isinstance( exprs, list ):
             self.exprs = exprs
-        elif isinstance( exprs, basestring ):
+        elif isinstance( exprs, str ):
             self.exprs = [ Literal( exprs ) ]
         else:
             self.exprs = [ exprs ]
@@ -1454,7 +1454,7 @@ class Or(ParseExpression):
         return maxMatchExp.parse( instring, loc, doActions )
 
     def __ixor__(self, other ):
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return self.append( other ) #Or( [ self, other ] )
 
@@ -1506,7 +1506,7 @@ class MatchFirst(ParseExpression):
             raise maxException
 
     def __ior__(self, other ):
-        if isinstance( other, basestring ):
+        if isinstance( other, str ):
             other = Literal( other )
         return self.append( other ) #MatchFirst( [ self, other ] )
 
@@ -1609,7 +1609,7 @@ class ParseElementEnhance(ParserElement):
     """Abstract subclass of ParserElement, for combining and post-processing parsed tokens."""
     def __init__( self, expr, savelist=False ):
         super(ParseElementEnhance,self).__init__(savelist)
-        if isinstance( expr, basestring ):
+        if isinstance( expr, str ):
             expr = Literal(expr)
         self.expr = expr
         self.strRepr = None
@@ -2074,13 +2074,13 @@ empty      = Empty().setName("empty")
 
 _escapedPunc = Word( _bslash, r"\[]-*.$+^?()~ ", exact=2 ).setParseAction(lambda s,l,t:t[0][1])
 _printables_less_backslash = "".join([ c for c in printables if c not in  r"\]" ])
-_escapedHexChar = Combine( Suppress(_bslash + "0x") + Word(hexnums) ).setParseAction(lambda s,l,t:unichr(int(t[0],16)))
-_escapedOctChar = Combine( Suppress(_bslash) + Word("0","01234567") ).setParseAction(lambda s,l,t:unichr(int(t[0],8)))
+_escapedHexChar = Combine( Suppress(_bslash + "0x") + Word(hexnums) ).setParseAction(lambda s,l,t:chr(int(t[0],16)))
+_escapedOctChar = Combine( Suppress(_bslash) + Word("0","01234567") ).setParseAction(lambda s,l,t:chr(int(t[0],8)))
 _singleChar = _escapedPunc | _escapedHexChar | _escapedOctChar | Word(_printables_less_backslash,exact=1)
 _charRange = Group(_singleChar + Suppress("-") + _singleChar)
 _reBracketExpr = "[" + Optional("^").setResultsName("negate") + Group( OneOrMore( _charRange | _singleChar ) ).setResultsName("body") + "]"
 
-_expanded = lambda p: (isinstance(p,ParseResults) and ''.join([ unichr(c) for c in range(ord(p[0]),ord(p[1])+1) ]) or p)
+_expanded = lambda p: (isinstance(p,ParseResults) and ''.join([ chr(c) for c in range(ord(p[0]),ord(p[1])+1) ]) or p)
         
 def srange(s):
     r"""Helper to easily define string ranges for use in Word construction.  Borrows

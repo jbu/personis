@@ -21,7 +21,7 @@ print("Now add a new resolver to um")
 def myresolver(model=None, component=None, context=None, resolver_args=None):
 	"""     new resolver function 
 	"""
-	print("new resolver called with ", repr(component))
+	print(("new resolver called with ", repr(component)))
 	if resolver_args == None:
 		ev_filter = None
 	else:

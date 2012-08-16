@@ -11,8 +11,8 @@ um = Personis_a.Access(model='Alice', modeldir='Tests/Models', user='alice', pas
 reslist = um.ask(context=["Personal"], view='fullname', showcontexts=True)
 print(reslist)
 cobjlist, contexts, theviews, thesubs = reslist
-subname = list(thesubs.items())[0][1].items()[0][0]
-print("first sub is: ", subname)
+subname = list(list(thesubs.items())[0][1].items())[0][0]
+print(("first sub is: ", subname))
 
 result = um.delete_sub(context=["Personal"], componentid='lastname', subname=subname)
 

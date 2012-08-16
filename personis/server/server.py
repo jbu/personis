@@ -31,7 +31,7 @@ import cherrypy
 from . import base
 from . import active
 from . import util
-import cPickle
+import pickle
 from multiprocessing import Process, Queue
 from . import cronserver
 import random, time
@@ -94,9 +94,9 @@ class Server:
         base_path = os.path.dirname(os.path.abspath(__file__))
         loader = TemplateLoader([base_path])
         tmpl = loader.load('html/list_clients.html')
-        for k, v in self.oauth_clients.items():
+        for k, v in list(self.oauth_clients.items()):
             logging.debug( 'clients %s, %s', k, v['friendly_name'])
-        stream = tmpl.generate(clients=self.oauth_clients.values())
+        stream = tmpl.generate(clients=list(self.oauth_clients.values()))
         return stream.render('xhtml')
 
 
@@ -179,7 +179,7 @@ class Server:
         clid, field = id.split('|')
         logging.debug(  'saving: ',clid, field, value)
         oldc = self.oauth_clients[clid][field] = value
-        for k, v in self.oauth_clients.items():
+        for k, v in list(self.oauth_clients.items()):
             logging.debug(  k, v['friendly_name'])
         self.save_oauth_clients()
         return value
@@ -320,7 +320,7 @@ class Server:
 
         self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
         self.access_tokens.sync()
-        logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
+        logging.debug('access tokens: %s',repr([i for i in list(self.access_tokens.keys())]))
 
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
@@ -350,7 +350,7 @@ class Server:
 
         # expire old tokens before we look
         now = time.time()
-        for k, v in self.access_tokens.items():
+        for k, v in list(self.access_tokens.items()):
             logging.debug(  'access_tokens %s: %s', k,v)
             if now > v['expires']:
                 logging.debug (  'expire access_token %s',k)
@@ -445,7 +445,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
             return json.dumps("Personis User Model server. Not accessible using a web browser.")
 
         # dirty kludge to get around unicode
-        for k,v in pargs.items():
+        for k,v in list(pargs.items()):
             if type(v) == type(''):
                 pargs[k] = str(v)
             if type(k) == type(''):
@@ -487,7 +487,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
                             c["evidencelist"] = [e for e in c["evidencelist"]]
                     newviews = {}
                     if theviews != None:
-                        for vname,v in theviews.items():
+                        for vname,v in list(theviews.items()):
                             newviews[vname] = v.__dict__
                     else:
                         newviews = None
@@ -557,7 +557,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
             traceback.print_exc()
             if 'version' in pargs:
                 new_result = {}
-                new_result["val"] = [e.__class__.__name__, e.__dict__.copy(), cPickle.dumps(e)]
+                new_result["val"] = [e.__class__.__name__, e.__dict__.copy(), pickle.dumps(e)]
                 new_result["result"] = "error"
                 result = new_result
             else:
@@ -581,7 +581,7 @@ class ExitThread(threading.Thread):
             logging.info('exit thread got %s', g)
             if g == 'exit':
                 self.running = False
-            print('qgot', g)
+            print(('qgot', g))
         logging.info('exit listener run ends')
         self.exit()
 

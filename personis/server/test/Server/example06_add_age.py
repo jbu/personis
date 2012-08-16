@@ -10,7 +10,7 @@ cobj = Personis_base.Component(Identifier="age", component_type="attribute", Des
 showobj(cobj, 1)
 
 res = um.mkcomponent(context=["Personal"], componentobj=cobj)
-print(repr(res))
+print((repr(res)))
 
 print(">>>> show the age component in the Personal context")
 ev = Personis_base.Evidence(source="example 6", evidence_type="explicit", value=17)

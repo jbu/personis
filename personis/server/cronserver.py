@@ -224,7 +224,7 @@ class crontab_parser(object):
         return list(range(self.max_))
  
     def _expand_number(self, s):
-        if isinstance(s, basestring) and s[0] == '-':
+        if isinstance(s, str) and s[0] == '-':
             raise self.ParseException("negative numbers not supported")
         try:
             i = int(s)

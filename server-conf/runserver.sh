@@ -6,4 +6,4 @@
 # sudo chmod 755 /etc/authbind/byport/80
 # And add authbind to the start of the execution below
 
-python -m personis.server.server --models=models/ --config=server.conf --oauthclients=oauth_clients.json --admins=admins.yaml
+python3 -m personis.server --models=models/ --config=server.conf --oauthclients=oauth_clients.json --admins=admins.yaml

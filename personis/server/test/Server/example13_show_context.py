@@ -7,9 +7,9 @@ from Personis_util import showobj, printcomplist
 def printAskContext( info ):
 	(cobjlist, contexts, theviews, thesubs) = info
 	printcomplist(cobjlist, printev = "yes")
-	print("Contexts: %s" % str(contexts))
-	print("Views: %s" % str(theviews))
-	print("Subscriptions: %s" % str(thesubs))
+	print(("Contexts: %s" % str(contexts)))
+	print(("Views: %s" % str(theviews)))
+	print(("Subscriptions: %s" % str(thesubs)))
 		
 print("===================================================================")
 print("Examples that show how the showcontext call works")

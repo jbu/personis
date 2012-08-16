@@ -10,7 +10,7 @@ cobj = Personis_base.Component(Identifier="fitness", component_type="goal", Desc
 showobj(cobj, 1)
 
 res = um.mkcomponent(context=["Personal"], componentobj=cobj)
-print(repr(res))
+print((repr(res)))
 
 print("\t show this component in the Personal context")
 ev = Personis_base.Evidence(evidence_type="explicit", value=17)
@@ -19,7 +19,7 @@ reslist = um.ask(context=["Personal"], view=['fitness'], resolver={'evidence_fil
 printcomplist(reslist, printev = "yes")
 
 goals = reslist[0].goals
-print("Old goals are:", goals)
+print(("Old goals are:", goals))
 print("\tadding a goal")
 goals.append(["Personal", "Health", "steps"])
 um.set_goals(context=["Personal"], componentid='fitness', goals=goals)

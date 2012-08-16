@@ -7,9 +7,9 @@ from Personis_util import showobj, printcomplist
 def printAskContext( info ):
 	(cobjlist, contexts, theviews, thesubs) = info
 	printcomplist(cobjlist, printev = "yes")
-	print("Contexts: %s" % str(contexts))
-	print("Views: %s" % str(theviews))
-	print("Subscriptions: %s" % str(thesubs))
+	print(("Contexts: %s" % str(contexts)))
+	print(("Views: %s" % str(theviews)))
+	print(("Subscriptions: %s" % str(thesubs)))
 		
 print("===================================================================")
 print("Examples that show how app registration works")
@@ -25,7 +25,7 @@ print(">>>> Try and set permissions on an unregistered app:")
 try:
 	um.setpermission(context=["Personal"], app="MyHealth", permissions={'ask':True, 'tell':False})
 except Exception as e:
-	print("setpermission failed with exception : %s\n" % (e))
+	print(("setpermission failed with exception : %s\n" % (e)))
 
 print(">>>> Register an app")
 um.registerapp(app="MyHealth", desc="My Health Manager", password="pass9")
@@ -38,15 +38,15 @@ um.setpermission(context=["Personal"], app="MyHealth", permissions={'ask':False,
 
 print(">>>> Show the permissions:")
 perms = um.getpermission(context=["Personal"], app="MyHealth")
-print("MyHealth:", perms)
+print(("MyHealth:", perms))
 
 print(">>>> Try getting permissions for an unregistered app:")
 try:
 	perms = um.getpermission(context=["Personal"], app="withings")
 except Exception as e:
-	print("getpermission failed with exception : %s\n" % (e))
+	print(("getpermission failed with exception : %s\n" % (e)))
 else:
-	print("withings:", perms)
+	print(("withings:", perms))
 
 print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 print(">>>> Now testing permissions")
@@ -59,14 +59,14 @@ um.tell(context=["Personal"], componentid='lastname', evidence=ev)
 
 print(">>>> Ask for Alice's fullname as owner (should work)")
 reslist = um.ask(context=["Personal"], view='fullname')
-print(reslist[0].value, reslist[1].value)
+print((reslist[0].value, reslist[1].value))
 
 um = None
 print(">>>> Access Alice's model as an unregistered App (should NOT work):")
 try:
 	um = Personis.Access(model="Alice",  user='withings', password='secret')
 except Exception as e:
-	print("Access failed with exception : %s\n" % (e))
+	print(("Access failed with exception : %s\n" % (e)))
 else:
 	print("**** access worked when it should have failed")
 
@@ -75,16 +75,16 @@ print(">>>> Access Alice's model as a registered App:")
 try:
 	um = Personis.Access(model="Alice", user='MyHealth', password='pass9')
 except Exception as e:
-	print("Access failed with exception : %s\n" % (e))
+	print(("Access failed with exception : %s\n" % (e)))
 else:
 	print("++++ access successful")
 
 print(">>>> Ask for Alice's fullname as app 'MyHealth' (should NOT work)")
 try:
 	reslist = um.ask(context=["Personal"], view='fullname')
-	print(reslist[0].value, reslist[1].value)
+	print((reslist[0].value, reslist[1].value))
 except Exception as e:
-	print("ask failed with exception : %s\n" % (e))
+	print(("ask failed with exception : %s\n" % (e)))
 else:
 	print("**** ask worked when it should have failed")
 
@@ -99,9 +99,9 @@ um = Personis.Access(model="Alice", user='MyHealth', password='pass9')
 print(">>>> Ask for Alice's fullname as app 'MyHealth' (should work now)")
 try:
 	reslist = um.ask(context=["Personal"], view='fullname')
-	print(reslist[0].value, reslist[1].value)
+	print((reslist[0].value, reslist[1].value))
 except Exception as e:
-	print("ask failed with exception : %s\n" % (e))
+	print(("ask failed with exception : %s\n" % (e)))
 else:
 	print("++++ ask successful")
 
@@ -110,7 +110,7 @@ ev = Personis_base.Evidence(source="MyHealth", evidence_type="explicit", value="
 try:
 	um.tell(context=["Personal"], componentid='firstname', evidence=ev)
 except Exception as e:
-	print("tell failed with exception : %s\n" % (e))
+	print(("tell failed with exception : %s\n" % (e)))
 else:
 	print("++++ tell successful")
 
@@ -118,7 +118,7 @@ print(">>>> Delete the 'MyHealth' app while NOT accessing as owner")
 try:
         um.deleteapp(app="MyHealth")
 except Exception as e:
-        print("deleteapp failed with exception : %s\n" % (e))
+        print(("deleteapp failed with exception : %s\n" % (e)))
 else:
         print("FAILED: deleteapp should not be able to delete app when not owner")
 
@@ -128,7 +128,7 @@ print(">>>> Delete the 'MyHealth' app while accessing as owner")
 try:
         um.deleteapp(app="MyHealth")
 except Exception as e:
-        print("deleteapp failed with exception : %s\n" % (e))
+        print(("deleteapp failed with exception : %s\n" % (e)))
 else:
         print("deleteapp succeeded")
 print(">>>> List the registered apps (should be none):")

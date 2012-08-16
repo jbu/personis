@@ -13,7 +13,7 @@ sys.exit(0)
 
 um = Personis.Access(model="Alice", user='alice', password='secret')
 modelfile = "saved-model"
-print("importing:", modelfile)
+print(("importing:", modelfile))
 modeljson = open(modelfile).read()
 um.import_model(partial_model=modeljson)
 

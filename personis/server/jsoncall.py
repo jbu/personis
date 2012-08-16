@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Personis.  If not, see <http://www.gnu.org/licenses/>.
 
-import httplib2, types, cPickle
+import httplib2, types, pickle
 import json
 import cherrypy, oauth2client
 from . import connection
@@ -51,9 +51,9 @@ def do_call(fun, args, connection):
 			print(result)
 			# We have returned with an error, so throw it as an exception.
 			if 'pythonPickel' in result:
-				raise cPickle.loads(result["pythonPickel"])
+				raise pickle.loads(result["pythonPickel"])
 			elif len(result["val"]) == 3:
-				raise cPickle.loads(str(result["val"][2]))
+				raise pickle.loads(str(result["val"][2]))
 			else:
 				raise Exception(str(result["val"]))
 		else:

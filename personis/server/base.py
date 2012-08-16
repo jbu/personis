@@ -460,7 +460,7 @@ class Access(resolvers.Access,ev_filters.Access):
 				else:
 					raise ValueError('unknown resolver "%s"'%(repr(resolver)))
 		for cid in cidlist:
-			if type(cid) == type(u''):
+			if type(cid) == type(''):
 				cid = cid.encode('ascii')
 			if type(cid) is StringType:
 				if comps != None:
@@ -1191,7 +1191,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		"""
 		if viewid == None:
 			return "no view specified for deletion"
-		if type(viewid) == type(u''):
+		if type(viewid) == type(''):
 			viewid = str(viewid)
 		self.curcontext = self._getcontextdir(context)
 		views, views_shelf_fd = shelf_open(self.curcontext+"/.views", "w")

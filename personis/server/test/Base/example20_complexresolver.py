@@ -22,7 +22,7 @@ print("Now add a new resolver to um")
 def myresolver(model=None, component=None, context=None, resolver_args=None):
 	"""     new resolver function 
 	"""
-	print("new resolver called with ", repr(component))
+	print(("new resolver called with ", repr(component)))
 	if resolver_args == None:
 		ev_filter = None
 	else:
@@ -32,7 +32,7 @@ def myresolver(model=None, component=None, context=None, resolver_args=None):
 		component.value = component.evidencelist[-1]['value']
 
 	r = model.ask(context=["Personal"], view=["lastname"])
-	print(r[0].__dict__)
+	print((r[0].__dict__))
 	return component
 
 um.resolverlist["myresolver"] = myresolver

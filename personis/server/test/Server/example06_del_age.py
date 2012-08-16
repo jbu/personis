@@ -13,5 +13,5 @@ printcomplist(reslist, printev = "yes")
 
 print("after attempting to delete age")
 resd = um.delcomponent(context=["Personal"], componentid = "age")
-print(repr(resd))
+print((repr(resd)))
 

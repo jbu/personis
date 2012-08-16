@@ -14,7 +14,7 @@ sub = """
 """
 
 result = um.subscribe(context=["Personal"], view=['lastname'], subscription={'user':'alice', 'password':'secret', 'statement':sub})
-print("Result:", result, "---\n")
+print(("Result:", result, "---\n"))
 
 ev = Personis_base.Evidence(evidence_type="explicit", value="Smith")
 um.tell(context=["Personal"], componentid='lastname', evidence=ev)
@@ -26,7 +26,7 @@ sub = """
 """
 
 result = um.subscribe(context=["Personal"], view=['lastname'], subscription={'user':'alice', 'password':'secret', 'statement':sub})
-print("Result:", result, "---\n")
+print(("Result:", result, "---\n"))
 
 ev = Personis_base.Evidence(evidence_type="explicit", value="Smith")
 um.tell(context=["Personal"], componentid='lastname', evidence=ev)

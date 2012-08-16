@@ -7,9 +7,9 @@ from Personis_util import showobj, printcomplist
 def printAskContext( info ):
 	(cobjlist, contexts, theviews, thesubs) = info
 	printcomplist(cobjlist, printev = "yes")
-	print("Contexts: %s" % str(contexts))
-	print("Views: %s" % str(theviews))
-	print("Subscriptions: %s" % str(thesubs))
+	print(("Contexts: %s" % str(contexts)))
+	print(("Views: %s" % str(theviews)))
+	print(("Subscriptions: %s" % str(thesubs)))
 		
 print("===================================================================")
 print("Examples that show how permissions work")
@@ -22,7 +22,7 @@ um.setpermission(context=["Personal"], app="MyHealth", permissions={'ask':True, 
 
 print(">>>> Show the permissions")
 perms = um.getpermission(context=["Personal"], app="MyHealth")
-print("MyHealth:", perms)
+print(("MyHealth:", perms))
 perms = um.getpermission(context=["Personal"], app="withings")
-print("withings:", perms)
+print(("withings:", perms))
 

@@ -126,7 +126,7 @@ def dotells(ev, compid):
 	global themodel, curcontext
 	evattrs = ["flags", "evidence_type", "source", "owner", "value", "comment", "time", "useby"]
 	if not all([a in evattrs for a in ev]):
-		logging.debug( "**** evidence attributes %s must be one of %s" % (ev.keys(), repr(evattrs)))
+		logging.debug( "**** evidence attributes %s must be one of %s" % (list(ev.keys()), repr(evattrs)))
 		return 
 	if "flags" in ev:
 		if type(ev['flags']) != type([]):
