@@ -31,6 +31,7 @@ see external documentation for the definition of the modeldef language
 import sys
 import json
 
+
 def doit():
 	if len(sys.argv) != 2:
 		print("usage: mkmodeldef json-model-file ....")
