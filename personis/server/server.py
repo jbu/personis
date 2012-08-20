@@ -640,8 +640,8 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
         try:
             cherrypy.config.update(os.path.expanduser(config))
             cherrypy.tree.mount(Server(modeldir, admins, clients, tokens, client_secrets), '/', config=config)
-            #cherrypy.server.ssl_certificate = "server.crt"
-            #cherrypy.server.ssl_private_key = "server.key" 
+            cherrypy.server.ssl_certificate = "server.crt"
+            cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
             if not exit_queue:
                 cherrypy.engine.block()
