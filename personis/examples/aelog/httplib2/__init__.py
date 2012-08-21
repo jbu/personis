@@ -1435,7 +1435,10 @@ a string that contains the response entity body.
                 else:
                     conn = self.connections[conn_key] = connection_type(
                             authority, timeout=self.timeout,
-                            proxy_info=proxy_info)
+                            proxy_info=proxy_info,
+                                ca_certs=self.ca_certs,
+                                disable_ssl_certificate_validation=
+                                        self.disable_ssl_certificate_validation)
                 conn.set_debuglevel(debuglevel)
 
             if 'range' not in headers and 'accept-encoding' not in headers:

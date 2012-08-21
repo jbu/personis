@@ -323,7 +323,7 @@ class Server:
             self.access_tokens_condition.acquire()
             self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
             #self.access_tokens.sync()
-            logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
+            #logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
         finally:
             self.access_tokens_condition.release()
 
