@@ -1060,7 +1060,9 @@ try:
       self.scheme = 'http'
       self.validate_certificate = not disable_certificate_validation
       import logging
-      logging.debug('val cert %s %s', self.validate_certificate, disable_certificate_validation)
+      if self.validate_certificate:
+        logging.debug('val cert %s %s', self.validate_certificate, disable_certificate_validation)
+        raise httplib.HTTPException()
       self.sock = True
 
     def request(self, method, url, body, headers):
