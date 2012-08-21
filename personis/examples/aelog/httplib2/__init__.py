@@ -1059,6 +1059,8 @@ try:
       self.response = None
       self.scheme = 'http'
       self.validate_certificate = not disable_certificate_validation
+      import logging
+      logging.debug('val cert %s %s', self.validate_certificate, disable_certificate_validation)
       self.sock = True
 
     def request(self, method, url, body, headers):
@@ -1068,6 +1070,7 @@ try:
         netloc = '%s:%s' % (self.host, self.port)
       absolute_uri = '%s://%s%s' % (self.scheme, netloc, url)
       try:
+
         response = fetch(absolute_uri, payload=body, method=method,
             headers=headers, allow_truncated=False, follow_redirects=False,
             deadline=self.timeout,
@@ -1102,9 +1105,10 @@ try:
   class AppEngineHttpsConnection(AppEngineHttpConnection):
     """Same as AppEngineHttpConnection, but for HTTPS URIs."""
     def __init__(self, host, port=None, key_file=None, cert_file=None,
-                 strict=None, timeout=None, proxy_info=None):
+                 strict=None, timeout=None, proxy_info=None, ca_certs=None,
+                 disable_certificate_validation=False):
       AppEngineHttpConnection.__init__(self, host, port, key_file, cert_file,
-          strict, timeout, proxy_info)
+          strict, timeout, proxy_info, ca_certs, disable_certificate_validation)
       self.scheme = 'https'
 
   # Update the connection classes to use the Googel App Engine specific ones.
@@ -1161,6 +1165,8 @@ and more.
         self.ca_certs = ca_certs
         self.disable_ssl_certificate_validation = \
                 disable_ssl_certificate_validation
+        import logging
+        logging.debug('http cert %s', self.disable_ssl_certificate_validation)
 
         # Map domain name to an httplib connection
         self.connections = {}
