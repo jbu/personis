@@ -1050,7 +1050,7 @@ try:
     """
     def __init__(self, host, port=None, key_file=None, cert_file=None,
                  strict=None, timeout=None, proxy_info=None, ca_certs=None,
-                 disable_certificate_validation=False):
+                 disable_ssl_certificate_validation=False):
       self.host = host
       self.port = port
       self.timeout = timeout
@@ -1058,10 +1058,10 @@ try:
         raise NotSupportedOnThisPlatform()
       self.response = None
       self.scheme = 'http'
-      self.validate_certificate = not disable_certificate_validation
+      self.validate_certificate = not disable_ssl_certificate_validation
       import logging
       if self.validate_certificate:
-        logging.debug('val cert %s %s', self.validate_certificate, disable_certificate_validation)
+        logging.debug('val cert %s %s', self.validate_certificate, disable_ssl_certificate_validation)
         raise httplib.HTTPException()
       self.sock = True
 
@@ -1108,9 +1108,9 @@ try:
     """Same as AppEngineHttpConnection, but for HTTPS URIs."""
     def __init__(self, host, port=None, key_file=None, cert_file=None,
                  strict=None, timeout=None, proxy_info=None, ca_certs=None,
-                 disable_certificate_validation=False):
+                 disable_ssl_certificate_validation=False):
       AppEngineHttpConnection.__init__(self, host, port, key_file, cert_file,
-          strict, timeout, proxy_info, ca_certs, disable_certificate_validation)
+          strict, timeout, proxy_info, ca_certs, disable_ssl_certificate_validation)
       self.scheme = 'https'
 
   # Update the connection classes to use the Googel App Engine specific ones.

@@ -25,6 +25,7 @@ item_list = {'fruit':{'icon':'http://2.bp.blogspot.com/-jDaZn2jh-8g/T_nBaiND65I/
 
 class LogLlum(webapp2.RequestHandler):
 
+
     def install_contexts(self, um):
         try:
             reslist = um.ask(context=['Apps','Logging'])
@@ -72,11 +73,11 @@ class LogLlum(webapp2.RequestHandler):
         if not flow:
             raise IOError()
         session['flow'] = None
-        credentials = flow.step2_exchange(self.request.params, httplib2.Http(disable_ssl_certificate_validation=True))
+        credentials = flow.step2_exchange(self.request.params, http = httplib2.Http(disable_ssl_certificate_validation=True))
         oauthconf = self.app.config.get('oauthconf')
-        c = client.Connection(uri = oauthconf['personis_uri'], credentials = credentials, http=httplib2.Http(disable_ssl_certificate_validation=True))
+        c = client.Connection(uri = oauthconf['personis_uri'], credentials = credentials)
         session['connection'] = pickle.dumps(c)
-        um = client.Access(connection=c)
+        um = client.Access(connection=c, http = httplib2.Http(disable_ssl_certificate_validation=True))
         self.install_contexts(um)
         self.redirect('/')
 
@@ -85,7 +86,7 @@ class LogLlum(webapp2.RequestHandler):
         if session.get('connection') == None:
             self.abort(400, detail='Log in first.')
         connection = pickle.loads(session.get('connection'))
-        um = client.Access(connection=connection, test=False)
+        um = client.Access(connection=connection, http = httplib2.Http(disable_ssl_certificate_validation=True), test=False)
         item = self.request.get('item')
         ev = client.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
         um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
@@ -97,7 +98,7 @@ class LogLlum(webapp2.RequestHandler):
             logging.debug('no connection found. logging in')
             return self.redirect('/do_login')
         connection = pickle.loads(session.get('connection'))
-        um = client.Access(connection=connection, test=False)
+        um = client.Access(connection=connection, test=False, http = httplib2.Http(disable_ssl_certificate_validation=True))
         try:
             reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
         except AccessTokenRefreshError as e:

@@ -741,7 +741,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			raise ValueError("tell: component id is None")
 		if evidence == None:
 			raise ValueError("tell: no evidence provided")
-		if type(componentid) == type(''):
+		if type(componentid) == type(u''):
 			componentid = str(componentid)
 		if type(componentid) != type(""):
 			raise ValueError("tell: component id is not string type")

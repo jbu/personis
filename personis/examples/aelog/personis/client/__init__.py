@@ -1,5 +1,7 @@
 import time
 import httplib2
+from util import *
+import logging
 
 class Connection(object):
 
@@ -21,6 +23,10 @@ class Connection(object):
             self.credentials.authorize(self.http)
             self.authorized = True
         return self.http
+
+    def set_http(self, http):
+        self.http = http
+        self.authorized = False
 
     def __repr__(self):
         return 'uri: %s, credentials: %s'%(self.uri, self.credentials.to_json())
@@ -67,7 +73,7 @@ class Evidence:
             raise TypeError, "bad evidence type %s"%(self.evidence_type)
 
     def __str__(self):
-        return 'evidence: '+`self.__dict__`
+        return 'evidence: '+repr(self.__dict__)
 
 class View:
     """ view object
@@ -150,8 +156,7 @@ class Component:
             if (self.value_type == "enum") and not (self.value in self.value_list):
                 raise ValueError, "value '%s' not in value_list for type 'enum'" % (self.value)
 
-from util import *
-import logging
+
 
 class Access(object):
     """
@@ -166,19 +171,22 @@ class Access(object):
     """
     def __init__(self, model = '-', connection=None, uri = None, credentials = None, http = None, loglevel=logging.INFO, test=True):
         if connection == None:
-            connection = Connection(uri, credentials, http)            
+            connection = Connection(uri, credentials, http)    
         self.modelname = model
         self.user = ''
         self.password = ''
         self.connection = connection
+        if http != None:        
+            self.connection.set_http(http)
+            
         ok = False
 
         if not test: 
             return
         try:
-            logging.debug("jsondocall: access %s", self.connection)
+            logging.info("jsondocall: access %s", self.connection)
             ok = do_call("access", {}, self.connection)
-            logging.debug("---------------------- result returned %s", ok)
+            logging.info("---------------------- result returned %s", ok)
         except:
             logging.debug(traceback.format_exc())
             raise ValueError, "cannot access model"

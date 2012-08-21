@@ -24,6 +24,10 @@ class Connection(object):
             self.authorized = True
         return self.http
 
+    def set_http(self, http):
+        self.http = http
+        self.authorized = False
+
     def __repr__(self):
         return 'uri: %s, credentials: %s'%(self.uri, self.credentials.to_json())
 
@@ -167,11 +171,14 @@ class Access(object):
     """
     def __init__(self, model = '-', connection=None, uri = None, credentials = None, http = None, loglevel=logging.INFO, test=True):
         if connection == None:
-            connection = Connection(uri, credentials, http)            
+            connection = Connection(uri, credentials, http)    
         self.modelname = model
         self.user = ''
         self.password = ''
         self.connection = connection
+        if http != None:        
+            self.connection.set_http(http)
+            
         ok = False
 
         if not test: 
