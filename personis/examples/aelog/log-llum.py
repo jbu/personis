@@ -72,9 +72,9 @@ class LogLlum(webapp2.RequestHandler):
         if not flow:
             raise IOError()
         session['flow'] = None
-        credentials = flow.step2_exchange(self.request.params)
+        credentials = flow.step2_exchange(self.request.params, httplib2.Http(disable_ssl_certificate_validation=True))
         oauthconf = self.app.config.get('oauthconf')
-        c = client.Connection(uri = oauthconf['personis_uri'], credentials = credentials)
+        c = client.Connection(uri = oauthconf['personis_uri'], credentials = credentials, http=httplib2.Http(disable_ssl_certificate_validation=True))
         session['connection'] = pickle.dumps(c)
         um = client.Access(connection=c)
         self.install_contexts(um)
@@ -179,7 +179,7 @@ class LogLlum(webapp2.RequestHandler):
         self.response.write(ret)
 
 
-httplib2.debuglevel=0
+httplib2.debuglevel=5
 logging.basicConfig(level=logging.DEBUG)
 config = {}
 config['oauthconf'] = yaml.load(file('oauth.ae.yaml','r'))

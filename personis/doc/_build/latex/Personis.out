@@ -15,6 +15,9 @@
 \BOOKMARK [1][-]{section.8.1}{Examples}{chapter.8}
 \BOOKMARK [0][-]{chapter.9}{Model Definition Format}{}
 \BOOKMARK [0][-]{chapter.10}{Client/Server Protocol}{}
-\BOOKMARK [0][-]{chapter.11}{Indices and tables}{}
-\BOOKMARK [0][-]{section*.4}{Python Module Index}{}
-\BOOKMARK [0][-]{section*.5}{Index}{}
+\BOOKMARK [0][-]{chapter.11}{client Package}{}
+\BOOKMARK [1][-]{section.11.1}{client Package}{chapter.11}
+\BOOKMARK [1][-]{section.11.2}{util Module}{chapter.11}
+\BOOKMARK [0][-]{chapter.12}{Indices and tables}{}
+\BOOKMARK [0][-]{section*.61}{Python Module Index}{}
+\BOOKMARK [0][-]{section*.62}{Index}{}

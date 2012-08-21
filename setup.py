@@ -19,6 +19,7 @@ install_requires=[
     'pyyaml',
     'cherrypy >= 3.0',
     'pyparsing',
+    'stuf <= 0.8.20',
     'shove',
     'distribute'
     ]

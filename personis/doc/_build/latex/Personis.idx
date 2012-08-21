@@ -1,1 +1,59 @@
-\indexentry{personis.server (module)|hyperpage}{21}
+\indexentry{personis.client (module)|hyperpage}{23}
+\indexentry{Access (class in personis.client)|hyperpage}{23}
+\indexentry{ask() (personis.client.Access method)|hyperpage}{23}
+\indexentry{delcomponent() (personis.client.Access method)|hyperpage}{23}
+\indexentry{delcontext() (personis.client.Access method)|hyperpage}{23}
+\indexentry{delete\_sub() (personis.client.Access method)|hyperpage}{24}
+\indexentry{deleteapp() (personis.client.Access method)|hyperpage}{24}
+\indexentry{delview() (personis.client.Access method)|hyperpage}{24}
+\indexentry{export\_model() (personis.client.Access method)|hyperpage}{24}
+\indexentry{getcontext() (personis.client.Access method)|hyperpage}{24}
+\indexentry{getpermission() (personis.client.Access method)|hyperpage}{24}
+\indexentry{getresolvers() (personis.client.Access method)|hyperpage}{24}
+\indexentry{import\_model() (personis.client.Access method)|hyperpage}{24}
+\indexentry{list\_subs() (personis.client.Access method)|hyperpage}{24}
+\indexentry{listapps() (personis.client.Access method)|hyperpage}{24}
+\indexentry{mkcomponent() (personis.client.Access method)|hyperpage}{24}
+\indexentry{mkcontext() (personis.client.Access method)|hyperpage}{24}
+\indexentry{mkview() (personis.client.Access method)|hyperpage}{25}
+\indexentry{registerapp() (personis.client.Access method)|hyperpage}{25}
+\indexentry{set\_goals() (personis.client.Access method)|hyperpage}{25}
+\indexentry{setpermission() (personis.client.Access method)|hyperpage}{25}
+\indexentry{setresolver() (personis.client.Access method)|hyperpage}{25}
+\indexentry{subscribe() (personis.client.Access method)|hyperpage}{25}
+\indexentry{tell() (personis.client.Access method)|hyperpage}{25}
+\indexentry{Component (class in personis.client)|hyperpage}{25}
+\indexentry{Context (class in personis.client)|hyperpage}{25}
+\indexentry{Evidence (class in personis.client)|hyperpage}{25}
+\indexentry{EvidenceTypes (personis.client.Evidence attribute)|hyperpage}{26}
+\indexentry{View (class in personis.client)|hyperpage}{26}
+\indexentry{personis.client (module)|hyperpage}{37}
+\indexentry{Access (class in personis.client)|hyperpage}{37}
+\indexentry{ask() (personis.client.Access method)|hyperpage}{37}
+\indexentry{delcomponent() (personis.client.Access method)|hyperpage}{37}
+\indexentry{delcontext() (personis.client.Access method)|hyperpage}{37}
+\indexentry{delete\_sub() (personis.client.Access method)|hyperpage}{37}
+\indexentry{deleteapp() (personis.client.Access method)|hyperpage}{37}
+\indexentry{delview() (personis.client.Access method)|hyperpage}{37}
+\indexentry{export\_model() (personis.client.Access method)|hyperpage}{38}
+\indexentry{getcontext() (personis.client.Access method)|hyperpage}{38}
+\indexentry{getpermission() (personis.client.Access method)|hyperpage}{38}
+\indexentry{getresolvers() (personis.client.Access method)|hyperpage}{38}
+\indexentry{import\_model() (personis.client.Access method)|hyperpage}{38}
+\indexentry{list\_subs() (personis.client.Access method)|hyperpage}{38}
+\indexentry{listapps() (personis.client.Access method)|hyperpage}{38}
+\indexentry{mkcomponent() (personis.client.Access method)|hyperpage}{38}
+\indexentry{mkcontext() (personis.client.Access method)|hyperpage}{38}
+\indexentry{mkview() (personis.client.Access method)|hyperpage}{38}
+\indexentry{registerapp() (personis.client.Access method)|hyperpage}{38}
+\indexentry{set\_goals() (personis.client.Access method)|hyperpage}{39}
+\indexentry{setpermission() (personis.client.Access method)|hyperpage}{39}
+\indexentry{setresolver() (personis.client.Access method)|hyperpage}{39}
+\indexentry{subscribe() (personis.client.Access method)|hyperpage}{39}
+\indexentry{tell() (personis.client.Access method)|hyperpage}{39}
+\indexentry{Component (class in personis.client)|hyperpage}{39}
+\indexentry{Context (class in personis.client)|hyperpage}{39}
+\indexentry{Evidence (class in personis.client)|hyperpage}{39}
+\indexentry{EvidenceTypes (personis.client.Evidence attribute)|hyperpage}{39}
+\indexentry{View (class in personis.client)|hyperpage}{40}
+\indexentry{personis.client.util (module)|hyperpage}{40}

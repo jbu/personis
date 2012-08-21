@@ -13,7 +13,7 @@
 
 
 \title{Personis Documentation}
-\date{August 03, 2012}
+\date{August 21, 2012}
 \release{12.9}
 \author{Bob Kummerfeld and Judy Kay}
 \newcommand{\sphinxlogo}{}
@@ -360,20 +360,8 @@ installed.
 The Personis framework makes use of several packages that are not part
 of the default Python installation.
 The packages are:
-\begin{itemize}
-\item {} 
-cherrypy (version 3.x)
 
-\item {} 
-pyparsing
-
-\item {} 
-google oauth2
-
-\item {} 
-httplib2
-
-\end{itemize}
+pip install cherrypy google-api-python-client pyyaml shove genshi sqlalchemy
 
 Personis is known to work with these versions and copies are included in
 the Personis distribution for your convenience. Personis may work with
@@ -504,6 +492,24 @@ client-server protocol used to access them. The server test scripts can be found
 \chapter{Tutorial Introduction to Personis}
 \label{Tutorial::doc}\label{Tutorial:tutorial-introduction-to-personis}
 This tutorial assumes you have installed the framework using the instructions in the Installation section.
+But as a quick recap for installing the client only:
+
+Create a sandbox directory (u:\textbackslash{}comp5047, perhaps). Download \href{https://raw.github.com/pypa/virtualenv/master/virtualenv.py}{https://raw.github.com/pypa/virtualenv/master/virtualenv.py} to the directory. Create a python sandbox:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+u:
+cd \PYGZbs{}comp5047
+c:\PYGZbs{}python2.6\PYGZbs{}python.exe virtualenv.py .
+\end{Verbatim}
+
+Install necessary libraries:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+u:\PYGZbs{}comp5047\PYGZbs{}Scripts\PYGZbs{}pip install google-api-python-client pyyaml personis
+\end{Verbatim}
+
+Install the client examples from \href{https://github.com/downloads/jbu/personis/clients.zip}{https://github.com/downloads/jbu/personis/clients.zip}
+
 Using the \emph{umbrowser} command line utility, the tutorial will take you through the construction, navigation and
 management of a user model.
 
@@ -514,10 +520,18 @@ The umbrowser.py program is a commandline utility that allows most
 operations of the Personis system to be carried out interactively.
 
 Umbrowser is found in the clients/browser directory of the personis package and is started with
-the command ./umbrowser.py:
+the command ./umbrowser.py (unix):
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \$ ./umbrowser.py
+\end{Verbatim}
+
+or for windows:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+u:
+cd \PYGZbs{}comp5047
+\PYGZbs{}comp5047\PYGZbs{}Scripts\PYGZbs{}python.exe umbrowser.py
 \end{Verbatim}
 
 The first time you run umbrowser it opens a web browser tab and goes through a login sequence. Usually two screens are presented: one at google that asks you to verify your identity, and one at the personis server asking whether you want to allow umbrowser access to your model (the correct answer is `yes'). If this is the first time accessing your model, one will be created for you. At the end of this you should end up at a prompt:
@@ -611,13 +625,13 @@ Subscriptions: \PYGZob{}\PYGZcb{}
 ['', 'Prefs'] \textgreater{}
 \end{Verbatim}
 
-Now we have a model called ``Alice'', owned by ``alice'' that has one
+Now we have a model owned by you that has one
 context ``Prefs'' containing one component ``food''.
-Now, Alice likes Thai food so we will add some evidence to her food
+Now, imagine that you like Thai food so we will add some evidence to your food
 preference component using the ``tell'' command:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-Alice ['', 'Prefs'] \textgreater{} tell food
+['', 'Prefs'] \textgreater{} tell food
 Value? Thai
 Evidence type:
 0 explicit
@@ -631,7 +645,7 @@ Tell value=Thai, type=explicit, flags=[], source=alice, context=['', 'Prefs'], c
 Ok?[N] Y
 
 
-Alice ['', 'Prefs'] \textgreater{} ls
+['', 'Prefs'] \textgreater{} ls
 Components:
         food: type of food I prefer
 Contexts: []
@@ -642,35 +656,19 @@ Subscriptions: \PYGZob{}\PYGZcb{}
 We can now examine the ``food'' component with the ``ls'' command:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-Alice ['', 'Prefs'] \textgreater{} ls food
+['', 'Prefs'] \textgreater{} ls food
 ===================================================================
 Component:  type of food I prefer
 ===================================================================
 showobj:
-  Description = type of food I prefer
-  component\_type = preference
-  evidencelist = 1 items
-  value\_list = []
+[...]
   value = Thai
-  value\_type = string
-  goals = []
-  resolver = None
-  Identifier = food
-  objectType = Component
+[...]
 ---------------------------------
 Evidence about it
 ---------------------------------
 showobj:
-           comment = None
-           evidence\_type = explicit
-           value = Thai
-           objectType = Evidence
-           source = alice
-           flags = ['']
-           time = Thu Apr 28 18:08:55 2011 (1304003335.61)
-           owner = alice
-           exp\_time = 0
-           useby = None
+        [...]
 ---------------------------------
 \end{Verbatim}
 
@@ -726,6 +724,46 @@ How did we do this? You can find the source for the logging app, and other perso
 \end{Verbatim}
 
 As you can see, the work is done by two lines. One creates the evidence that something happened, and the next tells the model about it.
+We will now do a similar exercise.
+\begin{itemize}
+\item {} 
+Create a new directory (u:\textbackslash{}comp5047\textbackslash{}asker).
+
+\item {} 
+Save \href{https://raw.github.com/jbu/personis/master/clients/asker/client\_secrets.json}{https://raw.github.com/jbu/personis/master/clients/asker/client\_secrets.json} into the new directory.
+
+\item {} 
+Copy this code skeleton into a file in the directory called ask.py:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{personis} \PYG{k+kn}{import} \PYG{n}{client}
+\PYG{k+kn}{import} \PYG{n+nn}{httplib2}
+\PYG{n}{p} \PYG{o}{=} \PYG{n}{httplib2}\PYG{o}{.}\PYG{n}{ProxyInfo}\PYG{p}{(}\PYG{n}{proxy\PYGZus{}type}\PYG{o}{=}\PYG{n}{httplib2}\PYG{o}{.}\PYG{n}{socks}\PYG{o}{.}\PYG{n}{PROXY\PYGZus{}TYPE\PYGZus{}HTTP\PYGZus{}NO\PYGZus{}TUNNEL}\PYG{p}{,} \PYG{n}{proxy\PYGZus{}host}\PYG{o}{=}\PYG{l+s}{'}\PYG{l+s}{www-cache.it.usyd.edu.au}\PYG{l+s}{'}\PYG{p}{,} \PYG{n}{proxy\PYGZus{}port}\PYG{o}{=}\PYG{l+m+mi}{8000}\PYG{p}{)}
+\PYG{n}{um} \PYG{o}{=} \PYG{n}{client}\PYG{o}{.}\PYG{n}{util}\PYG{o}{.}\PYG{n}{LoginFromClientSecrets}\PYG{p}{(}\PYG{n}{http}\PYG{o}{=}\PYG{n}{httplib2}\PYG{o}{.}\PYG{n}{Http}\PYG{p}{(}\PYG{n}{proxy\PYGZus{}info}\PYG{o}{=}\PYG{n}{p}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+
+\end{itemize}
+
+If we execute it:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZbs{}comp5047\PYGZbs{}Scripts\PYGZbs{}python.exe ask.py
+\end{Verbatim}
+
+it should take you through an authentication routine (involving web browsers, google, and a personis server) and then exit.
+
+Lets say we want to ask the model what we have been eating (assuming we have been logging our meals with the logging app shown above):
+
+\begin{Verbatim}[commandchars=\\\{\}]
+  kiwi : ***
+ grape : *
+ apple : **
+  pear : ****
+orange : ***
+banana : *
+\end{Verbatim}
+
+Can you add to ask.py to replicate this? You will probably need to use umbrowser to discover the model structure.
 
 
 \chapter{Personis Server}
@@ -829,7 +867,448 @@ definition file
 \\\hline
 \end{tabulary}
 
-\phantomsection\label{API:module-personis.server}\index{personis.server (module)}
+\phantomsection\label{API:module-personis.client}\index{personis.client (module)}\index{Access (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Access}}{\emph{model='-`}, \emph{connection=None}, \emph{uri=None}, \emph{credentials=None}, \emph{http=None}, \emph{loglevel=20}, \emph{test=True}}{}
+Client version of access for client/server system
+\begin{description}
+\item[{arguments:}] \leavevmode
+model           model name
+modelserver     model server and port
+user            user name
+password        password string
+
+\end{description}
+
+returns a user model access object
+\index{ask() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.ask}\pysiglinewithargsret{\bfcode{ask}}{\emph{context=}\optional{}, \emph{view=None}, \emph{resolver=None}, \emph{showcontexts=None}}{}~\begin{description}
+\item[{arguments: (see Personis\_base for details)}] \leavevmode
+context is a list giving the path of context identifiers
+view is either:
+\begin{quote}
+
+an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in
+\begin{quote}
+
+the context be returned
+\end{quote}
+\end{quote}
+
+resolver specifies a resolver, default is the builtin resolver
+
+\end{description}
+
+returns a list of component objects
+
+\end{fulllineitems}
+
+\index{delcomponent() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.delcomponent}\pysiglinewithargsret{\bfcode{delcomponent}}{\emph{context=}\optional{}, \emph{componentid=None}}{}
+Delete an existing component in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+id - the id for a componen
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{delcontext() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.delcontext}\pysiglinewithargsret{\bfcode{delcontext}}{\emph{context=}\optional{}}{}
+Delete an existing context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{delete\_sub() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.delete_sub}\pysiglinewithargsret{\bfcode{delete\_sub}}{\emph{context=}\optional{}, \emph{componentid=None}, \emph{subname=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+componentid designates the component subscribed to
+subname is the subscription name
+
+\end{fulllineitems}
+
+\index{deleteapp() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.deleteapp}\pysiglinewithargsret{\bfcode{deleteapp}}{\emph{app=None}}{}
+deletes an app
+
+\end{fulllineitems}
+
+\index{delview() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.delview}\pysiglinewithargsret{\bfcode{delview}}{\emph{context=}\optional{}, \emph{viewid=None}}{}
+Delete an existing view in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+viewid - the id for the view
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{export\_model() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.export_model}\pysiglinewithargsret{\bfcode{export\_model}}{\emph{context=}\optional{}, \emph{resolver=None}}{}
+arguments:
+context is the context to export
+resolver is a string containing the name of a resolver
+\begin{quote}
+
+or
+\end{quote}
+\begin{description}
+\item[{resolver is a dictionary containing information about resolver(s) to be used and arguments}] \leavevmode
+the ``resolver'' key gives the name of a resolver to use, if not present the default resolver is used
+the ``evidence\_filter'' key specifies an evidence filter
+eg `evidence\_filter' =  ``all'' returns all evidence,
+\begin{quote}
+
+``last10'' returns last 10 evidence items,
+``last1'' returns most recent evidence item,
+None returns no evidence
+\end{quote}
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{getcontext() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.getcontext}\pysiglinewithargsret{\bfcode{getcontext}}{\emph{context=}\optional{}, \emph{getsize=False}}{}
+Get context information
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+getsize - True if the size in bytes of the context subtree is required
+\end{quote}
+
+\end{fulllineitems}
+
+\index{getpermission() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.getpermission}\pysiglinewithargsret{\bfcode{getpermission}}{\emph{context=None}, \emph{componentid=None}, \emph{app=None}}{}
+gets permissions for a context (if componentid is None) or
+a component
+returns a tuple (ask,tell)
+
+\end{fulllineitems}
+
+\index{getresolvers() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.getresolvers}\pysiglinewithargsret{\bfcode{getresolvers}}{}{}
+Return a list of the available resolver names
+
+\end{fulllineitems}
+
+\index{import\_model() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.import_model}\pysiglinewithargsret{\bfcode{import\_model}}{\emph{context=}\optional{}, \emph{partial\_model=None}}{}
+arguments:
+context is the context to import into
+partial\_model is a json encoded string containing the partial model
+
+\end{fulllineitems}
+
+\index{list\_subs() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.list_subs}\pysiglinewithargsret{\bfcode{list\_subs}}{\emph{context=}\optional{}, \emph{componentid=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+componentid designates the component with subscriptions attached
+
+\end{fulllineitems}
+
+\index{listapps() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.listapps}\pysiglinewithargsret{\bfcode{listapps}}{}{}
+returns array of registered app names
+
+\end{fulllineitems}
+
+\index{mkcomponent() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.mkcomponent}\pysiglinewithargsret{\bfcode{mkcomponent}}{\emph{context=}\optional{}, \emph{componentobj=None}}{}
+Make a new component in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+componentobj - a Component object
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{mkcontext() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.mkcontext}\pysiglinewithargsret{\bfcode{mkcontext}}{\emph{context=}\optional{}, \emph{contextobj=None}}{}
+Make a new context in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+contextobj - a Context object
+\end{quote}
+
+\end{fulllineitems}
+
+\index{mkview() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.mkview}\pysiglinewithargsret{\bfcode{mkview}}{\emph{context=}\optional{}, \emph{viewobj=None}}{}
+Make a new view in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+viewobj - a View object
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{registerapp() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.registerapp}\pysiglinewithargsret{\bfcode{registerapp}}{\emph{app=None}, \emph{desc='`}, \emph{password=None}}{}
+registers a password for an app
+app name is a string (needs checking TODO)
+app passwords are stored at the top level .model db
+
+\end{fulllineitems}
+
+\index{set\_goals() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.set_goals}\pysiglinewithargsret{\bfcode{set\_goals}}{\emph{context=}\optional{}, \emph{componentid=None}, \emph{goals=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+componentid designates the component with subscriptions attached
+goals is a list of paths to components that are:
+\begin{quote}
+
+goals for this componentid if it is not of type goal
+components that contribute to this componentid if it is of type goal
+\end{quote}
+
+\end{fulllineitems}
+
+\index{setpermission() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.setpermission}\pysiglinewithargsret{\bfcode{setpermission}}{\emph{context=None}, \emph{componentid=None}, \emph{app=None}, \emph{permissions=\{\}}}{}
+sets ask/tell permission for a context (if componentid is None) or
+a component
+
+\end{fulllineitems}
+
+\index{setresolver() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.setresolver}\pysiglinewithargsret{\bfcode{setresolver}}{\emph{context}, \emph{componentid}, \emph{resolver}}{}
+set the resolver for a given component in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+componentid - the id for a given component
+resolver - the id of the resolver
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{subscribe() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.subscribe}\pysiglinewithargsret{\bfcode{subscribe}}{\emph{context=}\optional{}, \emph{view=None}, \emph{subscription=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+view is either:
+\begin{quote}
+
+an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in
+\begin{quote}
+
+the context be returned
+\end{quote}
+
+subscription is a Subscription object
+\end{quote}
+
+\end{fulllineitems}
+
+\index{tell() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Access.tell}\pysiglinewithargsret{\bfcode{tell}}{\emph{context=}\optional{}, \emph{componentid=None}, \emph{evidence=None}}{}
+arguments:
+context - a list giving the path to the required context
+componentid - identifier of the component
+evidence - evidence object to add to the component
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{Component (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Component}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Component}}{\emph{**kargs}}{}
+component object
+Identifier  the identifier of the component
+\begin{quote}
+
+unique in the context
+\end{quote}
+
+Description readable description
+creation\_time   time of creation of the component
+component\_type  {[}''attribute'', ``activity'', ``knowledge'', ``belief'', ``preference'', ``goal''{]}
+value\_type  {[}''string'', ``number'',''boolean'', ``enum'', ``JSON''{]}
+value\_list    a list of strings that are the possible values for type ``enum''
+value       the resolved value
+resolver    default resolver for this component
+goals       list of component paths eg {[} {[}'Personal', `Health', `weight'{]}, ...{]}
+evidencelist    list of evidence objects
+
+\end{fulllineitems}
+
+\index{Context (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Context}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Context}}{\emph{**kargs}}{}
+context object
+Identifier  the identifier of the component
+\begin{quote}
+
+unique in the context
+\end{quote}
+
+Description readable description
+resolver    default resolver for components in this context
+
+\end{fulllineitems}
+
+\index{Evidence (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Evidence}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Evidence}}{\emph{**kargs}}{}
+evidence object
+evidence\_type   ``explicit'', \# given by the user
+\begin{quote}
+
+``implicit'', \# observed by the machine
+``exmachina'', \# told (to the user) by the machine
+``inferred'', \# evidence generated by a subscription inference 
+``stereotype''{]} \# evidence added by a stereotype
+\end{quote}
+
+source  string indicating source of evidence
+value   any python object
+comment string with extra information about the evidence
+flags   a list of strings eg ``goal''
+time    notional creation time optionally given by user
+creation\_time actual time evidence item was created
+useby   timestamp evidence expires (if required)
+\index{EvidenceTypes (personis.client.Evidence attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.Evidence.EvidenceTypes}\pysigline{\bfcode{EvidenceTypes}\strong{ = {[}'explicit', `implicit', `exmachina', `inferred', `stereotype'{]}}}
+explicit: given by the user  (given)
+implicit: observed by the machine (observation)
+exmachina: told (to the user) by the machine (told)
+inferred: evidence generated by inference (external or internal)
+stereotype: evidence added by a stereotype
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{View (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{API:personis.client.View}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{View}}{\emph{**kargs}}{}
+view object
+Identifier  the identifier of the component
+\begin{quote}
+
+unique in the context
+\end{quote}
+
+Description readable description
+
+\end{fulllineitems}
+
+
 \textbf{Constants}
 
 ComponentTypes:
@@ -1433,6 +1912,458 @@ example:
 The POST requests should be over HTTP for now, HTTPS later. Also, a future stage of development will involve more crypto with signed, encrypted JSON.
 
 
+\chapter{client Package}
+\label{personis.client:client-package}\label{personis.client::doc}
+
+\section{\texttt{client} Package}
+\label{personis.client:id1}\phantomsection\label{personis.client:module-personis.client}\index{personis.client (module)}\index{Access (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Access}}{\emph{model='-`}, \emph{connection=None}, \emph{uri=None}, \emph{credentials=None}, \emph{http=None}, \emph{loglevel=20}, \emph{test=True}}{}
+Bases: \code{object}
+
+Client version of access for client/server system
+\begin{description}
+\item[{arguments:}] \leavevmode
+model           model name
+modelserver     model server and port
+user            user name
+password        password string
+
+\end{description}
+
+returns a user model access object
+\index{ask() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.ask}\pysiglinewithargsret{\bfcode{ask}}{\emph{context=}\optional{}, \emph{view=None}, \emph{resolver=None}, \emph{showcontexts=None}}{}~\begin{description}
+\item[{arguments: (see Personis\_base for details)}] \leavevmode
+context is a list giving the path of context identifiers
+view is either:
+\begin{quote}
+
+an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in
+\begin{quote}
+
+the context be returned
+\end{quote}
+\end{quote}
+
+resolver specifies a resolver, default is the builtin resolver
+
+\end{description}
+
+returns a list of component objects
+
+\end{fulllineitems}
+
+\index{delcomponent() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.delcomponent}\pysiglinewithargsret{\bfcode{delcomponent}}{\emph{context=}\optional{}, \emph{componentid=None}}{}
+Delete an existing component in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+id - the id for a componen
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{delcontext() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.delcontext}\pysiglinewithargsret{\bfcode{delcontext}}{\emph{context=}\optional{}}{}
+Delete an existing context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{delete\_sub() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.delete_sub}\pysiglinewithargsret{\bfcode{delete\_sub}}{\emph{context=}\optional{}, \emph{componentid=None}, \emph{subname=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+componentid designates the component subscribed to
+subname is the subscription name
+
+\end{fulllineitems}
+
+\index{deleteapp() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.deleteapp}\pysiglinewithargsret{\bfcode{deleteapp}}{\emph{app=None}}{}
+deletes an app
+
+\end{fulllineitems}
+
+\index{delview() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.delview}\pysiglinewithargsret{\bfcode{delview}}{\emph{context=}\optional{}, \emph{viewid=None}}{}
+Delete an existing view in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+viewid - the id for the view
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{export\_model() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.export_model}\pysiglinewithargsret{\bfcode{export\_model}}{\emph{context=}\optional{}, \emph{resolver=None}}{}
+arguments:
+context is the context to export
+resolver is a string containing the name of a resolver
+\begin{quote}
+
+or
+\end{quote}
+\begin{description}
+\item[{resolver is a dictionary containing information about resolver(s) to be used and arguments}] \leavevmode
+the ``resolver'' key gives the name of a resolver to use, if not present the default resolver is used
+the ``evidence\_filter'' key specifies an evidence filter
+eg `evidence\_filter' =  ``all'' returns all evidence,
+\begin{quote}
+
+``last10'' returns last 10 evidence items,
+``last1'' returns most recent evidence item,
+None returns no evidence
+\end{quote}
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{getcontext() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.getcontext}\pysiglinewithargsret{\bfcode{getcontext}}{\emph{context=}\optional{}, \emph{getsize=False}}{}
+Get context information
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+getsize - True if the size in bytes of the context subtree is required
+\end{quote}
+
+\end{fulllineitems}
+
+\index{getpermission() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.getpermission}\pysiglinewithargsret{\bfcode{getpermission}}{\emph{context=None}, \emph{componentid=None}, \emph{app=None}}{}
+gets permissions for a context (if componentid is None) or
+a component
+returns a tuple (ask,tell)
+
+\end{fulllineitems}
+
+\index{getresolvers() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.getresolvers}\pysiglinewithargsret{\bfcode{getresolvers}}{}{}
+Return a list of the available resolver names
+
+\end{fulllineitems}
+
+\index{import\_model() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.import_model}\pysiglinewithargsret{\bfcode{import\_model}}{\emph{context=}\optional{}, \emph{partial\_model=None}}{}
+arguments:
+context is the context to import into
+partial\_model is a json encoded string containing the partial model
+
+\end{fulllineitems}
+
+\index{list\_subs() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.list_subs}\pysiglinewithargsret{\bfcode{list\_subs}}{\emph{context=}\optional{}, \emph{componentid=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+componentid designates the component with subscriptions attached
+
+\end{fulllineitems}
+
+\index{listapps() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.listapps}\pysiglinewithargsret{\bfcode{listapps}}{}{}
+returns array of registered app names
+
+\end{fulllineitems}
+
+\index{mkcomponent() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.mkcomponent}\pysiglinewithargsret{\bfcode{mkcomponent}}{\emph{context=}\optional{}, \emph{componentobj=None}}{}
+Make a new component in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+componentobj - a Component object
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{mkcontext() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.mkcontext}\pysiglinewithargsret{\bfcode{mkcontext}}{\emph{context=}\optional{}, \emph{contextobj=None}}{}
+Make a new context in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+contextobj - a Context object
+\end{quote}
+
+\end{fulllineitems}
+
+\index{mkview() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.mkview}\pysiglinewithargsret{\bfcode{mkview}}{\emph{context=}\optional{}, \emph{viewobj=None}}{}
+Make a new view in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+viewobj - a View object
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{registerapp() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.registerapp}\pysiglinewithargsret{\bfcode{registerapp}}{\emph{app=None}, \emph{desc='`}, \emph{password=None}}{}
+registers a password for an app
+app name is a string (needs checking TODO)
+app passwords are stored at the top level .model db
+
+\end{fulllineitems}
+
+\index{set\_goals() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.set_goals}\pysiglinewithargsret{\bfcode{set\_goals}}{\emph{context=}\optional{}, \emph{componentid=None}, \emph{goals=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+componentid designates the component with subscriptions attached
+goals is a list of paths to components that are:
+\begin{quote}
+
+goals for this componentid if it is not of type goal
+components that contribute to this componentid if it is of type goal
+\end{quote}
+
+\end{fulllineitems}
+
+\index{setpermission() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.setpermission}\pysiglinewithargsret{\bfcode{setpermission}}{\emph{context=None}, \emph{componentid=None}, \emph{app=None}, \emph{permissions=\{\}}}{}
+sets ask/tell permission for a context (if componentid is None) or
+a component
+
+\end{fulllineitems}
+
+\index{setresolver() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.setresolver}\pysiglinewithargsret{\bfcode{setresolver}}{\emph{context}, \emph{componentid}, \emph{resolver}}{}
+set the resolver for a given component in a given context
+arguments:
+\begin{quote}
+
+context - a list giving the path to the required context
+componentid - the id for a given component
+resolver - the id of the resolver
+\end{quote}
+\begin{description}
+\item[{returns:}] \leavevmode
+None on success
+a string error message on error
+
+\end{description}
+
+\end{fulllineitems}
+
+\index{subscribe() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.subscribe}\pysiglinewithargsret{\bfcode{subscribe}}{\emph{context=}\optional{}, \emph{view=None}, \emph{subscription=None}}{}
+arguments:
+context is a list giving the path of context identifiers
+view is either:
+\begin{quote}
+
+an identifier of a view in the context specified
+a list of component identifiers or full path lists
+None indicating that the values of all components in
+\begin{quote}
+
+the context be returned
+\end{quote}
+
+subscription is a Subscription object
+\end{quote}
+
+\end{fulllineitems}
+
+\index{tell() (personis.client.Access method)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Access.tell}\pysiglinewithargsret{\bfcode{tell}}{\emph{context=}\optional{}, \emph{componentid=None}, \emph{evidence=None}}{}
+arguments:
+context - a list giving the path to the required context
+componentid - identifier of the component
+evidence - evidence object to add to the component
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{Component (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Component}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Component}}{\emph{**kargs}}{}
+component object
+Identifier  the identifier of the component
+\begin{quote}
+
+unique in the context
+\end{quote}
+
+Description readable description
+creation\_time   time of creation of the component
+component\_type  {[}''attribute'', ``activity'', ``knowledge'', ``belief'', ``preference'', ``goal''{]}
+value\_type  {[}''string'', ``number'',''boolean'', ``enum'', ``JSON''{]}
+value\_list    a list of strings that are the possible values for type ``enum''
+value       the resolved value
+resolver    default resolver for this component
+goals       list of component paths eg {[} {[}'Personal', `Health', `weight'{]}, ...{]}
+evidencelist    list of evidence objects
+
+\end{fulllineitems}
+
+\index{Context (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Context}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Context}}{\emph{**kargs}}{}
+context object
+Identifier  the identifier of the component
+\begin{quote}
+
+unique in the context
+\end{quote}
+
+Description readable description
+resolver    default resolver for components in this context
+
+\end{fulllineitems}
+
+\index{Evidence (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Evidence}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{Evidence}}{\emph{**kargs}}{}
+evidence object
+evidence\_type   ``explicit'', \# given by the user
+\begin{quote}
+
+``implicit'', \# observed by the machine
+``exmachina'', \# told (to the user) by the machine
+``inferred'', \# evidence generated by a subscription inference 
+``stereotype''{]} \# evidence added by a stereotype
+\end{quote}
+
+source  string indicating source of evidence
+value   any python object
+comment string with extra information about the evidence
+flags   a list of strings eg ``goal''
+time    notional creation time optionally given by user
+creation\_time actual time evidence item was created
+useby   timestamp evidence expires (if required)
+\index{EvidenceTypes (personis.client.Evidence attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.Evidence.EvidenceTypes}\pysigline{\bfcode{EvidenceTypes}\strong{ = {[}'explicit', `implicit', `exmachina', `inferred', `stereotype'{]}}}
+explicit: given by the user  (given)
+implicit: observed by the machine (observation)
+exmachina: told (to the user) by the machine (told)
+inferred: evidence generated by inference (external or internal)
+stereotype: evidence added by a stereotype
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{View (class in personis.client)}
+
+\begin{fulllineitems}
+\phantomsection\label{personis.client:personis.client.View}\pysiglinewithargsret{\strong{class }\code{personis.client.}\bfcode{View}}{\emph{**kargs}}{}
+view object
+Identifier  the identifier of the component
+\begin{quote}
+
+unique in the context
+\end{quote}
+
+Description readable description
+
+\end{fulllineitems}
+
+
+
+\section{\texttt{util} Module}
+\label{personis.client:util-module}\label{personis.client:module-personis.client.util}\index{personis.client.util (module)}
+
 \chapter{Indices and tables}
 \label{index:indices-and-tables}\begin{itemize}
 \item {} 
@@ -1451,7 +2382,8 @@ The POST requests should be over HTTP for now, HTTPS later. Also, a future stage
 \begin{theindex}
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 \bigletter{p}
-\item {\texttt{personis.server}}, \pageref{API:module-personis.server}
+\item {\texttt{personis.client}}, \pageref{personis.client:module-personis.client}
+\item {\texttt{personis.client.util}}, \pageref{personis.client:module-personis.client.util}
 \end{theindex}
 
 \renewcommand{\indexname}{Index}

@@ -1,4 +1,4 @@
 'client_id' : '3Df8640E83aAEFB84E85eEBBB4Ed7fE3'
 'client_secret' : '934aA03Cfa0A25DCfa12d53a26501A37'
-'personis_uri' : 'http://vm1-chai1.it.usyd.edu.au/'
-'callback' : 'http://personislog.appspot.com/authorized'
+'personis_uri' : 'https://s2.personis.info/'
+'callback' : 'https://personislog.appspot.com/authorized'

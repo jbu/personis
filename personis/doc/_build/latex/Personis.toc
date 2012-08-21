@@ -6,16 +6,19 @@
 \contentsline {chapter}{\numberline {5}Tutorial Introduction to Personis}{13}{chapter.5}
 \contentsline {section}{\numberline {5.1}umbrowser}{13}{section.5.1}
 \contentsline {section}{\numberline {5.2}Logger}{16}{section.5.2}
-\contentsline {chapter}{\numberline {6}Personis Server}{17}{chapter.6}
-\contentsline {section}{\numberline {6.1}Running a Server}{17}{section.6.1}
-\contentsline {chapter}{\numberline {7}Example Applications}{19}{chapter.7}
-\contentsline {section}{\numberline {7.1}Museum Guide}{19}{section.7.1}
-\contentsline {section}{\numberline {7.2}Health Monitoring}{19}{section.7.2}
-\contentsline {section}{\numberline {7.3}Drill and Practice}{19}{section.7.3}
-\contentsline {chapter}{\numberline {8}Application Program Interface}{21}{chapter.8}
-\contentsline {section}{\numberline {8.1}Examples}{25}{section.8.1}
-\contentsline {chapter}{\numberline {9}Model Definition Format}{29}{chapter.9}
-\contentsline {chapter}{\numberline {10}Client/Server Protocol}{31}{chapter.10}
-\contentsline {chapter}{\numberline {11}Indices and tables}{33}{chapter.11}
-\contentsline {chapter}{Python Module Index}{35}{section*.4}
-\contentsline {chapter}{Index}{37}{section*.5}
+\contentsline {chapter}{\numberline {6}Personis Server}{19}{chapter.6}
+\contentsline {section}{\numberline {6.1}Running a Server}{19}{section.6.1}
+\contentsline {chapter}{\numberline {7}Example Applications}{21}{chapter.7}
+\contentsline {section}{\numberline {7.1}Museum Guide}{21}{section.7.1}
+\contentsline {section}{\numberline {7.2}Health Monitoring}{21}{section.7.2}
+\contentsline {section}{\numberline {7.3}Drill and Practice}{21}{section.7.3}
+\contentsline {chapter}{\numberline {8}Application Program Interface}{23}{chapter.8}
+\contentsline {section}{\numberline {8.1}Examples}{30}{section.8.1}
+\contentsline {chapter}{\numberline {9}Model Definition Format}{33}{chapter.9}
+\contentsline {chapter}{\numberline {10}Client/Server Protocol}{35}{chapter.10}
+\contentsline {chapter}{\numberline {11}client Package}{37}{chapter.11}
+\contentsline {section}{\numberline {11.1}\texttt {client} Package}{37}{section.11.1}
+\contentsline {section}{\numberline {11.2}\texttt {util} Module}{40}{section.11.2}
+\contentsline {chapter}{\numberline {12}Indices and tables}{41}{chapter.12}
+\contentsline {chapter}{Python Module Index}{43}{section*.61}
+\contentsline {chapter}{Index}{45}{section*.62}

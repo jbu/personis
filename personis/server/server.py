@@ -61,7 +61,7 @@ class Server:
         if self.oauth_clients == None:
             self.oauth_clients = {}
         self.access_tokens_condition = threading.Condition()
-        self.access_tokens = Shove('sqlite:///'+access_tokens)
+        self.access_tokens = Shove('sqlite:///'+access_tokens, sync=0)
 
         def stopper():
             logging.info( 'saving persistant data')
@@ -181,7 +181,7 @@ class Server:
         logging.debug(  'saving: ',clid, field, value)
         oldc = self.oauth_clients[clid][field] = value
         for k, v in self.oauth_clients.items():
-            logging.debug(  k, v['friendly_name'])
+            logging.debug('%s, %s', k, v['friendly_name'])
         self.save_oauth_clients()
         return value
         
@@ -322,7 +322,7 @@ class Server:
         try:
             self.access_tokens_condition.acquire()
             self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
-            self.access_tokens.sync()
+            #self.access_tokens.sync()
             logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
         finally:
             self.access_tokens_condition.release()
