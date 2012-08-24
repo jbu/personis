@@ -75,6 +75,7 @@ def do_call(fun, args, connection):
             if "pythonPickel" in result:
                 raise pickle.loads(result["pythonPickel"])
             elif len(result["val"]) == 3:
+                print str(result["val"][2])
                 raise pickle.loads(str(result["val"][2]))
             else:
                 raise Exception, str(result["val"])

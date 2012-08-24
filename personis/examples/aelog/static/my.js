@@ -1,12 +1,12 @@
 $(document).ready(function(){
   $('img.wrapper').click(function(){
-
+  	var t = $(this).attr('alt');
     $.ajax({
          type: 'POST',
          url: 'log_me',
          data: {item: $(this).attr('alt')},
          success: function(data) {
-            $('#coll > .ui-collapsible-content ').prepend("<p class='loggedItem'>" +$(this).attr('alt')+' at '+ new Date().toDateString()+'</p>').trigger("create"); 
+            $('#coll > .ui-collapsible-content ').prepend("<p class='loggedItem'>" +t+' at '+ new Date().toDateString()+'</p>').trigger("create"); 
          }
      });
   });

@@ -32,7 +32,7 @@ class LogLlum(webapp2.RequestHandler):
 
     def install_contexts(self, um):
         try:
-            reslist = um.ask(context=['Apps','Logging'])
+            reslist = um.ask(context=['Apps','Logging'], view=['logged_items'])
             return
         except:
             pass
@@ -44,12 +44,19 @@ class LogLlum(webapp2.RequestHandler):
                   "resolvers": ["all","last10","last1","goal"]},
                   resolver=None, objectType="Context")
         print "Creating logging context "
-        um.mkcontext(context,ctx_obj)
+        try:
+            um.mkcontext(context,ctx_obj)
+        except:
+            logging.debug('already have logging context')
         context.append('Logging')
 
+        value_list = [i for i in item_list.keys()] + [i+'-' for i in item_list.keys()]
         cobj = client.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
-                                       value_list=[i for i in item_list.keys()], resolver=None ,Description="All the items logged")
-        um.mkcomponent(context=context, componentobj=cobj)
+                                       value_list=value_list, resolver=None ,Description="All the items logged")
+        try:
+            um.mkcomponent(context=context, componentobj=cobj)
+        except:
+            logging.debug('already have logged_items')
 
     def do_login(self):
         session = get_current_session()
@@ -106,6 +113,7 @@ class LogLlum(webapp2.RequestHandler):
             return self.redirect('/do_login')
         connection = pickle.loads(session.get('connection'))
         um = client.Access(connection=connection, test=False, http = httplib2.Http(disable_ssl_certificate_validation=True))
+        self.install_contexts(um)
         try:
             reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
         except AccessTokenRefreshError as e:
@@ -128,16 +136,13 @@ class LogLlum(webapp2.RequestHandler):
         <!-- Home -->
         <div data-role="page" id="page1">
             <div data-theme="a" data-role="header" data-position="fixed">
-                <h3>My Health Logger</h3>
+            <h3>My Health Logger</h3>
+            <a href=""><img src='{0[user_icon]}' style="height: 50px"/></a>
             </div>
             <div data-role="content" style="padding: 15px">
                 <div class="ui-grid-a">
-                    <div class="ui-block-a" align="center">
-                        <h2>Food</h2>
-                    </div>
-                    <div class="ui-block-b" align="center">
-                        <h2>Activity</h2>
-                    </div>'''
+                    <div class="ui-block-a" align="center"><h2>Food</h2></div>
+                    <div class="ui-block-b" align="center"><h2>Activity</h2></div>'''.format({'user_icon':reslist[1].value })
         l = 'a'
         for k, v in item_list.items():
             ret = ret + ''' <div class="ui-block-{0[l]}">
@@ -149,7 +154,7 @@ class LogLlum(webapp2.RequestHandler):
         ret = ret + ''' 
                 </div>
                 <button id="undo">Undo</button>
-            <div data-role="collapsible" id="coll" data-theme='c' data-content-theme="c">
+            <div data-role="collapsible" data-collapsed="false" id="coll" data-theme='c' data-content-theme="c">
               <h3>Logged items</h3>
                 <p class='loggedItem'></p>
             </div>

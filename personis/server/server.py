@@ -60,7 +60,6 @@ class Server:
         self.oauth_clients = json.loads(file(clients,'r').read())
         if self.oauth_clients == None:
             self.oauth_clients = {}
-        self.access_tokens_condition = threading.Condition()
         self.access_tokens = Shove('sqlite:///'+access_tokens, sync=0)
 
         def stopper():
@@ -319,14 +318,10 @@ class Server:
             rdi = rdi + 'state='+cherrypy.session['state']+'&amp;'
         rdi = rdi + 'code=' + val_key
 
-        try:
-            self.access_tokens_condition.acquire()
-            self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
-            #self.access_tokens.sync()
-            #logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
-        finally:
-            self.access_tokens_condition.release()
-
+        self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
+        self.access_tokens.sync()
+        logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
+        
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
         cherrypy.session['um'] = um
@@ -356,15 +351,13 @@ class Server:
         # expire old tokens before we look
         now = time.time()
 
-        try:
-            self.access_tokens_condition.acquire()
-            for k, v in self.access_tokens.items():
-                logging.debug(  'access_tokens %s: %s', k,v)
-                if now > v['expires']:
-                    logging.debug (  'expire access_token %s',k)
-                    del(self.access_tokens[k])
-        finally:
-            self.access_tokens_condition.release()
+
+        for k, v in self.access_tokens.items():
+            logging.debug(  'access_tokens %s: %s', k,v)
+            if now > v['expires']:
+                logging.debug (  'expire access_token %s',k)
+                del(self.access_tokens[k])
+
 
 
         if grant_type == 'refresh_token':
@@ -399,12 +392,10 @@ class Server:
         access_token = ''
         access_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
 
-        try:
-            self.access_tokens_condition.acquire()
-            self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
-            logging.debug(  'added access_token: %s',access_token)
-        finally:
-            self.access_tokens_condition.release()
+
+        self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
+        logging.debug(  'added access_token: %s',access_token)
+
 
 
 
@@ -418,19 +409,14 @@ class Server:
             refresh_token = ''
             refresh_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
             logging.info(  'added refresh_token: %s',refresh_token)
-            try:
-                self.access_tokens_condition.acquire()
-                self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
 
-            finally:
-                self.access_tokens_condition.release()
+            self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
+
             ret['refresh_token'] = refresh_token
 
-        try:
-            self.access_tokens_condition.acquire()
-            self.access_tokens.sync()
-        finally:
-            self.access_tokens_condition.release()
+
+        self.access_tokens.sync()
+
 
         s = json.dumps(ret)
         logging.info(  s)

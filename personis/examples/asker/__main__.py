@@ -12,7 +12,7 @@ p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, prox
 
 # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
 client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
-um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p), credentials='asker_cred.dat')
+um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), credentials='asker_cred.dat')
 
 # Ask UM for the logged items
 reslist = um.ask(context=["Apps", 'Logging'],view=['logged_items'])
