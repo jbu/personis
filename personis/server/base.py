@@ -932,7 +932,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		"""
 		if componentid == None:
 			return "no component specified for deletion"
-		if type(componentid) == type(''):
+		if type(componentid) == type(u''):
 			componentid = str(componentid)
 		self.curcontext = self._getcontextdir(context)
 		comps, comps_shelf_fd = shelf_open(self.curcontext+"/.components", "w")

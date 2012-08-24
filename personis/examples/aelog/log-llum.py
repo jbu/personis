@@ -15,13 +15,17 @@ import time
 import logging
 import pickle
 
-item_list = {'fruit':{'icon':'http://2.bp.blogspot.com/-jDaZn2jh-8g/T_nBaiND65I/AAAAAAAAEEU/xfTEI7jn9WA/s400/800px-Culinary_fruits_front_view.jpg'},
-            'vegetables':{'icon': 'http://vegansolution.files.wordpress.com/2009/11/nutrition.jpg?w=500'}, 
-            'running':{'icon': 'http://media.tumblr.com/tumblr_lr1zbqDTYY1qbjt03.jpg'},
-            'walking':{'icon': 'http://www.thenordicwalking.com/wp-content/uploads/2011/02/nw123.jpg'}, 
-            }
 
+item_list = {'fruit':{'category': 'food', 'icon':'/image/fruit.jpg'},
+            'running':{'category': 'activity', 'icon': '/image/running.jpg'},
+            'vegetables':{'category': 'food', 'icon': '/image/vegetables.jpg'}, 
+            'walking':{'category': 'activity', 'icon': '/image/walking.jpg'}, 
+            }
         
+        # running - http://www.flickr.com/photos/good_day/20723337/in/photostream/
+        # walking - http://www.flickr.com/photos/o5com/5081595200/in/photostream/
+        # fruit - http://www.flickr.com/photos/doug88888/2780642603/in/photostream/
+        # vegetables - http://www.flickr.com/photos/suckamc/2488644619/in/photostream/
 
 class LogLlum(webapp2.RequestHandler):
 
@@ -82,15 +86,18 @@ class LogLlum(webapp2.RequestHandler):
         self.redirect('/')
 
     def log_me(self):
+        if self.request.method != 'POST':
+            self.abort(400, detail="POST only")
         session = get_current_session()
         if session.get('connection') == None:
             self.abort(400, detail='Log in first.')
+        logging.debug('logme %s', self.request.get('item'))
         connection = pickle.loads(session.get('connection'))
         um = client.Access(connection=connection, http = httplib2.Http(disable_ssl_certificate_validation=True), test=False)
         item = self.request.get('item')
         ev = client.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
         um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
-        return self.redirect('/')
+        self.response.write(item)
 
     def get(self):
         session = get_current_session()
@@ -102,81 +109,54 @@ class LogLlum(webapp2.RequestHandler):
         try:
             reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
         except AccessTokenRefreshError as e:
-            logging.info('access token refresh error '+e)
+            logging.info('access token refresh error %s', e)
             return self.redirect('/do_login')
 
         ret = '''
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-        </title>
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-        <link rel="stylesheet" href="my.css" />
-        <style>
-            /* App custom styles */
-        </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js">
-        </script>
-        <script src="my.js">
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="/static/my.css"/>
+        <script src="/static/my.js"></script>
     </head>
     <body>
         <!-- Home -->
         <div data-role="page" id="page1">
             <div data-theme="a" data-role="header" data-position="fixed">
-                <h3>
-                    My Health Logger
-                </h3>
+                <h3>My Health Logger</h3>
             </div>
             <div data-role="content" style="padding: 15px">
-
                 <div class="ui-grid-a">
                     <div class="ui-block-a" align="center">
-                        <h2>
-                            Food
-                        </h2>
+                        <h2>Food</h2>
                     </div>
                     <div class="ui-block-b" align="center">
-                        <h2>
-                            Activity
-                        </h2>
-                    </div>
-        '''
+                        <h2>Activity</h2>
+                    </div>'''
         l = 'a'
         for k, v in item_list.items():
-            ret = ret + '''<div class="ui-block-{0[l]}">
-                    <div style=" text-align:center; padding: 5px">
-                        <a class="wrapper" href="/log_me?item={0[name]}" id="ByName"><img style='width:100%; ' src='{0[pic]}'/></a>
-                    </div>
+            ret = ret + ''' <div class="ui-block-{0[l]}">
+                <div style=" text-align:center; padding: 5px">
+                    <img class="wrapper"  src='{0[pic]}' alt='{0[name]}'/>
                 </div>
-            '''.format({'l': l,'name': k, 'pic': v['icon']})
+            </div>'''.format({'l': l,'name': k.strip(), 'pic': v['icon']})
             l = 'a' if l == 'b' else 'b'
-        ret = ret + '''
-                    
+        ret = ret + ''' 
                 </div>
-                <div data-role="collapsible-set" data-theme="" data-content-theme="">
-                    <div data-role="collapsible" data-collapsed="false">
-                        <h3>
-                            Activity
-                        </h3>
-                    </div>
-                </div>
-                <a data-role="button" data-transition="fade" href="#page1">
-                    Undo
-                </a>
+                <button id="undo">Undo</button>
+            <div data-role="collapsible" id="coll" data-theme='c' data-content-theme="c">
+              <h3>Logged items</h3>
+                <p class='loggedItem'></p>
             </div>
         </div>
-        <script>
-            //App custom javascript
-        </script>
+        </div>
     </body>
-</html>
-        '''
+</html>'''
         self.response.write(ret)
 
 
