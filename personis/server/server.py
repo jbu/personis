@@ -588,14 +588,14 @@ class ExitThread(threading.Thread):
 
     def run(self):
         self.running = True
-        print('exit thread running')
+        print 'exit thread running'
         logging.info('exit listener running')
         while self.running:
             g = self.q.get(block = True)
             logging.info('exit thread got %s', g)
             if g == 'exit':
                 self.running = False
-            print('qgot', g)
+            print 'qgot', g
         logging.info('exit listener run ends')
         self.exit()
 

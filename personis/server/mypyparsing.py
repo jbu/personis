@@ -423,13 +423,13 @@ def line( loc, strg ):
         return strg[lastCR+1:]
 
 def _defaultStartDebugAction( instring, loc, expr ):
-    print("Match",expr,"at loc",loc,"(%d,%d)" % ( lineno(loc,instring), col(loc,instring) ))
+    print "Match",expr,"at loc",loc,"(%d,%d)" % ( lineno(loc,instring), col(loc,instring) )
 
 def _defaultSuccessDebugAction( instring, startloc, endloc, expr, toks ):
-    print("Matched",expr,"->",toks.asList())
+    print "Matched",expr,"->",toks.asList()
     
 def _defaultExceptionDebugAction( instring, loc, expr, exc ):
-    print("Exception raised:", exc)
+    print "Exception raised:", exc
 
 def nullDebugAction(*args):
     """'Do-nothing' debug action, to suppress debugging output during parsing."""
@@ -2185,20 +2185,20 @@ commaSeparatedList = delimitedList( Optional( quotedString | _commasepitem, defa
 if __name__ == "__main__":
 
     def test( teststring ):
-        print(teststring, "->")
+        print teststring, "->"
         try:
             tokens = simpleSQL.parseString( teststring )
             tokenlist = tokens.asList()
-            print(tokenlist)
-            print("tokens = ",        tokens)
-            print("tokens.columns =", tokens.columns)
-            print("tokens.tables =",  tokens.tables)
-            print(tokens.asXML("SQL",True))
+            print tokenlist
+            print "tokens = ",        tokens
+            print "tokens.columns =", tokens.columns
+            print "tokens.tables =",  tokens.tables
+            print tokens.asXML("SQL",True)
         except ParseException as err:
-            print(err.line)
-            print(" "*(err.column-1) + "^")
-            print(err)
-        print()
+            print err.line
+            print " "*(err.column-1) + "^"
+            print err
+        print
 
     selectToken    = CaselessLiteral( "select" )
     fromToken      = CaselessLiteral( "from" )

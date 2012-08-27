@@ -402,7 +402,7 @@ class Access(resolvers.Access,ev_filters.Access):
 		contextinfo = self.getcontext(context)
 		if 'perms' not in contextinfo:
 			perms = []
-			print('no perms!')
+			print 'no perms!'
 		else:
 			perms = contextinfo['perms']
 		if self.usertype != 'owner':
@@ -690,7 +690,7 @@ class Access(resolvers.Access,ev_filters.Access):
 			con = Context(Identifier=cinfo['Identifier'], Description=cinfo['Description'], resolver=cinfo['resolver'], perms=cinfo['perms'])
 			self.mkcontext(context=context, contextobj=con)
 		else:
-			print(newcontext, "exists")
+			print newcontext, "exists"
 		for compname, comp in newmodel['components'].items():
 			newcobj = Component()
 			for k,v in comp.items():
@@ -703,7 +703,7 @@ class Access(resolvers.Access,ev_filters.Access):
 				evv = Evidence(evidence_type="explicit") # evidence type will be overwritten by imported evidence
 				for k,v in ev.items():
 					evv.__dict__[k] = v
-				print("=>> tell", newcontext, compname, evv.__dict__)
+				print "=>> tell", newcontext, compname, evv.__dict__
 				self.tell(context=newcontext, componentid=compname, evidence=evv, dosubs=False)
 		for viewname, view in newmodel['views'].items():
 			newview = View()
@@ -712,15 +712,15 @@ class Access(resolvers.Access,ev_filters.Access):
 			try:
 				self.mkview(newcontext, newview)
 			except:
-				print("View exists:", newcontext, newview)
-			print(">>VIEW", viewname, view)
+				print "View exists:", newcontext, newview
+			print ">>VIEW", viewname, view
 		for subname, sub in newmodel['subs'].items():
 			for k,v in sub.items():
-				print(">>SUB", subname, k, v)
+				print ">>SUB", subname, k, v
 				self.subscribe(context=newcontext, view=[subname], subscription=v)
 		if newmodel['contexts'] != None:
 			for contextname, cont in newmodel['contexts'].items():
-				print(">>CONTEXT", contextname, cont)
+				print ">>CONTEXT", contextname, cont
 				self.import_model(newcontext, cont)
 		
 		return newmodel

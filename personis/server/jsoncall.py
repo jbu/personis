@@ -35,8 +35,8 @@ def do_call(fun, args, connection):
 	try:
 		result = json.loads(content)
 	except:
-		print("json loads failed!")
-		print("<<%s>>" % (content))
+		print "json loads failed!"
+		print "<<%s>>" % (content)
 		raise ValueError("json loads failed")
 	# dirty kludge to get around unicode
 	for k,v in result.items():
@@ -48,7 +48,7 @@ def do_call(fun, args, connection):
 	## Unpack the error, and if it is an exception throw it.
 	if type(result) == dict and 'result' in result:
 		if result["result"] == "error":
-			print(result)
+			print result
 			# We have returned with an error, so throw it as an exception.
 			if 'pythonPickel' in result:
 				raise cPickle.loads(result["pythonPickel"])

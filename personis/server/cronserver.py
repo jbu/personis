@@ -38,13 +38,13 @@ def time_in_spec(t, spec):
 def chkspec(t,spec,orig):
 	full = dict(minset=set(range(60)), hourset = set(range(24)), domset = set(range(31)), monthset = set(range(12)), dowset = set(range(7)))
 	now = dict(minset=set([t.tm_min]), hourset = set([t.tm_hour]), domset = set([t.tm_mday]), monthset = set([t.tm_mon]), dowset = set([t.tm_wday]))
-	print("full = ",full)
-	print("spec = ",spec)
+	print "full = ",full
+	print "spec = ",spec
 	for s in ['minset','hourset','domset','monthset','dowset']:
 		if spec[s] != full[s]:
-			print("%s : %s" % (s, spec[s]))
+			print "%s : %s" % (s, spec[s])
 			if now[s].issubset(spec[s]):
-				print(">>%s : %s" % (s, orig[s].difference(now[s])))
+				print ">>%s : %s" % (s, orig[s].difference(now[s]))
 				speccopy = spec.copy()
 				speccopy[s] = orig[s].difference(now[s])
 				return speccopy
@@ -55,15 +55,15 @@ def checksub(modeldir, m):
 	try:	
 		um = pmdns.Access(modeldir=modeldir, model=sub['modelname'], user=sub['user'], password=sub['password'])
 	except:
-		print("Access failed", sub)
+		print "Access failed", sub
 		return
-	print("Access OK", sub)
+	print "Access OK", sub
 	try:
 		subscription.dosub(sub,um)
 	except:
-		print("dosub failed")
+		print "dosub failed"
 		return
-	print("dosub ok")
+	print "dosub ok"
 	
 
 def cronserver(q, modeldir):
@@ -108,13 +108,13 @@ else
 				if newspec == []:
 					if time_in_spec(tnow, cronspec):
 						newspec = chkspec(tnow, cronspec, cronspec)
-						print("=== FIRED cronspec ===", time.ctime(), newspec)
+						print "=== FIRED cronspec ===", time.ctime(), newspec
 						checksub(modeldir, crondb[i])
 						#print i,":",crondb[i]
 				else:
 					if time_in_spec(tnow, newspec):
 						newspec = chkspec(tnow, newspec, cronspec)
-						print("=== FIRED newspec ===", time.ctime(), newspec)
+						print "=== FIRED newspec ===", time.ctime(), newspec
 						checksub(modeldir, crondb[i])
 						#print i,":",crondb[i]
 				crondb[i]['newspec'] = newspec
@@ -137,7 +137,7 @@ else
 			m['cronspec'] = dict(minset=minset, hourset=hourset, domset=domset, monthset=monthset, dowset=dowset)
 			m['newspec'] = []
 			crondb[crondblen] = m
-			print("put:", m)
+			print "put:", m
 			crondblen += 1
 
 

@@ -76,7 +76,7 @@ def askval(str, loc, toks):
 	if model == '.': model = defaultmodel
 	context = [x for x in toks[2:-3] if x != '/']
 	componentid = toks[-2]
-	print("AskVal -> resolver: %s, model: %s, context: %s, componentid:%s" % (resolver, model, context, componentid))
+	print "AskVal -> resolver: %s, model: %s, context: %s, componentid:%s" % (resolver, model, context, componentid)
 	if model != defaultmodel:
 		global Personis
 		import Personis as pmdns
@@ -84,18 +84,18 @@ def askval(str, loc, toks):
 			um = pmdns.Access(model=model, user=user, password=password)
 			reslist = um.ask(context=context, view=[componentid], resolver=resolver)
 		except:
-			print("ask failed")
+			print "ask failed"
 			return "-no model-"
 	else:
 		reslist = currentum.ask(context=context, view=[componentid], resolver=resolver)
-	print("result: ", reslist[0].value)
+	print "result: ", reslist[0].value
 	if reslist[0].value == None:
 		return ""
 	else:
 		return reslist[0].value
 
 def domatch(str, loc, toks):
-	print("TOKS:", toks)
+	print "TOKS:", toks
 	if re.compile(toks[2]).match(toks[0]):
 		return "-match-"
 	else:
@@ -115,7 +115,7 @@ def dotell_body(str, loc, toks,changed_only=False):
 	evidence_type = toks[-3]
 	newval = toks[-1]
 	
-	print("Tell %s/%s/%s, %s:%s" % (model, context, componentid, evidence_type, newval))
+	print "Tell %s/%s/%s, %s:%s" % (model, context, componentid, evidence_type, newval)
 	try:
 		if model!=defaultmodel:
 			global Personis
@@ -136,7 +136,7 @@ def dotell_body(str, loc, toks,changed_only=False):
 				evidence=base.Evidence(evidence_type=evidence_type, value=newval))
 
 	except:
-		print('tell failed')
+		print 'tell failed'
 		raise ParseException(str, loc, "tell failed",0)
 	return True
 
@@ -144,9 +144,9 @@ def donotify(str, loc, toks):
 	#print "donotify::", toks
 	url = "".join(toks[1:])
 	import urllib.request, urllib.parse, urllib.error
-	print("Notify", url)
+	print "Notify", url
 	f = urllib.request.urlopen(url)
-	print(f.readlines())
+	print f.readlines()
 	f.close()
 	return
 
@@ -187,12 +187,12 @@ def dosub(sub, um):
 	user = sub['user']
 	password = sub.get('password')
 	statement = sub['statement']
-	print("default model:", defaultmodel)
-	print("statement:", statement)
+	print "default model:", defaultmodel
+	print "statement:", statement
 	try:
 		toks = subgrammar.parseString(statement)
 	except Exception as err:
-		print("parse failed [[%s]]" % (repr(err)))
+		print "parse failed [[%s]]" % (repr(err))
 	else:
 		return True
 
@@ -232,5 +232,5 @@ if __name__ == '__main__':
  <default!./personal/location> ~ '.*' :
 	 NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'location=' <./personal/location>  '&name=' <./personal/firstname>
 """
-	print(testsub)
+	print testsub
 	dosub({'user':'bob', 'password':'qwert', 'statement':testsub}, Dummyum("bob"))

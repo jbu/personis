@@ -49,7 +49,7 @@ class Access(base.Access):
 		subscription is a dictionary containing owner, password and subscription statement string
 		"""
 		subscription['modelname'] = self.modelname
-		print("subscription>>> %s %s %s" % (repr(context), repr(view), repr(subscription)))
+		print "subscription>>> %s %s %s" % (repr(context), repr(view), repr(subscription))
 		cronsub = subscription["statement"].strip().startswith("[")
 		token = "%s:%f" % (self.user, time.time())
 		for elt in ("user", "password", "statement"):
