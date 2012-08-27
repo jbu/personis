@@ -126,9 +126,9 @@ class LogLlum(webapp2.RequestHandler):
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
         <link rel="stylesheet" href="/static/my.css"/>
         <script src="/static/my.js"></script>
     </head>
@@ -146,7 +146,7 @@ class LogLlum(webapp2.RequestHandler):
         l = 'a'
         for k, v in item_list.items():
             ret = ret + ''' <div class="ui-block-{0[l]}">
-                <div style=" text-align:center; padding: 5px">
+                <div class="imageC">
                     <img class="wrapper"  src='{0[pic]}' alt='{0[name]}'/>
                 </div>
             </div>'''.format({'l': l,'name': k.strip(), 'pic': v['icon']})

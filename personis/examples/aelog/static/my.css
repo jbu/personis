@@ -1,3 +1,14 @@
-img.wrapper {width: 100%; height: 200px}
-.ui-collapsible-content {height: 100px; overflow-x: hidden; padding-right: 20px;}
+img.wrapper {
+    width: 100%;
+}
+
+.ui-collapsible-content {
+    height: 100px; 
+    overflow-x: hidden; 
+    padding-right: 20px;
+}
+
 .loggedItem {}
+
+div.imageC{
+}​
