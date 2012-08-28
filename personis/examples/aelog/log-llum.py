@@ -14,18 +14,22 @@ import yaml
 import time
 import logging
 import pickle
+from collections import OrderedDict
 
 
-item_list = {'fruit':{'category': 'food', 'icon':'/image/fruit.jpg'},
-            'running':{'category': 'activity', 'icon': '/image/running.jpg'},
-            'vegetables':{'category': 'food', 'icon': '/image/vegetables.jpg'}, 
-            'walking':{'category': 'activity', 'icon': '/image/walking.jpg'}, 
-            }
-        
+# items must be listed in correct order, so use OrderedDict and add manually.
+item_list = OrderedDict()
+
+item_list['fruit'] = {'category': 'food', 'icon':'/image/fruit.jpg'}
+item_list['running'] = {'category': 'activity', 'icon': '/image/running.jpg'}
+item_list['vegetables'] = {'category': 'food', 'icon': '/image/vegetables.jpg'}
+item_list['walking'] = {'category': 'activity', 'icon': '/image/walking.jpg'}
+
         # running - http://www.flickr.com/photos/good_day/20723337/in/photostream/
         # walking - http://www.flickr.com/photos/o5com/5081595200/in/photostream/
         # fruit - http://www.flickr.com/photos/doug88888/2780642603/in/photostream/
         # vegetables - http://www.flickr.com/photos/suckamc/2488644619/in/photostream/
+
 
 class LogLlum(webapp2.RequestHandler):
 

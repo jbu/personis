@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +10,7 @@
     
     <title>Client/Server Protocol &mdash; Personis 12.9 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -57,26 +58,28 @@
 <h1>Client/Server Protocol<a class="headerlink" href="#client-server-protocol" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the Personis <em>access</em>, <em>ask</em> and <em>tell</em> calls in terms of the Python method calls.</p>
 <p><strong>access</strong>:</p>
-<div class="highlight-python"><pre>def access(modelname=string, user=string, password=string, version="11.2")</pre>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">personis</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Access</span><span class="p">(</span><span class="n">uri</span> <span class="o">=</span> <span class="n">personis_uri</span><span class="p">,</span> <span class="n">credentials</span> <span class="o">=</span> <span class="n">cred</span><span class="p">,</span> <span class="n">http</span><span class="o">=</span><span class="n">http</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>The POST URL is then /access and the body is (for example):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;pass&quot;</span><span class="p">,</span> <span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
+<p>The password and user are now vestigal. These are taken care of at the http level. A user may still have multiple models in a server, so modelname can be used. The default is the main user model.</p>
 <p>the return data is:</p>
 <div class="highlight-python"><pre>{"result": "ok", "val": true}     -- on success
 {"result": "fail", "val": false}     -- on failure
 I might change this to include a diagnostic string as the value of val.</pre>
 </div>
 <p><strong>tell</strong>:</p>
-<div class="highlight-python"><pre>def tell(modelname=string, user=string, password=string, version="11.2",
+<div class="highlight-python"><pre>def tell(modelname=string, version="11.2",
         context=list-of-strings, componentid=string, evidence=dict)</pre>
 </div>
 <p>The URL is /tell</p>
 <p>Body example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-<span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;pass&quot;</span><span class="p">,</span>
+<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+<span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
 <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">,</span>
 <span class="s">&quot;evidence&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;comment&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span> <span class="s">&quot;evidence_type&quot;</span><span class="p">:</span> <span class="s">&quot;explicit&quot;</span><span class="p">,</span> <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;Bob&quot;</span><span class="p">,</span>
                 <span class="s">&quot;objectType&quot;</span><span class="p">:</span> <span class="s">&quot;Evidence&quot;</span><span class="p">,</span> <span class="s">&quot;source&quot;</span><span class="p">:</span> <span class="s">&quot;demoex2&quot;</span><span class="p">,</span> <span class="s">&quot;flags&quot;</span><span class="p">:</span> <span class="p">[],</span>
@@ -92,7 +95,7 @@ I might change this to include a diagnostic string as the value of val.</pre>
 I might change this to include a diagnostic string as the value of val.[a]</pre>
 </div>
 <p><strong>ask</strong>:</p>
-<div class="highlight-python"><pre>def ask(modelname=string, user=string, password=string, version="11.2",
+<div class="highlight-python"><pre>def ask(modelname=string, version="11.2",
         context=list-of-strings,
         resolve=dict,
         showcontexts=true-or-false,[b]
@@ -102,8 +105,8 @@ I might change this to include a diagnostic string as the value of val.[a]</pre>
 <p>The URL is /ask</p>
 <p>Body example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-<span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;pass&quot;</span><span class="p">,</span>
+<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+<span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
 <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">,</span>
 <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;Preferences&quot;</span><span class="p">,</span> <span class="s">&quot;Music&quot;</span><span class="p">,</span> <span class="s">&quot;Jazz&quot;</span><span class="p">,</span> <span class="s">&quot;Artists&quot;</span><span class="p">],</span>
 <span class="s">&quot;showcontexts&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>

@@ -30,9 +30,19 @@ import cronserver
 
 
 class Access(base.Access):
+	'''Access class with active additions
 
-	def __init__(self, model=None, modeldir=None, user=None, password=None):
-		base.Access.__init__(self, model=model, modeldir=modeldir, user=user, password=password)
+	:param model: Name of the model to open - must resolve, with modeldir, to a valid directory
+	:type model: str
+	:param modeldir: Directory of the model
+	:type modeldir: str
+	:param user: Username of person accessing. Should match model owner, but authorization is handled at server level.
+	:type user: str
+
+	'''
+
+	def __init__(self, model=None, modeldir=None, user=None):
+		base.Access.__init__(self, model=model, modeldir=modeldir, user=user)
 	
 	def subscribe(self,
 		context=[],

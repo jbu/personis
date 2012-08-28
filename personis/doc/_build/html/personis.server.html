@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +10,7 @@
     
     <title>server Package &mdash; Personis 12.9 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -54,8 +55,22 @@
 <span id="active-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">active</span></tt> Module<a class="headerlink" href="#module-personis.server.active" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="personis.server.active.Access">
-<em class="property">class </em><tt class="descclassname">personis.server.active.</tt><tt class="descname">Access</tt><big>(</big><em>model=None</em>, <em>modeldir=None</em>, <em>user=None</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#personis.server.active.Access" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">personis.server.active.</tt><tt class="descname">Access</tt><big>(</big><em>model=None</em>, <em>modeldir=None</em>, <em>user=None</em><big>)</big><a class="headerlink" href="#personis.server.active.Access" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#personis.server.base.Access" title="personis.server.base.Access"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.base.Access</span></tt></a></p>
+<p>Access class with active additions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>str</em>) &#8211; Name of the model to open - must resolve, with modeldir, to a valid directory</li>
+<li><strong>modeldir</strong> (<em>str</em>) &#8211; Directory of the model</li>
+<li><strong>user</strong> (<em>str</em>) &#8211; Username of person accessing. Should match model owner, but authorization is handled at server level.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="personis.server.active.Access.checksubs">
 <tt class="descname">checksubs</tt><big>(</big><em>context</em>, <em>componentid</em><big>)</big><a class="headerlink" href="#personis.server.active.Access.checksubs" title="Permalink to this definition">¶</a></dt>
@@ -94,7 +109,7 @@ None indicating that the values of all components in</p>
 <span id="base-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">base</span></tt> Module<a class="headerlink" href="#module-personis.server.base" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="personis.server.base.Access">
-<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Access</tt><big>(</big><em>model=None</em>, <em>modeldir=''</em>, <em>user=None</em>, <em>password=None</em>, <em>debug=0</em><big>)</big><a class="headerlink" href="#personis.server.base.Access" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Access</tt><big>(</big><em>model=None</em>, <em>modeldir=''</em>, <em>user=''</em>, <em>debug=0</em><big>)</big><a class="headerlink" href="#personis.server.base.Access" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#personis.server.resolvers.Access" title="personis.server.resolvers.Access"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.resolvers.Access</span></tt></a>, <a class="reference internal" href="#personis.server.ev_filters.Access" title="personis.server.ev_filters.Access"><tt class="xref py py-class docutils literal"><span class="pre">personis.server.ev_filters.Access</span></tt></a></p>
 <dl class="docutils">
 <dt>arguments:</dt>
@@ -410,19 +425,7 @@ evidence - evidence object to add to the component</p>
 <dl class="class">
 <dt id="personis.server.base.Component">
 <em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Component</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Component" title="Permalink to this definition">¶</a></dt>
-<dd><p>component object
-Identifier      the identifier of the component</p>
-<blockquote>
-<div>unique in the context</div></blockquote>
-<p>Description     readable description
-creation_time   time of creation of the component
-component_type  [&#8220;attribute&#8221;, &#8220;activity&#8221;, &#8220;knowledge&#8221;, &#8220;belief&#8221;, &#8220;preference&#8221;, &#8220;goal&#8221;]
-value_type      [&#8220;string&#8221;, &#8220;number&#8221;,&#8221;boolean&#8221;, &#8220;enum&#8221;, &#8220;JSON&#8221;]
-value_list        a list of strings that are the possible values for type &#8220;enum&#8221;
-value           the resolved value
-resolver        default resolver for this component
-goals           list of component paths eg [ [&#8216;Personal&#8217;, &#8216;Health&#8217;, &#8216;weight&#8217;], ...]
-evidencelist    list of evidence objects</p>
+<dd><p>Bases: <a class="reference internal" href="personis.client.html#personis.client.Component" title="personis.client.Component"><tt class="xref py py-class docutils literal"><span class="pre">personis.client.Component</span></tt></a></p>
 <dl class="method">
 <dt id="personis.server.base.Component.filterevidence">
 <tt class="descname">filterevidence</tt><big>(</big><em>model=None</em>, <em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>resolver_args=None</em><big>)</big><a class="headerlink" href="#personis.server.base.Component.filterevidence" title="Permalink to this definition">¶</a></dt>
@@ -454,88 +457,23 @@ else returns (count evidence obj, count)</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="personis.server.base.Context">
-<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Context</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Context" title="Permalink to this definition">¶</a></dt>
-<dd><p>context object
-Identifier      the identifier of the component</p>
-<blockquote>
-<div>unique in the context</div></blockquote>
-<p>Description     readable description
-resolver        default resolver for components in this context</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="personis.server.base.Evidence">
-<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">Evidence</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.Evidence" title="Permalink to this definition">¶</a></dt>
-<dd><p>evidence object
-evidence_type   &#8220;explicit&#8221;, # given by the user</p>
-<blockquote>
-<div>&#8220;implicit&#8221;, # observed by the machine
-&#8220;exmachina&#8221;, # told (to the user) by the machine
-&#8220;inferred&#8221;, # evidence generated by a subscription inference 
-&#8220;stereotype&#8221;] # evidence added by a stereotype</div></blockquote>
-<p>source  string indicating source of evidence
-value   any python object
-comment string with extra information about the evidence
-flags   a list of strings eg &#8220;goal&#8221;
-time    notional creation time optionally given by user
-creation_time actual time evidence item was created
-useby   timestamp evidence expires (if required)</p>
+<dl class="function">
+<dt id="personis.server.base.MkModel">
+<tt class="descclassname">personis.server.base.</tt><tt class="descname">MkModel</tt><big>(</big><em>model=None</em>, <em>modeldir=None</em>, <em>user=None</em>, <em>description=None</em><big>)</big><a class="headerlink" href="#personis.server.base.MkModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>make a model with name &#8220;model&#8221; in directory modeldir for &#8220;user&#8221; with &#8220;description&#8221;</p>
 </dd></dl>
 
 <dl class="data">
-<dt id="personis.server.base.EvidenceTypes">
-<tt class="descclassname">personis.server.base.</tt><tt class="descname">EvidenceTypes</tt><em class="property"> = ['explicit', 'implicit', 'exmachina', 'inferred', 'stereotype']</em><a class="headerlink" href="#personis.server.base.EvidenceTypes" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>model database stored in &#8221;.model&#8221; in the model directory</dt>
-<dd><p class="first">Identifier      modelname
-Description     of the model
-owner           owner of the model
-password        md5 hash of owner password for this model
-apps            dictionary of app names and keys</p>
-<blockquote class="last">
-<div><dl class="docutils">
-<dt>appname         dictionary of info about that app</dt>
-<dd>password        md5 hash of the apps access key (password)
-description     of the app</dd>
-</dl>
-</div></blockquote>
-</dd>
-<dt>context database stored in &#8221;.context&#8221; in each context directory</dt>
-<dd><p class="first">Identifier      context name
-Description     of the context
-perms           a dictionary of permissions for apps</p>
-<blockquote class="last">
-<div><dl class="docutils">
-<dt>appname         dictionary of permission info for that app</dt>
-<dd><dl class="first last docutils">
-<dt>permname        True/False value indicates permname permission for the app</dt>
-<dd>eg {&#8220;ask&#8221;:False, &#8220;tell&#8221;:True} can tell values but not ask</dd>
-<dt>&#8220;resolvers&#8221;     list of resolvers that the app is allowed to use</dt>
-<dd>eg {&#8220;resolvers&#8221;:[&#8220;last1&#8221;, &#8220;goal&#8221;]}</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="personis.server.base.MkModel">
-<tt class="descclassname">personis.server.base.</tt><tt class="descname">MkModel</tt><big>(</big><em>model=None</em>, <em>modeldir=None</em>, <em>user=None</em>, <em>password=None</em>, <em>description=None</em><big>)</big><a class="headerlink" href="#personis.server.base.MkModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>make a model with name &#8220;model&#8221; in directory modeldir for &#8220;user&#8221;/&#8221;password&#8221; with &#8220;description&#8221;</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="personis.server.base.View">
-<em class="property">class </em><tt class="descclassname">personis.server.base.</tt><tt class="descname">View</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.server.base.View" title="Permalink to this definition">¶</a></dt>
-<dd><p>view object
-Identifier      the identifier of the component</p>
+<dt id="personis.server.base.PERSONIS_VERSION">
+<tt class="descclassname">personis.server.base.</tt><tt class="descname">PERSONIS_VERSION</tt><em class="property"> = '$LastChangedRevision: 727 $'</em><a class="headerlink" href="#personis.server.base.PERSONIS_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>ComponentTypes = [&#8220;attribute&#8221;, &#8220;activity&#8221;, &#8220;knowledge&#8221;, &#8220;belief&#8221;, &#8220;preference&#8221;, &#8220;goal&#8221;]
+ValueTypes = [&#8220;string&#8221;, &#8220;number&#8221;, &#8220;boolean&#8221;, &#8220;enum&#8221;, &#8220;JSON&#8221;]
+EvidenceTypes = [&#8220;explicit&#8221;, # given by the user  (given)</p>
 <blockquote>
-<div>unique in the context</div></blockquote>
-<p>Description     readable description</p>
+<div>&#8220;implicit&#8221;, # observed by the machine (observation)
+&#8220;exmachina&#8221;, # told (to the user) by the machine (told)
+&#8220;inferred&#8221;, # evidence generated by inference (external or internal)
+&#8220;stereotype&#8221;] # evidence added by a stereotype</div></blockquote>
 </dd></dl>
 
 <dl class="function">

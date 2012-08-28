@@ -259,8 +259,8 @@ class Server:
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,user)):
             mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod')
-            mkmodel(model=user, mfile=mf, modeldir=self.modeldir, user=user, password='')
-            um = active.Access(model=user, modeldir=self.modeldir, user=user, password='')
+            mkmodel(model=user, mfile=mf, modeldir=self.modeldir, user=user)
+            um = active.Access(model=user, modeldir=self.modeldir, user=user)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
             um.tell(context=["Personal"], componentid='firstname', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['family_name'])
@@ -278,7 +278,7 @@ class Server:
             reslist = um.ask(context=["Personal"], view=['firstname','email'])
             util.printcomplist(reslist)
 
-        um = active.Access(model=user, modeldir=self.modeldir, user=user, password='')
+        um = active.Access(model=user, modeldir=self.modeldir, user=user)
         
         # if we're here from a local url, just redirect. no need to allow.
         if cherrypy.session.get('admin'):
@@ -476,10 +476,10 @@ Looks like you're coming into the service entrance with a browser, which is not 
             result = False
             if args[0] == 'mkmodel':
                 if not os.path.exists(os.path.join(self.modeldir,model)):
-                    mkmodel(model=model, mfile='modeldefs/empty.prod', modeldir=self.modeldir, user=usr['id'], password='', description=pargs['description'])
+                    mkmodel(model=model, mfile='modeldefs/empty.prod', modeldir=self.modeldir, user=usr['id'], description=pargs['description'])
                 result = True
             else:
-                um = active.Access(model=model, modeldir=self.modeldir, user=usr, password='')
+                um = active.Access(model=model, modeldir=self.modeldir, user=usr)
 
             apps = um.listapps()
             if not self.access_tokens[access_token]['client_id'] in apps:

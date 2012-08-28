@@ -8,11 +8,13 @@ This document describes the Personis *access*, *ask* and *tell* calls in terms o
 
 **access**::
 
-	def access(modelname=string, user=string, password=string, version="11.2")
+	personis.client.Access(uri = personis_uri, credentials = cred, http=http)
 
 The POST URL is then /access and the body is (for example)::
 
 	{"password": "pass", "modelname": "bob", "user": "bob", "version": "11.2"}
+
+The password and user are now vestigal. These are taken care of at the http level. A user may still have multiple models in a server, so modelname can be used. The default is the main user model.
 
 the return data is::
 
@@ -23,7 +25,7 @@ the return data is::
 
 **tell**::
 
-	def tell(modelname=string, user=string, password=string, version="11.2", 
+	def tell(modelname=string, version="11.2", 
                 context=list-of-strings, componentid=string, evidence=dict)
 
 The URL is /tell
@@ -31,8 +33,8 @@ The URL is /tell
 Body example::
 
 	{"modelname": "bob", 
-	"user": "bob", 
-	"password": "pass", 
+	"user": "", 
+	"password": "", 
 	"version": "11.2", 
 	"evidence": {"comment": null, "evidence_type": "explicit", "value": "Bob", 
 	                "objectType": "Evidence", "source": "demoex2", "flags": [], 
@@ -51,7 +53,7 @@ The return data is::
 
 **ask**::
 
-	def ask(modelname=string, user=string, password=string, version="11.2", 
+	def ask(modelname=string, version="11.2", 
                 context=list-of-strings, 
                 resolve=dict,
                 showcontexts=true-or-false,[b]
@@ -64,8 +66,8 @@ The URL is /ask
 Body example::
 
 	{"modelname": "bob", 
-	"user": "bob", 
-	"password": "pass", 
+	"user": "", 
+	"password": "", 
 	"version": "11.2", 
 	"context": ["Preferences", "Music", "Jazz", "Artists"], 
 	"showcontexts": null,

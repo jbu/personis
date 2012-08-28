@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -9,7 +10,7 @@
     
     <title>Application Program Interface &mdash; Personis 12.9 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -90,36 +91,61 @@ uses active.py to do the work</td>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-personis.client"></span><dl class="class">
+<span class="target" id="module-personis.client"></span><span class="target" id="module-personis.client"></span><dl class="class">
 <dt id="personis.client.Access">
 <em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Access</tt><big>(</big><em>model='-'</em>, <em>connection=None</em>, <em>uri=None</em>, <em>credentials=None</em>, <em>http=None</em>, <em>loglevel=20</em>, <em>test=True</em><big>)</big><a class="headerlink" href="#personis.client.Access" title="Permalink to this definition">¶</a></dt>
 <dd><p>Client version of access for client/server system</p>
-<dl class="docutils">
-<dt>arguments:</dt>
-<dd>model           model name
-modelserver     model server and port
-user            user name
-password        password string</dd>
-</dl>
-<p>returns a user model access object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first last simple">
+<li><cite>model</cite> (string) - model name. If none, then default user model. (&#8216;-&#8216; maps to the model of the authenticated user)</li>
+<li><cite>connection</cite> (Connection) - Connection to use connecting to server. If none, you need to provide a URI or credentials</li>
+<li><cite>uri</cite> (string) - URI of personis server. Need either this or credentials, or a connection.</li>
+<li><cite>credentials</cite> (Credentials) - Credentials for a connection (if no connection or URI provided.)</li>
+<li><cite>http</cite> (httplib2.Http) - Http connection to use.</li>
+<li><cite>loglevel</cite> (int) - Configure logging.</li>
+<li><cite>test</cite> (boolean) - default to true. If false, the test connection to the server is not done, for speed if connections are established repeatedly.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="personis.client.Access.ask">
 <tt class="descname">ask</tt><big>(</big><em>context=</em><span class="optional">[</span><span class="optional">]</span>, <em>view=None</em>, <em>resolver=None</em>, <em>showcontexts=None</em><big>)</big><a class="headerlink" href="#personis.client.Access.ask" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>arguments: (see Personis_base for details)</dt>
-<dd><p class="first">context is a list giving the path of context identifiers
-view is either:</p>
-<blockquote>
-<div><p>an identifier of a view in the context specified
-a list of component identifiers or full path lists
-None indicating that the values of all components in</p>
-<blockquote>
-<div>the context be returned</div></blockquote>
-</div></blockquote>
-<p class="last">resolver specifies a resolver, default is the builtin resolver</p>
+<dd><p>Ask personis for some information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first">
+<li><p class="first"><cite>context</cite> (list) - The path of context identifiers</p>
+</li>
+<li><dl class="first docutils">
+<dt><cite>view</cite> (list, string) - either:</dt>
+<dd><ul class="first last simple">
+<li>an identifier of a view in the context specified</li>
+<li>a list of component identifiers or full path lists</li>
+<li>None indicating that the values of all components in the context be returned</li>
+</ul>
 </dd>
 </dl>
-<p>returns a list of component objects</p>
+</li>
+<li><p class="first"><cite>resolver</cite> (string) - specifies a resolver, default is the builtin resolver</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first">a list of component objects</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns Type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -360,57 +386,145 @@ evidence - evidence object to add to the component</p>
 <dl class="class">
 <dt id="personis.client.Component">
 <em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Component</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.Component" title="Permalink to this definition">¶</a></dt>
-<dd><p>component object
-Identifier  the identifier of the component</p>
-<blockquote>
-<div>unique in the context</div></blockquote>
-<p>Description readable description
-creation_time   time of creation of the component
-component_type  [&#8220;attribute&#8221;, &#8220;activity&#8221;, &#8220;knowledge&#8221;, &#8220;belief&#8221;, &#8220;preference&#8221;, &#8220;goal&#8221;]
-value_type  [&#8220;string&#8221;, &#8220;number&#8221;,&#8221;boolean&#8221;, &#8220;enum&#8221;, &#8220;JSON&#8221;]
-value_list    a list of strings that are the possible values for type &#8220;enum&#8221;
-value       the resolved value
-resolver    default resolver for this component
-goals       list of component paths eg [ [&#8216;Personal&#8217;, &#8216;Health&#8217;, &#8216;weight&#8217;], ...]
-evidencelist    list of evidence objects</p>
+<dd><p>component object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first last simple">
+<li><cite>Identifier</cite> (string) - The identifier of the component - unique in the context.</li>
+<li><cite>Description</cite> (string) - Readable description</li>
+<li><cite>creation_time</cite> (string) - time of creation of the component.</li>
+<li><cite>component_type</cite> (list) - [&#8220;attribute&#8221;, &#8220;activity&#8221;, &#8220;knowledge&#8221;, &#8220;belief&#8221;, &#8220;preference&#8221;, &#8220;goal&#8221;]</li>
+<li><cite>value_type</cite> (list) - [&#8220;string&#8221;, &#8220;number&#8221;,&#8221;boolean&#8221;, &#8220;enum&#8221;, &#8220;JSON&#8221;]</li>
+<li><cite>value_list</cite> (int) - a list of strings that are the possible values for type &#8220;enum&#8221;.</li>
+<li><cite>value</cite> (string) - the resolved value.</li>
+<li><cite>resolver</cite> (string) - default resolver for this component.</li>
+<li><cite>goals</cite> (list) - list of component paths eg [ [&#8216;Personal&#8217;, &#8216;Health&#8217;, &#8216;weight&#8217;], ...]</li>
+<li><cite>evidencelist</cite> (list) - list of evidence objects.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="personis.client.Connection">
+<em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Connection</tt><big>(</big><em>uri=None</em>, <em>credentials=None</em>, <em>http=None</em><big>)</big><a class="headerlink" href="#personis.client.Connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection object</p>
+<p>Contains the state of your connection to personis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>uri</strong> (<em>str</em>) &#8211; The uri of a personis server.</li>
+<li><strong>credentials</strong> (<tt class="xref py py-class docutils literal"><span class="pre">httplib2.Credentials</span></tt>) &#8211; Credentails for connecting to the server.</li>
+<li><strong>http</strong> (<tt class="xref py py-class docutils literal"><span class="pre">httplib2.Http</span></tt>) &#8211; An http connection to use.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Http can be used if you need to configure proxies etc.
+The class needs either uri or credentials to work.</p>
+<dl class="method">
+<dt id="personis.client.Connection.get_http">
+<tt class="descname">get_http</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.client.Connection.get_http" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the http connection given in the construction, or in set_http</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">httplib2.Http</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Connection.set_http">
+<tt class="descname">set_http</tt><big>(</big><em>http</em><big>)</big><a class="headerlink" href="#personis.client.Connection.set_http" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the http connection to use</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>http</strong> (<tt class="xref py py-class docutils literal"><span class="pre">httplib2.Http</span></tt>) &#8211; The http connection to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="personis.client.Connection.valid">
+<tt class="descname">valid</tt><big>(</big><big>)</big><a class="headerlink" href="#personis.client.Connection.valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this valid?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean &#8211; is valid.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="personis.client.Context">
 <em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Context</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.Context" title="Permalink to this definition">¶</a></dt>
-<dd><p>context object
-Identifier  the identifier of the component</p>
-<blockquote>
-<div>unique in the context</div></blockquote>
-<p>Description readable description
-resolver    default resolver for components in this context</p>
+<dd><p>context object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first last simple">
+<li><cite>Identifier</cite> (string) - The identifier of the component - unique in the context.</li>
+<li><cite>Description</cite> (string) - Readable description</li>
+<li><cite>resolver</cite> (string) - default resolver for components in this context.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="class">
 <dt id="personis.client.Evidence">
 <em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">Evidence</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.Evidence" title="Permalink to this definition">¶</a></dt>
-<dd><p>evidence object
-evidence_type   &#8220;explicit&#8221;, # given by the user</p>
-<blockquote>
-<div>&#8220;implicit&#8221;, # observed by the machine
-&#8220;exmachina&#8221;, # told (to the user) by the machine
-&#8220;inferred&#8221;, # evidence generated by a subscription inference 
-&#8220;stereotype&#8221;] # evidence added by a stereotype</div></blockquote>
-<p>source  string indicating source of evidence
-value   any python object
-comment string with extra information about the evidence
-flags   a list of strings eg &#8220;goal&#8221;
-time    notional creation time optionally given by user
-creation_time actual time evidence item was created
-useby   timestamp evidence expires (if required)</p>
+<dd><p>evidence object</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">evidence_type: <a class="reference internal" href="personis.client.html#personis.client.Evidence.EvidenceTypes" title="personis.client.Evidence.EvidenceTypes"><tt class="xref py py-class docutils literal"><span class="pre">EvidenceTypes</span></tt></a>
+source: A string indicating the source of the evidence</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><cite>evidence_type</cite> (EvidenceTypes) - The type of the evidencelist</li>
+<li><cite>source</cite> (string) - string indicating source of evidence</li>
+<li><cite>value</cite> (object) - Any python object</li>
+<li><cite>comment</cite> (string) - string with extra information about the evidence</li>
+<li><cite>flags</cite> (list) -   a list of strings eg &#8220;goal&#8221;</li>
+<li><cite>time</cite> (integer) -    notional creation time optionally given by user</li>
+<li><cite>creation_time</cite> (integer) - actual time evidence item was created</li>
+<li><cite>useby</cite> (integer) -   timestamp evidence expires (if required)</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="personis.client.Evidence.EvidenceTypes">
 <tt class="descname">EvidenceTypes</tt><em class="property"> = ['explicit', 'implicit', 'exmachina', 'inferred', 'stereotype']</em><a class="headerlink" href="#personis.client.Evidence.EvidenceTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>explicit: given by the user  (given)
-implicit: observed by the machine (observation)
-exmachina: told (to the user) by the machine (told)
-inferred: evidence generated by inference (external or internal)
-stereotype: evidence added by a stereotype</p>
+<dd><p>Evidence can be:</p>
+<ul class="simple">
+<li>explicit: given by the user  (given)</li>
+<li>implicit: observed by the machine (observation)</li>
+<li>exmachina: told (to the user) by the machine (told)</li>
+<li>inferred: evidence generated by inference (external or internal)</li>
+<li>stereotype: evidence added by a stereotype</li>
+</ul>
 </dd></dl>
 
 </dd></dl>
@@ -418,11 +532,20 @@ stereotype: evidence added by a stereotype</p>
 <dl class="class">
 <dt id="personis.client.View">
 <em class="property">class </em><tt class="descclassname">personis.client.</tt><tt class="descname">View</tt><big>(</big><em>**kargs</em><big>)</big><a class="headerlink" href="#personis.client.View" title="Permalink to this definition">¶</a></dt>
-<dd><p>view object
-Identifier  the identifier of the component</p>
-<blockquote>
-<div>unique in the context</div></blockquote>
-<p>Description readable description</p>
+<dd><p>view object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first last simple">
+<li><cite>Identifier</cite> (string) - The identifier of the component - unique in the context.</li>
+<li><cite>Description</cite> (string) - Readable description</li>
+<li><cite>conponent_list</cite> (list) - List of components in the view</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p><strong>Constants</strong></p>
