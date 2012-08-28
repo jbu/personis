@@ -323,7 +323,7 @@ class Server:
         logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
         
         redr = cli['redirect_uri']
-        um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid, password='')
+        um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid)
         cherrypy.session['um'] = um
         result = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], password='')
         raise cherrypy.HTTPRedirect(rdi)
