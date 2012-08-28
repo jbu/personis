@@ -320,7 +320,7 @@ class Server:
 
         self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
         self.access_tokens.sync()
-        logging.debug('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
+        logging.info('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
         
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid)
@@ -353,9 +353,9 @@ class Server:
 
 
         for k, v in self.access_tokens.items():
-            logging.debug(  'access_tokens %s: %s', k,v)
+            logging.info(  'access_tokens %s: %s', k,v)
             if now > v['expires']:
-                logging.debug (  'expire access_token %s',k)
+                logging.info (  'expire access_token %s',k)
                 del(self.access_tokens[k])
 
 
