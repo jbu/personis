@@ -21,7 +21,7 @@ Contents:
    API
    Modeldef
    Client
-   personis.client
+   personis
 
 Indices and tables
 ==================

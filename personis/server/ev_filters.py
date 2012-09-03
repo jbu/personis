@@ -28,12 +28,11 @@ import json
 
 
 class Access:
-	"""
-		Evidence filter mixin for Personis Access
+	"""Evidence filter mixin for Personis Access
 
-		Contains evidence filter methods that are used before a resolver runs
-		To add a new filter, add the method to this class and add an
-			entry to the self.evidencefilterlist dictionary
+	Contains evidence filter methods that are used before a resolver runs
+	To add a new filter, add the method to this class and add an
+	entry to the self.evidencefilterlist dictionary
 	"""
 	def __init__(self):
 		self.evidencefilterlist = {"all":self._All_filter, "last1":self.last1_filter, "last10":self.last10_filter, "goal":self.goal_filter, "since_time":self.since_time_filter, "recent_count":self.recent_count_filter}

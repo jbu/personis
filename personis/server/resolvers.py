@@ -27,21 +27,20 @@ import json
 
 
 class Access:
-	"""
-		Resolver mixin for Personis Access
+	"""Resolver mixin for Personis Access
 
-		Contains resolver methods that can be specified on an "ask" operation
-		To add a new resolver, add the method to this class and add an
-			entry to the self.resolverlist dictionary
+	Contains resolver methods that can be specified on an "ask" operation
+	To add a new resolver, add the method to this class and add an
+	entry to the self.resolverlist dictionary
 	"""
 	def __init__(self):
 		self.resolverlist = {"default":self._DefaultResolver, "goal":self.GoalResolver, "recent":self.RecentResolver}
 
 	
 	def _DefaultResolver(self, model=None, component=None, context=None, resolver_args=None):
-		"""	resolver function used if none specified
-			sets component value to the value from the 
-			last piece of given, non-goal evidence
+		"""resolver function used if none specified
+		sets component value to the value from the 
+		last piece of given, non-goal evidence
 		"""
 		ev, evcount = component.getevidence(model=model, context=context)
 		while evcount > 0:
@@ -62,8 +61,8 @@ class Access:
 
 	def GoalResolver(self, model=None, component=None, context=None, resolver_args=None):
 		"""	resolver function used if none specified
-			sets component value to the value from the 
-			last piece of given, goal evidence
+		sets component value to the value from the 
+		last piece of given, goal evidence
 		"""
 		ev, evcount = component.getevidence(model=model, context=context)
 		while evcount > 0:
@@ -84,8 +83,8 @@ class Access:
 
 	def RecentResolver(self, model=None, component=None, context=None, resolver_args=None):
 		"""	resolver function used if none specified
-			sets component value to the value from the 
-			last piece of given, goal evidence
+		sets component value to the value from the 
+		last piece of given, goal evidence
 		"""
 		ev, evcount = component.getevidence(model=model, context=context)
 		

@@ -133,17 +133,17 @@ inactive_granularity = 5 # seconds
 active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's not seen.
 
 #httplib2.debuglevel=0
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 
 # get past the uni's stupid proxy server
 p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
 
 # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
 client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
-um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p), credentials='activity_cred.dat')
+um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), credentials='activity_cred.dat')
 
 reslist = um.ask(context=["Personal"],view=['firstname'])
-print 'logging for', reslist[0].value
+#print 'logging for', reslist[0].value
 
 install_inactivity(um)
 snd = sender(um)

@@ -490,13 +490,13 @@ class ParserElement(object):
 
     def setParseAction( self, fn ):
         """Define action to perform when successfully matching parse element definition.
-           Parse action fn is a callable method with the arguments (s, loc, toks) where:
-            - s   = the original string being parsed
-            - loc = the location of the matching substring
-            - toks = a list of the matched tokens, packaged as a ParseResults object
-           If the function fn modifies the tokens, it can return them as the return
-           value from fn, and the modified list of tokens will replace the original.
-           Otherwise, fn does not need to return any value.
+        Parse action fn is a callable method with the arguments (s, loc, toks) where:
+        - s   = the original string being parsed
+        - loc = the location of the matching substring
+        - toks = a list of the matched tokens, packaged as a ParseResults object
+        If the function fn modifies the tokens, it can return them as the return
+        value from fn, and the modified list of tokens will replace the original.
+        Otherwise, fn does not need to return any value.
         """
         self.parseAction = fn
         return self
@@ -879,13 +879,15 @@ class Literal(Token):
 
 class Keyword(Token):
     """Token to exactly match a specified string as a keyword, that is, it must be 
-       immediately followed by a non-keyword character.  Compare with Literal::
-         Literal("if") will match the leading 'if' in 'ifAndOnlyIf'.
-         Keyword("if") will not; it will only match the leading 'if in 'if x=1', or 'if(y==2)'
-       Accepts two optional constructor arguments in addition to the keyword string:
-       identChars is a string of characters that would be valid identifier characters,
-       defaulting to all alphanumerics + "_" and "$"; caseless allows case-insensitive
-       matching, default is False.
+    immediately followed by a non-keyword character.  Compare with Literal::
+
+        Literal("if") will match the leading 'if' in 'ifAndOnlyIf'.
+        Keyword("if") will not; it will only match the leading 'if in 'if x=1', or 'if(y==2)'
+
+    Accepts two optional constructor arguments in addition to the keyword string:
+    identChars is a string of characters that would be valid identifier characters,
+    defaulting to all alphanumerics + "_" and "$"; caseless allows case-insensitive
+    matching, default is False.
     """
     DEFAULT_KEYWORD_CHARS = alphanums+"_$"
     
@@ -2084,19 +2086,23 @@ _expanded = lambda p: (isinstance(p,ParseResults) and ''.join([ unichr(c) for c 
         
 def srange(s):
     r"""Helper to easily define string ranges for use in Word construction.  Borrows
-       syntax from regexp '[]' string range definitions::
-          srange("[0-9]")   -> "0123456789"
-          srange("[a-z]")   -> "abcdefghijklmnopqrstuvwxyz"
-          srange("[a-z$_]") -> "abcdefghijklmnopqrstuvwxyz$_"
-       The input string must be enclosed in []'s, and the returned string is the expanded 
-       character set joined into a single string.
-       The values enclosed in the []'s may be::
-          a single character
-          an escaped character with a leading backslash (such as \- or \])
-          an escaped hex character with a leading '\0x' (\0x21, which is a '!' character)
-          an escaped octal character with a leading '\0' (\041, which is a '!' character)
-          a range of any of the above, separated by a dash ('a-z', etc.)
-          any combination of the above ('aeiouy', 'a-zA-Z0-9_$', etc.)
+    syntax from regexp '[]' string range definitions::
+
+      srange("[0-9]")   -> "0123456789"
+      srange("[a-z]")   -> "abcdefghijklmnopqrstuvwxyz"
+      srange("[a-z$_]") -> "abcdefghijklmnopqrstuvwxyz$_"
+
+    The input string must be enclosed in []'s, and the returned string is the expanded 
+    character set joined into a single string.
+    The values enclosed in the []'s may be::
+
+      a single character
+      an escaped character with a leading backslash (such as \- or \])
+      an escaped hex character with a leading '\0x' (\0x21, which is a '!' character)
+      an escaped octal character with a leading '\0' (\041, which is a '!' character)
+      a range of any of the above, separated by a dash ('a-z', etc.)
+      any combination of the above ('aeiouy', 'a-zA-Z0-9_$', etc.)
+      
     """
     try:
         return "".join([_expanded(part) for part in _reBracketExpr.parseString(s).body])

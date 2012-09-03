@@ -40,6 +40,14 @@ from oauth2client.tools import run
 import httplib2
 
 def do_call(fun, args, connection):
+    """
+
+    :param fun:
+    :param args:
+    :param connection:
+    :return:
+    :raise:
+    """
     if (not connection.valid()):
         raise SystemError('Need http or modelserver and credentials')
     args["version"] = "11.2"
@@ -85,6 +93,16 @@ def do_call(fun, args, connection):
         return result
 
 def MkModel( model=None, modelserver=None, user=None, password=None, description=None, debug=0):
+    """
+
+    :param model:
+    :param modelserver:
+    :param user:
+    :param password:
+    :param description:
+    :param debug:
+    :raise:
+    """
     if modelserver == None:
         raise ValueError, "modelserver is None"
     if ':' in modelserver:
@@ -106,6 +124,11 @@ def MkModel( model=None, modelserver=None, user=None, password=None, description
 
 # utility function to display an object
 def showobj(obj, indent):
+    """
+
+    :param obj:
+    :param indent:
+    """
     print "showobj:"
     for k,v in obj.__dict__.items():
         if ((k == 'time') or (k == 'creation_time')) and (v != None):
@@ -118,6 +141,12 @@ def showobj(obj, indent):
 
 # utility to print a list of component objects + evidence if printev="yes"
 def PrintComplist(reslist, printev=None, count=1):
+    """
+
+    :param reslist:
+    :param printev:
+    :param count:
+    """
     print "count =", count
     for res in reslist:
         print "==================================================================="
@@ -154,6 +183,13 @@ def getOauthCredentialsFromClientSecrets(credentials='credentials.dat', filename
     # flow. The Storage object will ensure that if successful the good
     # Credentials will get written back to a file.
 
+    """
+
+    :param credentials:
+    :param filename:
+    :param http:
+    :return:
+    """
     storage = Storage(credentials)
     credentials = storage.get()
     FLOW = flow_from_clientsecrets(filename, scope='https://www.personis.com/auth/model')
@@ -163,5 +199,12 @@ def getOauthCredentialsFromClientSecrets(credentials='credentials.dat', filename
     return credentials, personis_uri
 
 def LoginFromClientSecrets(filename = 'client_secrets.json', credentials = 'credentials.dat', http=None):
+    """
+
+    :param filename:
+    :param credentials:
+    :param http:
+    :return:
+    """
     cred, personis_uri = getOauthCredentialsFromClientSecrets(filename = filename, credentials = credentials, http = http)
     return personis.client.Access(uri = personis_uri, credentials = cred, http=http)

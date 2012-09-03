@@ -7,7 +7,7 @@ installed.
 
 By far the simplest way to install personis is::
 
-pip install personis
+	pip install personis
 
 Personis uses a number of other libraries, but the install process should find
 and download the correct versions. If you don't wish to change your system python

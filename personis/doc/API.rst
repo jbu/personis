@@ -26,7 +26,7 @@ Application Program Interface
 
 
 
-.. automodule:: personis.client
+.. automodule:: personis
 	:members:
 
 

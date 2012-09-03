@@ -27,37 +27,37 @@
 	Run as a standalone program for testing.
 
 
- Subscription statement grammar:
+	Subscription statement grammar:
 
-	resolvername := ID
-	evidencetype := ID
-	componentval := '<' [ resolvername '!' ] component '>'
-	componentname := ID | componentval
-	modelname := '.' | componentname
-	component := modelname [ '/' componentname ]*
-	cronspec := '[' QUOTEDSTRING ']'
-	item := component | QUOTEDSTRING
-	patternmatch := item '~' item
-	tell := 'TELL' item ',' evidencetype ':' item
-	tellchanged := 'TELLCHANGED' item ',' evidencetype ':' item
-	notify := 'NOTIFY' item [item]*
-	action := tell | tellchanged | notify
-	statement := [ cronspec ] patternmatch ':' action
+		resolvername := ID
+		evidencetype := ID
+		componentval := '<' [ resolvername '!' ] component '>'
+		componentname := ID | componentval
+		modelname := '.' | componentname
+		component := modelname [ '/' componentname ]*
+		cronspec := '[' QUOTEDSTRING ']'
+		item := component | QUOTEDSTRING
+		patternmatch := item '~' item
+		tell := 'TELL' item ',' evidencetype ':' item
+		tellchanged := 'TELLCHANGED' item ',' evidencetype ':' item
+		notify := 'NOTIFY' item [item]*
+		action := tell | tellchanged | notify
+		statement := [ cronspec ] patternmatch ':' action
 
- Note:
-	a cronspec string is similar to a crontab entry: "minute hour day_of_month month day_of_week"
+	Note:
+		a cronspec string is similar to a crontab entry: "minute hour day_of_month month day_of_week"
 
- Examples:
+	Examples:
 
- <froomBT/seen> ~ '.*' : TELL <froomBT/seen>/location, <froomBT/location>"
- <froomBT/seen> ~ '.*' : NOTIFY 'http://www/qqq.cgi'"
- <froomBT/seen> ~ '.*' : TELL bob/personal/location, explicit:<froomBT/location>
- <bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
- ["*/15 * * * *"] <bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
- <default!bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
- <default!bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
- <bobPhone/seenby> ~ '.*' : TELL bobPhone/location, explicit:<<bobPhone/seenby>/location>
- <default!./personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'location=' <./personal/location>  '&name=' <./personal/firstname>
+		 <froomBT/seen> ~ '.*' : TELL <froomBT/seen>/location, <froomBT/location>"
+		 <froomBT/seen> ~ '.*' : NOTIFY 'http://www/qqq.cgi'"
+		 <froomBT/seen> ~ '.*' : TELL bob/personal/location, explicit:<froomBT/location>
+		 <bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
+		 ["*/15 * * * *"] <bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
+		 <default!bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
+		 <default!bob/personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi'
+		 <bobPhone/seenby> ~ '.*' : TELL bobPhone/location, explicit:<<bobPhone/seenby>/location>
+		 <default!./personal/location> ~ '.*' : NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'location=' <./personal/location>  '&name=' <./personal/firstname>
 
 """
 #import Personis_server

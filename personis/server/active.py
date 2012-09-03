@@ -49,14 +49,13 @@ class Access(base.Access):
 		view=None,
 		subscription=None):
 		"""
-	arguments:
-		context is a list giving the path of context identifiers
-		view is either:
+
+		:param context: is a list giving the path of context identifiers
+		:param view: is either:
 			an identifier of a view in the context specified
 			a list of component identifiers or full path lists
-			None indicating that the values of all components in
-				the context be returned
-		subscription is a dictionary containing owner, password and subscription statement string
+			None indicating that the values of all components in the context be returned
+		:param subscription: is a dictionary containing owner, password and subscription statement string
 		"""
 		subscription['modelname'] = self.modelname
 		print "subscription>>> %s %s %s" % (repr(context), repr(view), repr(subscription))

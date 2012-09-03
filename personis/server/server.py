@@ -35,7 +35,7 @@ import cPickle
 from multiprocessing import Process, Queue
 from . import cronserver
 import random, time
-from . import connection
+#from ..client import Connection
 from shove import Shove
 import string
 
@@ -51,6 +51,19 @@ from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, flow_
 from genshi.template import TemplateLoader
 
 class Server:
+    '''The personis server
+
+    :param modeldir: Directory containing the user models
+    :type modeldir: str
+    :param adminsfile: Path to list of people who can administrate the server
+    :type adminsfile: str
+    :param clients: Path to son file of oauth client details
+    :type clients: str
+    :param access_tokens: Path of file containint the oauth access tokens
+    :type access_tokens: str
+    :param client_secrets: Path to json file containing client info for this server (as a client) to access google APIs
+    :type client_secrets: str
+    '''
 
     def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None, access_tokens='oauth_access_tokens.dat', client_secrets='client_secrets_google.json'):
         self.modeldir = modeldir
@@ -76,10 +89,6 @@ class Server:
 
     @cherrypy.expose
     def list_clients(self):
-        """
-        Admin interface for Personis. See admins.yaml for configuration
-        (To be accessed by a user with a web browser)
-        """
         # if we're here, we just want the local web UI. 
         # if no user then not logged in, so set admin to
         # true, target url back here, and go to login.
@@ -102,10 +111,6 @@ class Server:
 
     @cherrypy.expose
     def list_apps(self):
-        """
-        App admin interface for Personis users. 
-        (To be accessed by a user with a web browser)
-        """
         # if we're here, we just want the local web UI. 
         # if no user then not logged in, so set admin to
         # true, target url back here, and go to login.
@@ -131,9 +136,6 @@ class Server:
 
     @cherrypy.expose
     def list_apps_save(self, id, value, _method='get'):
-        """
-        AJAX helper for list_clients. No real user interface
-        """
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
         # This uses a get parameter, where it should be del or post. 
@@ -146,9 +148,6 @@ class Server:
 
     @cherrypy.expose
     def list_clients_save(self, id, value, _method='get'):
-        """
-        AJAX helper for list_clients. No real user interface
-        """
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
         if not cherrypy.session.get('user') in self.admins:
@@ -351,20 +350,14 @@ class Server:
         # expire old tokens before we look
         now = time.time()
 
-
         for k, v in self.access_tokens.items():
             logging.info(  'access_tokens %s: %s', k,v)
             if now > v['expires']:
                 logging.info (  'expire access_token %s',k)
                 del(self.access_tokens[k])
 
-
-
         if grant_type == 'refresh_token':
             code = refresh_token
-
-        #for k,v in self.access_tokens.items():
-            #print 'a:',k, v['type']
 
         if not code in self.access_tokens:
             if grant_type == 'refresh_token':
@@ -376,10 +369,6 @@ class Server:
 
         if tok['client_id'] != client_id:
             raise cherrypy.HTTPError(401, 'Incorrect client')
-
-        #if tok['type'] == 'refresh_token':
-            #print 'remove refresh_token',code
-            #del(self.access_tokens[code])
         
         if cli['secret'] != client_secret:
             raise cherrypy.HTTPError(401, 'Incorrect client information')
@@ -392,12 +381,8 @@ class Server:
         access_token = ''
         access_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
 
-
         self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
         logging.debug(  'added access_token: %s',access_token)
-
-
-
 
         ret = {'access_token': access_token, 
                'token_type': 'bearer',
@@ -414,9 +399,7 @@ class Server:
 
             ret['refresh_token'] = refresh_token
 
-
         self.access_tokens.sync()
-
 
         s = json.dumps(ret)
         logging.info(  s)
@@ -607,6 +590,21 @@ class ExitThread(threading.Thread):
         self.join()
 
 def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, exit_queue = None, client_secrets = 'client_secrets_google.json'):
+    '''Utility to run the personis server.
+
+    :param modeldir: Directory containing the user models
+    :type modeldir: str
+    :param config: Path to cherrypy server config file
+    :type config: str
+    :param admins: Path to list of people who can administrate the server
+    :type admins: str
+    :param clients: Path to son file of oauth client details
+    :type clients: str
+    :param tokens: Path of file containint the oauth access tokens
+    :type tokens: str
+    :param client_secrets: Path to json file containing client info for this server (as a client) to access google APIs
+    :type client_secrets: str
+    '''
     logging.basicConfig(level=loglevel)
     logging.info(  "serving models in '%s'" % (modeldir))
     logging.info(  "config file '%s'" % (config))
