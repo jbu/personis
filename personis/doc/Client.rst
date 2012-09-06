@@ -12,7 +12,7 @@ This document describes the Personis *access*, *ask* and *tell* calls in terms o
 
 The POST URL is then /access and the body is (for example)::
 
-	{"password": "pass", "modelname": "bob", "user": "bob", "version": "11.2"}
+	{"password": "", "modelname": "bob", "user": "bob", "version": "11.2"}
 
 The password and user are now vestigal. These are taken care of at the http level. A user may still have multiple models in a server, so modelname can be used. The default is the main user model.
 
@@ -33,7 +33,7 @@ The URL is /tell
 Body example::
 
 	{"modelname": "bob", 
-	"user": "", 
+	"user": "bob", 
 	"password": "", 
 	"version": "11.2", 
 	"evidence": {"comment": null, "evidence_type": "explicit", "value": "Bob", 
@@ -66,7 +66,7 @@ The URL is /ask
 Body example::
 
 	{"modelname": "bob", 
-	"user": "", 
+	"user": "bob", 
 	"password": "", 
 	"version": "11.2", 
 	"context": ["Preferences", "Music", "Jazz", "Artists"], 
@@ -104,5 +104,5 @@ example::
 	}
 
 
-The POST requests should be over HTTP for now, HTTPS later. Also, a future stage of development will involve more crypto with signed, encrypted JSON.
+The POST requests should be over HTTPS. Also, a future stage of development will involve more crypto with signed, encrypted JSON.
 

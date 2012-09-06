@@ -58,33 +58,8 @@
 <h1>Personis Server<a class="headerlink" href="#personis-server" title="Permalink to this headline">¶</a></h1>
 <p>Personis operates as a library that is imported by application programs and stores models in the local file
 system.</p>
-<p>Personis can also be run as a server, providing an interface to models for remote clients. In this case the API is almost the same, the only difference being the modules that is imported and used for the Access call, and the
-specification of the model to be accessed.</p>
-<p>In the case of locally stored models, access requires a <em>modeldir</em> argument to specify the
-location of the stored models, as well as the name of the model (a simple ID).
-For models accessed remotely via the server, <em>modeldir</em> is not used and the model name has the form:
-name&#64;server[:port].</p>
-<p>For example, to access the model for &#8220;alice&#8221; stored on the server &#8220;models.server.com&#8221; we
-would use the statements:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">Personis</span>
-
-<span class="n">um</span> <span class="o">=</span> <span class="n">Personis</span><span class="o">.</span><span class="n">Access</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s">&quot;alice@models.server.com&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s">&#39;myapp&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;pass&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="section" id="running-a-server">
-<h2>Running a Server<a class="headerlink" href="#running-a-server" title="Permalink to this headline">¶</a></h2>
-<p>It is very easy to run your own Personis server to provide access to models for remote clients.</p>
-<p>A server gets configuration information from the file $HOME/.personis_server.conf.
-This file specifies the port that the server is to use as well as some miscellaneous configuration options.
-A suitable personis_server.conf file can be found in the Personis/Src directory. This can be copied into
-$HOME/.personis_server.conf and the port number changed as desired.</p>
-<p>A server can be started for any set of models stored in the same directory using the command:</p>
-<div class="highlight-python"><pre># assuming that PYTHONPATH, MODELDIR and LOGFILE are initialised
-Personis.py  --models $MODELDIR --log $LOGFILE &amp;</pre>
-</div>
-<p>The directory containing the models is specified in $MODELDIR.
-Log information is written to $LOGFILE. This includes information on all requests, error messages etc.</p>
-</div>
+<p>Personis can also be run as a server, providing an interface to models for remote clients. In this case the API is almost the same, the only difference being the modules that is imported and used for the Access call, and the specification of the model to be accessed. The server also adds authorization and authentication.</p>
+<p>For details, see <a class="reference internal" href="Installation.html"><em>Installation</em></a>.</p>
 </div>
 
 
@@ -93,14 +68,6 @@ Log information is written to $LOGFILE. This includes information on all request
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Personis Server</a><ul>
-<li><a class="reference internal" href="#running-a-server">Running a Server</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="Tutorial.html"
                         title="previous chapter">Tutorial Introduction to Personis</a></p>

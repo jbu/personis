@@ -22,6 +22,7 @@ installation, you can use virtualenv::
 If you wish to customise your installation further, we recommend getting the distribution
 from http://pypi.python.org/pypi/personis or the source from https://github.com/jbu/personis.
 
+.. _clientconfig:
 Client Configuration
 --------------------
 

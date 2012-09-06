@@ -62,7 +62,7 @@
 </pre></div>
 </div>
 <p>The POST URL is then /access and the body is (for example):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;pass&quot;</span><span class="p">,</span> <span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>The password and user are now vestigal. These are taken care of at the http level. A user may still have multiple models in a server, so modelname can be used. The default is the main user model.</p>
@@ -78,7 +78,7 @@ I might change this to include a diagnostic string as the value of val.</pre>
 <p>The URL is /tell</p>
 <p>Body example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
 <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
 <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">,</span>
 <span class="s">&quot;evidence&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;comment&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span> <span class="s">&quot;evidence_type&quot;</span><span class="p">:</span> <span class="s">&quot;explicit&quot;</span><span class="p">,</span> <span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="s">&quot;Bob&quot;</span><span class="p">,</span>
@@ -105,7 +105,7 @@ I might change this to include a diagnostic string as the value of val.[a]</pre>
 <p>The URL is /ask</p>
 <p>Body example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;modelname&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
-<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+<span class="s">&quot;user&quot;</span><span class="p">:</span> <span class="s">&quot;bob&quot;</span><span class="p">,</span>
 <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
 <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="s">&quot;11.2&quot;</span><span class="p">,</span>
 <span class="s">&quot;context&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;Preferences&quot;</span><span class="p">,</span> <span class="s">&quot;Music&quot;</span><span class="p">,</span> <span class="s">&quot;Jazz&quot;</span><span class="p">,</span> <span class="s">&quot;Artists&quot;</span><span class="p">],</span>
@@ -142,7 +142,7 @@ The value for &#8220;val&#8221; is a list of dictionaries, one per component val
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The POST requests should be over HTTP for now, HTTPS later. Also, a future stage of development will involve more crypto with signed, encrypted JSON.</p>
+<p>The POST requests should be over HTTPS. Also, a future stage of development will involve more crypto with signed, encrypted JSON.</p>
 </div>
 
 
