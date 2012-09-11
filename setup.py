@@ -27,8 +27,8 @@ setup(
     },
     entry_points = {
         'console_scripts': [
-            'watcher = personis.examples.activity:go',
-            'umbrowser = personis.examples.browser:go',
+            'watcher = personis.examples.activity.__main__:go',
+            'umbrowser = personis.examples.browser.__main__:go',
         ]
     },
     version=version,
