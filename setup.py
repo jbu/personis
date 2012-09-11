@@ -5,11 +5,7 @@ install_requires=[
     'pyyaml',
     'cherrypy >= 3.0',
     'pyparsing',
-    'stuf',
-    'shove',
     'genshi',
-    'sqlalchemy',
-    'pyopenssl',
     'distribute',
     'docutils>=0.3'
     ]
@@ -31,11 +27,8 @@ setup(
     },
     entry_points = {
         'console_scripts': [
-            'watcher = personis.examples.activity',
-            'umbrowser = personis.examples.browser',
-        ],
-        'gui_scripts': [
-            
+            'watcher = personis.examples.activity:go',
+            'umbrowser = personis.examples.browser:go',
         ]
     },
     version=version,
