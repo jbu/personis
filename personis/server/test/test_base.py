@@ -16,7 +16,7 @@ class TestPersonisBase(unittest.TestCase):
             shutil.rmtree('models')
         os.mkdir('models')
 
-        mkmodel.mkmodel(model='alice', mfile='../modeldefs/user', modeldir='models', user='alice')
+        mkmodel.mkmodel(model='alice', mfile='../modeldefs/user.mdef', modeldir='models', user='alice')
         cls.um = base.Access(model="alice", modeldir='models', user='alice')
         # create a piece of evidence with Alice as value
         ev = base.Evidence(evidence_type="explicit", value="Alice")

@@ -317,8 +317,8 @@ def mkmodel_um(um,lines, debug = 1):
 	
 
 def mkmodel(model=None, mfile=None, modeldir=None, user=None, password=None):
-	base.MkModel(model=model, modeldir=modeldir, user=user, password=password)
-	um = active.Access(model=model, modeldir=modeldir, user=user, password=password)
+	base.MkModel(model=model, modeldir=modeldir, user=user)
+	um = active.Access(model=model, modeldir=modeldir, user=user)
 	mkmodel_um(um,get_modeldef(mfile))
 
 def get_modeldef(mfile):

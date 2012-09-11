@@ -176,7 +176,7 @@ class Server:
             raise cherrypy.HTTPRedirect('/list_clients')
 
         clid, field = id.split('|')
-        logging.debug(  'saving: ',clid, field, value)
+        logging.debug(  'saving: %s, %s, %s',clid, field, value)
         oldc = self.oauth_clients[clid][field] = value
         for k, v in self.oauth_clients.items():
             logging.debug('%s, %s', k, v['friendly_name'])
@@ -211,10 +211,12 @@ class Server:
         enter. there is no client_id etc because personis is not being
         used as an oauth server.
         """
-        flow = flow_from_clientsecrets(self.client_secrets,
-    scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email')
         callback = cherrypy.request.base + '/logged_in'
-        authorize_url = flow.step1_get_authorize_url(callback)
+        flow = flow_from_clientsecrets(
+            self.client_secrets,
+            scope='https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+            redirect_uri = callback)
+        authorize_url = flow.step1_get_authorize_url()
         cherrypy.session['flow'] = flow
         raise cherrypy.HTTPRedirect(authorize_url)
 
@@ -231,7 +233,12 @@ class Server:
         flow = cherrypy.session.get('flow')
         if not flow:
             raise IOError()
-        credentials = flow.step2_exchange(cherrypy.request.params)
+        credentials = flow.step2_exchange(
+            cherrypy.request.params
+            #, http = httplib2.Http(
+            #    proxy_info = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+            #    )
+        )
         http = httplib2.Http()
         http = credentials.authorize(http)
         cjson = credentials.to_json()
@@ -257,7 +264,7 @@ class Server:
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir,user)):
-            mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod')
+            mf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modeldefs/user.prod.mdef')
             mkmodel(model=user, mfile=mf, modeldir=self.modeldir, user=user)
             um = active.Access(model=user, modeldir=self.modeldir, user=user)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['given_name'])
@@ -459,7 +466,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
             result = False
             if args[0] == 'mkmodel':
                 if not os.path.exists(os.path.join(self.modeldir,model)):
-                    mkmodel(model=model, mfile='modeldefs/empty.prod', modeldir=self.modeldir, user=usr['id'], description=pargs['description'])
+                    mkmodel(model=model, mfile='modeldefs/empty.prod.mdef', modeldir=self.modeldir, user=usr['id'], description=pargs['description'])
                 result = True
             else:
                 um = active.Access(model=model, modeldir=self.modeldir, user=usr)
@@ -624,8 +631,8 @@ def runServer(modeldir, config, admins, clients, tokens, loglevel=logging.INFO, 
         try:
             cherrypy.config.update(os.path.expanduser(config))
             cherrypy.tree.mount(Server(modeldir, admins, clients, tokens, client_secrets), '/', config=config)
-            cherrypy.server.ssl_certificate = "server.crt"
-            cherrypy.server.ssl_private_key = "server.key" 
+            #cherrypy.server.ssl_certificate = "server.crt"
+            #cherrypy.server.ssl_private_key = "server.key" 
             cherrypy.engine.start()
             if not exit_queue:
                 cherrypy.engine.block()

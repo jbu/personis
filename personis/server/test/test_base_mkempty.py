@@ -14,7 +14,7 @@ class TestPersonisBase(unittest.TestCase):
             shutil.rmtree('models')
         os.mkdir('models')
 
-        mkmodel.mkmodel(model='alice', mfile='../modeldefs/empty.prod', modeldir='models', user='alice')
+        mkmodel.mkmodel(model='alice', mfile='../modeldefs/empty.prod.mdef', modeldir='models', user='alice')
         um = base.Access(model="alice", modeldir='models', user='alice')
         ev = base.Evidence(evidence_type="explicit", value="test")
         um.tell(context=["Admin", 'modelinfo'], componentid='personisversion', evidence=ev)

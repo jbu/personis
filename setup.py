@@ -1,55 +1,18 @@
 from setuptools import setup, find_packages
-import fnmatch
-import os
-
-import distribute_setup
-distribute_setup.use_setuptools()
-
-try:
-    from distutils.command.build_py import build_py_2to3 as build_py
-except ImportError:
-    # 2.x
-    from distutils.command.build_py import build_py
-
-long_desc = """The Google API Client for Python is a client library for
-accessing the Plus, Moderator, and many other Google APIs."""
 
 install_requires=[
     'google-api-python-client',
     'pyyaml',
     'cherrypy >= 3.0',
     'pyparsing',
-    'stuf <= 0.8.20',
+    'stuf',
     'shove',
-    'distribute'
+    'genshi',
+    'sqlalchemy',
+    'pyopenssl',
+    'distribute',
+    'docutils>=0.3'
     ]
-
-packages = [
-  'personis',
-  'personis.client',
-  'personis.examples',
-  'personis.examples.browser',
-  'personis.examples.activity',
-  'personis.examples.asker',
-  'personis.examples.log-llum',
-  'personis.examples.aelog',
-  'personis.server',
-  'personis.server.test'
-  ]
-
-
-include_patterns = '*.html *.css *.png *.gif *.yaml *.json *.conf *.rst *.jpg *.ico *.txt *.js *.doctree Makefile README *.pdf *.sh *.svg'.split()
-matches = []
-for root, dirnames, filenames in os.walk('personis'):
-    for pat in include_patterns:
-        for filename in fnmatch.filter(filenames, pat):
-            matches.append(os.path.join(root, filename))
-
-#matches = [i for i in matches if (i.startswith('./personis') or i.startswith('./server_conf'))]
-
-packagedat = {
-    '': matches
-    }
 
 long_desc = """The Personis user model server and associated client library. Also some sample clients."""
 
@@ -57,21 +20,32 @@ import personis
 version = personis.__version__
 
 setup(
-    use_2to3=True,
-    name="personis",
+    name = "personis",
+    packages = find_packages(),
+    scripts = [],
+
+    install_requires = install_requires,
+    include_package_data = True,
+    package_data = {
+        'personis.server': ['static/images/*.*', 'static/js/*.js']
+    },
+    entry_points = {
+        'console_scripts': [
+            'watcher = personis.examples.activity',
+            'umbrowser = personis.examples.browser',
+        ],
+        'gui_scripts': [
+            
+        ]
+    },
     version=version,
     description="Peronis user model library",
     long_description=long_desc,
     author='Bob Kummerfeld, James Uther, Mark Assad, Judy Kay, et. al.',
     author_email='bob.kummerfeld@sydney.edu.au',
     url='http://github.com/jbu/personis',
-    install_requires=install_requires,
-    packages=packages,
-    scripts=[],
     license="GPL3",
-    package_data=packagedat,
     keywords="personis user-model server",
-    include_package_data = True,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',

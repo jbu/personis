@@ -20,7 +20,7 @@
 import httplib2, types, cPickle
 import json
 import cherrypy, oauth2client
-from . import connection
+#from ..client import Connection
 
 def do_call(fun, args, connection):
 	if (not connection.valid()):

@@ -1,2 +1,2 @@
 include COPYING
-global-include *.html *.css *.png *.gif *.yaml *.json *.conf *.rst *.jpg *.ico *.txt *.js *.doctree Makefile README *.pdf *.sh *.svg *.py
+global-include *.html *.css *.png *.gif *.yaml *.json *.conf *.rst *.jpg *.ico *.txt *.js Makefile README *.pdf *.sh *.svg *.py *.mdef

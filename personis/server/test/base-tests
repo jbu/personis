@@ -36,7 +36,7 @@ then
 	echo "Creating model 'Alice', username 'alice', password 'secret'"
 	mkdir -p "$MODELDIR"
 	rm -f output_* error_output*
-	python Src/Utils/mkmodel.py Src/Modeldefs/user "$MODELDIR" Alice:alice:secret > output_alice 2> error_output_alice
+	python Src/Utils/mkmodel.py Src/Modeldefs/user.mdef "$MODELDIR" Alice:alice:secret > output_alice 2> error_output_alice
 
 #
 # Check the files that have been made in the models directory
