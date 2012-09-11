@@ -31,12 +31,11 @@ import cherrypy
 from . import base
 from . import active
 from . import util
-import cPickle
 from multiprocessing import Process, Queue
 from . import cronserver
 import random, time
 #from ..client import Connection
-from shove import Shove
+from . import filedict
 import string
 
 from .mkmodel import *
@@ -65,7 +64,7 @@ class Server:
     :type client_secrets: str
     '''
 
-    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None, access_tokens='oauth_access_tokens.dat', client_secrets='client_secrets_google.json'):
+    def __init__(self, modeldir='models', adminsfile='admins.yaml', clients = None, access_tokens='./access_tokens.dat', client_secrets='client_secrets_google.json'):
         self.modeldir = modeldir
         self.admins = yaml.load(file(adminsfile,'r'))
         self.oauth_clients_file = clients
@@ -73,12 +72,11 @@ class Server:
         self.oauth_clients = json.loads(file(clients,'r').read())
         if self.oauth_clients == None:
             self.oauth_clients = {}
-        self.access_tokens = Shove('sqlite:///'+access_tokens, sync=0)
-
+        self.access_tokens_filename = access_tokens
         def stopper():
             logging.info( 'saving persistant data')
             self.save_oauth_clients()
-            self.access_tokens.close()
+            #self.access_tokens.close()
         cherrypy.engine.subscribe('stop', stopper)
 
     def save_oauth_clients(self):
@@ -324,9 +322,11 @@ class Server:
             rdi = rdi + 'state='+cherrypy.session['state']+'&amp;'
         rdi = rdi + 'code=' + val_key
 
-        self.access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
-        self.access_tokens.sync()
-        logging.info('access tokens: %s',repr([i for i in self.access_tokens.keys()]))
+        access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
+
+        access_tokens[val_key] = {'timestamp': time.time(), 'userid': usrid, 'client_id': cherrypy.session['client_id'], 'type': 'authorization_code', 'expires': time.time()+600}
+        #self.access_tokens.sync()
+        logging.info('access tokens: %s',repr([i for i in access_tokens.keys()]))
         
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid)
@@ -357,22 +357,24 @@ class Server:
         # expire old tokens before we look
         now = time.time()
 
-        for k, v in self.access_tokens.items():
+        access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
+
+        for k, v in access_tokens.items():
             logging.info(  'access_tokens %s: %s', k,v)
             if now > v['expires']:
                 logging.info (  'expire access_token %s',k)
-                del(self.access_tokens[k])
+                del(access_tokens[k])
 
         if grant_type == 'refresh_token':
             code = refresh_token
 
-        if not code in self.access_tokens:
+        if not code in access_tokens:
             if grant_type == 'refresh_token':
                 raise cherrypy.HTTPError(401, 'Refresh_token expiry')
             else:
                 raise cherrypy.HTTPError(401, 'Incorrect token')
 
-        tok = self.access_tokens[code]
+        tok = access_tokens[code]
 
         if tok['client_id'] != client_id:
             raise cherrypy.HTTPError(401, 'Incorrect client')
@@ -388,7 +390,7 @@ class Server:
         access_token = ''
         access_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
 
-        self.access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
+        access_tokens[access_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'access_token', 'expires': time.time() + access_expiry}
         logging.debug(  'added access_token: %s',access_token)
 
         ret = {'access_token': access_token, 
@@ -402,11 +404,11 @@ class Server:
             refresh_token = ''.join([random.choice(string.hexdigits) for i in range(32)])
             logging.info(  'added refresh_token: %s',refresh_token)
 
-            self.access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
+            access_tokens[refresh_token] = {'timestamp': time.time(), 'userid': userid, 'client_id': client_id, 'type': 'refresh_token', 'expires': time.time() + refresh_expiry}
 
             ret['refresh_token'] = refresh_token
 
-        self.access_tokens.sync()
+        #self.access_tokens.sync()
 
         s = json.dumps(ret)
         logging.info(  s)
@@ -418,9 +420,11 @@ class Server:
 
         cherrypy.session['admin'] = False
 
+        access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
+
         try:
             access_token = cherrypy.request.headers['Authorization'].split()[1]
-            logging.debug( 'access_tokens %s', self.access_tokens )
+            logging.debug( 'access_tokens %s', access_tokens )
             logging.debug(  'access_token %s', repr(access_token) )
         except:
             return '''
@@ -429,15 +433,15 @@ Looks like you're coming into the service entrance with a browser, which is not 
 <br/>If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>, or the <a href="/doc/index.html">the docs</a>.
 <br/>Source at <a href="https://github.com/jbu/personis">github</a>.
 '''
-        if not access_token in self.access_tokens:
+        if access_token not in access_tokens:
     	    raise cherrypy.HTTPError(401, 'Incorrect access token')
             #print 'token',self.access_tokens[access_token]
         now = time.time()
-        if now > self.access_tokens[access_token]['expires']:
+        if now > access_tokens[access_token]['expires']:
             logging.debug(  'expired %s', access_token)
             raise cherrypy.HTTPError(401, 'Expired access token')
     
-        usr = self.access_tokens[access_token]['userid']
+        usr = access_tokens[access_token]['userid']
 
         cl = cherrypy.request.headers['Content-Length']
         jsonobj = cherrypy.request.body.read(int(cl))
@@ -472,8 +476,8 @@ Looks like you're coming into the service entrance with a browser, which is not 
                 um = active.Access(model=model, modeldir=self.modeldir, user=usr)
 
             apps = um.listapps()
-            if not self.access_tokens[access_token]['client_id'] in apps:
-                logging.debug(  'client for access token not in model %s, %s', access_token, self.access_tokens[access_token]['client_id'])
+            if access_tokens[access_token]['client_id'] not in apps:
+                logging.debug(  'client for access token not in model %s, %s', access_token, access_tokens[access_token]['client_id'])
                 raise cherrypy.HTTPError(401, 'client for access token not in model')
 
             if args[0] == 'access':

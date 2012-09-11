@@ -19,7 +19,7 @@ parser.add_option("-o", "--oauthclients",
           help="Clients json file", default='oauth_clients.json')
 parser.add_option("-t", "--tokens",
           dest="tokens", metavar='FILE',
-          help="Access tokens database", default='oauth_access_tokens.dat')
+          help="Access tokens database", default='access_tokens.dat')
 parser.add_option("-l", "--log",
           dest="logging",
           help="Log level", default='INFO')
