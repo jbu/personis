@@ -1,0 +1,68 @@
+[12/Sep/2012:16:28:49] ENGINE Bus STARTING
+[12/Sep/2012:16:28:49] ENGINE Started monitor thread '_TimeoutMonitor'.
+[12/Sep/2012:16:28:49] ENGINE Started monitor thread 'Autoreloader'.
+[12/Sep/2012:16:28:49] ENGINE Serving on 127.0.0.1:2005
+[12/Sep/2012:16:28:49] ENGINE Bus STARTED
+[12/Sep/2012:16:29:26] ENGINE Keyboard Interrupt: shutting down bus
+[12/Sep/2012:16:29:26] ENGINE Bus STOPPING
+[12/Sep/2012:16:29:26] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[12/Sep/2012:16:29:26] ENGINE Stopped thread 'Autoreloader'.
+[12/Sep/2012:16:29:26] ENGINE Stopped thread '_TimeoutMonitor'.
+[12/Sep/2012:16:29:26] ENGINE Bus STOPPED
+[12/Sep/2012:16:29:26] ENGINE Bus EXITING
+[12/Sep/2012:16:29:26] ENGINE Bus EXITED
+[12/Sep/2012:16:29:26] ENGINE Waiting for child threads to terminate...
+[12/Sep/2012:16:30:02] ENGINE Bus STARTING
+[12/Sep/2012:16:30:02] ENGINE Started monitor thread '_TimeoutMonitor'.
+[12/Sep/2012:16:30:02] ENGINE Started monitor thread 'Autoreloader'.
+[12/Sep/2012:16:30:02] ENGINE Serving on 127.0.0.1:2005
+[12/Sep/2012:16:30:02] ENGINE Bus STARTED
+[12/Sep/2012:16:30:03] ENGINE Started monitor thread 'Session cleanup'.
+[12/Sep/2012:16:46:58] ENGINE Bus STARTING
+[12/Sep/2012:16:46:58] ENGINE Started monitor thread '_TimeoutMonitor'.
+[12/Sep/2012:16:46:58] ENGINE Started monitor thread 'Autoreloader'.
+[12/Sep/2012:16:46:58] ENGINE Serving on 127.0.0.1:2005
+[12/Sep/2012:16:46:58] ENGINE Bus STARTED
+[12/Sep/2012:16:47:35] ENGINE Started monitor thread 'Session cleanup'.
+[12/Sep/2012:16:49:20] ENGINE Keyboard Interrupt: shutting down bus
+[12/Sep/2012:16:49:20] ENGINE Bus STOPPING
+[12/Sep/2012:16:49:20] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[12/Sep/2012:16:49:20] ENGINE Stopped thread 'Autoreloader'.
+[12/Sep/2012:16:49:20] ENGINE Stopped thread '_TimeoutMonitor'.
+[12/Sep/2012:16:49:20] ENGINE Stopped thread 'Session cleanup'.
+[12/Sep/2012:16:49:20] ENGINE Bus STOPPED
+[12/Sep/2012:16:49:20] ENGINE Bus EXITING
+[12/Sep/2012:16:49:20] ENGINE Bus EXITED
+[12/Sep/2012:16:49:20] ENGINE Waiting for child threads to terminate...
+[12/Sep/2012:16:50:29] ENGINE Bus STARTING
+[12/Sep/2012:16:50:29] ENGINE Started monitor thread '_TimeoutMonitor'.
+[12/Sep/2012:16:50:29] ENGINE Started monitor thread 'Autoreloader'.
+[12/Sep/2012:16:50:29] ENGINE Serving on 127.0.0.1:2005
+[12/Sep/2012:16:50:29] ENGINE Bus STARTED
+[12/Sep/2012:16:50:37] ENGINE Started monitor thread 'Session cleanup'.
+[12/Sep/2012:16:51:49] ENGINE Keyboard Interrupt: shutting down bus
+[12/Sep/2012:16:51:49] ENGINE Bus STOPPING
+[12/Sep/2012:16:51:49] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[12/Sep/2012:16:51:49] ENGINE Stopped thread 'Autoreloader'.
+[12/Sep/2012:16:51:49] ENGINE Stopped thread '_TimeoutMonitor'.
+[12/Sep/2012:16:51:49] ENGINE Stopped thread 'Session cleanup'.
+[12/Sep/2012:16:51:49] ENGINE Bus STOPPED
+[12/Sep/2012:16:51:49] ENGINE Bus EXITING
+[12/Sep/2012:16:51:49] ENGINE Bus EXITED
+[12/Sep/2012:16:51:49] ENGINE Waiting for child threads to terminate...
+[12/Sep/2012:16:52:07] ENGINE Bus STARTING
+[12/Sep/2012:16:52:07] ENGINE Started monitor thread '_TimeoutMonitor'.
+[12/Sep/2012:16:52:07] ENGINE Started monitor thread 'Autoreloader'.
+[12/Sep/2012:16:52:07] ENGINE Serving on 127.0.0.1:2005
+[12/Sep/2012:16:52:07] ENGINE Bus STARTED
+[12/Sep/2012:16:52:11] ENGINE Started monitor thread 'Session cleanup'.
+[12/Sep/2012:16:54:33] ENGINE Keyboard Interrupt: shutting down bus
+[12/Sep/2012:16:54:33] ENGINE Bus STOPPING
+[12/Sep/2012:16:54:33] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('127.0.0.1', 2005)) shut down
+[12/Sep/2012:16:54:33] ENGINE Stopped thread 'Autoreloader'.
+[12/Sep/2012:16:54:33] ENGINE Stopped thread '_TimeoutMonitor'.
+[12/Sep/2012:16:54:33] ENGINE Stopped thread 'Session cleanup'.
+[12/Sep/2012:16:54:33] ENGINE Bus STOPPED
+[12/Sep/2012:16:54:33] ENGINE Bus EXITING
+[12/Sep/2012:16:54:33] ENGINE Bus EXITED
+[12/Sep/2012:16:54:33] ENGINE Waiting for child threads to terminate...

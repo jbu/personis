@@ -528,7 +528,9 @@ def go():
 
     # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
     client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
-    b.um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), credentials='browser_cred.dat')
+    b.um = client.util.LoginFromClientSecrets(filename=client_secrets, 
+        http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), 
+        credentials='browser_cred.dat')
     reslist = b.um.ask(context=["Personal"],view=['firstname'])
     b.username = reslist[0].value
     print 'Welcome', b.username
