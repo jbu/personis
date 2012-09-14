@@ -26,6 +26,7 @@
 import os, traceback
 import json
 import yaml
+import cPickle
 from . import jsoncall
 import cherrypy
 from . import base

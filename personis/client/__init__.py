@@ -161,7 +161,7 @@ class Component:
     :param creation_time: (string) - time of creation of the component.
     :param component_type: (list) - ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
     :param value_type: (list) - ["string", "number","boolean", "enum", "JSON"]
-    :param value_list: (int) - a list of strings that are the possible values for type "enum".
+    :param value_list: (list) - a list of strings that are the possible values for type "enum".
     :param value: (string) - the resolved value.
     :param resolver: (string) - default resolver for this component.
     :param goals: (list) - list of component paths eg [ ['Personal', 'Health', 'weight'], ...]
