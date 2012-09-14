@@ -589,7 +589,7 @@ class Access(resolvers.Access, ev_filters.Access):
             con = Context(Identifier=cinfo['Identifier'], Description=cinfo['Description'], resolver=cinfo['resolver'], perms=cinfo['perms'])
             self.mkcontext(context=context, contextobj=con)
         else:
-            print newcontext, "exists"
+            logging.debug("%s exists",newcontext)
         for compname, comp in newmodel['components'].items():
             newcobj = Component()
             for k,v in comp.items():
@@ -602,7 +602,7 @@ class Access(resolvers.Access, ev_filters.Access):
                 evv = Evidence(evidence_type="explicit") # evidence type will be overwritten by imported evidence
                 for k,v in ev.items():
                     evv.__dict__[k] = v
-                print "=>> tell", newcontext, compname, evv.__dict__
+                logging.debug("=>> tell %s %s %s", newcontext, compname, evv.__dict__)
                 self.tell(context=newcontext, componentid=compname, evidence=evv, dosubs=False)
         for viewname, view in newmodel['views'].items():
             newview = View()
@@ -611,15 +611,15 @@ class Access(resolvers.Access, ev_filters.Access):
             try:
                 self.mkview(newcontext, newview)
             except:
-                print "View exists:", newcontext, newview
-            print ">>VIEW", viewname, view
+                logging.debug( "View exists: %s %s", newcontext, newview)
+            logging.debug( ">>VIEW %s %s", viewname, view)
         for subname, sub in newmodel['subs'].items():
             for k,v in sub.items():
-                print ">>SUB", subname, k, v
+                logging.debug( ">>SUB %s %s %s", subname, k, v)
                 self.subscribe(context=newcontext, view=[subname], subscription=v)
         if newmodel['contexts'] != None:
             for contextname, cont in newmodel['contexts'].items():
-                print ">>CONTEXT", contextname, cont
+                logging.debug( ">>CONTEXT %s %s", contextname, cont)
                 self.import_model(newcontext, cont)
         
         return newmodel
@@ -836,7 +836,7 @@ class Access(resolvers.Access, ev_filters.Access):
         if componentid in comps:
             del comps[componentid]
         else:
-            return "no component matched $s"%(componentid)
+            return "no component matched %s"%(componentid)
 
         shelf_close(comps, comps_shelf_fd)
         try:
@@ -1019,7 +1019,7 @@ class Access(resolvers.Access, ev_filters.Access):
 
     def delcontext(self,
         context=[]):
-        """Delete a context saves an archive of the context (debug)
+        """Delete a context
         """
         okchars = string.ascii_letters+string.digits+'_'
         for c in context:
@@ -1037,12 +1037,12 @@ class Access(resolvers.Access, ev_filters.Access):
         except:
             return False
         
-        import tarfile, time
-        tarname = "%s-%s.tgz" % (time.strftime("%Y%m%d%H%M", time.localtime()), delcontext)
+        #import tarfile, time
+        #tarname = "%s-%s.tgz" % (time.strftime("%Y%m%d%H%M", time.localtime()), delcontext)
         #print ">>> ", tarname
-        tar = tarfile.open(os.path.join(*[self.modeldir, tarname]), "w:gz")
-        tar.add(delcontext)
-        tar.close()
+        #tar = tarfile.open(os.path.join(*[self.modeldir, tarname]), "w:gz")
+        #tar.add(delcontext)
+        #tar.close()
 
         #print '>>> os.system("rm -rf ' + os.path.join(*([self.modeldir]+ctxtdir))+'"'
         os.system("rm -rf "+os.path.join(*([self.modeldir]+ctxtdir)))

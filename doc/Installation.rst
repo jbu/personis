@@ -16,8 +16,18 @@ installation, you can use virtualenv::
 	mkdir personis-sandbox
 	cd personis-sandbox
 	wget https://raw.github.com/pypa/virtualenv/master/virtualenv.py
-	python virtualenv.py .
+	python virtualenv.py --distribute .
 	./bin/pip install personis
+
+Windows
+-------
+
+Some examples (the activity watcher, for example) use win32api. To use this, first install win32api. Then, if you want to use a virtualenv sandbox::
+
+	python virtualenv.py --distribute --system-site-packages .
+
+Source, etc
+-----------
 
 If you wish to customise your installation further, we recommend getting the distribution
 from http://pypi.python.org/pypi/personis or the source from https://github.com/jbu/personis.
@@ -98,3 +108,8 @@ Server
 ~~~~~~
 
 The cherrypy server is configured from 'server.conf'. You must ensure at least socket_host and socket_port are correct, and the paths in the resource sections point to the personis server source directory.
+
+HTTPS
+~~~~~
+
+Parts of the Oauth login should (some say MUST) run over https to ensure security. To enable https in cherrypy, install the pyopenssl library, create certificates, and enable them. Because this is a bit of a pain, the default installation does not do this. But you should.
