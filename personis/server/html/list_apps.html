@@ -11,8 +11,7 @@ $(document).ready(function() {
 
   $.getJSON("/list_apps_json",function(data) {
     $.each(data, function(key,val) {
-      var div_data =
-        "<li >"val['description']+" | <a href='/list_apps_save?id=removeOneForMe&value="+key+"'>remove</li>";
+      var div_data = "<li >"+val['description']+" | <a href='/list_apps_save?id=removeOneForMe&value="+key+"'>remove</li>";
     $(div_data).appendTo("#applist");
     });
   });
