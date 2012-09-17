@@ -121,6 +121,7 @@ class Server:
 
         return open(os.path.join(base_path,'html','list_apps.html')).read()
 
+    @cherrypy.expose
     def list_apps_json(self):
         if cherrypy.session.get('user') == None:
             cherrypy.session['admin'] = True
