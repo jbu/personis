@@ -146,7 +146,7 @@ class Server:
         return json.dumps(apps)
 
     @cherrypy.expose
-    def list_apps_save(self, id, value, app=None, desc=None _method='get'):
+    def list_apps_save(self, id, value, app=None, desc=None, _method='get'):
         # json app manager
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
