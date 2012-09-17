@@ -133,7 +133,7 @@ class Server:
         apps = um.listapps()
         for k in apps:
             #ret = ret + '<li><table border="0" padding="5">'
-            if k['realm'] == 'oauth':
+            if apps[k]['realm'] == 'oauth':
                 c = self.oauth_clients[k]
                 apps[k]['client_id'] = c['client_id']
                 apps[k]['icon'] = c['icon']
