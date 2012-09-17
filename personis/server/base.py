@@ -852,15 +852,20 @@ class Access(resolvers.Access, ev_filters.Access):
         shelf_close(evdb, evdb_fd)
         return None # all ok
 
-    def registerapp(self, app=None, desc="", password=None):
+    def registerapp(self, app=None, desc="", password=None, realm='password'):
         """registers a password for an app
         
         :param app: app name is a string (needs checking TODO)
         :param desc: the app description string
             app passwords are stored at the top level .model db
+        :param realm: The type of access method. 'oauth' if it's an app (like mneme or umbrowser) that
+            can handle oauth. 'password' for the old password system.
         
-        :return: returns a dictionary containing description and password(access key)
+        :return: returns a dictionary containing description and password(access key). If 'password' realm was requested, but
+            no password given, returns None
         """
+        if realm == 'password' and password is None:
+            return None
         if self.usertype != 'owner':
             raise ValueError("registerapp: must be owner to set password for %s" % (app))
         p = hashlib.md5()
@@ -870,6 +875,7 @@ class Access(resolvers.Access, ev_filters.Access):
         if app not in self.moddb['apps']:
             self.moddb['apps'][app] = {}
         self.moddb['apps'][app]['description'] = desc
+        self.moddb['apps'][app]['realm'] = realm
         self.moddb['apps'][app]['password'] = p.hexdigest()
 
         mod, mod_shelf_fd = shelf_open(os.path.join(self.modeldir,self.modelname,".model"), "w")

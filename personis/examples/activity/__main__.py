@@ -132,14 +132,27 @@ def go():
     inactive_granularity = 5 # seconds
     active_granularity = 10 # seconds - you can stop typing for 10 seconds and it's not seen.
 
+    gflags.DEFINE_enum('logging_level', 'ERROR',
+        ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+        'Set the level of logging detail.')
+    gflags.DEFINE_string('clientjson', None, 'client json file', short_name='j')
+    # Let the gflags module process the command-line arguments
+    try:
+        argv = gflags.FLAGS(sys.argv)
+    except gflags.FlagsError, e:
+        print '%s\\nUsage: %s ARGS\\n%s' % (e, sys.argv[0], FLAGS)
+        sys.exit(1)
     #httplib2.debuglevel=0
-    #logging.basicConfig(level=logging.INFO)
+    logging.getLogger().setLevel(getattr(logging, gflags.FLAGS.logging_level))
 
     # get past the uni's stupid proxy server
     p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
 
     # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
-    client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
+    if gflags.FLAGS.clientjson is not None:
+        client_secrets = gflags.FLAGS.clientjson
+    else:
+        client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
     um = client.util.LoginFromClientSecrets(filename=client_secrets, http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), credentials='activity_cred.dat')
 
     reslist = um.ask(context=["Personal"],view=['firstname'])

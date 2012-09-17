@@ -107,7 +107,6 @@ class Server:
         stream = tmpl.generate(clients=self.oauth_clients.values())
         return stream.render('xhtml')
 
-
     @cherrypy.expose
     def list_apps(self):
         # if we're here, we just want the local web UI. 
@@ -119,22 +118,33 @@ class Server:
             raise cherrypy.HTTPRedirect('/login')
 
         base_path = os.path.dirname(os.path.abspath(__file__))
-        loader = TemplateLoader([base_path])
-        tmpl = loader.load('html/list_apps.html')
+
+        return open(os.path.join(base_path,'html','list_apps.html')).read()
+
+    def list_apps_json(self):
+        if cherrypy.session.get('user') == None:
+            cherrypy.session['admin'] = True
+            cherrypy.session['target_url'] = '/list_apps'
+            raise cherrypy.HTTPRedirect('/login')
+        # No templates. reducing dependencies.
+        #ret ='''<!DOCTYPE html><html><head><meta charset="utf-8" /><title>Personis User Model Server - App Authorization</title><link rel="stylesheet" href="/static/usyd.css"/><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script><script type="text/javascript" src="/static/js/jquery.jeditable.js"></script><script src="/static/js/list_clients.js"></script></head><body><table width="100%" cellspacing="0" cellpadding="0" border="0" class="role">  <tbody><tr>    <td style="width: 200px;">      <a href="http://www.usyd.edu.au/">        <img border="0" src="http://www.it.usyd.edu.au/images/common/university_sydney_logo.gif" alt="School of IT" class="decor"/>      </a>    </td>    <td style="width: 100%;"></td>    <td style="width: 400px;">      <a href="Home">        <img border="0" class="decor" alt="CHAI: computer human adapted interaction" src="http://chai.it.usyd.edu.au/Images/chai_banner.png"/>      </a>    </td>  </tr></tbody></table><br/><br/><div style="max-width:  800px; margin:  0 auto; border: 1px black dotted; padding:  20px; border-radius: 5px;"><table border='0' width="100%"><tr><td valign='top' halign='center' style='padding-right: 30px'><img src="/static/images/icon.svg" width="100"/></td><td> <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div> <h1>Registered Clients</h1><br/><ul>'''
         um = cherrypy.session.get('um')
         apps = um.listapps()
         for k in apps:
-            c = self.oauth_clients[k]
-            apps[k]['friendly_name'] = c['friendly_name']
-            apps[k]['client_id'] = c['client_id']
-            apps[k]['icon'] = c['icon']
-        apps = [apps[k] for k in apps]
-        logging.debug(  'apps %s', apps)
-        stream = tmpl.generate(apps = apps)
-        return stream.render('xhtml')
+            #ret = ret + '<li><table border="0" padding="5">'
+            if k['realm'] == 'oauth':
+                c = self.oauth_clients[k]
+                apps[k]['client_id'] = c['client_id']
+                apps[k]['icon'] = c['icon']
+            #ret = ret + '</tr></table></li>'
+        #apps = [apps[k] for k in apps.values()]
+        logging.debug(  'apps %s', apps.values())
+
+        return json.dumps(apps)
 
     @cherrypy.expose
     def list_apps_save(self, id, value, _method='get'):
+        # json app manager
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
         # This uses a get parameter, where it should be del or post. 
@@ -142,8 +152,14 @@ class Server:
         um = cherrypy.session.get('um')
         if id == "removeOneForMe":
             logging.debug(  "removed an app")
-            um.deleteapp(value)
-            raise cherrypy.HTTPRedirect('/list_apps')
+            return json.dumps(um.deleteapp(value))
+        if id == "addOneForMe":
+            logging.debug("add an app")
+            for i in range(16):
+                passw = passw + random.choice(string.ascii_uppercase)
+            r = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], password=passw)
+            r['cleartextp'] = passw[:3] + ' ' + passw[3:7] + ' ' + passw[7:11] + ' ' + passw[11:]
+            return json.dumps(r)
 
     @cherrypy.expose
     def list_clients_save(self, id, value, _method='get'):
@@ -332,7 +348,7 @@ class Server:
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid)
         cherrypy.session['um'] = um
-        result = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], password='')
+        result = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], realm='oauth')
         raise cherrypy.HTTPRedirect(rdi)
                
     @cherrypy.expose
@@ -521,7 +537,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
             elif args[0] == 'set_goals':
                 result = um.set_goals(context=pargs['context'], componentid=pargs['componentid'], goals=pargs['goals'])
             elif args[0] == 'registerapp':
-                result = um.registerapp(app=pargs['app'], desc=pargs['description'], password=pargs['apppassword'])
+                result = um.registerapp(app=pargs['app'], desc=pargs['description'], password=pargs['apppassword'], realm=pargs['realm'])
             elif args[0] == 'deleteapp':
                 result = um.deleteapp(app=pargs['app'])
             elif args[0] == 'getpermission':

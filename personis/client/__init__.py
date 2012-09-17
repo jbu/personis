@@ -554,11 +554,11 @@ class Access(object):
             - components that contribute to this componentid if it is of type goal
         :return: None on success or a string error message on error
         """
-        return  do_call("set_goals", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'componentid':componentid,\
+        return  do_call("set_goals", {'modelname':self.modelname,
+                                        'user':self.user,
+                                        'password':self.password,
+                                        'context':context,
+                                        'componentid':componentid,
                                         'goals':goals},
                                         self.connection)
 
@@ -573,14 +573,14 @@ class Access(object):
 
         :return: A list of subscriptions or a string error message on error
         """
-        return  do_call("list_subs", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
+        return  do_call("list_subs", {'modelname':self.modelname,
+                                        'user':self.user,
+                                        'password':self.password,
+                                        'context':context,
                                         'componentid':componentid},
                                         self.connection)
 
-    def registerapp(self, app=None, desc="", password=None):
+    def registerapp(self, app=None, desc="", password=None, realm='password'):
         """registers a password for an app
 
         :param app: name is a string (needs checking TODO)
@@ -589,11 +589,12 @@ class Access(object):
 
         :return: None on success or a string error message on error
         """
-        return do_call("registerapp", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'app':app,\
-                                        'description':desc,\
+        return do_call("registerapp", {'modelname':self.modelname,
+                                        'user':self.user,
+                                        'password':self.password,
+                                        'app':app,
+                                        'realm':realm,
+                                        'description':desc,
                                         'apppassword':password},
                                         self.connection)
 
@@ -604,9 +605,9 @@ class Access(object):
         """
         if app == None:
             raise ValueError, "deleteapp: app is None"
-        return do_call("deleteapp", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
+        return do_call("deleteapp", {'modelname':self.modelname,
+                                        'user':self.user,
+                                        'password':self.password,
                                         'app':app},
                                         self.connection)
 
@@ -615,8 +616,8 @@ class Access(object):
 
         :return: A list of apps or a string error message on error
         """
-        return do_call("listapps", {'modelname':self.modelname,\
-                                        'user':self.user,\
+        return do_call("listapps", {'modelname':self.modelname,
+                                        'user':self.user,
                                         'password':self.password},
                                         self.connection)
 
