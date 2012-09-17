@@ -17,10 +17,10 @@ $(document).ready(function() {
 
     $('<ul/>', {
       'class': 'my-new-list',
-      html: items.join('')
+      html: apps.join('')
     }).appendTo('#applist');
   });
-  
+
   $('.edit').editable('/list_apps_save', {
       indicator : "...",
       onblur    : 'cancel',
