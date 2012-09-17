@@ -5,35 +5,27 @@
 <title>Personis User Model Server - App Authorization</title>
 <link rel="stylesheet" href="/static/usyd.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery.jeditable.js"></script>
 <script>
 $(document).ready(function() {
 
   $.getJSON("/list_apps_json",function(data) {
     $.each(data, function(key,val) {
       var div_data = "<li >"+val['description']+" | <a href='/list_apps_save?id=removeOneForMe&value="+key+"'>remove</li>";
-    $(div_data).appendTo("#applist");
+      $(div_data).appendTo("#applist");
     });
-  });
-  $.getJSON('/list_apps_json', function(data) {
-    var apps = [];
-    $.each(apps, function(key, val) {
-      items.push('<li id="' + key + '">' + val + '</li>');
-    });
-    console.log(apps)
-    $('<ul/>', {
-      'class': 'my-new-list',
-      html: apps.join('')
-    }).appendTo('#applist');
   });
 
-  $('.edit').editable('/list_apps_save', {
-      indicator : "...",
-      onblur    : 'cancel',
-      //submit    : 'OK',
-      type      : 'text',
-      //submitdata: { _method: "put" },
-      cssclass  : "editable"
+  $('#newform').submit(function (event) {
+    event.preventDefault(); 
+    var $form = $( this ),
+    appv = $form.find( 'input[id="app"]' ).val(),
+    descv = $form.find( 'input[id="desc"]' ).val(),
+    url = $form.attr( 'action' );
+    $.post(url, { app: appv, desc: descv },
+       function(data) {
+          var div_data = "<li >"+data['description']+" | "+data['cleartextp']+" | <a href='/list_apps_save?id=removeOneForMe&value="+data['app']+"'>remove</li>;"
+          $(div_data).appendTo('#applist');
+       });
   });
 });
 </script>
@@ -74,6 +66,11 @@ $(document).ready(function() {
 <ul id='applist'>
     </ul>
 
+<form id='newform' action="/list_apps_save?id=addOneForMe" >
+<input type="text" size='10' id="app"/> 
+<input type="text" size='20' id="desc"/> 
+<input type="submit" value="Search" />
+</form>
 </td>
 </tr>
 </table>

@@ -133,6 +133,7 @@ class Server:
         apps = um.listapps()
         logging.info('list apps %s',repr(apps))
         for k in apps:
+            apps[k]['app'] = k
             #ret = ret + '<li><table border="0" padding="5">'
             if k in self.oauth_clients:
                 c = self.oauth_clients[k]
@@ -145,7 +146,7 @@ class Server:
         return json.dumps(apps)
 
     @cherrypy.expose
-    def list_apps_save(self, id, value, _method='get'):
+    def list_apps_save(self, id, value, app=None, desc=None _method='get'):
         # json app manager
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
@@ -154,12 +155,13 @@ class Server:
         um = cherrypy.session.get('um')
         if id == "removeOneForMe":
             logging.debug(  "removed an app")
-            return json.dumps(um.deleteapp(value))
+            json.dumps(um.deleteapp(value))
         if id == "addOneForMe":
             logging.debug("add an app")
             for i in range(16):
                 passw = passw + random.choice(string.ascii_uppercase)
-            r = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], password=passw)
+            r = um.registerapp(app=app, desc=desc, password=passw)
+            r['app'] = app
             r['cleartextp'] = passw[:3] + ' ' + passw[3:7] + ' ' + passw[7:11] + ' ' + passw[11:]
             return json.dumps(r)
 
