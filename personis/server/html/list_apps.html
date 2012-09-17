@@ -9,12 +9,19 @@
 <script>
 $(document).ready(function() {
 
+  $.getJSON("/list_apps_json",function(data) {
+    $.each(data, function(key,val) {
+      var div_data =
+        "<li >"val['description']+" | <a href='/list_apps_save?id=removeOneForMe&value="+key+"'>remove</li>";
+    $(div_data).appendTo("#applist");
+    });
+  });
   $.getJSON('/list_apps_json', function(data) {
     var apps = [];
     $.each(apps, function(key, val) {
       items.push('<li id="' + key + '">' + val + '</li>');
     });
-
+    console.log(apps)
     $('<ul/>', {
       'class': 'my-new-list',
       html: apps.join('')

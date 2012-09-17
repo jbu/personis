@@ -140,7 +140,7 @@ class Server:
                 apps[k]['icon'] = c['icon']
             #ret = ret + '</tr></table></li>'
         #apps = [apps[k] for k in apps.values()]
-        logging.debug(  'apps %s', apps.values())
+        logging.debug(  'apps %s', apps)
 
         return json.dumps(apps)
 
