@@ -153,6 +153,7 @@ class Server:
         # This uses a get parameter, where it should be del or post. 
         # worksfornow
 
+        logging.debug('list_apps_save args %s, kargs %s',repr(args), repr(kargs))
         um = cherrypy.session.get('um')
         if kargs['id'] == "removeOneForMe":
             logging.debug(  "removed an app")
