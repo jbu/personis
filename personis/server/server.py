@@ -146,22 +146,24 @@ class Server:
         return json.dumps(apps)
 
     @cherrypy.expose
-    def list_apps_save(self, id, value, app=None, desc=None, _method='get'):
+    def list_apps_save(self, *args, **kargs):
         # json app manager
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
         # This uses a get parameter, where it should be del or post. 
         # worksfornow
+
         um = cherrypy.session.get('um')
-        if id == "removeOneForMe":
+        if kargs['id'] == "removeOneForMe":
             logging.debug(  "removed an app")
-            json.dumps(um.deleteapp(value))
-        if id == "addOneForMe":
+            json.dumps(um.deleteapp(kargs['value']))
+        if kargs['id'] == "addOneForMe":
             logging.debug("add an app")
             for i in range(16):
                 passw = passw + random.choice(string.ascii_uppercase)
-            r = um.registerapp(app=app, desc=desc, password=passw)
-            r['app'] = app
+            r = um.registerapp(app=kargs['app'], desc=kargs['desc'], password=passw)
+            r['app'] = kargs['app']
+            r['desc'] = kargs['desc']
             r['cleartextp'] = passw[:3] + ' ' + passw[3:7] + ' ' + passw[7:11] + ' ' + passw[11:]
             return json.dumps(r)
 
@@ -472,14 +474,6 @@ Looks like you're coming into the service entrance with a browser, which is not 
         except:
             logging.debug(  "bad request - cannot decode json - possible access from web browser")
             return json.dumps("Personis User Model server. Not accessible using a web browser.")
-
-        # dirty kludge to get around unicode
-        for k,v in pargs.items():
-            if type(v) == type(''):
-                pargs[k] = str(v)
-            if type(k) == type(''):
-                del pargs[k]
-                pargs[str(k)] = v
 
         model = usr
         if 'model' in pargs:
