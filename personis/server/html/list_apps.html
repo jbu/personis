@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   $.getJSON("/list_apps_json",function(data) {
     $.each(data, function(key,val) {
-      var div_data = "<li >"+val['description']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+key+"'>remove</li>";
+      var div_data = "<li id="+key+">"+val['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>";
       $(div_data).appendTo("#applist");
     });
   });
@@ -25,22 +25,22 @@ $(document).ready(function() {
             function(data) {
                 var j = jQuery.parseJSON(data);
                 console.log(j, j['description']);
-                var div_data = "<li >"+j['description']+" | "+j['cleartextp']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+j['app']+"'>remove</li>;"
+                var div_data = "<li id="+j['app']+">"+j['description']+" | Passwd: "+j['cleartextp']+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
                 $(div_data).appendTo('#applist');
             });
     });
 
-  $('.removelink').click(function(event) {
-    event.preventDefault(); 
-    var $link = $( this ),
-    id = $link.find( 'input[id="app"]' ).val(),
-    url = $form.attr( 'action' );
-    $.post(url, { app: appv, desc: descv, id: 'addOneForMe'},
-       function(data) {
-          var div_data = "<li >"+data['description']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+data['app']+"'>remove</li>;"
-          $(div_data).appendTo('#applist');
-       });
-  });
+    $('.remove').click(function(event) {
+        event.preventDefault(); 
+        var $link = $( this ),
+        id = $link.parent.find( 'id' ).val(),
+        url = $form.attr( 'action' );
+        $.post(url, { value: '', id: 'removeOneForMe'},
+            function(data) {
+                var div_data = "<li id=>"+data['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
+                $(div_data).appendTo('#applist');
+            });
+    });
 });
 </script>
 </head>

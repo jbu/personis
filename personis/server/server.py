@@ -162,7 +162,7 @@ class Server:
             logging.debug("add an app")
             passw = ''
             for i in range(16):
-                passw = passw + random.choice(string.ascii_uppercase)
+                passw = passw + random.choice(string.ascii_lowercase)
             r = um.registerapp(app=kargs['app'], desc=kargs['desc'], password=passw)
             r['app'] = kargs['app']
             r['desc'] = kargs['desc']
