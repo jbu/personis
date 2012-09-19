@@ -36,7 +36,7 @@ $(document).ready(function() {
         );
     });
     console.log('here');
-    $('img.remove').on('click', function(event) {
+    $('#applist').on('click', 'img.remove', function(event) {
         event.preventDefault(); 
         var $link = $( this );
         var $li = $link.parent();
