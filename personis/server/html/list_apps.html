@@ -41,7 +41,7 @@ $(document).ready(function() {
         var $link = $( this );
         var $li = $link.parent();
         var $id = $li.attr( 'id' );
-        $.post(url, { value: $id, id: 'removeOneForMe'},
+        $.post('/list_apps_save', { value: $id, id: 'removeOneForMe'},
             function(data) {
                 $li.hide();
             }
