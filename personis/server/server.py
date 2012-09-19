@@ -439,11 +439,20 @@ class Server:
         logging.info(  s)
         return s
 
+    @cherrypy.expose
+    def index(self):
+        return '''
+        <h1>Personis</h1>
+        Welcome to Personis. <br/>
+        <a href="/list_apps">your apps</a>.
+        <br/>If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>, or the <a href="http://personis.readthedocs.org/en/latest/">the docs</a>.
+        <br/>Source at <a href="https://github.com/jbu/personis">github</a>.
+        '''
 
     @cherrypy.expose
     def default(self, *args, **kargs):
 
-        cherrypy.session['admin'] = False
+        #cherrypy.session['admin'] = False
 
         access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
 
