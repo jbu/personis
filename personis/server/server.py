@@ -166,7 +166,7 @@ class Server:
             r = um.registerapp(app=kargs['app'], desc=kargs['desc'], password=passw)
             r['app'] = kargs['app']
             r['desc'] = kargs['desc']
-            r['cleartextp'] = passw[:3] + ' ' + passw[3:7] + ' ' + passw[7:11] + ' ' + passw[11:]
+            r['cleartextp'] = passw[:4] + ' ' + passw[4:8] + ' ' + passw[8:12] + ' ' + passw[12:]
             return json.dumps(r)
 
     @cherrypy.expose
