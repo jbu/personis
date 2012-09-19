@@ -23,7 +23,7 @@ $(document).ready(function() {
     url = $form.attr( 'action' );
     $.post(url, { app: appv, desc: descv, id: 'addOneForMe'},
        function(data) {
-          console.log(data);
+          console.log(data, data['description']);
           var div_data = "<li >"+data['description']+" | "+data['cleartextp']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+data['app']+"'>remove</li>;"
           $(div_data).appendTo('#applist');
        });
@@ -36,7 +36,7 @@ $(document).ready(function() {
     url = $form.attr( 'action' );
     $.post(url, { app: appv, desc: descv, id: 'addOneForMe'},
        function(data) {
-          var div_data = "<li >"+data['description']+" | "+data['cleartextp']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+data['app']+"'>remove</li>;"
+          var div_data = "<li >"+data['description']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+data['app']+"'>remove</li>;"
           $(div_data).appendTo('#applist');
        });
   });
