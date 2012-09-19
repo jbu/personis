@@ -482,7 +482,7 @@ Looks like you're coming into the service entrance with a browser, which is not 
             model = pargs['modelname']
 
         logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
-        logging.debug('args, kargs, pargs',args, kargs, pargs)
+        logging.debug('args %s, kargs %s, pargs %s',repr(args), repr(kargs), repr(pargs))
         try:
             result = False
             if args[0] == 'mkmodel':
