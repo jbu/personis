@@ -30,20 +30,20 @@ $(document).ready(function() {
         $.post(url, { app: appv, desc: descv, id: 'addOneForMe'},
             function(data) {
                 var j = jQuery.parseJSON(data);
-                console.log(j, j['description']);
                 var div_data = "<li id="+j['app']+">"+j['app']+" | "+j['description']+" | Passwd: "+j['cleartextp']+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
                 $(div_data).appendTo('#applist');
             }
         );
     });
-
+    console.log('here');
     $('img.remove').on('click', function(event) {
         event.preventDefault(); 
-        var $link = $( this ),
-        id = $link.parent.find( 'id' ).val(),
-        url = $form.attr( 'action' );
-        $.post(url, { value: '', id: 'removeOneForMe'},
+        var $link = $( this );
+        var $li = $link.parent();
+        var $id = $li.attr( 'id' );
+        $.post(url, { value: $id, id: 'removeOneForMe'},
             function(data) {
+                $li.hide();
             }
         );
     });
