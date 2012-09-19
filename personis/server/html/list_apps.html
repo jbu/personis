@@ -14,12 +14,12 @@ img.remove {
 <script>
 $(document).ready(function() {
 
-  $.getJSON("/list_apps_json",function(data) {
-    $.each(data, function(key,val) {
-      var div_data = "<li id="+key+">"+val['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>";
-      $(div_data).appendTo("#applist");
+    $.getJSON("/list_apps_json",function(data) {
+        $.each(data, function(key,val) {
+            var div_data = "<li id="+key+">"+key+" | "+val['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>";
+            $(div_data).appendTo("#applist");
+        });
     });
-  });
 
     $('#newform').submit(function (event) {
         event.preventDefault(); 
@@ -31,21 +31,21 @@ $(document).ready(function() {
             function(data) {
                 var j = jQuery.parseJSON(data);
                 console.log(j, j['description']);
-                var div_data = "<li id="+j['app']+">"+j['description']+" | Passwd: "+j['cleartextp']+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
+                var div_data = "<li id="+j['app']+">"+j['app']+" | "+j['description']+" | Passwd: "+j['cleartextp']+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
                 $(div_data).appendTo('#applist');
-            });
+            }
+        );
     });
 
-    $('.remove').bind('click', function(event) {
+    $('img.remove').on('click', function(event) {
         event.preventDefault(); 
         var $link = $( this ),
         id = $link.parent.find( 'id' ).val(),
         url = $form.attr( 'action' );
         $.post(url, { value: '', id: 'removeOneForMe'},
             function(data) {
-                var div_data = "<li id=>"+data['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
-                $(div_data).appendTo('#applist');
-            });
+            }
+        );
     });
 });
 </script>
