@@ -30,7 +30,7 @@ $(document).ready(function() {
             });
     });
 
-    $('.remove').click(function(event) {
+    $('img.remove').bind('click', function(event) {
         event.preventDefault(); 
         var $link = $( this ),
         id = $link.parent.find( 'id' ).val(),
