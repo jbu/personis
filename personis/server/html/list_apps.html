@@ -23,7 +23,7 @@ $(document).ready(function() {
         url = $form.attr( 'action' );
         $.post(url, { app: appv, desc: descv, id: 'addOneForMe'},
             function(data) {
-                var j = jQuery.parseJSON('{"name":"John"}');
+                var j = jQuery.parseJSON(data);
                 console.log(j, j['description']);
                 var div_data = "<li >"+j['description']+" | "+j['cleartextp']+" | <a class='removelink' href='/list_apps_save?id=removeOneForMe&value="+j['app']+"'>remove</li>;"
                 $(div_data).appendTo('#applist');
