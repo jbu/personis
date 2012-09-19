@@ -124,7 +124,7 @@ class Server:
     @cherrypy.expose
     def list_apps_json(self):
         if cherrypy.session.get('user') == None:
-            cherrypy.session['admin'] = True
+            #cherrypy.session['admin'] = True
             cherrypy.session['target_url'] = '/list_apps'
             raise cherrypy.HTTPRedirect('/login')
         # No templates. reducing dependencies.
@@ -216,7 +216,7 @@ class Server:
         Only for oauth use. Don't come in this way if you want 
         to use list_clients!!
         """
-        cherrypy.session['admin'] = False
+        #cherrypy.session['admin'] = False
         cherrypy.session['client_id'] = client_id
         
         cli = self.oauth_clients[client_id]
@@ -310,7 +310,7 @@ class Server:
         um = active.Access(model=user, modeldir=self.modeldir, user=user)
         
         # if we're here from a local url, just redirect. no need to allow.
-        if cherrypy.session.get('admin'):
+        if cherrypy.session.get('target_url'):
             cherrypy.session['um'] = um
             raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
 
@@ -453,6 +453,11 @@ class Server:
     def default(self, *args, **kargs):
 
         #cherrypy.session['admin'] = False
+
+        if cherrypy.session.get('user') == None:
+            #cherrypy.session['admin'] = True
+            cherrypy.session['target_url'] = args[0]
+            raise cherrypy.HTTPRedirect('/login')
 
         access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
 
