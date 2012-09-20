@@ -461,6 +461,8 @@ class Server:
         elif pargs: # are we from an app?
             m = pargs.get('modelname', '-')
             usr = pargs.get('user', '')
+            if m == '-':
+                m = usr
             con = pargs.get('context', None)
             cid = pargs['view']
             u = active.Access(model=m, modeldir=self.modeldir, user=usr)
