@@ -14,7 +14,9 @@ img.remove {
 <script>
 $(document).ready(function() {
 
-    $.getJSON("/listapps",function(data) {
+    //$.getJSON("/listapps",function(data) {
+        
+    $.post('/listapps', {modelname: '-', password: '', user: '', version: '11.2'},
         $.each(data, function(key,val) {
             var div_data = "<li id="+key+">"+key+" | "+val['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>";
             $(div_data).appendTo("#applist");
@@ -28,8 +30,7 @@ $(document).ready(function() {
         descv = $form.find( 'input[id="desc"]' ).val(),
         passw = $form.find( 'input[id="pass"]' ).val(),
 
-        v = {realm: 'password', description: descv, app: appv, apppassword: passw}
-        $.post('/registerapp', v,
+        $.post('/registerapp', {realm: 'password', description: descv, app: appv, apppassword: passw},
             function(data) {
                 var j = jQuery.parseJSON(data);
                 var div_data = "<li id="+j['app']+">"+j['app']+" | "+j['description']+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
