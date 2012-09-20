@@ -490,6 +490,11 @@ class Server:
             usr = access_tokens[access_token]['userid']
             logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
 
+            apps = um.listapps()
+            if access_tokens[access_token]['client_id'] not in apps:
+                logging.debug(  'client for access token not in model %s, %s', access_token, access_tokens[access_token]['client_id'])
+                raise cherrypy.HTTPError(401, 'client for access token not in model')
+
         elif cherrypy.session.get('webSession'): # we're a web session
             if not cherrypy.session.get('user'):
                 cherrypy.session['target_url'] = args[0]
@@ -519,12 +524,7 @@ class Server:
                 result = True
             else:
                 um = active.Access(model=model, modeldir=self.modeldir, user=usr)
-
-            apps = um.listapps()
-            if access_tokens[access_token]['client_id'] not in apps:
-                logging.debug(  'client for access token not in model %s, %s', access_token, access_tokens[access_token]['client_id'])
-                raise cherrypy.HTTPError(401, 'client for access token not in model')
-
+                
             if args[0] == 'access':
                 result = True
             elif args[0] == 'tell':
