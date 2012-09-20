@@ -474,7 +474,7 @@ class Server:
             pass
         logging.debug('pargs %s', repr(pargs))
 
-        if cherrypy.request.headers['Authorization'] is not None: # we're from a web client using oauth.
+        if 'Authorization' in cherrypy.request.headers: # we're from a web client using oauth.
             access_token = cherrypy.request.headers['Authorization'].split()[1]
             logging.debug( 'access_tokens %s', access_tokens )
             logging.debug(  'access_token %s', repr(access_token) )
