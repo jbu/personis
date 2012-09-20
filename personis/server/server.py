@@ -507,8 +507,8 @@ class Server:
             logging.debug('WEB: USER: %s', usr)
 
         elif pargs: # are we from an app?
-            m = pargs.get('model', '-')
-            usr = pargs.get(user, '')
+            m = pargs.get('modelname', '-')
+            usr = pargs.get('user', '')
             con = pargs.get('context', None)
             cid = pargs['componentid']
             u = active.Access(model=model, modeldir=self.modeldir, user=usr)

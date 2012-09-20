@@ -170,7 +170,7 @@ class TestPersonisBase(unittest.TestCase):
 
     def test_register_app(self):
         appdetails = self.um.registerapp(app="MyHealth", desc="My Health Manager", password="pass9")
-        self.assertEqual(appdetails, {'password': 'c28cce9cbd2daf76f10eb54478bb0454', 'description': 'My Health Manager'})
+        self.assertEqual(appdetails, {u'realm': u'password', u'password': u'c28cce9cbd2daf76f10eb54478bb0454', u'givenpw': None, u'description': u'My Health Manager'})
         apps = self.um.listapps()
         self.assertIn(u'MyHealth', apps.keys())
 
