@@ -16,8 +16,11 @@ $(document).ready(function() {
 
     //$.getJSON("/listapps",function(data) {
 
-    $.post('/listapps', {modelname: '-', password: '', user: '', version: '11.2'},
-        function (data) {
+    $.ajax(url: '/listapps', 
+        data: {modelname: '-', password: '', user: '', version: '11.2'},
+        dataType: 'json',
+        type: 'POST',
+        success: function (data) {
             $.each(data, function(key,val) {
                 var div_data = "<li id="+key+">"+key+" | "+val['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>";
                 $(div_data).appendTo("#applist");
