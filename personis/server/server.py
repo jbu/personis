@@ -422,6 +422,7 @@ class Server:
 
         access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
 
+        logging.debug('websession: %s, auth: %s', cherrypy.get('sebSession'), cherrypy.request.headers.has_key('Authorization'))
 
         pargs = None
         try:
