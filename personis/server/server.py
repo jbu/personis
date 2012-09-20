@@ -122,54 +122,6 @@ class Server:
         return open(os.path.join(base_path,'html','list_apps.html')).read()
 
     @cherrypy.expose
-    def list_apps_json(self):
-        if cherrypy.session.get('user') == None:
-            #cherrypy.session['admin'] = True
-            cherrypy.session['target_url'] = '/list_apps'
-            raise cherrypy.HTTPRedirect('/login')
-        # No templates. reducing dependencies.
-        #ret ='''<!DOCTYPE html><html><head><meta charset="utf-8" /><title>Personis User Model Server - App Authorization</title><link rel="stylesheet" href="/static/usyd.css"/><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script><script type="text/javascript" src="/static/js/jquery.jeditable.js"></script><script src="/static/js/list_clients.js"></script></head><body><table width="100%" cellspacing="0" cellpadding="0" border="0" class="role">  <tbody><tr>    <td style="width: 200px;">      <a href="http://www.usyd.edu.au/">        <img border="0" src="http://www.it.usyd.edu.au/images/common/university_sydney_logo.gif" alt="School of IT" class="decor"/>      </a>    </td>    <td style="width: 100%;"></td>    <td style="width: 400px;">      <a href="Home">        <img border="0" class="decor" alt="CHAI: computer human adapted interaction" src="http://chai.it.usyd.edu.au/Images/chai_banner.png"/>      </a>    </td>  </tr></tbody></table><br/><br/><div style="max-width:  800px; margin:  0 auto; border: 1px black dotted; padding:  20px; border-radius: 5px;"><table border='0' width="100%"><tr><td valign='top' halign='center' style='padding-right: 30px'><img src="/static/images/icon.svg" width="100"/></td><td> <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div> <h1>Registered Clients</h1><br/><ul>'''
-        um = cherrypy.session.get('um')
-        apps = um.listapps()
-        logging.info('list apps %s',repr(apps))
-        for k in apps:
-            apps[k]['app'] = k
-            #ret = ret + '<li><table border="0" padding="5">'
-            if k in self.oauth_clients:
-                c = self.oauth_clients[k]
-                apps[k]['client_id'] = c['client_id']
-                apps[k]['icon'] = c['icon']
-            #ret = ret + '</tr></table></li>'
-        #apps = [apps[k] for k in apps.values()]
-        logging.debug(  'apps %s', apps)
-
-        return json.dumps(apps)
-
-    @cherrypy.expose
-    def list_apps_save(self, *args, **kargs):
-        # json app manager
-        if cherrypy.session.get('user') == None:
-            raise cherrypy.HTTPError()
-        # This uses a get parameter, where it should be del or post. 
-        # worksfornow
-
-        logging.debug('list_apps_save args %s, kargs %s',repr(args), repr(kargs))
-        um = cherrypy.session.get('um')
-        if kargs['id'] == "removeOneForMe":
-            logging.debug(  "removed an app")
-            json.dumps(um.deleteapp(kargs['value']))
-        if kargs['id'] == "addOneForMe":
-            logging.debug("add an app")
-            passw = ''
-            for i in range(16):
-                passw = passw + random.choice(string.ascii_lowercase)
-            r = um.registerapp(app=kargs['app'], desc=kargs['desc'], password=passw)
-            r['app'] = kargs['app']
-            r['desc'] = kargs['desc']
-            r['cleartextp'] = passw[:4] + ' ' + passw[4:8] + ' ' + passw[8:12] + ' ' + passw[12:]
-            return json.dumps(r)
-
-    @cherrypy.expose
     def list_clients_save(self, id, value, _method='get'):
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
@@ -510,7 +462,7 @@ class Server:
             m = pargs.get('modelname', '-')
             usr = pargs.get('user', '')
             con = pargs.get('context', None)
-            cid = pargs['componentid']
+            cid = pargs['view']
             u = active.Access(model=model, modeldir=self.modeldir, user=usr)
             if not u.checkpermission(context=con, componentid=cid, app=usr, permname=args[0], permval=True):
                 raise cherrypy.HTTPError(401, 'Incorrect authentication')
