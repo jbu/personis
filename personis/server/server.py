@@ -460,8 +460,8 @@ class Server:
         # 2) Password base apps that login via a ('model','appname','password') tuple
         # 3) Web clients that might be using this to add or delete apps for a user. These can have a local session.
 
-        logging.debug('args %s, kargs %s, pargs %s',repr(args), repr(kargs), repr(pargs))
-        
+        logging.debug('args %s, kargs %s',repr(args), repr(kargs))
+
         access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
 
         cl = cherrypy.request.headers['Content-Length']
@@ -471,6 +471,7 @@ class Server:
             pargs = json.loads(jsonobj)
         except:
             pass
+        logging.debug('pargs %s', repr(pargs))
 
         if cherrypy.request.headers['Authorization'] is not None: # we're from a web client using oauth.
             access_token = cherrypy.request.headers['Authorization'].split()[1]
