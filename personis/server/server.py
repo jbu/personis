@@ -476,7 +476,7 @@ class Server:
 
         if 'Authorization' in cherrypy.request.headers: # we're from a web client using oauth.
             access_token = cherrypy.request.headers['Authorization'].split()[1]
-            logging.debug( 'access_tokens %s', access_tokens )
+            #logging.debug( 'access_tokens %s', access_tokens )
             logging.debug(  'access_token %s', repr(access_token) )
 
             if access_token not in access_tokens:
@@ -490,6 +490,9 @@ class Server:
             usr = access_tokens[access_token]['userid']
             logging.debug(  'OAUTH: USER: %s, BEARER: %s', usr, access_token)
 
+            model = usr
+            if 'model' in pargs:
+                model = pargs['modelname']
             u = active.Access(model=model, modeldir=self.modeldir, user=usr)
             apps = u.listapps()
             if access_tokens[access_token]['client_id'] not in apps:
