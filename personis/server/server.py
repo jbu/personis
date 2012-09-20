@@ -464,10 +464,11 @@ class Server:
 
         access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
 
-        cl = cherrypy.request.headers['Content-Length']
-        jsonobj = cherrypy.request.body.read(int(cl))
+
         pargs = None
         try:
+            cl = cherrypy.request.headers['Content-Length']
+            jsonobj = cherrypy.request.body.read(int(cl))
             pargs = json.loads(jsonobj)
         except:
             pass
