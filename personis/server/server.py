@@ -488,6 +488,7 @@ class Server:
                 raise cherrypy.HTTPError(401, 'Expired access token')
         
             usr = access_tokens[access_token]['userid']
+            logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
 
         elif cherrypy.session.get('webSession'): # we're a web session
             if not cherrypy.session.get('user'):
@@ -509,8 +510,6 @@ class Server:
         model = usr
         if 'model' in pargs:
             model = pargs['modelname']
-
-        logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
 
         try:
             result = False
