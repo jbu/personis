@@ -38,7 +38,7 @@ $(document).ready(function() {
         $.post('/registerapp', {realm: 'password', description: descv, app: appv, apppassword: passw},
             function(data) {
                 var j = jQuery.parseJSON(data);
-                var div_data = "<li id="+j['app']+">"+j['app']+" | "+j['description']+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
+                var div_data = "<li id="+appv+">"+appv+" | "+descv+" <img class='remove' src='/static/images/trash_fill.svg'/></li>;"
                 $(div_data).appendTo('#applist');
             }
         );
