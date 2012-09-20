@@ -936,6 +936,7 @@ class Access(resolvers.Access, ev_filters.Access):
         
         :return: a tuple (ask,tell)
         """
+        logging.debug('getperms: context %s, comp %s, app %s', repr(context), repr(componentid), app)
         if app not in self.moddb['apps']:
             raise ValueError("getpermission: app %s not registered"%(app))
         if componentid == None:

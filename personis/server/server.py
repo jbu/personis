@@ -470,9 +470,8 @@ class Server:
             if m == '-':
                 m = usr
             con = pargs.get('context', None)
-            cid = pargs['view']
             u = active.Access(model=m, modeldir=self.modeldir, user=usr)
-            if not u.checkpermission(context=con, componentid=cid, app=usr, permname=args[0], permval=True):
+            if not u.checkpermission(context=con, app=usr, permname=args[0], permval=True):
                 raise cherrypy.HTTPError(401, 'Incorrect authentication')
             logging.debug('APP: app: %s', usr)
         else:
