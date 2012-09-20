@@ -87,6 +87,18 @@ class Server:
         f.close()
 
     @cherrypy.expose
+    def list_apps(self):
+        # if we're here, we just want the local web UI. 
+        # if no user then not logged in, so set admin to
+        # true, target url back here, and go to login.
+        if cherrypy.session.get('user') == None:
+            cherrypy.session['webSession'] = True
+            cherrypy.session['target_url'] = '/list_apps'
+            raise cherrypy.HTTPRedirect('/login')
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        return open(os.path.join(base_path,'html','list_apps.html')).read()
+
+    @cherrypy.expose
     def list_clients(self):
         # if we're here, we just want the local web UI. 
         # if no user then not logged in, so set admin to
@@ -108,21 +120,15 @@ class Server:
         return stream.render('xhtml')
 
     @cherrypy.expose
-    def list_apps(self):
-        # if we're here, we just want the local web UI. 
-        # if no user then not logged in, so set admin to
-        # true, target url back here, and go to login.
+    def list_clients_json(self):
         if cherrypy.session.get('user') == None:
-            cherrypy.session['webSession'] = True
-            cherrypy.session['target_url'] = '/list_apps'
-            raise cherrypy.HTTPRedirect('/login')
-
-        base_path = os.path.dirname(os.path.abspath(__file__))
-
-        return open(os.path.join(base_path,'html','list_apps.html')).read()
-
+            raise cherrypy.HTTPError(401, 'Wrong entry point')
+        if not cherrypy.session.get('user') in self.admins:
+            raise cherrypy.HTTPError(401, 'Admin only')
+        return json.dumps(self.oauth_clients)
+        
     @cherrypy.expose
-    def list_clients_save(self, id, value, _method='get'):
+    def list_clients_put(self, *args, **kargs):
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
         if not cherrypy.session.get('user') in self.admins:
