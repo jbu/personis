@@ -21,7 +21,8 @@ $(document).ready(function() {
         dataType: 'json',
         type: 'POST',
         done: function (data) {
-            $.each(data, function(key,val) {
+            var d = data['val']
+            $.each(d, function(key,val) {
                 var div_data = "<li id="+key+">"+key+" | "+val['description']+" | <img class='remove' src='/static/images/trash_fill.svg'/></li>";
                 $(div_data).appendTo("#applist");
             })
