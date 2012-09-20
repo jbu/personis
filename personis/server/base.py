@@ -266,6 +266,8 @@ class Access(resolvers.Access, ev_filters.Access):
             self.usertype = 'owner'
         else:
             self.usertype = 'app'
+            if self.user not in self.moddb['apps']:
+                raise ValueError("App %s not registered in %s" % (self.user, model))
 
         shelf_close(mod, mod_shelf_fd)
         resolvers.Access.__init__(self)

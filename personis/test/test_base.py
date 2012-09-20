@@ -175,16 +175,31 @@ class TestPersonisBase(unittest.TestCase):
         self.assertIn(u'MyHealth', apps.keys())
 
         # registered app. should work
-        um = base.Access(model="alice", modeldir='models', user='MyHealth', password='pass9')
+        appum = base.Access(model="alice", modeldir='models', user='MyHealth', password='pass9')
         # Ask for Alice's fullname as app 'MyHealth' (should NOT work)")
         with self.assertRaises(Exception) as e:
-            reslist = um.ask(context=["test"], view='fullname')
-
+            reslist = appum.ask(context=["test"], view='fullname')
 
         self.um.setpermission(context=["test"], app="MyHealth", permissions={'ask':True, 'tell':False})
-
         perms = self.um.getpermission(context=["test"], app="MyHealth")
         self.assertEquals(perms, {'ask': True, 'tell': False})
+
+        #should work now.
+        reslist = appum.ask(context=["test"], view='fullname')
+        #mainly checking it doesn't throw an execption, but should really assert a return value.
+
+        #Now try and tell a new value for first name (should NOT work)
+        with self.assertRaises(Exception) as e:
+            ev = Personis_base.Evidence(evidence_type="explicit", value="Fred")
+            appum.tell(context=["test"], componentid='firstname', evidence=ev)
+
+        # registered app. should work
+        um = base.Access(model="alice", modeldir='models', user='MyHealth', password='pass9')
+
+        self.um.deleteapp(app="MyHealth")
+
+        apps = self.um.listapps()
+        self.assertNotIn(u'MyHealth', apps)
 
         # try and set permission on unregistered app
         with self.assertRaises(Exception) as e:
@@ -192,27 +207,10 @@ class TestPersonisBase(unittest.TestCase):
         # try and get permission on ungrestiered app
         with self.assertRaises(Exception) as e:
             perms = self.um.getpermission(context=["test"], app="withings")
-
-        self.um.deleteapp(app="MyHealth")
-
-        apps = self.um.listapps()
-        self.assertNotIn(u'MyHealth', apps)
-
         # try access from unregistered app
         with self.assertRaises(Exception) as e:
             um = base.Access(model="alice", modeldir='models', user='withings')
 
-        # registered app. should work
-        um = base.Access(model="alice", modeldir='models', user='MyHealth', password='pass9')
-
-        #should work now.
-        with self.assertRaises(Exception) as e:
-            reslist = um.ask(context=["test"], view='fullname')
-
-        #Now try and tell a new value for first name (should NOT work)
-        with self.assertRaises(Exception) as e:
-            ev = Personis_base.Evidence(evidence_type="explicit", value="Fred")
-            um.tell(context=["test"], componentid='firstname', evidence=ev)
 
 if __name__ == '__main__':
     unittest.main()

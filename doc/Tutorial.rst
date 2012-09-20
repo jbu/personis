@@ -14,9 +14,7 @@ Create a sandbox directory (u:\\comp5047, perhaps). Download https://raw.github.
 
 Install necessary libraries::
 
-	u:\comp5047\Scripts\pip install google-api-python-client pyyaml personis
-
-Install the client examples from https://github.com/downloads/jbu/personis/clients.zip
+	Scripts\pip install personis
 
 Using the *umbrowser* command line utility, the tutorial will take you through the construction, navigation and 
 management of a user model.
@@ -199,7 +197,7 @@ Start umbrowser, as in the previous section::
 	['', 'Apps', 'Logging'] > 
 	['', 'Apps', 'Logging'] > ls logged_items
 
-How did we do this? You can find the source for the logging app, and other personis clients, at https://github.com/jbu/personis/tree/master/clients/ (log-llum is the cherrypy version, aelog is the version that runs on appengine). Look at the method log_me in https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py::
+How did we do this? You can find the source for the logging app, and other personis clients, at https://github.com/jbu/personis/blob/master/personis/examples (log-llum is the cherrypy version, aelog is the version that runs on appengine). Look at the method log_me in https://github.com/jbu/personis/blob/master/clients/log-llum/log-llum.py::
 
     @cherrypy.expose
     def log_me(self, item):
@@ -214,7 +212,7 @@ As you can see, the work is done by two lines. One creates the evidence that som
 We will now do a similar exercise.
 
 * Create a new directory (u:\\comp5047\\asker). 
-* Save https://raw.github.com/jbu/personis/master/clients/asker/client_secrets.json into the new directory. 
+* Save https://github.com/jbu/personis/blob/master/personis/examples/asker/client_secrets.json into the new directory. 
 * Copy this code skeleton into a file in the directory called ask.py::
 
 	from personis import client
