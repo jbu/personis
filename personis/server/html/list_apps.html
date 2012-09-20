@@ -30,7 +30,7 @@ $(document).ready(function() {
         var $form = $( this ),
         appv = $form.find( 'input[id="app"]' ).val(),
         descv = $form.find( 'input[id="desc"]' ).val(),
-        passw = $form.find( 'input[id="pass"]' ).val(),
+        passw = $form.find( 'input[id="pass"]' ).val();
 
         $.post('/registerapp', {realm: 'password', description: descv, app: appv, apppassword: passw},
             function(data) {
