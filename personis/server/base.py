@@ -242,7 +242,7 @@ class Access(resolvers.Access, ev_filters.Access):
     :raise:
     """
 
-    def __init__(self, model=None, modeldir="", user='', debug=0):
+    def __init__(self, model=None, modeldir="", user='', password=None, debug=0):
         if model == None:
             raise ValueError("model is None")
         if modeldir[0] != '/':
@@ -251,6 +251,7 @@ class Access(resolvers.Access, ev_filters.Access):
             self.modeldir = modeldir
         self.modelname = model
         self.user = user
+        self.password = password
         self.debug = debug
         if not os.path.isdir(os.path.join(self.modeldir,self.modelname)):
             raise ValueError("no model dir for '%s'"%(self.modelname))
@@ -261,7 +262,7 @@ class Access(resolvers.Access, ev_filters.Access):
         self.moddb = {}
         for k in mod:
             self.moddb[k] = mod[k]
-        if (self.user == self.moddb['owner']):
+        if (self.user == self.moddb['owner']) and self.password is None:
             self.usertype = 'owner'
         else:
             self.usertype = 'app'
@@ -869,7 +870,7 @@ class Access(resolvers.Access, ev_filters.Access):
         if self.usertype != 'owner':
             raise ValueError("registerapp: must be owner to set password for %s" % (app))
         p = hashlib.md5()
-        if password == None:
+        if password is None:
             password = ''
         p.update(password)
         if app not in self.moddb['apps']:
@@ -881,7 +882,9 @@ class Access(resolvers.Access, ev_filters.Access):
         mod, mod_shelf_fd = shelf_open(os.path.join(self.modeldir,self.modelname,".model"), "w")
         mod['apps'] = self.moddb['apps']
         shelf_close(mod, mod_shelf_fd)
-        return self.moddb['apps'][app]
+        a = self.moddb['apps'][app]
+        a['givenpw'] = self.password
+        return a
 
     def deleteapp(self, app=None):
         """deletes an app

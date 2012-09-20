@@ -92,7 +92,7 @@ class Server:
         # if no user then not logged in, so set admin to
         # true, target url back here, and go to login.
         if cherrypy.session.get('user') == None:
-            cherrypy.session['admin'] = True
+            cherrypy.session['webSession'] = True
             cherrypy.session['target_url'] = '/list_clients'
             raise cherrypy.HTTPRedirect('/login')
         # check if user is actually allowed to be here
@@ -113,7 +113,7 @@ class Server:
         # if no user then not logged in, so set admin to
         # true, target url back here, and go to login.
         if cherrypy.session.get('user') == None:
-            cherrypy.session['admin'] = True
+            cherrypy.session['webSession'] = True
             cherrypy.session['target_url'] = '/list_apps'
             raise cherrypy.HTTPRedirect('/login')
 
@@ -216,7 +216,7 @@ class Server:
         Only for oauth use. Don't come in this way if you want 
         to use list_clients!!
         """
-        #cherrypy.session['admin'] = False
+        cherrypy.session.pop('webSession')
         cherrypy.session['client_id'] = client_id
         
         cli = self.oauth_clients[client_id]
@@ -310,7 +310,7 @@ class Server:
         um = active.Access(model=user, modeldir=self.modeldir, user=user)
         
         # if we're here from a local url, just redirect. no need to allow.
-        if cherrypy.session.get('target_url'):
+        if cherrypy.session.get('webSession'):
             cherrypy.session['um'] = um
             raise cherrypy.HTTPRedirect(cherrypy.session['target_url'])
 
@@ -356,6 +356,7 @@ class Server:
         redr = cli['redirect_uri']
         um = active.Access(model=usrid, modeldir=self.modeldir, user=usrid)
         cherrypy.session['um'] = um
+
         result = um.registerapp(app=cherrypy.session['client_id'], desc=cli['friendly_name'], realm='oauth')
         raise cherrypy.HTTPRedirect(rdi)
                
@@ -454,49 +455,61 @@ class Server:
 
         #cherrypy.session['admin'] = False
 
-        if cherrypy.session.get('user') == None:
-            #cherrypy.session['admin'] = True
-            cherrypy.session['target_url'] = args[0]
-            raise cherrypy.HTTPRedirect('/login')
+        #authentication is a bit tricky here, because we have 3 types.
+        # 1) multiplexed clients that carry the user and associated authentication in an Authorization header
+        # 2) Password base apps that login via a ('model','appname','password') tuple
+        # 3) Web clients that might be using this to add or delete apps for a user. These can have a local session.
 
+        logging.debug('args %s, kargs %s, pargs %s',repr(args), repr(kargs), repr(pargs))
+        
         access_tokens = filedict.FileDict(filename=self.access_tokens_filename)
-
-        try:
-            access_token = cherrypy.request.headers['Authorization'].split()[1]
-            logging.debug( 'access_tokens %s', access_tokens )
-            logging.debug(  'access_token %s', repr(access_token) )
-        except:
-            return '''
-<h1>Personis</h1>
-Looks like you're coming into the service entrance with a browser, which is not how this works. Ask someme about 'Mneme', or perhaps you're looking for <a href="/list_apps">your apps</a>.
-<br/>If you're an administrator, you might want to try <a href="/list_clients">the admin page</a>, or the <a href="http://personis.readthedocs.org/en/latest/">the docs</a>.
-<br/>Source at <a href="https://github.com/jbu/personis">github</a>.
-'''
-        if access_token not in access_tokens:
-    	    raise cherrypy.HTTPError(401, 'Incorrect access token')
-            #print 'token',self.access_tokens[access_token]
-        now = time.time()
-        if now > access_tokens[access_token]['expires']:
-            logging.debug(  'expired %s', access_token)
-            raise cherrypy.HTTPError(401, 'Expired access token')
-    
-        usr = access_tokens[access_token]['userid']
 
         cl = cherrypy.request.headers['Content-Length']
         jsonobj = cherrypy.request.body.read(int(cl))
-        
+        pargs = None
         try:
             pargs = json.loads(jsonobj)
         except:
-            logging.debug(  "bad request - cannot decode json - possible access from web browser")
-            return json.dumps("Personis User Model server. Not accessible using a web browser.")
+            pass
+
+        if cherrypy.request.headers['Authorization'] is not None: # we're from a web client using oauth.
+            access_token = cherrypy.request.headers['Authorization'].split()[1]
+            logging.debug( 'access_tokens %s', access_tokens )
+            logging.debug(  'access_token %s', repr(access_token) )
+
+            if access_token not in access_tokens:
+        	    raise cherrypy.HTTPError(401, 'Incorrect access token')
+                #print 'token',self.access_tokens[access_token]
+            now = time.time()
+            if now > access_tokens[access_token]['expires']:
+                logging.debug(  'expired %s', access_token)
+                raise cherrypy.HTTPError(401, 'Expired access token')
+        
+            usr = access_tokens[access_token]['userid']
+
+        elif cherrypy.session.get('webSession'): # we're a web session
+            if not cherrypy.session.get('user'):
+                cherrypy.session['target_url'] = args[0]
+                raise cherrypy.HTTPRedirect('/login')
+            usr = cherrypy.session.get('user')
+        elif pargs: # are we from an app?
+            m = pargs.get('model', '-')
+            us = pargs.get(user, '')
+            con = pargs.get('context', None)
+            cid = pargs['componentid']
+            u = active.Access(model=model, modeldir=self.modeldir, user=usr)
+            if not u.checkpermission(context=con, componentid=cid, app=us, permname=args[0], permval=True):
+                raise cherrypy.HTTPError(401, 'Incorrect authentication')
+        else:
+            raise cherrypy.HTTPError(401, 'Incorrect authentication')
+        
 
         model = usr
         if 'model' in pargs:
             model = pargs['modelname']
 
         logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
-        logging.debug('args %s, kargs %s, pargs %s',repr(args), repr(kargs), repr(pargs))
+
         try:
             result = False
             if args[0] == 'mkmodel':
