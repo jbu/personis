@@ -463,6 +463,7 @@ class Server:
                 raise cherrypy.HTTPRedirect('/login')
             usr = cherrypy.session.get('user')
             logging.debug('WEB: USER: %s', usr)
+            model = usr
 
         elif pargs: # are we from an app?
             m = pargs.get('modelname', '-')
@@ -473,15 +474,11 @@ class Server:
             u = active.Access(model=m, modeldir=self.modeldir, user=usr)
             if not u.checkpermission(context=con, app=usr, permname=args[0], permval=True):
                 raise cherrypy.HTTPError(401, 'Incorrect authentication')
+            model = m
             logging.debug('APP: app: %s', usr)
         else:
             raise cherrypy.HTTPError(401, 'Incorrect authentication')
         
-
-        model = usr
-        if 'model' in pargs:
-            model = pargs['modelname']
-
         try:
             result = False
             if args[0] == 'mkmodel':
