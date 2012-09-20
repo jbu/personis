@@ -488,7 +488,7 @@ class Server:
                 raise cherrypy.HTTPError(401, 'Expired access token')
         
             usr = access_tokens[access_token]['userid']
-            logging.debug(  'USER: %s, MODEL: %s, BEARER: %s', usr, model, access_token)
+            logging.debug(  'OAUTH: USER: %s, BEARER: %s', usr, access_token)
 
             apps = um.listapps()
             if access_tokens[access_token]['client_id'] not in apps:
@@ -500,14 +500,17 @@ class Server:
                 cherrypy.session['target_url'] = args[0]
                 raise cherrypy.HTTPRedirect('/login')
             usr = cherrypy.session.get('user')
+            logging.debug('WEB: USER: %s', usr)
+
         elif pargs: # are we from an app?
             m = pargs.get('model', '-')
-            us = pargs.get(user, '')
+            usr = pargs.get(user, '')
             con = pargs.get('context', None)
             cid = pargs['componentid']
             u = active.Access(model=model, modeldir=self.modeldir, user=usr)
-            if not u.checkpermission(context=con, componentid=cid, app=us, permname=args[0], permval=True):
+            if not u.checkpermission(context=con, componentid=cid, app=usr, permname=args[0], permval=True):
                 raise cherrypy.HTTPError(401, 'Incorrect authentication')
+            logging.debug('APP: app: %s', usr)
         else:
             raise cherrypy.HTTPError(401, 'Incorrect authentication')
         
@@ -524,7 +527,7 @@ class Server:
                 result = True
             else:
                 um = active.Access(model=model, modeldir=self.modeldir, user=usr)
-                
+
             if args[0] == 'access':
                 result = True
             elif args[0] == 'tell':
