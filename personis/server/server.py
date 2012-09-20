@@ -490,7 +490,8 @@ class Server:
             usr = access_tokens[access_token]['userid']
             logging.debug(  'OAUTH: USER: %s, BEARER: %s', usr, access_token)
 
-            apps = um.listapps()
+            u = active.Access(model=model, modeldir=self.modeldir, user=usr)
+            apps = u.listapps()
             if access_tokens[access_token]['client_id'] not in apps:
                 logging.debug(  'client for access token not in model %s, %s', access_token, access_tokens[access_token]['client_id'])
                 raise cherrypy.HTTPError(401, 'client for access token not in model')
