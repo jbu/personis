@@ -471,7 +471,7 @@ class Server:
             jsonobj = cherrypy.request.body.read(int(cl))
             pargs = json.loads(jsonobj)
         except:
-            pass
+            pargs = kargs
         logging.debug('pargs %s', repr(pargs))
 
         if 'Authorization' in cherrypy.request.headers: # we're from a web client using oauth.
