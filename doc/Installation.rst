@@ -112,4 +112,4 @@ The cherrypy server is configured from 'server.conf'. You must ensure at least s
 HTTPS
 ~~~~~
 
-Parts of the Oauth login should (some say MUST) run over https to ensure security. To enable https in cherrypy, install the pyopenssl library, create certificates, and enable them. Because this is a bit of a pain, the default installation does not do this. But you should.
+Parts of the Oauth login should (some say MUST) run over https to ensure security. To enable https in cherrypy, install the pyopenssl library, create certificates, and enable them. Because this is a bit of a pain, the default installation does not do this. But you should. A good overview of creating self-signed certificates can be found at http://www.akadia.com/services/ssh_test_certificate.html
