@@ -29,7 +29,7 @@ And here's how to do it with a remote server::
 	# there is a similar client.Access() method, but we use a handy utility 
 	# that gets the server information from a .json file and automates the login
 	# process.
-    um = client.util.LoginFromClientSecrets('client_secrets.json')
+	um = client.util.LoginFromClientSecrets('client_secrets.json')
 
 After this, the `um` object has almost identical behaviour in both cases.
 
@@ -212,7 +212,7 @@ app name, and the password is given. The app has been preregistered with the mod
     data = {'modelname': '<modelname>', 'context': ['test'], 'view': ['email'], 'version': '11.2', 'user': 'MyHealth', 'resolver': {'evidence_filter': 'all'}, 'password': 'pass9', 'showcontexts': True}
     
     # Send the request (note the /ask endpoint)
-    resp, content = h.request("https://s2.personis.info/ask", "POST", json.dumps(data))
+    resp, content = h.request("https://s0.personis.name/ask", "POST", json.dumps(data))
     
     # receive the json response, and in this case check (it was a unit test)
     c = json.loads(content)

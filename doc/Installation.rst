@@ -43,8 +43,8 @@ You will need to know the URI of a personis server to connect to. You can instal
 	    "client_id": "dfadfadfsdfdwrwe",
 	    "client_secret":"fadklsfjlk2rj2klrwej",
 	    "redirect_uris": ["http://localhost:8080"],
-	    "auth_uri": "https://s2.personis.info/authorize",
-	    "token_uri": "https://s2.personis.info/request_token"
+	    "auth_uri": "https://s0.personis.name/authorize",
+	    "token_uri": "https://s0.personis.name/request_token"
 	  }
 	}
 
