@@ -228,7 +228,7 @@ class Server:
         #print 'content', content
         try:
             usr = json.loads(content[1])
-            user = usr['email'].split('@')[0].replace('.','')
+            user = usr['email'].split('@')[0].replace('.','').lower()
             cherrypy.session['user'] = user
         except:
             logging.debug(  'exception on usr %s', content[1])
@@ -238,7 +238,7 @@ class Server:
         logging.debug(  'loggedin session id %s',cherrypy.session.id)
 
         if not 'picture' in usr:
-            if usr['gender'].lower() == 'male':
+            if 'gender' in usr and usr['gender'].lower() == 'female':
                 usr['picture'] = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/161px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg'
             else:
                 usr['picture'] = 'http://www.lacasadeviena.com/wp-content/uploads/2012/06/magritte-sonofman1-300x362.jpg'
@@ -252,8 +252,9 @@ class Server:
             um.tell(context=["Personal"], componentid='firstname', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['family_name'])
             um.tell(context=["Personal"], componentid='lastname', evidence=ev)
-            ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['gender'])
-            um.tell(context=["Personal"], componentid='gender', evidence=ev)
+            if 'gender' in usr:
+                ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['gender'])
+                um.tell(context=["Personal"], componentid='gender', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['email'])
             um.tell(context=["Personal"], componentid='email', evidence=ev)
             ev = base.Evidence(source="Create_Model", evidence_type="explicit", value=usr['id'])
