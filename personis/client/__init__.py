@@ -472,7 +472,7 @@ class Access(object):
             an identifier of a view in the context specified
             a list of component identifiers or full path lists
             None indicating that the values of all components in the context be returned
-            subscription is a Subscription object
+        :param subscription: is a Subscription object
         :return: None on success or a string error message on error
         """
         return  do_call("subscribe", {'modelname':self.modelname,\

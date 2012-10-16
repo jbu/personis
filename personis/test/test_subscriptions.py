@@ -36,7 +36,7 @@ class TestPersonisBaseAdd(unittest.TestCase):
         #time.sleep(1)
 
         client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
-        p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+        p = None # httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
         cls.um = client.util.LoginFromClientSecrets(filename=client_secrets, 
             http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), 
             credentials='server_test_cred.dat')
@@ -76,113 +76,22 @@ class TestPersonisBaseAdd(unittest.TestCase):
         ev = client.Evidence(evidence_type="explicit", value="female")
         self.um.tell(context=["test"], componentid='gender', evidence=ev)
 
+        print(">>>> subscribe to changes in lastname")
 
-    def test_ask_fullname(self):
-        ev = client.Evidence(evidence_type="explicit", value="Alice")
-        # tell this as user alice's first name
-        self.um.tell(context=["test"], componentid='firstname', evidence=ev)
-        ev = client.Evidence(evidence_type="explicit", value="Smith")
-        self.um.tell(context=["test"], componentid='lastname', evidence=ev)
-        res = self.um.ask(context=["test"], view='fullname')
+        sub = """
+<default!./test/lastname> ~ '.*' :
+         NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'lastname=' <./test/lastname> """
 
-        self.assertEqual(res[0].value, u'Alice')
-        self.assertEqual(res[1].value, u'Smith')
+         result = self.um.subscribe(context=["test"], view=['lastname'], subscription={'user':'alice', 'password':'qwert', 'statement':sub})
+         print(result)
 
-    def test_ask_fullname_resolver(self):
-        ev = client.Evidence(evidence_type="explicit", value="Alice")
-        # tell this as user alice's first name
-        self.um.tell(context=["test"], componentid='firstname', evidence=ev)
-        ev = client.Evidence(evidence_type="explicit", value="Smith")
-        self.um.tell(context=["test"], componentid='lastname', evidence=ev)
-        res = self.um.ask(context=["test"], view='fullname', resolver={'evidence_filter':"last1"})
-        self.assertEqual(res[0].value, u'Alice')
-        self.assertEqual(res[1].value, u'Smith')
-
-    def test_ask_comboview(self):
-        ev = client.Evidence(evidence_type="explicit", value="Alice")
-        # tell this as user alice's first name
-        self.um.tell(context=["test"], componentid='firstname', evidence=ev)
-        ev = client.Evidence(evidence_type="explicit", value="Smith")
-        self.um.tell(context=["test"], componentid='lastname', evidence=ev)
-        res = self.um.ask(context=["test"], view=['firstname', 'lastname'])
-        self.assertEqual(res[0].value, u'Alice')
-        self.assertEqual(res[1].value, u'Smith')
-
-    def test_make_del_age(self):
-        cobj = client.Component(Identifier="age", component_type="attribute", Description="age", goals=[['Personal', 'Health', 'weight']], value_type="number")
-        res = self.um.mkcomponent(context=["test"], componentobj=cobj)
-
-        ev = client.Evidence(evidence_type="explicit", value=17)
-        self.um.tell(context=["test"], componentid='age', evidence=ev)
-        reslist = self.um.ask(context=["test"], view=['age'], resolver={'evidence_filter':"all"})
-
-        self.assertEqual(reslist[0].value, 17)
-        self.um.delcomponent(context=["test"], componentid = "age")
-
-        info = self.um.ask(context=["test"], showcontexts=True)
-        (cobjlist, contexts, theviews, thesubs) = info
-        self.assertNotIn(u'age', cobjlist)
-
-    def test_mk_del_view(self):
-        vobj = client.View(Identifier="email_details", component_list=["firstname", "lastname", "email"])
-        self.um.mkview(context=["test"], viewobj=vobj)
-        reslist= self.um.ask(context=["test"], view = 'email_details', resolver={'evidence_filter':"all"})
-
-        r2 = [u'firstname', u'lastname', u'email']
-        r3 = [i.Identifier for i in reslist]
-
-        self.assertItemsEqual(r2, r3)
-
-        self.um.delview(context=['test'], viewid='email_details')
-        info = self.um.ask(context=["test"], showcontexts=True)
-        (cobjlist, contexts, theviews, thesubs) = info
-        self.assertNotIn(u'email_details', theviews)
-
-    def test_register_app(self):
-        appdetails = self.um.registerapp(app="MyHealth", desc="My Health Manager", password="pass9")
-        self.assertEqual(appdetails['description'], u'My Health Manager')
-        apps = self.um.listapps()
-        self.assertIn(u'MyHealth', apps.keys())
-
-        self.um.setpermission(context=["test"], app="MyHealth", permissions={'ask':True, 'tell':False})
-
-        perms = self.um.getpermission(context=["test"], app="MyHealth")
-        self.assertEquals(perms, {'ask': True, 'tell': False})
-
-        with self.assertRaises(Exception) as e:
-            perms = self.um.getpermission(context=["test"], app="withings")
-
-        self.um.deleteapp(app="MyHealth")
-
-        apps = self.um.listapps()
-        self.assertNotIn(u'MyHealth', apps)
-
-    def test_export(self):
-        ev = client.Evidence(evidence_type="explicit", value="Alice")
-        # tell this as user alice's first name
-        self.um.tell(context=["test"], componentid='firstname', evidence=ev)
-
-        m = self.um.export_model(context=['test'],
-            resolver={'evidence_filter': 'all'})
-        tempfile_path = tempfile.mkstemp()[1]
-
-        f  =open(tempfile_path,'w')
-        f.write(m)
-        f.close()
-
-        cobj = client.Context(Identifier='test-import', Description='a test component')
-        t = self.um.mkcontext(context=[], contextobj=cobj)
-
-        modeljson = open(tempfile_path,'r').read()
-        modeljson = json.loads(modeljson)
-        self.assertEquals(modeljson['components']['firstname']['value'], 'Alice')
-        self.um.import_model(context=['test-import'], partial_model=modeljson)
-
-        reslist = self.um.ask(context=['test-import', 'test'], view='fullname')
-
-        r = [r.value for r in reslist]
-        rc = [u'Alice',u'Smith']
-        self.assertItemsEqual(r, rc)
+         print(">>>> add a subscription that is checked regularly according to a cron rule")
+         # min, hour, day of month, month, day of week
+         sub = """
+ ["1-58 * * * *"] <default!./test/lastname> ~ '.*' :
+         NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'lastname=' <./test/lastname> """
+         result = um.subscribe(context=["test"], view=['lastname'], subscription={'user':'alice', 'password':'secret', 'statement':sub})
+         print(result)
 
 if __name__ == '__main__':
     unittest.main()
