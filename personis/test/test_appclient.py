@@ -62,6 +62,18 @@ class TestPersonis(unittest.TestCase):
         res = cli.ask(context=["test"], view=['firstname'])
         self.assertEqual(res[0].value, u'Alice')
 
+
+        ev = client.Evidence(evidence_type="explicit", value="Smith")
+        # tell not yet enabled
+        with self.assertRaises(Exception) as e:
+            cli.tell(context=["test"], componentid='lastname', evidence=ev)
+
+        self.um.setpermission(context=["test"], app="MyHealth", permissions={'ask':True, 'tell':True})
+        cli.tell(context=["test"], componentid='lastname', evidence=ev) # works now
+
+        res = self.um.ask(context=['test'], view=['lastname'])
+        self.assertEquals(res[0].value, u'Smith')
+
         self.um.deleteapp(app="MyHealth")
 
         apps = self.um.listapps()

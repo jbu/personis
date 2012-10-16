@@ -51,3 +51,29 @@ class Model(object):
 				complist.append(comp)
 			reslist = complist
 		return reslist
+
+	def tell(self,
+			context=[],
+			componentid=None,
+			evidence=None):   # evidence obj
+
+		"""Tell the model something.
+
+		:param context: a list giving the path to the required context
+		:param componentid: identifier of the component
+		:param evidence: evidence object to add to the component
+		:return: None on success or a string error message on error
+		:raise:
+		"""
+		if componentid == None:
+			raise ValueError, "tell: componentid is None"
+		if evidence == None:
+			raise ValueError, "tell: no evidence provided"
+
+		return self._call("tell", {'modelname':self.model,\
+			'user':self.app,\
+			'password':self.password,\
+			'context':context,\
+			'componentid':componentid,\
+			'evidence':evidence.__dict__}
+			)
