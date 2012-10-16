@@ -19,7 +19,8 @@ class TestPersonis(unittest.TestCase):
         client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
         cls.server_uri = json.loads(open(client_secrets,'r').read())['installed']['token_uri'][:-len('request_token')]
         
-        p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+        #p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
+        p = None
         cls.um = client.util.LoginFromClientSecrets(filename=client_secrets, 
             http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), 
             credentials='server_test_cred.dat')
@@ -52,7 +53,7 @@ class TestPersonis(unittest.TestCase):
         perms = self.um.getpermission(context=["test"], app="MyHealth")
         self.assertEquals(perms, {'ask': True, 'tell': False})
 
-        cli = app_client.Model(self.server_uri, app='MyHealth', password='pass9')
+        cli = app_client.Model(self.server_uri, model='jamesuther', app='MyHealth', password='pass9')
 
         # create a piece of evidence with Alice as value
         ev = client.Evidence(evidence_type="explicit", value="Alice")

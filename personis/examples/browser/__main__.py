@@ -512,22 +512,24 @@ def go():
         ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         'Set the level of logging detail.')
     gflags.DEFINE_string('clientjson', None, 'client json file', short_name='j')
+    gflags.DEFINE_boolean('sydproxy', True, 'use the syduni proxy', short_name='p')
 
 
     # Let the gflags module process the command-line arguments
     try:
         argv = gflags.FLAGS(sys.argv)
     except gflags.FlagsError, e:
-        print '%s\\nUsage: %s ARGS\\n%s' % (e, sys.argv[0], FLAGS)
+        print '%s\\nUsage: %s ARGS\\n%s' % (e, sys.argv[0], gflags.FLAGS)
         sys.exit(1)
 
     # Set the logging according to the command-line flag
     logging.getLogger().setLevel(getattr(logging, gflags.FLAGS.logging_level))
 
     b = browse()
-    # get past the uni's stupid proxy server
-    p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
-
+    p = None
+    if gflags.FLAGS.sydproxy:
+        # get past the uni's stupid proxy server
+        p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
     # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
     if gflags.FLAGS.clientjson is not None:
         client_secrets = gflags.FLAGS.clientjson
