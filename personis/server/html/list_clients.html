@@ -11,35 +11,34 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.jeditable.js"></script>
 <script src="/static/js/list_clients.js"></script>
-<script id='table_bit'>
-  <li>
-    <table border="0" padding="5">
-      <tr>
-        <td>Friendly Name: </td>
-        <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>
-        <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>
-        <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>
-      </tr>
-      <tr>
-        <td>Client id:</td>
-        <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>
-      </tr>
-      <tr>
-        <td>Secret:</td>
-        <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>
-      </tr>
-      <tr>
-        <td>redirect uri:</td>
-        <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>
-      </tr>
-      <tr>
-        <td>icon uri:</td>
-        <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>
-      </tr>
-    </table>
-  </li>
-</script>
 <script>
+var table_str = '<li>'
+              + ' <table border="0" padding="5">'
+              + '  <tr>'
+              + '    <td>Friendly Name: </td>'
+              + '    <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>'
+              + '    <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>'
+              + '    <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>'
+              + '  </tr>'
+              + '  <tr>'
+              + '    <td>Client id:</td>'
+              + '    <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>'
+              + '  </tr>'
+              + '  <tr>'
+              + '    <td>Secret:</td>'
+              + '    <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>'
+              + '  </tr>'
+              + '  <tr>'
+              + '    <td>redirect uri:</td>'
+              + '    <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>'
+              + '  </tr>'
+              + '  <tr>'
+              + '    <td>icon uri:</td>'
+              + '    <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>'
+              + '  </tr>'
+              + ' </table>'
+              + '</li>'
+
 $(document).ready(function() {
 
     $.ajax({url: '/list_clients_json', 
@@ -51,7 +50,7 @@ $(document).ready(function() {
           console.log(key);
           console.log(val);
           var cid = val['client_id'];
-          var div_data = $('table_bit').html();
+          var div_data = table_str;
           div_data = div_data.replace('${client.client_id}', val['client_id']);
           div_data = div_data.replace('${client.friendly_name}', val['friendly_name']);
           div_data = div_data.replace('${client.secret}', val['secret']);
