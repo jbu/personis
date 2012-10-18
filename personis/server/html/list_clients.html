@@ -44,9 +44,8 @@ $(document).ready(function() {
     $.ajax({url: '/list_clients_json', 
         type: 'GET'
     }).done(function (data) {
-        var d = data['val']
-        console.log(d);
-        $.each(d, function(key,val) {
+        console.log(data);
+        $.each(data, function(key,val) {
 
           console.log(key);
           console.log(val);
