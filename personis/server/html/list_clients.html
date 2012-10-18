@@ -41,7 +41,7 @@ var table_str = '<li>'
 
 $(document).ready(function() {
 
-    $.getJson(url: '/list_clients_json', function (data) {
+    $.getJson('/list_clients_json', function (data) {
         console.log(data);
         $.each(data, function(key,val) {
 
