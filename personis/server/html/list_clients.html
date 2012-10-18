@@ -51,7 +51,13 @@ $(document).ready(function() {
           div_data = div_data.replace(/client_redirect_uri/g, val['redirect_uri']);
           div_data = div_data.replace(/client_icon/g, val['icon']);
           
-          $(div_data).appendTo("#applist");
+          $(div_data).appendTo("#applist")
+            .editable('/list_clients_save', {
+              indicator : "...",
+              onblur    : 'cancel',
+              type      : 'text',
+              cssclass  : "editable"
+            });
         })
     });
 
