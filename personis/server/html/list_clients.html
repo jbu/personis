@@ -45,11 +45,11 @@ $(document).ready(function() {
         $.each(data, function(key,val) {
 
           var div_data = table_str;
-          div_data = div_data.replace('${client.client_id}', val['client_id']);
-          div_data = div_data.replace('${client.friendly_name}', val['friendly_name']);
-          div_data = div_data.replace('${client.secret}', val['secret']);
-          div_data = div_data.replace('${client.redirect_uri}', val['redirect_uri']);
-          div_data = div_data.replace('${client.icon}', val['icon']);
+          div_data = div_data.replace(${client.client_id}/g, key);
+          div_data = div_data.replace(${client.friendly_name}/g, val['friendly_name']);
+          div_data = div_data.replace(${client.secret}/g, val['secret']);
+          div_data = div_data.replace(${client.redirect_uri}/g, val['redirect_uri']);
+          div_data = div_data.replace(${client.icon}/g, val['icon']);
           
           $(div_data).appendTo("#applist");
         })
