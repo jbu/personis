@@ -42,13 +42,10 @@ var table_str = '<li>'
 $(document).ready(function() {
 
     $.getJSON('/list_clients_json', function (data) {
-        console.log(data);
         $.each(data, function(key,val) {
 
-          console.log(key);
-          console.log(val);
           var div_data = table_str;
-          div_data = div_data.replace('${client.client_id}', key);
+          div_data = div_data.replace('${client.client_id}', val['client_id']);
           div_data = div_data.replace('${client.friendly_name}', val['friendly_name']);
           div_data = div_data.replace('${client.secret}', val['secret']);
           div_data = div_data.replace('${client.redirect_uri}', val['redirect_uri']);
