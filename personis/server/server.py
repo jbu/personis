@@ -48,8 +48,6 @@ import threading
 from oauth2client.file import Storage
 from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, flow_from_clientsecrets
 
-from genshi.template import TemplateLoader
-
 class Server:
     '''The personis server
 
@@ -112,12 +110,8 @@ class Server:
             raise cherrypy.HTTPError(401, 'Admin only')
 
         base_path = os.path.dirname(os.path.abspath(__file__))
-        loader = TemplateLoader([base_path])
-        tmpl = loader.load('html/list_clients.html')
-        for k, v in self.oauth_clients.items():
-            logging.debug( 'clients %s, %s', k, v['friendly_name'])
-        stream = tmpl.generate(clients=self.oauth_clients.values())
-        return stream.render('xhtml')
+        return open(os.path.join(base_path,'html','list_clients.html')).read()
+
 
     @cherrypy.expose
     def list_clients_json(self):
