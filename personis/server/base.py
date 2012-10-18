@@ -44,7 +44,7 @@ context database stored in ".context" in each context directory::
                 eg {"resolvers":["last1", "goal"]}
 """
 
-import os, shelve, sys, fcntl, time, string, glob
+import os, shelve, sys, time, string, glob
 import hashlib
 from . import filedict
 from types import *

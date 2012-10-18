@@ -282,10 +282,9 @@ class Server:
         #otherwise, ask yes/no                
         cli = self.oauth_clients[cherrypy.session['client_id']]
         base_path = os.path.dirname(os.path.abspath(__file__))
-        loader = TemplateLoader([os.path.join(base_path, 'html')])
-        tmpl = loader.load('appQuery.html')
-        stream = tmpl.generate(name=usr['given_name'], app=cli['friendly_name'], icon=cli['icon'], picture=usr['picture'])
-        return stream.render('xhtml')
+        src = os.open(os.path.join(base_path, 'html', 'appQuery.html'), 'r').read()
+        stream = src.format(name=usr['given_name'], app=cli['friendly_name'], icon=cli['icon'], picture=usr['picture'])
+        return stream
 
     @cherrypy.expose
     def allow(self):

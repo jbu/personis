@@ -50,6 +50,8 @@ class TestPersonisBaseAdd(unittest.TestCase):
         res = cls.um.mkcomponent(context=["test"], componentobj=cobj)
         cobj = client.Component(Identifier="email", component_type="attribute", Description="email address", value_type="string")
         res = cls.um.mkcomponent(context=["test"], componentobj=cobj)
+        cobj = client.Component(Identifier="otheremail", component_type="attribute", Description="email address", value_type="string")
+        res = cls.um.mkcomponent(context=["test"], componentobj=cobj)
 
         vobj = client.View(Identifier="fullname", component_list=["firstname", "lastname"])
         cls.um.mkview(context=["test"], viewobj=vobj)
@@ -66,7 +68,6 @@ class TestPersonisBaseAdd(unittest.TestCase):
     def test_ask_tell(self):
         # create a piece of evidence with Alice as value
         ev = client.Evidence(evidence_type="explicit", value="Alice")
-        # tell this as user alice's first name
         self.um.tell(context=["test"], componentid='firstname', evidence=ev)
         res = self.um.ask(context=["test"], view=['firstname'])
         self.assertEqual(res[0].value, u'Alice')
@@ -76,22 +77,25 @@ class TestPersonisBaseAdd(unittest.TestCase):
         ev = client.Evidence(evidence_type="explicit", value="female")
         self.um.tell(context=["test"], componentid='gender', evidence=ev)
 
-        print(">>>> subscribe to changes in lastname")
+        appdetails = self.um.registerapp(app="MySubscription", desc="My Subscription", password="pass9")
+        self.assertEqual(appdetails['description'], u'My Subscription')
+        apps = self.um.listapps()
+        self.assertIn(u'MySubscription', apps.keys())
 
-        sub = """
-<default!./test/lastname> ~ '.*' :
-         NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'lastname=' <./test/lastname> """
+        self.um.setpermission(context=["test"], app="MySubscription", permissions={'ask':True, 'tell':True})
 
-         result = self.um.subscribe(context=["test"], view=['lastname'], subscription={'user':'alice', 'password':'qwert', 'statement':sub})
-         print(result)
+        sub = """<test/gender> ~ '.*' : TELL jamesuther/test/firstname, explicit:<Personal/firstname>"""
 
-         print(">>>> add a subscription that is checked regularly according to a cron rule")
-         # min, hour, day of month, month, day of week
-         sub = """
- ["1-58 * * * *"] <default!./test/lastname> ~ '.*' :
-         NOTIFY 'http://www.it.usyd.edu.au/~bob/Personis/tst.cgi?' 'lastname=' <./test/lastname> """
-         result = um.subscribe(context=["test"], view=['lastname'], subscription={'user':'alice', 'password':'secret', 'statement':sub})
-         print(result)
+        result = self.um.subscribe(context=["test"], view=['firstname'], subscription={'user':'MySubscription', 'password':'pass9', 'statement':sub})
+
+        print result
+
+        ev = client.Evidence(evidence_type="explicit", value="male")
+        self.um.tell(context=["test"], componentid='gender', evidence=ev)
+        # subscription should have fired. firstname should now be James
+        res = self.um.ask(context=["test"], view=['firstname'])
+        self.assertEqual(res[0].value, u'James')
+
 
 if __name__ == '__main__':
     unittest.main()
