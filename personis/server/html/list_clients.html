@@ -16,25 +16,25 @@ var table_str = '<li>'
               + ' <table border="0" padding="5">'
               + '  <tr>'
               + '    <td>Friendly Name: </td>'
-              + '    <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>'
-              + '    <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>'
-              + '    <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>'
+              + '    <td><div class="edit" id="client_id|friendly_name" style="font-weight: bold">client_friendly_name</div></td>'
+              + '    <td rowspan="5"> <img src="client_icon" halign="center" style="max-width:100px; max-height:100px"/></td>'
+              + '    <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=client_id"><img src="/static/images/trash_fill.svg"/></a></td>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>Client id:</td>'
-              + '    <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>'
+              + '    <td><div id="client_id|client_id" style="">client_id</div></td>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>Secret:</td>'
-              + '    <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>'
+              + '    <td><div class="edit" id="client_id|secret" style="">client_secret</div></td>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>redirect uri:</td>'
-              + '    <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>'
+              + '    <td><div class="edit" id="client_id|redirect_uri" style="">client_redirect_uri</div></td>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>icon uri:</td>'
-              + '    <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>'
+              + '    <td><div class="edit" id="client_id|icon" style="">client_icon</div></td>'
               + '  </tr>'
               + ' </table>'
               + '</li>'
@@ -45,11 +45,11 @@ $(document).ready(function() {
         $.each(data, function(key,val) {
 
           var div_data = table_str;
-          div_data = div_data.replace(${client.client_id}/g, key);
-          div_data = div_data.replace(${client.friendly_name}/g, val['friendly_name']);
-          div_data = div_data.replace(${client.secret}/g, val['secret']);
-          div_data = div_data.replace(${client.redirect_uri}/g, val['redirect_uri']);
-          div_data = div_data.replace(${client.icon}/g, val['icon']);
+          div_data = div_data.replace(client_id/g, key);
+          div_data = div_data.replace(client_friendly_name/g, val['friendly_name']);
+          div_data = div_data.replace(client_secret/g, val['secret']);
+          div_data = div_data.replace(client_redirect_uri/g, val['redirect_uri']);
+          div_data = div_data.replace(client_icon/g, val['icon']);
           
           $(div_data).appendTo("#applist");
         })
