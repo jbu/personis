@@ -249,19 +249,32 @@ img.profile {
 <script type="text/javascript" src="/static/js/jquery.jeditable.js"></script>
 <script src="/static/js/list_clients.js"></script>
 <script id='table_bit'>
-          <tr><td>Friendly Name: </td>
-              <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>
-              <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>
-              <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>
-          </tr><tr><td>Client id:</td>
-              <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>
-          </tr><tr><td>Secret:</td>
-               <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>
-          </tr><tr><td>redirect uri:</td>
-               <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>
-          </tr><tr><td>icon uri:</td>
-               <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>
-          </tr>
+<li>
+  <table border="0" padding="5">
+    <tr>
+      <td>Friendly Name: </td>
+      <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>
+      <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>
+      <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>
+    </tr>
+    <tr>
+      <td>Client id:</td>
+      <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>
+    </tr>
+    <tr>
+      <td>Secret:</td>
+      <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>
+    </tr>
+    <tr>
+      <td>redirect uri:</td>
+      <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>
+    </tr>
+    <tr>
+      <td>icon uri:</td>
+      <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>
+    </tr>
+  </table>
+</li>
 
 </script>
 <script>
@@ -331,24 +344,7 @@ $(document).ready(function() {
  <div style="font-size: 24pt; font-weight: bold">Personis User Model Server</div>
  <h1>Registered Clients</h1>
 <br/>
-<ul py:if="clients">
-      <li py:for="client in clients">
-        <table border="0" padding="5">
-          <tr><td>Friendly Name: </td>
-              <td><div class="edit" id="${client.client_id}|friendly_name" style="font-weight: bold">${client.friendly_name}</div></td>
-              <td rowspan="5"> <img src="${client.icon}" halign="center" style="max-width:100px; max-height:100px"/></td>
-              <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=${client.client_id}"><img src="/static/images/trash_fill.svg"/></a></td>
-          </tr><tr><td>Client id:</td>
-              <td><div id="${client.client_id}|client_id" style="">${client.client_id}</div></td>
-          </tr><tr><td>Secret:</td>
-               <td><div class="edit" id="${client.client_id}|secret" style="">${client.secret}</div></td>
-          </tr><tr><td>redirect uri:</td>
-               <td><div class="edit" id="${client.client_id}|redirect_uri" style="">${client.redirect_uri}</div></td>
-          </tr><tr><td>icon uri:</td>
-               <td><div class="edit" id="${client.client_id}|icon" style="">${client.icon}</div></td>
-          </tr>
-</table>
-      </li>
+<ul id='applist'>
     </ul>
    <a href="/list_clients_save?id=addOneForMe&amp;value=two"><img src="/static/images/plus_alt.svg"/></a>
 
