@@ -152,14 +152,15 @@ pattern. If the pattern is matched an action is initiated. The action can be a *
 evidence to a component, or a *notify* operation that will construct a URL and fetch it, thus initiating some 
 action at an external web site.  Rules can be deleted using the *delete_sub* method.
 
-Note that you need to use `active` instead of `base` as that is where the subscription methods are found.
+Note: When a model fires a subscription it more or less bypasses security when it's just in one model. There is
+the start of a scheme to have inter-model subscriptions based on the app security model (subscriptions log in
+as an app/password) but this is not yet fully tested.
 
 For example::
 
-	import base
-	import active
+	from personis import client
 	
-	um = Personis_a.Access(model="alice", modeldir='Models', user='contactapp')
+	um = client.util.LoginFromClientSecrets()
 
 	# subscription rule that will match firstname against a wildcard pattern (regular expression):
 	sub = """
@@ -205,15 +206,28 @@ simpler mechanism to ask or tell based on app permissions. The general idea is t
 using a model/username/password authentication scheme. In the following example the modelname is my model, the 'user' parameter is set to the
 app name, and the password is given. The app has been preregistered with the model and given permissions to ask at the given context. ::
 
-	
-    h = httplib2.Http() # an http object. We can add proxy or certificate validation here if needed.
+	from personis import client
+	um = client.util.LoginFromClientSecrets(...)
+	appdetails = self.um.registerapp(app="MyHealth", desc="My Health Manager", password="pass9")
+	self.um.setpermission(context=["HealthData"], app="MyHealth", permissions={'ask':True, 'tell':True})
+
+Then, in the client ::
+
+	from personis import app_client
+	cli = app_client.Model(self.server_uri, model='mymodel', app='MyHealth', password='pass9')
+    res = cli.ask(context=["HealthData"], view=['weight'])
+
+Or leaving out the app_client utility library and using raw json:
+
+    h = httplib2.Http(disable_ssl_certificate_validation=True) # an http object. We can add proxy or certificate validation here if needed.
 
     # My personis request. 
-    data = {'modelname': '<modelname>', 'context': ['test'], 'view': ['email'], 'version': '11.2', 'user': 'MyHealth', 'resolver': {'evidence_filter': 'all'}, 'password': 'pass9', 'showcontexts': True}
+    data = {'modelname': 'mymodel', 'context': ['HealthData'], 'view': ['weight'], 'version': '11.2', 'user': 'MyHealth', 
+        'resolver': {'evidence_filter': 'all'}, 'password': 'pass9', 'showcontexts': True}
     
     # Send the request (note the /ask endpoint)
     resp, content = h.request("https://s0.personis.name/ask", "POST", json.dumps(data))
     
     # receive the json response, and in this case check (it was a unit test)
     c = json.loads(content)
-    self.assertEquals(c['val'][0][0]['Description'], 'email address')
+    self.assertEquals(c['val'][0][0]['Description'], 'My Weight')

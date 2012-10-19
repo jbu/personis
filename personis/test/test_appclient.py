@@ -82,6 +82,29 @@ class TestPersonis(unittest.TestCase):
         with self.assertRaises(Exception) as e:
             res = cli.ask(context=["test"], view=['firstname'])
 
+    def test_simple(self):
+        appdetails = self.um.registerapp(app="MyHealth", desc="My Health Manager", password="pass9")
+        self.assertEqual(appdetails['description'], u'My Health Manager')
+        apps = self.um.listapps()
+        self.assertIn(u'MyHealth', apps.keys())
+
+        self.um.setpermission(context=["test"], app="MyHealth", permissions={'ask':True, 'tell':False})
+
+        h = httplib2.Http(disable_ssl_certificate_validation=True) # an http object. We can add proxy or certificate validation here if needed.
+
+        # My personis request. 
+        data = {'modelname': 'jamesuther', 'context': ['test'], 'view': ['firstname'], 'version': '11.2', 'user': 'MyHealth', 
+            'resolver': {'evidence_filter': 'all'}, 'password': 'pass9', 'showcontexts': True}
+        
+        # Send the request (note the /ask endpoint)
+        resp, content = h.request("https://s0.personis.name/ask", "POST", json.dumps(data))
+        
+        # receive the json response, and in this case check (it was a unit test)
+        c = json.loads(content)
+        self.assertEquals(c['val'][0][0]['Description'], 'First name')
+
+        self.um.deleteapp(app="MyHealth")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -65,7 +65,7 @@ class TestPersonisBaseAdd(unittest.TestCase):
         #shutil.rmtree('models')
         cls.um.delcontext(context=["test"])
 
-    def test_ask_tell(self):
+    def test_subscribe(self):
         # create a piece of evidence with Alice as value
         ev = client.Evidence(evidence_type="explicit", value="Alice")
         self.um.tell(context=["test"], componentid='firstname', evidence=ev)
@@ -84,17 +84,17 @@ class TestPersonisBaseAdd(unittest.TestCase):
 
         self.um.setpermission(context=["test"], app="MySubscription", permissions={'ask':True, 'tell':True})
 
-        sub = """<test/gender> ~ '.*' : TELL jamesuther/test/firstname, explicit:<Personal/firstname>"""
+        sub = """<jamesuther/test/gender> ~ '.*' : TELL jamesuther/test/firstname, explicit:<jamesuther/Personal/firstname>"""
 
-        result = self.um.subscribe(context=["test"], view=['firstname'], subscription={'user':'MySubscription', 'password':'pass9', 'statement':sub})
-
-        print result
+        token = self.um.subscribe(context=["test"], view=['gender'], subscription={'user':'MySubscription', 'password':'pass9', 'statement':sub})
 
         ev = client.Evidence(evidence_type="explicit", value="male")
         self.um.tell(context=["test"], componentid='gender', evidence=ev)
         # subscription should have fired. firstname should now be James
         res = self.um.ask(context=["test"], view=['firstname'])
         self.assertEqual(res[0].value, u'James')
+
+        self.um.delete_sub(context=['test'], componentid = 'gender', subname = token)
 
 
 if __name__ == '__main__':
