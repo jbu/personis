@@ -213,11 +213,11 @@ app name, and the password is given. The app has been preregistered with the mod
 
 Then, in the client ::
 
-	from personis import app_client
-	cli = app_client.Model(self.server_uri, model='mymodel', app='MyHealth', password='pass9')
+    from personis import app_client
+    cli = app_client.Model(self.server_uri, model='mymodel', app='MyHealth', password='pass9')
     res = cli.ask(context=["HealthData"], view=['weight'])
 
-Or leaving out the app_client utility library and using raw json:
+Or leaving out the app_client utility library and using raw json::
 
     h = httplib2.Http(disable_ssl_certificate_validation=True) # an http object. We can add proxy or certificate validation here if needed.
 
