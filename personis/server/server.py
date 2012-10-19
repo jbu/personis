@@ -123,18 +123,24 @@ class Server:
         
     @cherrypy.expose
     def list_clients_put(self, *args, **kargs):
+        logging.debug('list_clients_put, %s, %s',repr(args), repr(kargs));
         if cherrypy.session.get('user') == None:
             raise cherrypy.HTTPError()
         if not cherrypy.session.get('user') in self.admins:
             raise cherrypy.HTTPError()
         # This uses a get parameter, where it should be del or post. 
         # worksfornow
-        if id == "removeOneForMe":
+        if 'id' not in kargs:
+            raise cherrypy.HTTPError()
+        iid = kargs['id']
+        value = kargs['value']
+
+        if iid == "removeOneForMe":
             del(self.oauth_clients[value])
             self.save_oauth_clients()
             logging.debug(  "removed a client")
             raise cherrypy.HTTPRedirect('/list_clients')
-        if id == "addOneForMe":
+        if iid == "addOneForMe":
             clid = ''
             secret = ''
             for i in range(32):
@@ -150,7 +156,7 @@ class Server:
             logging.debug(  "added a client")
             raise cherrypy.HTTPRedirect('/list_clients')
 
-        clid, field = id.split('|')
+        clid, field = iid.split('|')
         logging.debug(  'saving: %s, %s, %s',clid, field, value)
         oldc = self.oauth_clients[clid][field] = value
         for k, v in self.oauth_clients.items():
