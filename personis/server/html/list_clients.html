@@ -16,7 +16,7 @@ var table_str = '<li>'
               + ' <table border="0" padding="5">'
               + '  <tr>'
               + '    <td>Friendly Name: </td>'
-              + '    <td><div class="edit" id="client_id|friendly_name" style="font-weight: bold">client_friendly_name</div></td>'
+              + '    <td><div class="client_id edit" id="client_id|friendly_name" style="font-weight: bold">client_friendly_name</div></td>'
               + '    <td rowspan="5"> <img src="client_icon" halign="center" style="max-width:100px; max-height:100px"/></td>'
               + '    <td rowspan="5"><a href="/list_clients_save?id=removeOneForMe&amp;value=client_id"><img src="/static/images/trash_fill.svg"/></a></td>'
               + '  </tr>'
@@ -26,15 +26,15 @@ var table_str = '<li>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>Secret:</td>'
-              + '    <td><div class="edit" id="client_id|secret" style="">client_secret</div></td>'
+              + '    <td><div class="client_id edit" id="client_id|secret" style="">client_secret</div></td>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>redirect uri:</td>'
-              + '    <td><div class="edit" id="client_id|redirect_uri" style="">client_redirect_uri</div></td>'
+              + '    <td><div class="client_id edit" id="client_id|redirect_uri" style="">client_redirect_uri</div></td>'
               + '  </tr>'
               + '  <tr>'
               + '    <td>icon uri:</td>'
-              + '    <td><div class="edit" id="client_id|icon" style="">client_icon</div></td>'
+              + '    <td><div class="client_id edit" id="client_id|icon" style="">client_icon</div></td>'
               + '  </tr>'
               + ' </table>'
               + '</li>'
@@ -51,8 +51,8 @@ $(document).ready(function() {
           div_data = div_data.replace(/client_redirect_uri/g, val['redirect_uri']);
           div_data = div_data.replace(/client_icon/g, val['icon']);
           
-          $(div_data).appendTo("#applist")
-            .editable('/list_clients_save', {
+          $(div_data).appendTo("#applist");
+          $('.'+key+'.edit').editable('/list_clients_save', {
               indicator : "...",
               onblur    : 'cancel',
               type      : 'text',
@@ -61,14 +61,14 @@ $(document).ready(function() {
         })
     });
 
-    $('.edit').editable('/list_clients_save', {
-        indicator : "...",
-        onblur    : 'cancel',
+    //$('.edit').editable('/list_clients_save', {
+    //    indicator : "...",
+    //    onblur    : 'cancel',
         //submit    : 'OK',
-        type      : 'text',
+    //    type      : 'text',
         //submitdata: { _method: "put" },
-        cssclass  : "editable"
-    });
+    //    cssclass  : "editable"
+    //});
 });
 </script>
 </head>
