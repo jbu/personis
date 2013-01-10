@@ -11,7 +11,7 @@ The project consists of 4 parts (so far).
 
 All are implemented in python. Python2.7.4 has been the development version.
 
-Build Stats
+Build Status
 ===========
 [![Build Status](https://travis-ci.org/jbu/personis.png)](https://travis-ci.org/jbu/personis)
 
