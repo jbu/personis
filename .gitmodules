@@ -1,0 +1,3 @@
+[submodule "pyoidc"]
+	path = pyoidc
+	url = https://github.com/rohe/pyoidc.git

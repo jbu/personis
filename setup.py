@@ -4,7 +4,8 @@ install_requires=[
     'google-api-python-client',
     'pyyaml',
     'cherrypy >= 3.0',
-    'pyparsing'
+    'pyparsing',
+    'pyoidc'
     ]
 
 long_desc = """The Personis user model server and associated client library. Also some sample clients."""

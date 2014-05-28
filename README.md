@@ -30,7 +30,8 @@ files. You can see that there are a few config files:
  information from google. 
 
 If you want to run Personis independently of the original setup (ie, you're
-not in our research group) you can create your own google API project at https://code.google.com/apis/console#access and set up a new google 
+not in our research group) you can create your own google API project at 
+https://code.google.com/apis/console#access and set up a new google 
 API project to get your own client id and secret for personis. These go
 in oauth.yaml
 You can find the user id for admins.yaml by looking for the long number
