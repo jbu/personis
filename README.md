@@ -17,6 +17,9 @@ Installation
 ============
 
 Server: 
+
+  Best to run in virtualenv (virtualenv livedir)
+
   The server is most handily run using the runserver.sh script. Edit this
 script to adjust the required paths and to pass in the correct config
 files. You can see that there are a few config files:
