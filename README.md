@@ -58,6 +58,39 @@ add the personis server url. Make sure the callback entry is correct.
 Command line clients are just run (python xxx.py). They start a web browser
 to do the authentication stuff - just follow along.
 
+Inner workings
+==============
+
+A model is a tree. Non-leaf nodes are called a 'context' and form a path. 
+Each node (leaf or otherwise) has
+'''
+ {
+ id: (string),
+ description: (string),
+ creation_time: (string) #isoblah creation time. RO
+ resolver: (string) # function implementation or pre-defined name  
+ }
+'''
+
+Each non-leaf (context) node also has
+'''
+ {
+ perms: {(string):(string), *}, # RO
+ }
+'''
+
+Each leaf node (component) also has
+'''
+ {
+ component_type: (string) # one of ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
+ interpret_as: (string) # one of ["string", "number","boolean", "enum", "JSON"]
+ possible_values: (string) # one of a list of possible strings
+ value: (string)
+ goals: [(string)*] # list of context paths. ('/'.join(context ids))
+ evidence: [{}*] # list of evidence objects 
+ }
+'''
+
 Inner workings of server
 ========================
 
