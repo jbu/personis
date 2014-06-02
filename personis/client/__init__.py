@@ -11,7 +11,9 @@ import httplib2
 from util import *
 import logging
 
+
 class Connection(object):
+
     """Connection object
 
     Contains the state of your connection to personis.
@@ -25,7 +27,7 @@ class Connection(object):
         The class needs either uri or credentials to work.
     """
 
-    def __init__(self, uri = None, credentials = None, http = None):
+    def __init__(self, uri=None, credentials=None, http=None):
         self.http = http
         self.credentials = credentials
         self.uri = uri
@@ -36,16 +38,16 @@ class Connection(object):
 
         :returns:  boolean -- is valid.
          """
-        if self.uri == None or self.credentials == None:
+        if self.uri is None or self.credentials is None:
             return False
         return True
 
     def get_http(self):
         """Get the http connection given in the construction, or in set_http
- 
+
         :returns: :class:`httplib2.Http`
         """
-        if self.http == None:
+        if self.http is None:
             self.http = httplib2.Http()
         if not self.authorized:
             self.credentials.authorize(self.http)
@@ -56,15 +58,18 @@ class Connection(object):
         """Set the http connection to use
 
         :param http: The http connection to use
-        :type http: :class:`httplib2.Http` 
+        :type http: :class:`httplib2.Http`
         """
         self.http = http
         self.authorized = False
 
     def __repr__(self):
-        return 'uri: %s, credentials: %s'%(self.uri, self.credentials.to_json())
+        return 'uri: %s, credentials: %s' % (
+            self.uri, self.credentials.to_json())
+
 
 class Evidence:
+
     """ evidence object
 
     :param evidence_type: (:class:`EvidenceTypes`) - The type of the evidencelist
@@ -77,7 +82,12 @@ class Evidence:
     :param useby: (integer) -   timestamp evidence expires (if required)
     """
 
-    EvidenceTypes = ["explicit", "implicit", "exmachina", "inferred", "stereotype"] 
+    EvidenceTypes = [
+        "explicit",
+        "implicit",
+        "exmachina",
+        "inferred",
+        "stereotype"]
     """Evidence can be:
 
     - explicit: given by the user  (given)
@@ -96,18 +106,20 @@ class Evidence:
         self.value = None
         self.comment = None
         self.creation_time = None
-        self.time = None  
+        self.time = None
         self.useby = None
         self.objectType = "Evidence"
-        for k,v in kargs.items():
+        for k, v in kargs.items():
             self.__dict__[k] = v
         if not self.evidence_type in Evidence.EvidenceTypes:
-            raise TypeError, "bad evidence type %s"%(self.evidence_type)
+            raise TypeError("bad evidence type %s" % (self.evidence_type))
 
     def __str__(self):
-        return 'evidence: '+repr(self.__dict__)
+        return 'evidence: ' + repr(self.__dict__)
+
 
 class View:
+
     """view object
 
     :param Identifier: The identifier of the component - unique in the context.
@@ -118,42 +130,48 @@ class View:
     :type component_list: list
     :return:
     """
+
     def __init__(self, **kargs):
 
         self.Identifier = None
         self.Description = ""
         self.component_list = None
         self.objectType = "View"
-        for k,v in kargs.items():
+        for k, v in kargs.items():
             self.__dict__[k] = v
-        if self.Identifier == None:
+        if self.Identifier is None:
             return None
 
+
 class Context:
+
     """ context object
 
     :param Identifier: The identifier of the component - unique in the context.
     :param Description: Readable description
     :param resolver: default resolver for components in this context
-    """ 
+    """
 
     def __init__(self, **kargs):
 
         self.Identifier = None
         self.Description = ""
-        self.perms = {} # permissions - owner only to begin
+        self.perms = {}  # permissions - owner only to begin
         self.resolver = None
         self.objectType = "Context"
         self.creation_time = time.time()
-        for k,v in kargs.items():
+        for k, v in kargs.items():
             self.__dict__[k] = v
-        if self.Identifier == None:
+        if self.Identifier is None:
             return None
 
     def __str__(self):
-        return 'Identifier {}, Description {}, perms {}'.format(self.Identifier, self.Description, self.perms)
+        return 'Identifier {}, Description {}, perms {}'.format(
+            self.Identifier, self.Description, self.perms)
+
 
 class Component:
+
     """ component object
 
     :param Identifier: (string) - The identifier of the component - unique in the context.
@@ -168,7 +186,13 @@ class Component:
     :param evidencelist: (list) - list of evidence objects.
     """
 
-    ComponentTypes = ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
+    ComponentTypes = [
+        "attribute",
+        "activity",
+        "knowledge",
+        "belief",
+        "preference",
+        "goal"]
     ValueTypes = ["string", "number", "boolean", "enum", "JSON"]
 
     def __init__(self, **kargs):
@@ -185,24 +209,30 @@ class Component:
         self.evidencelist = []
         self.objectType = "Component"
         self.creation_time = time.time()
-        for k,v in kargs.items():
+        for k, v in kargs.items():
             self.__dict__[k] = v
-        if self.Identifier == None:
+        if self.Identifier is None:
             return None
         if not self.component_type in Component.ComponentTypes:
-            raise TypeError, "bad component type %s"%(self.component_type)
+            raise TypeError("bad component type %s" % (self.component_type))
         if not self.value_type in Component.ValueTypes:
-            raise ValueError, "bad component value definition %s"%(self.value_type)
+            raise ValueError(
+                "bad component value definition %s" %
+                (self.value_type))
         if (self.value_type == "enum") and (len(self.value_list) == 0):
-            raise ValueError, "type 'enum' requires non-empty value-list"
-        if self.value != None:
+            raise ValueError("type 'enum' requires non-empty value-list")
+        if self.value is not None:
             if (self.value_type == "enum") and not (self.value in self.value_list):
-                raise ValueError, "value '%s' not in value_list for type 'enum'" % (self.value)
+                raise ValueError(
+                    "value '%s' not in value_list for type 'enum'" %
+                    (self.value))
 
     def __str__(self):
-        return 'Component: '+ repr(self.__dict__)
+        return 'Component: ' + repr(self.__dict__)
+
 
 class Access(object):
+
     """Client version of access for client/server system
 
     :param model: (string) - model name. If none, then default user model. ('-' maps to the model of the authenticated user)
@@ -215,20 +245,21 @@ class Access(object):
 
     """
 
-    def __init__(self, model = '-', connection=None, uri = None, credentials = None, http = None, loglevel=logging.INFO, test=True):
+    def __init__(self, model='-', connection=None, uri=None,
+                 credentials=None, http=None, loglevel=logging.INFO, test=True):
 
-        if connection == None:
-            connection = Connection(uri, credentials, http)    
+        if connection is None:
+            connection = Connection(uri, credentials, http)
         self.modelname = model
         self.user = ''
         self.password = ''
         self.connection = connection
-        if http != None:        
+        if http is not None:
             self.connection.set_http(http)
-            
+
         ok = False
 
-        if not test: 
+        if not test:
             return
         try:
             logging.info("jsondocall: access %s", self.connection)
@@ -236,16 +267,15 @@ class Access(object):
             logging.info("---------------------- result returned %s", ok)
         except:
             logging.debug(traceback.format_exc())
-            raise ValueError, "cannot access model"
+            raise ValueError("cannot access model")
         if not ok:
-            raise ValueError, "server cannot access model"
+            raise ValueError("server cannot access model")
 
     def ask(self,
             context=[],
             view=None,
             resolver=None,
             showcontexts=None):
-
         """Ask personis for some information
 
         :param context: (list) - The path of context identifiers
@@ -257,37 +287,40 @@ class Access(object):
 
         :return: a list of matched components
         """
-        reslist = do_call("ask", {'modelname':self.modelname,\
-                                    'user':self.user,\
-                                    'password':self.password,\
-                                    'context':context,\
-                                    'view':view,\
-                                    'resolver':resolver,\
-                                    'showcontexts':showcontexts},
-                                    self.connection)
+        reslist = do_call("ask", {'modelname': self.modelname,
+                                  'user': self.user,
+                                  'password': self.password,
+                                  'context': context,
+                                  'view': view,
+                                  'resolver': resolver,
+                                  'showcontexts': showcontexts},
+                          self.connection)
         complist = []
         if showcontexts:
             cobjlist, contexts, theviews, thesubs = reslist
             for c in cobjlist:
                 comp = Component(**c)
                 if c["evidencelist"]:
-                    comp.evidencelist = [Evidence(**e) for e in c["evidencelist"]]
+                    comp.evidencelist = [
+                        Evidence(
+                            **e) for e in c["evidencelist"]]
                 complist.append(comp)
             reslist = [complist, contexts, theviews, thesubs]
         else:
             for c in reslist:
                 comp = Component(**c)
                 if c["evidencelist"]:
-                    comp.evidencelist = [Evidence(**e) for e in c["evidencelist"]]
+                    comp.evidencelist = [
+                        Evidence(
+                            **e) for e in c["evidencelist"]]
                 complist.append(comp)
             reslist = complist
         return reslist
 
     def tell(self,
-            context=[],
-            componentid=None,
-            evidence=None):   # evidence obj
-
+             context=[],
+             componentid=None,
+             evidence=None):   # evidence obj
         """Tell the model something.
 
         :param context: a list giving the path to the required context
@@ -296,23 +329,23 @@ class Access(object):
         :return: None on success or a string error message on error
         :raise:
         """
-        if componentid == None:
-            raise ValueError, "tell: componentid is None"
-        if evidence == None:
-            raise ValueError, "tell: no evidence provided"
+        if componentid is None:
+            raise ValueError("tell: componentid is None")
+        if evidence is None:
+            raise ValueError("tell: no evidence provided")
 
-        return do_call("tell", {'modelname':self.modelname,\
-            'user':self.user,\
-            'password':self.password,\
-            'context':context,\
-            'componentid':componentid,\
-            'evidence':evidence.__dict__},
-            self.connection
-        )
+        return do_call("tell", {'modelname': self.modelname,
+                                'user': self.user,
+                                'password': self.password,
+                                'context': context,
+                                'componentid': componentid,
+                                'evidence': evidence.__dict__},
+                       self.connection
+                       )
 
     def mkcomponent(self,
-            context=[],
-            componentobj=None):
+                    context=[],
+                    componentobj=None):
         """Make a new component in a given context
 
         :param context: a list giving the path to the required context
@@ -320,17 +353,18 @@ class Access(object):
         :return: None on success or a string error message on error
         :raise:
         """
-        if componentobj == None:
-            raise ValueError, "mkcomponent: componentobj is None"
-        return do_call("mkcomponent", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'componentobj':componentobj.__dict__},
-                                        self.connection)
+        if componentobj is None:
+            raise ValueError("mkcomponent: componentobj is None")
+        return do_call("mkcomponent", {'modelname': self.modelname,
+                                       'user': self.user,
+                                       'password': self.password,
+                                       'context': context,
+                                       'componentobj': componentobj.__dict__},
+                       self.connection)
+
     def delcomponent(self,
-            context=[],
-            componentid=None):
+                     context=[],
+                     componentid=None):
         """Delete an existing component in a given context
 
         :param context: a list giving the path to the required context
@@ -338,39 +372,41 @@ class Access(object):
         :return: None on success or a string error message on error
         :raise:
         """
-        if componentid == None:
-            raise ValueError, "delcomponent: componentid is None"
-        return do_call("delcomponent", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'componentid':componentid},
-                                        self.connection)
+        if componentid is None:
+            raise ValueError("delcomponent: componentid is None")
+        return do_call("delcomponent", {'modelname': self.modelname,
+                                        'user': self.user,
+                                        'password': self.password,
+                                        'context': context,
+                                        'componentid': componentid},
+                       self.connection)
+
     def delcontext(self,
-            context=[]):
+                   context=[]):
         """Delete an existing context
 
         :param context: a list giving the path to the required context
         :return: None on success or a string error message on error
         :raise:
         """
-        if context == None:
-            raise ValueError, "delcontext: context is None"
-        return do_call( "delcontext", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context},
-                                        self.connection)
+        if context is None:
+            raise ValueError("delcontext: context is None")
+        return do_call("delcontext", {'modelname': self.modelname,
+                                      'user': self.user,
+                                      'password': self.password,
+                                      'context': context},
+                       self.connection)
+
     def getresolvers(self):
         '''Return a list of the available resolver names'''
-        return do_call("getresolvers", {'modelname':self.modelname,\
-                                        'user':self.user, 'password':self.password},
-                                        self.connection)
+        return do_call("getresolvers", {'modelname': self.modelname,
+                                        'user': self.user, 'password': self.password},
+                       self.connection)
 
     def setresolver(self,
-            context,
-            componentid,
-            resolver):
+                    context,
+                    componentid,
+                    resolver):
         """set the resolver for a given component in a given context
 
         :param context: a list giving the path to the required context
@@ -379,19 +415,19 @@ class Access(object):
         :return: None on success or a string error message on error
         :raise:
         """
-        if componentid == None:
-            raise ValueError, "setresolver: componentid is None"
-        return do_call("setresolver", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'componentid':componentid, \
-                                        'resolver':resolver},
-                                        self.connection)
+        if componentid is None:
+            raise ValueError("setresolver: componentid is None")
+        return do_call("setresolver", {'modelname': self.modelname,
+                                       'user': self.user,
+                                       'password': self.password,
+                                       'context': context,
+                                       'componentid': componentid,
+                                       'resolver': resolver},
+                       self.connection)
 
     def mkview(self,
-            context=[],
-            viewobj=None):
+               context=[],
+               viewobj=None):
         """Make a new view in a given context
 
         :param context: a list giving the path to the required context
@@ -399,72 +435,71 @@ class Access(object):
 
         :return: None on success or a string error message on error
         """
-        if viewobj == None:
-            raise ValueError, "mkview: viewobj is None"
-        return do_call("mkview", {'modelname':self.modelname,\
-                                    'user':self.user,\
-                                    'password':self.password,\
-                                    'context':context,\
-                                    'viewobj':viewobj.__dict__},
-                                    self.connection)
+        if viewobj is None:
+            raise ValueError("mkview: viewobj is None")
+        return do_call("mkview", {'modelname': self.modelname,
+                                  'user': self.user,
+                                  'password': self.password,
+                                  'context': context,
+                                  'viewobj': viewobj.__dict__},
+                       self.connection)
+
     def delview(self,
-            context=[],
-            viewid=None):
+                context=[],
+                viewid=None):
         """Delete an existing view in a given context
 
         :param context: a list giving the path to the required context
         :param viewid: the id for the view
         :return: None on success or a string error message on error
         """
-        if viewid == None:
-            raise ValueError, "delview: viewid is None"
-        return do_call("delview", {'modelname':self.modelname,\
-                                    'user':self.user,\
-                                    'password':self.password,\
-                                    'context':context,\
-                                    'viewid':viewid},
-                                    self.connection)
-
+        if viewid is None:
+            raise ValueError("delview: viewid is None")
+        return do_call("delview", {'modelname': self.modelname,
+                                   'user': self.user,
+                                   'password': self.password,
+                                   'context': context,
+                                   'viewid': viewid},
+                       self.connection)
 
     def mkcontext(self,
-            context= [],
-            contextobj=None):
+                  context=[],
+                  contextobj=None):
         """Make a new context in a given context
 
         :param context: a list giving the path to the required context
         :param contextobj: a Context object
         :return: None on success or a string error message on error
         """
-        if contextobj == None:
-            raise ValueError, "mkcontext: contextobj is None"
-        return do_call("mkcontext", {'modelname':self.modelname,\
-                                    'user':self.user,\
-                                    'password':self.password,\
-                                    'context':context,\
-                                    'contextobj':contextobj.__dict__},
-                                    self.connection)
-
+        if contextobj is None:
+            raise ValueError("mkcontext: contextobj is None")
+        return do_call("mkcontext", {'modelname': self.modelname,
+                                     'user': self.user,
+                                     'password': self.password,
+                                     'context': context,
+                                     'contextobj': contextobj.__dict__},
+                       self.connection)
 
     def getcontext(self,
-            context=[],
-            getsize=False):
+                   context=[],
+                   getsize=False):
         """Get context information
 
         :param context: - a list giving the path to the required context
         :param getsize: - True if the size in bytes of the context subtree is required
         :return: A context, or a string error message on error
         """
-        return do_call("getcontext", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'getsize':getsize},
-                                        self.connection)
+        return do_call("getcontext", {'modelname': self.modelname,
+                                      'user': self.user,
+                                      'password': self.password,
+                                      'context': context,
+                                      'getsize': getsize},
+                       self.connection)
 
     def subscribe(self,
-            context=[],
-            view=None,
-            subscription=None):
+                  context=[],
+                  view=None,
+                  subscription=None):
         """
 
         :param context: is a list giving the path of context identifiers
@@ -475,17 +510,18 @@ class Access(object):
         :param subscription: is a Subscription object
         :return: None on success or a string error message on error
         """
-        return  do_call("subscribe", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'view':view,\
-                                        'subscription':subscription},
-                                        self.connection)
+        return do_call("subscribe", {'modelname': self.modelname,
+                                     'user': self.user,
+                                     'password': self.password,
+                                     'context': context,
+                                     'view': view,
+                                     'subscription': subscription},
+                       self.connection)
+
     def delete_sub(self,
-            context=[],
-            componentid=None,
-            subname=None):
+                   context=[],
+                   componentid=None,
+                   subname=None):
         """
 
         :param context: is a list giving the path of context identifiers
@@ -493,21 +529,21 @@ class Access(object):
         :param subname: is the subscription name
         :return: None on success or a string error message on error
         """
-        return  do_call("delete_sub", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'componentid':componentid,\
-                                        'subname':subname},
-                                        self.connection)
+        return do_call("delete_sub", {'modelname': self.modelname,
+                                      'user': self.user,
+                                      'password': self.password,
+                                      'context': context,
+                                      'componentid': componentid,
+                                      'subname': subname},
+                       self.connection)
 
     def export_model(self,
-            context=[],
-            resolver=None):
+                     context=[],
+                     resolver=None):
         """
 
         :param context: is the context to export
-        :param resolver: 
+        :param resolver:
             - is a string containing the name of a resolver or
             - resolver is a dictionary containing information about resolver(s) to be used and arguments::
 
@@ -519,32 +555,33 @@ class Access(object):
                                         None returns no evidence
         :return: A json model dump or a string error message on error
         """
-        return do_call("export_model", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'resolver':resolver},
-                                        self.connection)
+        return do_call("export_model", {'modelname': self.modelname,
+                                        'user': self.user,
+                                        'password': self.password,
+                                        'context': context,
+                                        'resolver': resolver},
+                       self.connection)
 
     def import_model(self,
-            context=[],
-            partial_model=None):
+                     context=[],
+                     partial_model=None):
         """
 
         :param context: is the context to import into
         :param partial_modeL: is a json encoded string containing the partial model
         :return: None on success or a string error message on error
         """
-        return do_call("import_model", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context':context,\
-                                        'partial_model':partial_model},
-                                        self.connection)
+        return do_call("import_model", {'modelname': self.modelname,
+                                        'user': self.user,
+                                        'password': self.password,
+                                        'context': context,
+                                        'partial_model': partial_model},
+                       self.connection)
+
     def set_goals(self,
-            context=[],
-            componentid=None,
-            goals=None):
+                  context=[],
+                  componentid=None,
+                  goals=None):
         """
 
         :param context: is a list giving the path of context identifiers
@@ -554,18 +591,17 @@ class Access(object):
             - components that contribute to this componentid if it is of type goal
         :return: None on success or a string error message on error
         """
-        return  do_call("set_goals", {'modelname':self.modelname,
-                                        'user':self.user,
-                                        'password':self.password,
-                                        'context':context,
-                                        'componentid':componentid,
-                                        'goals':goals},
-                                        self.connection)
-
+        return do_call("set_goals", {'modelname': self.modelname,
+                                     'user': self.user,
+                                     'password': self.password,
+                                     'context': context,
+                                     'componentid': componentid,
+                                     'goals': goals},
+                       self.connection)
 
     def list_subs(self,
-            context=[],
-            componentid=None):
+                  context=[],
+                  componentid=None):
         """
 
         :param context: is a list giving the path of context identifiers
@@ -573,12 +609,12 @@ class Access(object):
 
         :return: A list of subscriptions or a string error message on error
         """
-        return  do_call("list_subs", {'modelname':self.modelname,
-                                        'user':self.user,
-                                        'password':self.password,
-                                        'context':context,
-                                        'componentid':componentid},
-                                        self.connection)
+        return do_call("list_subs", {'modelname': self.modelname,
+                                     'user': self.user,
+                                     'password': self.password,
+                                     'context': context,
+                                     'componentid': componentid},
+                       self.connection)
 
     def registerapp(self, app=None, desc="", password=None, realm='password'):
         """registers a password for an app
@@ -589,61 +625,62 @@ class Access(object):
 
         :return: None on success or a string error message on error
         """
-        return do_call("registerapp", {'modelname':self.modelname,
-                                        'user':self.user,
-                                        'password':self.password,
-                                        'app':app,
-                                        'realm':realm,
-                                        'description':desc,
-                                        'apppassword':password},
-                                        self.connection)
+        return do_call("registerapp", {'modelname': self.modelname,
+                                       'user': self.user,
+                                       'password': self.password,
+                                       'app': app,
+                                       'realm': realm,
+                                       'description': desc,
+                                       'apppassword': password},
+                       self.connection)
 
     def deleteapp(self, app=None):
         """deletes an app
 
         :return: None on success or a string error message on error
         """
-        if app == None:
-            raise ValueError, "deleteapp: app is None"
-        return do_call("deleteapp", {'modelname':self.modelname,
-                                        'user':self.user,
-                                        'password':self.password,
-                                        'app':app},
-                                        self.connection)
+        if app is None:
+            raise ValueError("deleteapp: app is None")
+        return do_call("deleteapp", {'modelname': self.modelname,
+                                     'user': self.user,
+                                     'password': self.password,
+                                     'app': app},
+                       self.connection)
 
     def listapps(self):
         """returns array of registered app names
 
         :return: A list of apps or a string error message on error
         """
-        return do_call("listapps", {'modelname':self.modelname,
-                                        'user':self.user,
-                                        'password':self.password},
-                                        self.connection)
+        return do_call("listapps", {'modelname': self.modelname,
+                                    'user': self.user,
+                                    'password': self.password},
+                       self.connection)
 
-    def setpermission(self, context=None, componentid=None, app=None, permissions={}):
+    def setpermission(
+            self, context=None, componentid=None, app=None, permissions={}):
         """sets ask/tell permission for a context (if componentid is None) or a component
 
         :return: None on success or a string error message on error
         """
-        return do_call("setpermission", {'modelname':self.modelname,\
-                                        'user':self.user,\
-                                        'password':self.password,\
-                                        'context': context,\
-                                        'componentid': componentid,\
-                                        'app': app,\
-                                        'permissions': permissions},
-                                        self.connection)
+        return do_call("setpermission", {'modelname': self.modelname,
+                                         'user': self.user,
+                                         'password': self.password,
+                                         'context': context,
+                                         'componentid': componentid,
+                                         'app': app,
+                                         'permissions': permissions},
+                       self.connection)
 
     def getpermission(self, context=None, componentid=None, app=None):
         """gets permissions for a context (if componentid is None) or a component
 
         :return: a tuple (ask,tell) on success or a string error message on error
         """
-        return do_call("getpermission", {'modelname':self.modelname,\
-                                       'user':self.user,\
-                                       'password':self.password,\
-                                       'context': context,\
-                                       'componentid': componentid,\
-                                       'app': app},
-                                       self.connection)
+        return do_call("getpermission", {'modelname': self.modelname,
+                                         'user': self.user,
+                                         'password': self.password,
+                                         'context': context,
+                                         'componentid': componentid,
+                                         'app': app},
+                       self.connection)

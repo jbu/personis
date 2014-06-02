@@ -1,2 +1,2 @@
 def go():
-	__main__.go()
+    __main__.go()

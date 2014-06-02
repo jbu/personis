@@ -14,21 +14,25 @@ import logging
 
 import cmd
 
+
 def printjson(jsonobj):
     json.dump(sysjson.loads(jsonobj), sys.stdout, sort_keys=True, indent=4)
     print
 
+
 def loggedin(modelserver, credentials, cmd):
-    if (credentials == None):
+    if (credentials is None):
         print cmd, ": please login"
         return False
     return True
 
-def nomodel(modelname,cmd):
+
+def nomodel(modelname, cmd):
     if modelname == "":
         print cmd, ": please select a model using the 'model' command"
         return False
     return True
+
 
 def lscontext(um, cont):
     try:
@@ -37,23 +41,24 @@ def lscontext(um, cont):
         #printcomplist(cobjlist, printev = "yes")
         print "Components:"
         for cobj in cobjlist:
-            print "\t%s: %s"%(cobj.Identifier, cobj.Description)
+            print "\t%s: %s" % (cobj.Identifier, cobj.Description)
         print "Contexts: %s" % str(contexts)
         print "Views: %s" % str(theviews)
         print "Subscriptions: %s" % str(thesubs)
-    except ValueError, e:
+    except ValueError as e:
         print "ask failed: %s" % (e)
+
 
 class browse(cmd.Cmd):
 
     def __init__(self):
         self.accesstype = "base"
-        self.attrs = {"voluble":False, "evnum":1}
+        self.attrs = {"voluble": False, "evnum": 1}
         self.um = None
         self.username = ''
         self.context = [""]
         self.intro = "Personis Model Browser"
-        self.prompt = "%s > " %(self.context)
+        self.prompt = "%s > " % (self.context)
         cmd.Cmd.__init__(self)
 
     def do_set(self, line):
@@ -92,7 +97,9 @@ class browse(cmd.Cmd):
             return
         self.umname = line[0]
         try:
-            self.um = client.Access(modelserver=self.modelserver, credentials=self.credentials)
+            self.um = client.Access(
+                modelserver=self.modelserver,
+                credentials=self.credentials)
         except:
             print "Failed to access model '%s', user '%s', password '%s'" % (self.umname, self.username, self.userpassword)
             return
@@ -110,12 +117,21 @@ class browse(cmd.Cmd):
         cont = self.context
         if len(line) == 1:
             if line[0][-1] == '/':
-                lscontext(self.um, self.context+[line[0][:-1]])
+                lscontext(self.um, self.context + [line[0][:-1]])
             else:
                 try:
-                    info = self.um.ask(context=self.context, view=[line[0]], resolver=dict(evidence_filter="all"))
-                    client.util.PrintComplist(info, printev="yes", count=int(self.attrs["evnum"]))
-                except ValueError, e:
+                    info = self.um.ask(
+                        context=self.context,
+                        view=[
+                            line[0]],
+                        resolver=dict(
+                            evidence_filter="all"))
+                    client.util.PrintComplist(
+                        info,
+                        printev="yes",
+                        count=int(
+                            self.attrs["evnum"]))
+                except ValueError as e:
                     print "ask failed: %s" % (e)
         else:
             lscontext(self.um, self.context)
@@ -137,7 +153,7 @@ class browse(cmd.Cmd):
             etindex = 0
         else:
             etindex = int(etindex)
-        if (etindex < 0) or (etindex > len(client.Evidence.EvidenceTypes)-1):
+        if (etindex < 0) or (etindex > len(client.Evidence.EvidenceTypes) - 1):
             print "Index out of range"
             return
         etype = client.Evidence.EvidenceTypes[etindex]
@@ -153,13 +169,18 @@ class browse(cmd.Cmd):
         ok = raw_input("Ok?[N] ")
         if ok != 'Y':
             return
-        ev = client.Evidence(source=source, evidence_type=etype, flags=flags, value=val)
+        ev = client.Evidence(
+            source=source,
+            evidence_type=etype,
+            flags=flags,
+            value=val)
         try:
-            self.um.tell(context=self.context, componentid=compname, evidence=ev)
-        except ValueError, e:
+            self.um.tell(
+                context=self.context,
+                componentid=compname,
+                evidence=ev)
+        except ValueError as e:
             print "tell failed: %s" % (e)
-
-
 
     def do_cd(self, line):
         """cd context_name
@@ -182,7 +203,7 @@ class browse(cmd.Cmd):
         except:
             print "context not found:", self.context
             self.context = savecontext
-        self.prompt = "%s > " %(self.context)
+        self.prompt = "%s > " % (self.context)
 
     def do_login(self, line):
         """login username password"""
@@ -218,9 +239,12 @@ class browse(cmd.Cmd):
             print "export: cannot open ", line[0]
             return
 
-        modeljson = self.um.export_model(context=self.context, resolver = {'evidence_filter': "all"})
+        modeljson = self.um.export_model(
+            context=self.context,
+            resolver={
+                'evidence_filter': "all"})
         mm = json.loads(modeljson)
-        expfile.write(json.dumps(mm,sort_keys=True,indent=4))
+        expfile.write(json.dumps(mm, sort_keys=True, indent=4))
         if self.attrs["voluble"]:
             print modeljson
 
@@ -236,10 +260,12 @@ class browse(cmd.Cmd):
         except:
             print "import: cannot open ", line[0]
             return
-        self.um.import_model(context=self.context, partial_model=importfile.read())
+        self.um.import_model(
+            context=self.context,
+            partial_model=importfile.read())
         importfile.close()
 
-    #def do_importmdef(self, line):
+    # def do_importmdef(self, line):
     #    """importmdef fromfilename
     #            imports a model in modeldef format"""
     #    line = line.split()
@@ -247,9 +273,9 @@ class browse(cmd.Cmd):
     #        print "usage: importmdef fromfilename"
     #        return
     #    Personis_mkmodel.mkmodel_um(um,Personis_mkmodel.get_modeldef(line[0]))
-        #try:
+        # try:
         #       Personis_mkmodel.mkmodel_um(um,Personis_mkmodel.get_modeldef(line[0]))
-        #except:
+        # except:
         #       print "import modeldef failed"
 
     def do_setgoals(self, line):
@@ -313,7 +339,12 @@ class browse(cmd.Cmd):
         if ok != 'Y':
             print "Permissions NOT set"
             return
-        self.um.setpermission(context=contxt, app=appname, permissions={'ask':askperm, 'tell':tellperm} )
+        self.um.setpermission(
+            context=contxt,
+            app=appname,
+            permissions={
+                'ask': askperm,
+                'tell': tellperm})
         print "Permissions set"
 
     def do_showperm(self, line):
@@ -344,7 +375,7 @@ class browse(cmd.Cmd):
         comp = line[0]
         sub = raw_input("Subscription statement: ")
         print "Subscribing for component '%s' in context %s, with statement:\n%s" % (comp, contxt, sub)
-        sub = {'user':self.username, 'password':'', 'statement':sub}
+        sub = {'user': self.username, 'password': '', 'statement': sub}
         ok = raw_input("Ok? [N] ")
         if ok != 'Y':
             return
@@ -368,9 +399,12 @@ class browse(cmd.Cmd):
             print "Component '%s' has no subscriptions" % (comp)
             return
         for sid, sub in thesubs.items():
-            d = raw_input("delete sub '%s'?[N] "%sub)
+            d = raw_input("delete sub '%s'?[N] " % sub)
             if d == 'Y':
-                result = self.um.delete_sub(context=contxt, componentid=comp, subname=sid)
+                result = self.um.delete_sub(
+                    context=contxt,
+                    componentid=comp,
+                    subname=sid)
                 print result
 
     def do_mkcomponent(self, line):
@@ -388,7 +422,7 @@ class browse(cmd.Cmd):
         for ct in client.Component.ComponentTypes:
             print client.Component.ComponentTypes.index(ct), ct
         ctindex = int(raw_input("Index? "))
-        if (ctindex < 0) or (ctindex > len(client.Component.ComponentTypes)-1):
+        if (ctindex < 0) or (ctindex > len(client.Component.ComponentTypes) - 1):
             print "Index out of range"
             return
         comptype = client.Component.ComponentTypes[ctindex]
@@ -397,7 +431,7 @@ class browse(cmd.Cmd):
         for ct in client.Component.ValueTypes:
             print client.Component.ValueTypes.index(ct), ct
         ctindex = int(raw_input("Index? "))
-        if (ctindex < 0) or (ctindex > len(client.Component.ValueTypes)-1):
+        if (ctindex < 0) or (ctindex > len(client.Component.ValueTypes) - 1):
             print "Index out of range"
             return
         valtype = client.Component.ValueTypes[ctindex]
@@ -406,8 +440,12 @@ class browse(cmd.Cmd):
         ok = raw_input("Ok?[N] ")
         if ok != 'Y':
             return
-        cobj = client.Component(Identifier=comp, component_type=comptype, Description=compdesc, value_type=valtype)
-        res = self.um.mkcomponent(context=contxt,  componentobj=cobj)
+        cobj = client.Component(
+            Identifier=comp,
+            component_type=comptype,
+            Description=compdesc,
+            value_type=valtype)
+        res = self.um.mkcomponent(context=contxt, componentobj=cobj)
 
     def do_delcomponent(self, line):
         """delcomponent component_name
@@ -424,7 +462,6 @@ class browse(cmd.Cmd):
         res = self.um.delcomponent(context=self.context, componentid=comp)
         if res:
             print res
-
 
     def do_mkcontext(self, line):
         """mkcontext context_name
@@ -482,8 +519,12 @@ class browse(cmd.Cmd):
             modeldir = line[1]
             print "making model '%s' in directory '%s' with username '%s' and password '%s'" % (self.umname, modeldir, self.username, self.userpassword)
             try:
-                client.MkModel(model=self.umname, modeldir=modeldir, user=self.username, password=self.userpassword)
-            except Exception, e:
+                client.MkModel(
+                    model=self.umname,
+                    modeldir=modeldir,
+                    user=self.username,
+                    password=self.userpassword)
+            except Exception as e:
                 print "mkmodel failed: ", e
                 return
             print "model made"
@@ -504,21 +545,29 @@ class browse(cmd.Cmd):
                 print ">>%s" % (line)
             self.cmdqueue.extend(input)
 
+
 def go():
     # The gflags module makes defining command-line options easy for
     # applications. Run this program with the '--help' argument to see
     # all the flags that it understands.
     gflags.DEFINE_enum('logging_level', 'ERROR',
-        ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        'Set the level of logging detail.')
-    gflags.DEFINE_string('clientjson', None, 'client json file', short_name='j')
-    gflags.DEFINE_boolean('sydproxy', True, 'use the syduni proxy', short_name='p')
-
+                       ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+                       'Set the level of logging detail.')
+    gflags.DEFINE_string(
+        'clientjson',
+        None,
+        'client json file',
+        short_name='j')
+    gflags.DEFINE_boolean(
+        'sydproxy',
+        True,
+        'use the syduni proxy',
+        short_name='p')
 
     # Let the gflags module process the command-line arguments
     try:
         argv = gflags.FLAGS(sys.argv)
-    except gflags.FlagsError, e:
+    except gflags.FlagsError as e:
         print '%s\\nUsage: %s ARGS\\n%s' % (e, sys.argv[0], gflags.FLAGS)
         sys.exit(1)
 
@@ -529,16 +578,25 @@ def go():
     p = None
     if gflags.FLAGS.sydproxy:
         # get past the uni's stupid proxy server
-        p = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL, proxy_host='www-cache.it.usyd.edu.au', proxy_port=8000)
-    # Use the util package to get a link to UM. This uses the client_secrets.json file for the um location
+        p = httplib2.ProxyInfo(
+            proxy_type=httplib2.socks.PROXY_TYPE_HTTP_NO_TUNNEL,
+            proxy_host='www-cache.it.usyd.edu.au',
+            proxy_port=8000)
+    # Use the util package to get a link to UM. This uses the
+    # client_secrets.json file for the um location
     if gflags.FLAGS.clientjson is not None:
         client_secrets = gflags.FLAGS.clientjson
     else:
-        client_secrets = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'client_secrets.json')
-    b.um = client.util.LoginFromClientSecrets(filename=client_secrets, 
-        http=httplib2.Http(proxy_info=p, disable_ssl_certificate_validation=True), 
-        credentials='browser_cred.dat')
-    reslist = b.um.ask(context=["Personal"],view=['firstname'])
+        client_secrets = os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            'client_secrets.json')
+    b.um = client.util.LoginFromClientSecrets(filename=client_secrets,
+                                              http=httplib2.Http(
+                                                  proxy_info=p,
+                                                  disable_ssl_certificate_validation=True),
+                                              credentials='browser_cred.dat')
+    reslist = b.um.ask(context=["Personal"], view=['firstname'])
     b.username = reslist[0].value
     print 'Welcome', b.username
 

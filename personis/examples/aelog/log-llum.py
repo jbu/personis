@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 
 from oauth2client.file import Storage
 from oauth2client.client import Storage, Credentials, OAuth2WebServerFlow, AccessTokenRefreshError
@@ -20,43 +21,47 @@ from collections import OrderedDict
 # items must be listed in correct order, so use OrderedDict and add manually.
 item_list = OrderedDict()
 
-item_list['fruit'] = {'category': 'food', 'icon':'/image/fruit.jpg'}
+item_list['fruit'] = {'category': 'food', 'icon': '/image/fruit.jpg'}
 item_list['running'] = {'category': 'activity', 'icon': '/image/running.jpg'}
 item_list['vegetables'] = {'category': 'food', 'icon': '/image/vegetables.jpg'}
 item_list['walking'] = {'category': 'activity', 'icon': '/image/walking.jpg'}
 
-        # running - http://www.flickr.com/photos/good_day/20723337/in/photostream/
-        # walking - http://www.flickr.com/photos/o5com/5081595200/in/photostream/
-        # fruit - http://www.flickr.com/photos/doug88888/2780642603/in/photostream/
-        # vegetables - http://www.flickr.com/photos/suckamc/2488644619/in/photostream/
+# running - http://www.flickr.com/photos/good_day/20723337/in/photostream/
+# walking - http://www.flickr.com/photos/o5com/5081595200/in/photostream/
+# fruit - http://www.flickr.com/photos/doug88888/2780642603/in/photostream/
+# vegetables - http://www.flickr.com/photos/suckamc/2488644619/in/photostream/
 
 
 class LogLlum(webapp2.RequestHandler):
 
-
     def install_contexts(self, um):
         try:
-            reslist = um.ask(context=['Apps','Logging'], view=['logged_items'])
+            reslist = um.ask(
+                context=[
+                    'Apps',
+                    'Logging'],
+                view=['logged_items'])
             return
         except:
             pass
 
         context = ['Apps']
         ctx_obj = client.Context(Identifier="Logging",
-                  Description="The logging app",
-                  perms={'ask':True, 'tell':True,
-                  "resolvers": ["all","last10","last1","goal"]},
-                  resolver=None, objectType="Context")
+                                 Description="The logging app",
+                                 perms={'ask': True, 'tell': True,
+                                        "resolvers": ["all", "last10", "last1", "goal"]},
+                                 resolver=None, objectType="Context")
         print "Creating logging context "
         try:
-            um.mkcontext(context,ctx_obj)
+            um.mkcontext(context, ctx_obj)
         except:
             logging.debug('already have logging context')
         context.append('Logging')
 
-        value_list = [i for i in item_list.keys()] + [i+'-' for i in item_list.keys()]
-        cobj = client.Component(Identifier="logged_items", component_type="activity", value_type="enum", 
-                                       value_list=value_list, resolver=None ,Description="All the items logged")
+        value_list = [
+            i for i in item_list.keys()] + [i + '-' for i in item_list.keys()]
+        cobj = client.Component(Identifier="logged_items", component_type="activity", value_type="enum",
+                                value_list=value_list, resolver=None, Description="All the items logged")
         try:
             um.mkcomponent(context=context, componentobj=cobj)
         except:
@@ -66,16 +71,16 @@ class LogLlum(webapp2.RequestHandler):
         session = get_current_session()
         oauthconf = self.app.config.get('oauthconf')
         flow = OAuth2WebServerFlow(client_id=oauthconf['client_id'],
-                        client_secret=oauthconf['client_secret'],
-                        scope='https://www.personis.info/auth/model',
-                        user_agent='Log-llum/1.0',
-                        auth_uri=oauthconf['personis_uri']+'/authorize',
-                        token_uri=oauthconf['personis_uri']+'/request_token')
+                                   client_secret=oauthconf['client_secret'],
+                                   scope='https://www.personis.info/auth/model',
+                                   user_agent='Log-llum/1.0',
+                                   auth_uri=oauthconf[
+                                       'personis_uri'] + '/authorize',
+                                   token_uri=oauthconf['personis_uri'] + '/request_token')
         callback = oauthconf['callback']
         authorize_url = flow.step1_get_authorize_url(callback)
         session['flow'] = pickle.dumps(flow)
         return self.redirect(authorize_url)
-
 
     def authorized(self):
         session = get_current_session()
@@ -88,11 +93,19 @@ class LogLlum(webapp2.RequestHandler):
         if not flow:
             raise IOError()
         session['flow'] = None
-        credentials = flow.step2_exchange(self.request.params, http = httplib2.Http(disable_ssl_certificate_validation=True))
+        credentials = flow.step2_exchange(
+            self.request.params,
+            http=httplib2.Http(
+                disable_ssl_certificate_validation=True))
         oauthconf = self.app.config.get('oauthconf')
-        c = client.Connection(uri = oauthconf['personis_uri'], credentials = credentials)
+        c = client.Connection(
+            uri=oauthconf['personis_uri'],
+            credentials=credentials)
         session['connection'] = pickle.dumps(c)
-        um = client.Access(connection=c, http = httplib2.Http(disable_ssl_certificate_validation=True))
+        um = client.Access(
+            connection=c,
+            http=httplib2.Http(
+                disable_ssl_certificate_validation=True))
         self.install_contexts(um)
         self.redirect('/')
 
@@ -100,26 +113,47 @@ class LogLlum(webapp2.RequestHandler):
         if self.request.method != 'POST':
             self.abort(400, detail="POST only")
         session = get_current_session()
-        if session.get('connection') == None:
+        if session.get('connection') is None:
             self.abort(400, detail='Log in first.')
         logging.debug('logme %s', self.request.get('item'))
         connection = pickle.loads(session.get('connection'))
-        um = client.Access(connection=connection, http = httplib2.Http(disable_ssl_certificate_validation=True), test=False)
+        um = client.Access(
+            connection=connection,
+            http=httplib2.Http(
+                disable_ssl_certificate_validation=True),
+            test=False)
         item = self.request.get('item')
-        ev = client.Evidence(source='llum-log', evidence_type="explicit", value=item, time=time.time())
-        um.tell(context=['Apps','Logging'], componentid='logged_items', evidence=ev)
+        ev = client.Evidence(
+            source='llum-log',
+            evidence_type="explicit",
+            value=item,
+            time=time.time())
+        um.tell(
+            context=[
+                'Apps',
+                'Logging'],
+            componentid='logged_items',
+            evidence=ev)
         self.response.write(item)
 
     def get(self):
         session = get_current_session()
-        if session.get('connection') == None:
+        if session.get('connection') is None:
             logging.debug('no connection found. logging in')
             return self.redirect('/do_login')
         connection = pickle.loads(session.get('connection'))
-        um = client.Access(connection=connection, test=False, http = httplib2.Http(disable_ssl_certificate_validation=True))
+        um = client.Access(
+            connection=connection,
+            test=False,
+            http=httplib2.Http(
+                disable_ssl_certificate_validation=True))
         self.install_contexts(um)
         try:
-            reslist = um.ask(context=["Personal"],view=['firstname', 'picture'])
+            reslist = um.ask(
+                context=["Personal"],
+                view=[
+                    'firstname',
+                    'picture'])
         except AccessTokenRefreshError as e:
             logging.info('access token refresh error %s', e)
             return self.redirect('/do_login')
@@ -146,16 +180,16 @@ class LogLlum(webapp2.RequestHandler):
             <div data-role="content" style="padding: 15px">
                 <div class="ui-grid-a">
                     <div class="ui-block-a" align="center"><h2>Food</h2></div>
-                    <div class="ui-block-b" align="center"><h2>Activity</h2></div>'''.format({'user_icon':reslist[1].value })
+                    <div class="ui-block-b" align="center"><h2>Activity</h2></div>'''.format({'user_icon': reslist[1].value })
         l = 'a'
         for k, v in item_list.items():
             ret = ret + ''' <div class="ui-block-{0[l]}">
                 <div class="imageC">
                     <img class="wrapper"  src='{0[pic]}' alt='{0[name]}'/>
                 </div>
-            </div>'''.format({'l': l,'name': k.strip(), 'pic': v['icon']})
+            </div>'''.format({'l': l, 'name': k.strip(), 'pic': v['icon']})
             l = 'a' if l == 'b' else 'b'
-        ret = ret + ''' 
+        ret = ret + '''
                 </div>
                 <button id="undo">Undo</button>
             <div data-role="collapsible" data-collapsed="false" id="coll" data-theme='c' data-content-theme="c">
@@ -169,18 +203,18 @@ class LogLlum(webapp2.RequestHandler):
         self.response.write(ret)
 
 
-httplib2.debuglevel=5
+httplib2.debuglevel = 5
 logging.basicConfig(level=logging.DEBUG)
 config = {}
-config['oauthconf'] = yaml.load(file('oauth.ae.yaml','r'))
+config['oauthconf'] = yaml.load(file('oauth.ae.yaml', 'r'))
 
 app = webapp2.WSGIApplication([
-        webapp2.Route(r'/do_login', handler=LogLlum, handler_method='do_login'),
-        webapp2.Route(r'/authorized', handler=LogLlum, handler_method='authorized'),
-        webapp2.Route(r'/log_me', handler=LogLlum, handler_method='log_me'),
-        (r'/', LogLlum)
-    ],
+    webapp2.Route(r'/do_login', handler=LogLlum, handler_method='do_login'),
+    webapp2.Route(
+        r'/authorized',
+        handler=LogLlum,
+        handler_method='authorized'),
+    webapp2.Route(r'/log_me', handler=LogLlum, handler_method='log_me'),
+    (r'/', LogLlum)
+],
     debug=False, config=config)
-
-
-

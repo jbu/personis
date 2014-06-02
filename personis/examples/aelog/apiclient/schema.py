@@ -66,238 +66,241 @@ from oauth2client.anyjson import simplejson
 
 
 class Schemas(object):
-  """Schemas for an API."""
 
-  def __init__(self, discovery):
-    """Constructor.
+    """Schemas for an API."""
 
-    Args:
-      discovery: object, Deserialized discovery document from which we pull
-        out the named schema.
-    """
-    self.schemas = discovery.get('schemas', {})
+    def __init__(self, discovery):
+        """Constructor.
 
-    # Cache of pretty printed schemas.
-    self.pretty = {}
+        Args:
+          discovery: object, Deserialized discovery document from which we pull
+            out the named schema.
+        """
+        self.schemas = discovery.get('schemas', {})
 
-  def _prettyPrintByName(self, name, seen=None, dent=0):
-    """Get pretty printed object prototype from the schema name.
+        # Cache of pretty printed schemas.
+        self.pretty = {}
 
-    Args:
-      name: string, Name of schema in the discovery document.
-      seen: list of string, Names of schema already seen. Used to handle
-        recursive definitions.
+    def _prettyPrintByName(self, name, seen=None, dent=0):
+        """Get pretty printed object prototype from the schema name.
 
-    Returns:
-      string, A string that contains a prototype object with
-        comments that conforms to the given schema.
-    """
-    if seen is None:
-      seen = []
+        Args:
+          name: string, Name of schema in the discovery document.
+          seen: list of string, Names of schema already seen. Used to handle
+            recursive definitions.
 
-    if name in seen:
-      # Do not fall into an infinite loop over recursive definitions.
-      return '# Object with schema name: %s' % name
-    seen.append(name)
+        Returns:
+          string, A string that contains a prototype object with
+            comments that conforms to the given schema.
+        """
+        if seen is None:
+            seen = []
 
-    if name not in self.pretty:
-      self.pretty[name] = _SchemaToStruct(self.schemas[name],
-          seen, dent).to_str(self._prettyPrintByName)
+        if name in seen:
+            # Do not fall into an infinite loop over recursive definitions.
+            return '# Object with schema name: %s' % name
+        seen.append(name)
 
-    seen.pop()
+        if name not in self.pretty:
+            self.pretty[name] = _SchemaToStruct(self.schemas[name],
+                                                seen, dent).to_str(self._prettyPrintByName)
 
-    return self.pretty[name]
+        seen.pop()
 
-  def prettyPrintByName(self, name):
-    """Get pretty printed object prototype from the schema name.
+        return self.pretty[name]
 
-    Args:
-      name: string, Name of schema in the discovery document.
+    def prettyPrintByName(self, name):
+        """Get pretty printed object prototype from the schema name.
 
-    Returns:
-      string, A string that contains a prototype object with
-        comments that conforms to the given schema.
-    """
-    # Return with trailing comma and newline removed.
-    return self._prettyPrintByName(name, seen=[], dent=1)[:-2]
+        Args:
+          name: string, Name of schema in the discovery document.
 
-  def _prettyPrintSchema(self, schema, seen=None, dent=0):
-    """Get pretty printed object prototype of schema.
+        Returns:
+          string, A string that contains a prototype object with
+            comments that conforms to the given schema.
+        """
+        # Return with trailing comma and newline removed.
+        return self._prettyPrintByName(name, seen=[], dent=1)[:-2]
 
-    Args:
-      schema: object, Parsed JSON schema.
-      seen: list of string, Names of schema already seen. Used to handle
-        recursive definitions.
+    def _prettyPrintSchema(self, schema, seen=None, dent=0):
+        """Get pretty printed object prototype of schema.
 
-    Returns:
-      string, A string that contains a prototype object with
-        comments that conforms to the given schema.
-    """
-    if seen is None:
-      seen = []
+        Args:
+          schema: object, Parsed JSON schema.
+          seen: list of string, Names of schema already seen. Used to handle
+            recursive definitions.
 
-    return _SchemaToStruct(schema, seen, dent).to_str(self._prettyPrintByName)
+        Returns:
+          string, A string that contains a prototype object with
+            comments that conforms to the given schema.
+        """
+        if seen is None:
+            seen = []
 
-  def prettyPrintSchema(self, schema):
-    """Get pretty printed object prototype of schema.
+        return _SchemaToStruct(schema, seen, dent).to_str(
+            self._prettyPrintByName)
 
-    Args:
-      schema: object, Parsed JSON schema.
+    def prettyPrintSchema(self, schema):
+        """Get pretty printed object prototype of schema.
 
-    Returns:
-      string, A string that contains a prototype object with
-        comments that conforms to the given schema.
-    """
-    # Return with trailing comma and newline removed.
-    return self._prettyPrintSchema(schema, dent=1)[:-2]
+        Args:
+          schema: object, Parsed JSON schema.
 
-  def get(self, name):
-    """Get deserialized JSON schema from the schema name.
+        Returns:
+          string, A string that contains a prototype object with
+            comments that conforms to the given schema.
+        """
+        # Return with trailing comma and newline removed.
+        return self._prettyPrintSchema(schema, dent=1)[:-2]
 
-    Args:
-      name: string, Schema name.
-    """
-    return self.schemas[name]
+    def get(self, name):
+        """Get deserialized JSON schema from the schema name.
+
+        Args:
+          name: string, Schema name.
+        """
+        return self.schemas[name]
 
 
 class _SchemaToStruct(object):
-  """Convert schema to a prototype object."""
 
-  def __init__(self, schema, seen, dent=0):
-    """Constructor.
+    """Convert schema to a prototype object."""
 
-    Args:
-      schema: object, Parsed JSON schema.
-      seen: list, List of names of schema already seen while parsing. Used to
-        handle recursive definitions.
-      dent: int, Initial indentation depth.
-    """
-    # The result of this parsing kept as list of strings.
-    self.value = []
+    def __init__(self, schema, seen, dent=0):
+        """Constructor.
 
-    # The final value of the parsing.
-    self.string = None
+        Args:
+          schema: object, Parsed JSON schema.
+          seen: list, List of names of schema already seen while parsing. Used to
+            handle recursive definitions.
+          dent: int, Initial indentation depth.
+        """
+        # The result of this parsing kept as list of strings.
+        self.value = []
 
-    # The parsed JSON schema.
-    self.schema = schema
+        # The final value of the parsing.
+        self.string = None
 
-    # Indentation level.
-    self.dent = dent
+        # The parsed JSON schema.
+        self.schema = schema
 
-    # Method that when called returns a prototype object for the schema with
-    # the given name.
-    self.from_cache = None
+        # Indentation level.
+        self.dent = dent
 
-    # List of names of schema already seen while parsing.
-    self.seen = seen
+        # Method that when called returns a prototype object for the schema with
+        # the given name.
+        self.from_cache = None
 
-  def emit(self, text):
-    """Add text as a line to the output.
+        # List of names of schema already seen while parsing.
+        self.seen = seen
 
-    Args:
-      text: string, Text to output.
-    """
-    self.value.extend(["  " * self.dent, text, '\n'])
+    def emit(self, text):
+        """Add text as a line to the output.
 
-  def emitBegin(self, text):
-    """Add text to the output, but with no line terminator.
+        Args:
+          text: string, Text to output.
+        """
+        self.value.extend(["  " * self.dent, text, '\n'])
 
-    Args:
-      text: string, Text to output.
-      """
-    self.value.extend(["  " * self.dent, text])
+    def emitBegin(self, text):
+        """Add text to the output, but with no line terminator.
 
-  def emitEnd(self, text, comment):
-    """Add text and comment to the output with line terminator.
+        Args:
+          text: string, Text to output.
+          """
+        self.value.extend(["  " * self.dent, text])
 
-    Args:
-      text: string, Text to output.
-      comment: string, Python comment.
-    """
-    if comment:
-      divider = '\n' + '  ' * (self.dent + 2) + '# '
-      lines = comment.splitlines()
-      lines = [x.rstrip() for x in lines]
-      comment = divider.join(lines)
-      self.value.extend([text, ' # ', comment, '\n'])
-    else:
-      self.value.extend([text, '\n'])
+    def emitEnd(self, text, comment):
+        """Add text and comment to the output with line terminator.
 
-  def indent(self):
-    """Increase indentation level."""
-    self.dent += 1
+        Args:
+          text: string, Text to output.
+          comment: string, Python comment.
+        """
+        if comment:
+            divider = '\n' + '  ' * (self.dent + 2) + '# '
+            lines = comment.splitlines()
+            lines = [x.rstrip() for x in lines]
+            comment = divider.join(lines)
+            self.value.extend([text, ' # ', comment, '\n'])
+        else:
+            self.value.extend([text, '\n'])
 
-  def undent(self):
-    """Decrease indentation level."""
-    self.dent -= 1
+    def indent(self):
+        """Increase indentation level."""
+        self.dent += 1
 
-  def _to_str_impl(self, schema):
-    """Prototype object based on the schema, in Python code with comments.
+    def undent(self):
+        """Decrease indentation level."""
+        self.dent -= 1
 
-    Args:
-      schema: object, Parsed JSON schema file.
+    def _to_str_impl(self, schema):
+        """Prototype object based on the schema, in Python code with comments.
 
-    Returns:
-      Prototype object based on the schema, in Python code with comments.
-    """
-    stype = schema.get('type')
-    if stype == 'object':
-      self.emitEnd('{', schema.get('description', ''))
-      self.indent()
-      for pname, pschema in schema.get('properties', {}).iteritems():
-        self.emitBegin('"%s": ' % pname)
-        self._to_str_impl(pschema)
-      self.undent()
-      self.emit('},')
-    elif '$ref' in schema:
-      schemaName = schema['$ref']
-      description = schema.get('description', '')
-      s = self.from_cache(schemaName, self.seen)
-      parts = s.splitlines()
-      self.emitEnd(parts[0], description)
-      for line in parts[1:]:
-        self.emit(line.rstrip())
-    elif stype == 'boolean':
-      value = schema.get('default', 'True or False')
-      self.emitEnd('%s,' % str(value), schema.get('description', ''))
-    elif stype == 'string':
-      value = schema.get('default', 'A String')
-      self.emitEnd('"%s",' % str(value), schema.get('description', ''))
-    elif stype == 'integer':
-      value = schema.get('default', '42')
-      self.emitEnd('%s,' % str(value), schema.get('description', ''))
-    elif stype == 'number':
-      value = schema.get('default', '3.14')
-      self.emitEnd('%s,' % str(value), schema.get('description', ''))
-    elif stype == 'null':
-      self.emitEnd('None,', schema.get('description', ''))
-    elif stype == 'any':
-      self.emitEnd('"",', schema.get('description', ''))
-    elif stype == 'array':
-      self.emitEnd('[', schema.get('description'))
-      self.indent()
-      self.emitBegin('')
-      self._to_str_impl(schema['items'])
-      self.undent()
-      self.emit('],')
-    else:
-      self.emit('Unknown type! %s' % stype)
-      self.emitEnd('', '')
+        Args:
+          schema: object, Parsed JSON schema file.
 
-    self.string = ''.join(self.value)
-    return self.string
+        Returns:
+          Prototype object based on the schema, in Python code with comments.
+        """
+        stype = schema.get('type')
+        if stype == 'object':
+            self.emitEnd('{', schema.get('description', ''))
+            self.indent()
+            for pname, pschema in schema.get('properties', {}).iteritems():
+                self.emitBegin('"%s": ' % pname)
+                self._to_str_impl(pschema)
+            self.undent()
+            self.emit('},')
+        elif '$ref' in schema:
+            schemaName = schema['$ref']
+            description = schema.get('description', '')
+            s = self.from_cache(schemaName, self.seen)
+            parts = s.splitlines()
+            self.emitEnd(parts[0], description)
+            for line in parts[1:]:
+                self.emit(line.rstrip())
+        elif stype == 'boolean':
+            value = schema.get('default', 'True or False')
+            self.emitEnd('%s,' % str(value), schema.get('description', ''))
+        elif stype == 'string':
+            value = schema.get('default', 'A String')
+            self.emitEnd('"%s",' % str(value), schema.get('description', ''))
+        elif stype == 'integer':
+            value = schema.get('default', '42')
+            self.emitEnd('%s,' % str(value), schema.get('description', ''))
+        elif stype == 'number':
+            value = schema.get('default', '3.14')
+            self.emitEnd('%s,' % str(value), schema.get('description', ''))
+        elif stype == 'null':
+            self.emitEnd('None,', schema.get('description', ''))
+        elif stype == 'any':
+            self.emitEnd('"",', schema.get('description', ''))
+        elif stype == 'array':
+            self.emitEnd('[', schema.get('description'))
+            self.indent()
+            self.emitBegin('')
+            self._to_str_impl(schema['items'])
+            self.undent()
+            self.emit('],')
+        else:
+            self.emit('Unknown type! %s' % stype)
+            self.emitEnd('', '')
 
-  def to_str(self, from_cache):
-    """Prototype object based on the schema, in Python code with comments.
+        self.string = ''.join(self.value)
+        return self.string
 
-    Args:
-      from_cache: callable(name, seen), Callable that retrieves an object
-         prototype for a schema with the given name. Seen is a list of schema
-         names already seen as we recursively descend the schema definition.
+    def to_str(self, from_cache):
+        """Prototype object based on the schema, in Python code with comments.
 
-    Returns:
-      Prototype object based on the schema, in Python code with comments.
-      The lines of the code will all be properly indented.
-    """
-    self.from_cache = from_cache
-    return self._to_str_impl(self.schema)
+        Args:
+          from_cache: callable(name, seen), Callable that retrieves an object
+             prototype for a schema with the given name. Seen is a list of schema
+             names already seen as we recursively descend the schema definition.
+
+        Returns:
+          Prototype object based on the schema, in Python code with comments.
+          The lines of the code will all be properly indented.
+        """
+        self.from_cache = from_cache
+        return self._to_str_impl(self.schema)

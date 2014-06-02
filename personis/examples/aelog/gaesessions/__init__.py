@@ -14,40 +14,56 @@ from google.appengine.api import memcache
 from google.appengine.ext import db
 
 # Configurable cookie options
-COOKIE_NAME_PREFIX = "DgU"  # identifies a cookie as being one used by gae-sessions (so you can set cookies too)
+# identifies a cookie as being one used by gae-sessions (so you can set
+# cookies too)
+COOKIE_NAME_PREFIX = "DgU"
 COOKIE_PATH = "/"
-DEFAULT_COOKIE_ONLY_THRESH = 10240  # 10KB: GAE only allows ~16000B in HTTP header - leave ~6KB for other info
+# 10KB: GAE only allows ~16000B in HTTP header - leave ~6KB for other info
+DEFAULT_COOKIE_ONLY_THRESH = 10240
 DEFAULT_LIFETIME = datetime.timedelta(days=7)
 
 # constants
 SID_LEN = 43  # timestamp (10 chars) + underscore + md5 (32 hex chars)
 SIG_LEN = 44  # base 64 encoded HMAC-SHA256
 MAX_COOKIE_LEN = 4096
-EXPIRE_COOKIE_FMT = ' %s=; expires=Wed, 01-Jan-1970 00:00:00 GMT; Path=' + COOKIE_PATH
-COOKIE_FMT = ' ' + COOKIE_NAME_PREFIX + '%02d="%s"; %sPath=' + COOKIE_PATH + '; HttpOnly'
+EXPIRE_COOKIE_FMT = ' %s=; expires=Wed, 01-Jan-1970 00:00:00 GMT; Path=' + \
+    COOKIE_PATH
+COOKIE_FMT = ' ' + COOKIE_NAME_PREFIX + \
+    '%02d="%s"; %sPath=' + COOKIE_PATH + '; HttpOnly'
 COOKIE_FMT_SECURE = COOKIE_FMT + '; Secure'
 COOKIE_DATE_FMT = '%a, %d-%b-%Y %H:%M:%S GMT'
-COOKIE_OVERHEAD = len(COOKIE_FMT % (0, '', '')) + len('expires=Xxx, xx XXX XXXX XX:XX:XX GMT; ') + 150  # 150=safety margin (e.g., in case browser uses 4000 instead of 4096)
+# 150=safety margin (e.g., in case browser uses 4000 instead of 4096)
+COOKIE_OVERHEAD = len(
+    COOKIE_FMT %
+    (0, '', '')) + len('expires=Xxx, xx XXX XXXX XX:XX:XX GMT; ') + 150
 MAX_DATA_PER_COOKIE = MAX_COOKIE_LEN - COOKIE_OVERHEAD
 
 _tls = threading.local()
+
+
 def get_current_session():
     """Returns the session associated with the current request."""
     return _tls.current_session
+
 
 def set_current_session(session):
     """Sets the session associated with the current request."""
     _tls.current_session = session
 
+
 def is_gaesessions_key(k):
     return k.startswith(COOKIE_NAME_PREFIX)
 
+
 class SessionModel(db.Model):
+
     """Contains session data.  key_name is the session ID and pdump contains a
     pickled dictionary which maps session variables to their values."""
     pdump = db.BlobProperty()
 
+
 class Session(object):
+
     """Manages loading, reading/writing key-value pairs, and saving of a session.
 
     ``sid`` - if set, then the session for that sid (if any) is loaded. Otherwise,
@@ -97,16 +113,20 @@ class Session(object):
             actual_sig = Session.__compute_hmac(self.base_key, sid, pdump)
             if sig == actual_sig:
                 self.__set_sid(sid, False)
-                # check for expiration and terminate the session if it has expired
+                # check for expiration and terminate the session if it has
+                # expired
                 if self.get_expiration() != 0 and time.time() > self.get_expiration():
                     return self.terminate()
 
                 if pdump:
                     self.data = self.__decode_data(pdump)
                 else:
-                    self.data = None  # data is in memcache/db: load it on-demand
+                    # data is in memcache/db: load it on-demand
+                    self.data = None
             else:
-                logging.warn('cookie with invalid sig received from %s: %s' % (os.environ.get('REMOTE_ADDR'), b64pdump))
+                logging.warn(
+                    'cookie with invalid sig received from %s: %s' %
+                    (os.environ.get('REMOTE_ADDR'), b64pdump))
         except (CookieError, KeyError, IndexError, TypeError):
             # there is no cookie (i.e., no session) or the cookie is invalid
             self.terminate(False)
@@ -131,10 +151,12 @@ class Session(object):
         cv = sig + self.sid + b64encode(self.cookie_data)
         num_cookies = 1 + (len(cv) - 1) / m
         if self.get_expiration() > 0:
-            ed = "expires=%s; " % datetime.datetime.fromtimestamp(self.get_expiration()).strftime(COOKIE_DATE_FMT)
+            ed = "expires=%s; " % datetime.datetime.fromtimestamp(
+                self.get_expiration()).strftime(COOKIE_DATE_FMT)
         else:
             ed = ''
-        cookies = [fmt % (i, cv[i*m:i*m+m], ed) for i in xrange(num_cookies)]
+        cookies = [fmt % (i, cv[i * m:i * m + m], ed)
+                   for i in xrange(num_cookies)]
 
         # expire old cookies which aren't needed anymore
         old_cookies = xrange(num_cookies, len(self.cookie_keys))
@@ -151,7 +173,7 @@ class Session(object):
         """Returns True if cookies set by this session will include the "Secure"
         attribute so that the client will only send them over a secure channel
         like SSL)."""
-        return self.sid is not None and self.sid[-33]=='S'
+        return self.sid is not None and self.sid[-33] == 'S'
 
     def is_accessed(self):
         """Returns True if any value of this session has been accessed."""
@@ -182,30 +204,32 @@ class Session(object):
             sep = 'S'
         else:
             sep = '_'
-        return ('%010d' % expire_ts) + sep + hashlib.md5(os.urandom(16)).hexdigest()
+        return ('%010d' % expire_ts) + sep + \
+            hashlib.md5(os.urandom(16)).hexdigest()
 
     @staticmethod
     def __encode_data(d):
         """Returns a "pickled+" encoding of d.  d values of type db.Model are
         protobuf encoded before pickling to minimize CPU usage & data size."""
-        # separate protobufs so we'll know how to decode (they are just strings)
-        eP = {} # for models encoded as protobufs
-        eO = {} # for everything else
-        for k,v in d.iteritems():
+        # separate protobufs so we'll know how to decode (they are just
+        # strings)
+        eP = {}  # for models encoded as protobufs
+        eO = {}  # for everything else
+        for k, v in d.iteritems():
             if isinstance(v, db.Model):
                 eP[k] = db.model_to_protobuf(v)
             else:
                 eO[k] = v
-        return pickle.dumps((eP,eO), 2)
+        return pickle.dumps((eP, eO), 2)
 
     @staticmethod
     def __decode_data(pdump):
         """Returns a data dictionary after decoding it from "pickled+" form."""
         try:
             eP, eO = pickle.loads(pdump)
-            for k,v in eP.iteritems():
+            for k, v in eP.iteritems():
                 eO[k] = db.model_from_protobuf(v)
-        except Exception, e:
+        except Exception as e:
             logging.warn("failed to decode session data: %s" % e)
             eO = {}
         return eO
@@ -219,7 +243,8 @@ class Session(object):
         omitted, the session expiration time will not be changed.
         """
         if self.sid or expiration_ts is not None:
-            self.ensure_data_loaded()  # ensure we have the data before we delete it
+            # ensure we have the data before we delete it
+            self.ensure_data_loaded()
             if expiration_ts is None:
                 expiration_ts = self.get_expiration()
             self.__set_sid(self.__make_sid(expiration_ts, self.is_ssl_only()))
@@ -271,11 +296,15 @@ class Session(object):
     def __clear_data(self):
         """Deletes this session from memcache and the datastore."""
         if self.sid:
-            memcache.delete(self.sid, namespace='') # not really needed; it'll go away on its own
+            memcache.delete(
+                self.sid,
+                namespace='')  # not really needed; it'll go away on its own
             try:
                 db.delete(self.db_key)
             except:
-                pass # either it wasn't in the db (maybe cookie/memcache-only) or db is down => cron will expire it
+                # either it wasn't in the db (maybe cookie/memcache-only) or db
+                # is down => cron will expire it
+                pass
 
     def __retrieve_data(self):
         """Sets the data associated with this session after retrieving it from
@@ -285,15 +314,19 @@ class Session(object):
         if pdump is None:
             # memcache lost it, go to the datastore
             if self.no_datastore:
-                logging.info("can't find session data in memcache for sid=%s (using memcache only sessions)" % self.sid)
-                self.terminate(False) # we lost it; just kill the session
+                logging.info(
+                    "can't find session data in memcache for sid=%s (using memcache only sessions)" %
+                    self.sid)
+                self.terminate(False)  # we lost it; just kill the session
                 return
             session_model_instance = db.get(self.db_key)
             if session_model_instance:
                 pdump = session_model_instance.pdump
             else:
-                logging.error("can't find session data in the datastore for sid=%s" % self.sid)
-                self.terminate(False) # we lost it; just kill the session
+                logging.error(
+                    "can't find session data in the datastore for sid=%s" %
+                    self.sid)
+                self.terminate(False)  # we lost it; just kill the session
                 return
         self.data = self.__decode_data(pdump)
 
@@ -311,9 +344,9 @@ class Session(object):
         automatically saved at the end of the request if any changes were made.
         """
         if not self.sid:
-            return # no session is active
+            return  # no session is active
         if not self.dirty:
-            return # nothing has changed
+            return  # nothing has changed
         dirty = self.dirty
         self.dirty = False  # saving, so it won't be dirty anymore
 
@@ -321,23 +354,31 @@ class Session(object):
         pdump = self.__encode_data(self.data)
 
         # persist via cookies if it is reasonably small
-        if len(pdump)*4/3 <= self.cookie_only_thresh: # 4/3 b/c base64 is ~33% bigger
+        # 4/3 b/c base64 is ~33% bigger
+        if len(pdump) * 4 / 3 <= self.cookie_only_thresh:
             self.cookie_data = pdump
             if not persist_even_if_using_cookie:
                 return
         elif self.cookie_keys:
-            # latest data will only be in the backend, so expire data cookies we set
+            # latest data will only be in the backend, so expire data cookies
+            # we set
             self.cookie_data = ''
 
-        memcache.set(self.sid, pdump, namespace='', time=self.get_expiration())  # may fail if memcache is down
+        memcache.set(
+            self.sid,
+            pdump,
+            namespace='',
+            time=self.get_expiration())  # may fail if memcache is down
 
         # persist the session to the datastore
         if dirty is Session.DIRTY_BUT_DONT_PERSIST_TO_DB or self.no_datastore:
             return
         try:
             SessionModel(key_name=self.sid, pdump=pdump).put()
-        except Exception, e:
-            logging.warning("unable to persist session to datastore for sid=%s (%s)" % (self.sid,e))
+        except Exception as e:
+            logging.warning(
+                "unable to persist session to datastore for sid=%s (%s)" %
+                (self.sid, e))
 
     # Users may interact with the session through a dictionary-like interface.
     def clear(self):
@@ -354,7 +395,7 @@ class Session(object):
     def has_key(self, key):
         """Returns True if key is set."""
         self.ensure_data_loaded()
-        return self.data.has_key(key)
+        return key in self.data
 
     def pop(self, key, default=None):
         """Removes key and returns its value, or default if key is not present."""
@@ -418,7 +459,9 @@ class Session(object):
         else:
             return "uninitialized session"
 
+
 class SessionMiddleware(object):
+
     """WSGI middleware that adds session support.
 
     ``cookie_key`` - A key used to secure cookies so users cannot modify their
@@ -439,7 +482,9 @@ class SessionMiddleware(object):
     memcache/datastore latency which is critical for small sessions.  Larger
     sessions are kept in memcache+datastore instead.  Defaults to 10KB.
     """
-    def __init__(self, app, cookie_key, lifetime=DEFAULT_LIFETIME, no_datastore=False, cookie_only_threshold=DEFAULT_COOKIE_ONLY_THRESH):
+
+    def __init__(self, app, cookie_key, lifetime=DEFAULT_LIFETIME,
+                 no_datastore=False, cookie_only_threshold=DEFAULT_COOKIE_ONLY_THRESH):
         self.app = app
         self.lifetime = lifetime
         self.no_datastore = no_datastore
@@ -448,15 +493,20 @@ class SessionMiddleware(object):
         if not self.cookie_key:
             raise ValueError("cookie_key MUST be specified")
         if len(self.cookie_key) < 32:
-            raise ValueError("RFC2104 recommends you use at least a 32 character key.  Try os.urandom(64) to make a key.")
+            raise ValueError(
+                "RFC2104 recommends you use at least a 32 character key.  Try os.urandom(64) to make a key.")
 
     def __call__(self, environ, start_response):
         # initialize a session for the current user
-        _tls.current_session = Session(lifetime=self.lifetime, no_datastore=self.no_datastore, cookie_only_threshold=self.cookie_only_thresh, cookie_key=self.cookie_key)
+        _tls.current_session = Session(
+            lifetime=self.lifetime,
+            no_datastore=self.no_datastore,
+            cookie_only_threshold=self.cookie_only_thresh,
+            cookie_key=self.cookie_key)
 
         # create a hook for us to insert a cookie into the response headers
         def my_start_response(status, headers, exc_info=None):
-            _tls.current_session.save() # store the session if it was changed
+            _tls.current_session.save()  # store the session if it was changed
             for ch in _tls.current_session.make_cookie_headers():
                 headers.append(('Set-Cookie', ch))
             return start_response(status, headers, exc_info)
@@ -464,25 +514,34 @@ class SessionMiddleware(object):
         # let the app do its thing
         return self.app(environ, my_start_response)
 
+
 class DjangoSessionMiddleware(object):
+
     """Django middleware that adds session support.  You must specify the
     session configuration parameters by modifying the call to ``SessionMiddleware``
     in ``DjangoSessionMiddleware.__init__()`` since Django cannot call an
     initialization method with parameters.
     """
+
     def __init__(self):
-        fake_app = lambda environ, start_response : start_response
-        self.wrapped_wsgi_middleware = SessionMiddleware(fake_app, cookie_key='you MUST change this')
+        fake_app = lambda environ, start_response: start_response
+        self.wrapped_wsgi_middleware = SessionMiddleware(
+            fake_app,
+            cookie_key='you MUST change this')
         self.response_handler = None
 
     def process_request(self, request):
-        self.response_handler = self.wrapped_wsgi_middleware(None, lambda status, headers, exc_info : headers)
+        self.response_handler = self.wrapped_wsgi_middleware(
+            None,
+            lambda status,
+            headers,
+            exc_info: headers)
         request.session = get_current_session()  # for convenience
 
     def process_response(self, request, response):
         if self.response_handler:
             session_headers = self.response_handler(None, [], None)
-            for k,v in session_headers:
+            for k, v in session_headers:
                 response[k] = v
             self.response_handler = None
         if request.session.is_accessed():
@@ -490,6 +549,7 @@ class DjangoSessionMiddleware(object):
             logging.info("Varying")
             patch_vary_headers(response, ('Cookie',))
         return response
+
 
 def delete_expired_sessions():
     """Deletes expired sessions from the datastore.
@@ -502,5 +562,7 @@ def delete_expired_sessions():
     q.filter('__key__ < ', key)
     results = q.fetch(500)
     db.delete(results)
-    logging.info('gae-sessions: deleted %d expired sessions from the datastore' % len(results))
-    return len(results)<500
+    logging.info(
+        'gae-sessions: deleted %d expired sessions from the datastore' %
+        len(results))
+    return len(results) < 500

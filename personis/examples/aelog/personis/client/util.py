@@ -23,7 +23,8 @@
 # Active User Models: added subscribe method to Access
 #
 
-import os, traceback
+import os
+import traceback
 import json
 #from django.utils import simplejson as json
 import string
@@ -39,81 +40,92 @@ from oauth2client.client import Credentials, OAuth2WebServerFlow, flow_from_clie
 from oauth2client.tools import run
 import httplib2
 
+
 def do_call(fun, args, connection):
     if (not connection.valid()):
         raise SystemError('Need http or modelserver and credentials')
     args["version"] = "11.2"
-    args_json = json.dumps(args)+'\n'
+    args_json = json.dumps(args) + '\n'
 
     http = connection.get_http()
     uri = connection.uri + fun
     logging.debug('do_call uri: %s, body: %s', uri, args_json)
     try:
-        resp, content = http.request(uri, method="POST", headers={'Content-Type': 'application/json'}, body=args_json)
-        logging.debug('Resp: %s, content: %s',resp, content)
+        resp, content = http.request(
+            uri, method="POST", headers={
+                'Content-Type': 'application/json'}, body=args_json)
+        logging.debug('Resp: %s, content: %s', resp, content)
     except Exception as e:
-        logging.debug('httperror: %s',e )
+        logging.debug('httperror: %s', e)
         raise e
     try:
         result = json.loads(content)
     except:
-        logging.debug( "json loads failed!")
-        logging.debug( "<<%s>>" % (content))
-        raise ValueError, "json loads failed"
+        logging.debug("json loads failed!")
+        logging.debug("<<%s>>" % (content))
+        raise ValueError("json loads failed")
     # dirty kludge to get around unicode
-    for k,v in result.items():
-        if type(v) == type(u''):
+    for k, v in result.items():
+        if isinstance(v, type(u'')):
             result[k] = str(v)
-        if type(k) == type(u''):
+        if isinstance(k, type(u'')):
             del result[k]
             result[str(k)] = v
-    ## Unpack the error, and if it is an exception throw it.
-    if type(result) == types.DictionaryType and 'result' in result:
+    # Unpack the error, and if it is an exception throw it.
+    if isinstance(result, types.DictionaryType) and 'result' in result:
         if result["result"] == "error":
-            logging.debug( result)
+            logging.debug(result)
             # We have returned with an error, so throw it as an exception.
             if 'pythonPickel' in result:
                 raise pickle.loads(result["pythonPickel"])
             elif len(result["val"]) == 3:
                 raise pickle.loads(str(result["val"][2]))
             else:
-                raise Exception, str(result["val"])
+                raise Exception(str(result["val"]))
         else:
-            # Unwrap the result, and return as normal. 
+            # Unwrap the result, and return as normal.
             result = result["val"]
         return result
 
-def MkModel( model=None, modelserver=None, user=None, password=None, description=None, debug=0):
-    if modelserver == None:
-        raise ValueError, "modelserver is None"
+
+def MkModel(model=None, modelserver=None, user=None,
+            password=None, description=None, debug=0):
+    if modelserver is None:
+        raise ValueError("modelserver is None")
     if ':' in modelserver:
         modelserver, modelport = modelserver.split(":")
     else:
-        modelport = 2005 # default port for personis server
+        modelport = 2005  # default port for personis server
     modelname = model
     ok = False
     try:
-        ok = do_call(modelserver, modelport, "mkmodel", {'modelname':modelname,\
-                                                                'descripion':description,\
-                                                                'user':user,\
-                                                                'password':password})
+        ok = do_call(modelserver, modelport, "mkmodel", {'modelname': modelname,
+                                                         'descripion': description,
+                                                         'user': user,
+                                                         'password': password})
     except:
-        if debug >0:
+        if debug > 0:
             traceback.print_exc()
-        raise ValueError, "cannot create model '%s', server '%s'" % (modelname, modelserver)
+        raise ValueError(
+            "cannot create model '%s', server '%s'" %
+            (modelname, modelserver))
     if not ok:
-        raise ValueError, "server '%s' cannot create model '%s'" % (modelserver, modelname)
+        raise ValueError(
+            "server '%s' cannot create model '%s'" %
+            (modelserver, modelname))
 
 # utility function to display an object
+
+
 def showobj(obj, indent):
     print "showobj:"
-    for k,v in obj.__dict__.items():
-        if ((k == 'time') or (k == 'creation_time')) and (v != None):
-            print "%*s %s %s %s (%s)" % (indent, " ", k,"=",time.ctime(v),v)
+    for k, v in obj.__dict__.items():
+        if ((k == 'time') or (k == 'creation_time')) and (v is not None):
+            print "%*s %s %s %s (%s)" % (indent, " ", k, "=", time.ctime(v), v)
         elif k == "evidencelist":
-            print "%*s %s %s %d items" % (indent, " ", k,"=",len(v))
+            print "%*s %s %s %d items" % (indent, " ", k, "=", len(v))
         else:
-            print "%*s %s %s %s" % (indent, " ", k,"=",v)
+            print "%*s %s %s %s" % (indent, " ", k, "=", v)
 
 
 # utility to print a list of component objects + evidence if printev="yes"
@@ -126,7 +138,7 @@ def PrintComplist(reslist, printev=None, count=1):
         showobj(res, 0)
         if res.value_type == "JSON":
             jval = json.loads(res.value)
-            print "Value:",jval
+            print "Value:", jval
         if printev == "yes":
             print "---------------------------------"
             print "Evidence about it"
@@ -137,29 +149,43 @@ def PrintComplist(reslist, printev=None, count=1):
                 evlist = res.evidencelist
                 evlist.reverse()
                 for ev in evlist[:count]:
-                    if type(ev) == type(dict()):
+                    if isinstance(ev, type(dict())):
                         showobj(Struct(**ev), 10)
                     else:
                         showobj(ev, 10)
                     print "---------------------------------"
 
+
 class Struct:
-    def __init__(self, **entries): 
+
+    def __init__(self, **entries):
         self.__dict__.update(entries)
 
-def getOauthCredentialsFromClientSecrets(filename = 'client_secrets.json', http=None):
+
+def getOauthCredentialsFromClientSecrets(
+        filename='client_secrets.json', http=None):
 
     # If the Credentials don't exist or are invalid run through the native client
     # flow. The Storage object will ensure that if successful the good
     # Credentials will get written back to a file.
     storage = Storage('credentials.dat')
     credentials = storage.get()
-    FLOW = flow_from_clientsecrets(filename, scope='https://www.personis.com/auth/model')
+    FLOW = flow_from_clientsecrets(
+        filename,
+        scope='https://www.personis.com/auth/model')
     if credentials is None or credentials.invalid:
         credentials = run(FLOW, storage, http)
-    personis_uri = json.loads(open('client_secrets.json','r').read())['installed']['token_uri'][:-len('request_token')]
+    personis_uri = json.loads(
+        open(
+            'client_secrets.json',
+            'r').read())['installed']['token_uri'][
+        :-
+        len('request_token')]
     return credentials, personis_uri
 
-def LoginFromClientSecrets(filename = 'client_secrets.json', http=None):
-    credentials, personis_uri = getOauthCredentialsFromClientSecrets(filename, http)
-    return personis.client.Access(uri = personis_uri, credentials = credentials, http=http)
+
+def LoginFromClientSecrets(filename='client_secrets.json', http=None):
+    credentials, personis_uri = getOauthCredentialsFromClientSecrets(
+        filename, http)
+    return personis.client.Access(
+        uri=personis_uri, credentials=credentials, http=http)

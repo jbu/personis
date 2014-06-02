@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-install_requires=[
+install_requires = [
     'google-api-python-client',
     'pyyaml',
     'cherrypy >= 3.0',
     'pyparsing',
     'pyoidc'
-    ]
+]
 
 long_desc = """The Personis user model server and associated client library. Also some sample clients."""
 
@@ -14,16 +14,16 @@ import personis
 version = personis.__version__
 
 setup(
-    name = "personis",
-    packages = find_packages(),
-    scripts = [],
+    name="personis",
+    packages=find_packages(),
+    scripts=[],
 
-    install_requires = install_requires,
-    include_package_data = True,
-    package_data = {
+    install_requires=install_requires,
+    include_package_data=True,
+    package_data={
         'personis.server': ['static/images/*.*', 'static/js/*.js']
     },
-    entry_points = {
+    entry_points={
         'console_scripts': [
             'watcher = personis.examples.activity.__main__:go',
             'umbrowser = personis.examples.browser.__main__:go',

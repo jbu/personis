@@ -16,16 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Personis.  If not, see <http://www.gnu.org/licenses/>.
 
-#	David Carmichael 
+#	David Carmichael
 # 	July 2006
 #
 
 ''' Exceptions used in the Personis System '''
 
+
 class ModelNotFoundError(IOError):
-	"Used to indicate that no model can be found for given modelname"
+
+    "Used to indicate that no model can be found for given modelname"
+
 
 class ModelServerError(IOError):
-	"Used to indicate that the required model server is returning an error"
 
-
+    "Used to indicate that the required model server is returning an error"

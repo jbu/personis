@@ -12,13 +12,17 @@ import cPickle as pickle
 
 import sqlite3
 
+
 class DefaultArg:
     pass
+
 
 class Solutions:
     Sqlite3 = 0
 
+
 class FileDict(UserDict.DictMixin):
+
     "A dictionary that stores its data persistantly in a file"
 
     def __init__(self, solution=Solutions.Sqlite3, **options):
@@ -35,8 +39,12 @@ class FileDict(UserDict.DictMixin):
 
         assert not options, "Unrecognized options: %s" % options
 
-        self.__conn.execute('create table if not exists %s (id integer primary key, hash integer, key blob, value blob);'%self.__tablename)
-        self.__conn.execute('create index if not exists %s_index ON %s(hash);' % (self.__tablename, self.__tablename))
+        self.__conn.execute(
+            'create table if not exists %s (id integer primary key, hash integer, key blob, value blob);' %
+            self.__tablename)
+        self.__conn.execute(
+            'create index if not exists %s_index ON %s(hash);' %
+            (self.__tablename, self.__tablename))
         self.__conn.commit()
 
     def _commit(self):
@@ -47,20 +55,25 @@ class FileDict(UserDict.DictMixin):
 
     def __pack(self, value):
         return sqlite3.Binary(pickle.dumps(value, -1))
+
     def __unpack(self, value):
         return pickle.loads(str(value))
 
     def __get_id(self, key):
-        cursor = self.__conn.execute('select key,id from %s where hash=?;'%self.__tablename, (hash(key),))
-        for k,id in cursor:
+        cursor = self.__conn.execute(
+            'select key,id from %s where hash=?;' %
+            self.__tablename, (hash(key),))
+        for k, id in cursor:
             if self.__unpack(k) == key:
                 return id
 
         raise KeyError(key)
 
     def __getitem__(self, key):
-        cursor = self.__conn.execute('select key,value from %s where hash=?;'%self.__tablename, (hash(key),))
-        for k,v in cursor:
+        cursor = self.__conn.execute(
+            'select key,value from %s where hash=?;' %
+            self.__tablename, (hash(key),))
+        for k, v in cursor:
             if self.__unpack(k) == key:
                 return self.__unpack(v)
 
@@ -71,11 +84,13 @@ class FileDict(UserDict.DictMixin):
 
         try:
             id = self.__get_id(key)
-            cursor = self.__conn.execute('update %s set value=? where id=?;'%self.__tablename, (value_pickle, id) )
+            cursor = self.__conn.execute(
+                'update %s set value=? where id=?;' %
+                self.__tablename, (value_pickle, id))
         except KeyError:
             key_pickle = self.__pack(key)
             cursor = self.__conn.execute('insert into %s (hash, key, value) values (?, ?, ?);'
-                    %self.__tablename, (hash(key), key_pickle, value_pickle) )
+                                         % self.__tablename, (hash(key), key_pickle, value_pickle))
 
         assert cursor.rowcount == 1
 
@@ -85,29 +100,40 @@ class FileDict(UserDict.DictMixin):
 
     def __delitem__(self, key):
         id = self.__get_id(key)
-        cursor = self.__conn.execute('delete from %s where id=?;'%self.__tablename, (id,))
+        cursor = self.__conn.execute(
+            'delete from %s where id=?;' %
+            self.__tablename, (id,))
         if cursor.rowcount <= 0:
             raise KeyError(key)
 
         self._commit()
 
     def update(self, d):
-        for k,v in d.iteritems():
+        for k, v in d.iteritems():
             self.__setitem(k, v)
         self._commit()
 
     def __iter__(self):
-        return (self.__unpack(x[0]) for x in self.__conn.execute('select key from %s;'%self.__tablename) )
+        return (self.__unpack(x[0]) for x in self.__conn.execute(
+            'select key from %s;' % self.__tablename))
+
     def keys(self):
         return iter(self)
+
     def values(self):
-        return (self.__unpack(x[0]) for x in self.__conn.execute('select value from %s;'%self.__tablename) )
+        return (self.__unpack(x[0]) for x in self.__conn.execute(
+            'select value from %s;' % self.__tablename))
+
     def items(self):
-        return (map(self.__unpack, x) for x in self.__conn.execute('select key,value from %s;'%self.__tablename) )
+        return (map(self.__unpack, x) for x in self.__conn.execute(
+            'select key,value from %s;' % self.__tablename))
+
     def iterkeys(self):
         return self.keys()
+
     def itervalues(self):
         return self.values()
+
     def iteritems(self):
         return self.items()
 
@@ -119,7 +145,8 @@ class FileDict(UserDict.DictMixin):
             return False
 
     def __len__(self):
-        return self.__conn.execute('select count(*) from %s;' % self.__tablename).fetchone()[0]
+        return self.__conn.execute(
+            'select count(*) from %s;' % self.__tablename).fetchone()[0]
 
     def __del__(self):
         try:
@@ -134,6 +161,7 @@ class FileDict(UserDict.DictMixin):
         return self._Batch(self)
 
     class _Batch:
+
         def __init__(self, d):
             self.__d = d
 

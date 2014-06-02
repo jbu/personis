@@ -6,6 +6,7 @@ import os
 import shutil
 import sys
 
+
 class TestPersonisBase(unittest.TestCase):
 
     @classmethod
@@ -14,11 +15,19 @@ class TestPersonisBase(unittest.TestCase):
             shutil.rmtree('models')
         os.mkdir('models')
 
-        mkmodel.mkmodel(model='alice', mfile='empty.prod.mdef', modeldir='models', user='alice')
+        mkmodel.mkmodel(
+            model='alice',
+            mfile='empty.prod.mdef',
+            modeldir='models',
+            user='alice')
         um = base.Access(model="alice", modeldir='models', user='alice')
         ev = base.Evidence(evidence_type="explicit", value="test")
-        um.tell(context=["Admin", 'modelinfo'], componentid='personisversion', evidence=ev)
-
+        um.tell(
+            context=[
+                "Admin",
+                'modelinfo'],
+            componentid='personisversion',
+            evidence=ev)
 
     @classmethod
     def tearDownClass(cls):
