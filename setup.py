@@ -5,7 +5,7 @@ install_requires = [
     'pyyaml',
     'cherrypy >= 3.0',
     'pyparsing',
-    'pyoidc'
+    'pyoidc',
 ]
 
 long_desc = """The Personis user model server and associated client library. Also some sample clients."""

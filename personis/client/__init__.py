@@ -13,7 +13,6 @@ import logging
 
 
 class Connection(object):
-
     """Connection object
 
     Contains the state of your connection to personis.
@@ -69,7 +68,6 @@ class Connection(object):
 
 
 class Evidence:
-
     """ evidence object
 
     :param evidence_type: (:class:`EvidenceTypes`) - The type of the evidencelist
@@ -118,121 +116,78 @@ class Evidence:
         return 'evidence: ' + repr(self.__dict__)
 
 
-class View:
-
-    """view object
-
-    :param Identifier: The identifier of the component - unique in the context.
-    :type Identifier: str
-    :param Description: Readable description
-    :type Description: str
-    :param component_list: List of components in the view
-    :type component_list: list
-    :return:
-    """
-
-    def __init__(self, **kargs):
-
-        self.Identifier = None
-        self.Description = ""
-        self.component_list = None
-        self.objectType = "View"
-        for k, v in kargs.items():
-            self.__dict__[k] = v
-        if self.Identifier is None:
-            return None
+nul_resolver = u"(lambda x : x)"
 
 
-class Context:
-
-    """ context object
-
-    :param Identifier: The identifier of the component - unique in the context.
-    :param Description: Readable description
+def mk_context(ID, description, resolver, **kargs):
+    """ Make some context
+    :rtype : dict
+    :param id: The identifier of the component - unique in the context.
+    :param description: Readable description
     :param resolver: default resolver for components in this context
     """
+    if ID is None:
+        return None
 
-    def __init__(self, **kargs):
+    r = dict(id=ID, description="", perms={}, resolver=nul_resolver, creation_time=time.time())
 
-        self.Identifier = None
-        self.Description = ""
-        self.perms = {}  # permissions - owner only to begin
-        self.resolver = None
-        self.objectType = "Context"
-        self.creation_time = time.time()
-        for k, v in kargs.items():
-            self.__dict__[k] = v
-        if self.Identifier is None:
-            return None
+    for k, v in kargs.items():
+        r[k] = v
 
-    def __str__(self):
-        return 'Identifier {}, Description {}, perms {}'.format(
-            self.Identifier, self.Description, self.perms)
+    return r
 
 
-class Component:
-
+def mk_component(ID,
+                 description="",
+                 creation_time=time.time(),
+                 component_type=None,
+                 value=None,
+                 legal_values=[],
+                 resolver=None,
+                 goals=[],
+                 evidence_list=[],
+                 **kargs):
     """ component object
-
     :param Identifier: (string) - The identifier of the component - unique in the context.
     :param Description: (string) - Readable description
     :param creation_time: (string) - time of creation of the component.
     :param component_type: (list) - ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
-    :param value_type: (list) - ["string", "number","boolean", "enum", "JSON"]
-    :param value_list: (list) - a list of strings that are the possible values for type "enum".
+    :param legal_values: (list) - a list of possible values, if required. Effectively forces an enum.
     :param value: (string) - the resolved value.
     :param resolver: (string) - default resolver for this component.
     :param goals: (list) - list of component paths eg [ ['Personal', 'Health', 'weight'], ...]
-    :param evidencelist: (list) - list of evidence objects.
+    :param evidence_list: (list) - list of evidence objects.
     """
 
-    ComponentTypes = [
-        "attribute",
-        "activity",
-        "knowledge",
-        "belief",
-        "preference",
-        "goal"]
-    ValueTypes = ["string", "number", "boolean", "enum", "JSON"]
+    if ID is None:
+        return None
 
-    def __init__(self, **kargs):
+    if component_type not in ["attribute", "activity", "knowledge", "belief", "preference", "goal"]:
+        raise TypeError("bad component type %s" % component_type)
 
-        # set some default values
-        self.Identifier = None
-        self.Description = ""
-        self.component_type = None
-        self.value_type = None
-        self.value_list = []
-        self.value = None
-        self.resolver = None
-        self.goals = []
-        self.evidencelist = []
-        self.objectType = "Component"
-        self.creation_time = time.time()
-        for k, v in kargs.items():
-            self.__dict__[k] = v
-        if self.Identifier is None:
-            return None
-        if not self.component_type in Component.ComponentTypes:
-            raise TypeError("bad component type %s" % (self.component_type))
-        if not self.value_type in Component.ValueTypes:
-            raise ValueError(
-                "bad component value definition %s" %
-                (self.value_type))
-        if (self.value_type == "enum") and (len(self.value_list) == 0):
-            raise ValueError("type 'enum' requires non-empty value-list")
-        if self.value is not None:
-            if (self.value_type == "enum") and not (self.value in self.value_list):
-                raise ValueError(
-                    "value '%s' not in value_list for type 'enum'" %
-                    (self.value))
+    if json.loads(json.dumps(value)) != value:
+        raise ValueError("JSON round-trip failed %s" % value)
 
-    def __str__(self):
-        return 'Component: ' + repr(self.__dict__)
+    if legal_values is not None and value not in legal_values:
+        raise ValueError("%s not one of %s" % (value, legal_values))
+
+    r = dict(ID=None,
+             description=description,
+             component_type=component_type,
+             value=value,
+             legal_values=legal_values,
+             resolver=resolver,
+             goals=goals,
+             creation_time=creation_time,
+             evidencelist=evidence_list)
+
+    for k, v in kargs.items():
+        r[k] = v
+
+    return r
 
 
 class Access(object):
-
     """Client version of access for client/server system
 
     :param model: (string) - model name. If none, then default user model. ('-' maps to the model of the authenticated user)
@@ -320,7 +275,7 @@ class Access(object):
     def tell(self,
              context=[],
              componentid=None,
-             evidence=None):   # evidence obj
+             evidence=None):  # evidence obj
         """Tell the model something.
 
         :param context: a list giving the path to the required context
@@ -341,7 +296,7 @@ class Access(object):
                                 'componentid': componentid,
                                 'evidence': evidence.__dict__},
                        self.connection
-                       )
+        )
 
     def mkcomponent(self,
                     context=[],

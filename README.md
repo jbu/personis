@@ -83,13 +83,30 @@ Each leaf node (component) also has
 '''
  {
  component_type: (string) # one of ["attribute", "activity", "knowledge", "belief", "preference", "goal"]
- interpret_as: (string) # one of ["string", "number","boolean", "enum", "JSON"]
  possible_values: (string) # one of a list of possible strings
  value: (string)
  goals: [(string)*] # list of context paths. ('/'.join(context ids))
  evidence: [{}*] # list of evidence objects 
  }
 '''
+
+Evidence can be 
+
+'''
+ {
+ evidence_type: (string) # in ["explicit", "implicit", "exmachina", "inferred", "stereotype"]
+ source: (string)
+ value: (string)
+ comment: (string)
+ flags: (string)
+ time: (string) # isoblah given creation time
+ creation_time: (string) # isoblah measured creation time
+ expires: (string) # time to expire.
+ }
+'''
+
+We will ignore views for now, as they are simply a list of components rather than a single one in an ask query.
+
 
 Inner workings of server
 ========================

@@ -79,7 +79,7 @@ class Server:
         self.access_tokens_filename = access_tokens
 
         def stopper():
-            logging.info('saving persistant data')
+            logging.info('saving persistent data')
             self.save_oauth_clients()
             # self.access_tokens.close()
         cherrypy.engine.subscribe('stop', stopper)
@@ -216,7 +216,7 @@ class Server:
         """
         Step 2 of the oauth dance. At this point Google has said this is a
         known user. We then go and get more user info about them from google,
-        save the info in a persistant store, create a model if none exists,
+        save the info in a persistent store, create a model if none exists,
         and then ask them if they're happy to let the client they're using
         access personis on their behalf.
         (Accessed by the user with a web browser redirected from /authorized)
@@ -250,11 +250,9 @@ class Server:
 
         if not 'picture' in usr:
             if 'gender' in usr and usr['gender'].lower() == 'female':
-                usr[
-                    'picture'] = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/161px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg'
+                usr['picture'] = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/161px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg'
             else:
-                usr[
-                    'picture'] = 'http://www.lacasadeviena.com/wp-content/uploads/2012/06/magritte-sonofman1-300x362.jpg'
+                usr['picture'] = 'http://www.lacasadeviena.com/wp-content/uploads/2012/06/magritte-sonofman1-300x362.jpg'
 
         # if no model for user, create one.
         if not os.path.exists(os.path.join(self.modeldir, user)):
